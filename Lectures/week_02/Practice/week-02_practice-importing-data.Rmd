@@ -1,6 +1,5 @@
 ---
 title: "Week 2 - Practice Set"
-author: "PLACE YOUR NAME AND NETID HERE!"
 output:
   html_notebook:
     toc: true
@@ -76,48 +75,7 @@ Now let's **IMPORT** that data back into R
 3. load the `.Rdata` object. 
 
 
-
-
-
-
-
-
-## Question 1
-
-**Create a vector of numbers from 1:100 and assign it to the object `my_vec`**
-
 ```{r}
 
 ```
-
-
-## Question 2
-
-**Subset `my_vec` so that only values higher than 50 are retained. Assign the output to the object `my_vec_sub`**
-
-```{r}
-
-```
-
-
-## Question 3
-
-```{r}
-
-```
-
-
-## Question 4
-
-```{r}
-
-```
-
-
-## Question 5
-
-```{r}
-
-```
-
 
