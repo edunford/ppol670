@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 9       Applications in Unsupervised Learning</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 9 </font> <br> <br> <font size=100, face="bold"> Applications in Unsupervised Learning </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 9 &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Unsupervised Learning &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+&lt;br&gt;
+
+- **Refresh on the supervised and unsupervised distinction**
+
+&lt;br&gt;
+
+- **Principal Components**
+
+&lt;br&gt;
+
+- **K-means Clustering**
+
+&lt;br&gt;
+
+- **Hierarchical Clustering**
+
+---
+
+class: newsection
+
+# Supervised &lt;br&gt; vs. &lt;br&gt; Unsupervised
+
+---
+
+### Supervised Learning
+
+
+- For each observation of the predictor measurement `\(x_i\)` there is an associated response measurement `\(y_i\)`. In essence, there is an _outcome_ we are aiming to accurately predict or understand.
+  
+- Use regression and classification methods
+  
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+  
+ 
+---
+  
+### Unsupervised Learning
+  
+
+- We observe a vector of measurements `\(x_i\)` but _no_ associated response `\(y_i\)`.
+  
+- "unsupervised" because we lack a response variable that can supervise our analysis.
+
+- Aim is to (a) data reduction and/or (b) data exploration (find "hidden" structures in the data).
+  
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+  
+---
+
+### Challenges of Unsupervised Learning
+
+
+&lt;br&gt; 
+
+- Tends to be more **subjective**: there is no simple goal here
+
+&lt;br&gt; 
+
+- **Difficult to assess** the results
+
+&lt;br&gt; 
+
+- No way to "check our work": no universally accepted mechanism for performing cross-validation or validating results.
+
+&lt;br&gt; 
+
+- Requires **exploration**
+
+---
+
+class: newsection
+
+&lt;br&gt; 
+
+# Principal Components 
+
+---
+
+### Principal component analysis (PCA)
+
+&lt;br&gt;
+
+When faced with a large set of _correlated_ variables, **principal components** allow us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in the original set. 
+
+-  Directions in feature space along which the original data are **_highly variable_**.
+
+- These directions also define lines and subspaces that are as **_close as possible_**.
+
+- PCA is a form of **data reduction**
+
+---
+
+### Principal component analysis (PCA)
+
+- Say we have a data set ( `\(D\)` ) containing `\(p\)` features.
+
+--
+
+- We want to explore this data visually, but if `\(p\)` is large, that would require many plots!
+  
+  - e.g. `\(p = 10\)` means `\(45 plots\)` ( `\(\frac{p(p-1)}{2}\)` )
+  
+  - Not every feature is adding information
+  
+--
+
+- Need to reduce the number of features.
+
+- PCA offers a way of finding a **_low-dimensional representation_** of the data that captures as much of the information (variation) as possible. 
+
+
+---
+
+### Lower Dimensional Representation
+
+
+
+
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Lower Dimensional Representation
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Lower Dimensional Representation
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Lower Dimensional Representation
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Principal component analysis (PCA)
+
+The Principal components define a direction in feature space along which the **_data vary most_**. 
+
+--
+
+&lt;br&gt;
+
+Assuming `\(X\)` has `\(p\)` features, the first principal component is a linear combination of the factor loadings (eigenvectors)
+
+&lt;br&gt;
+
+`$$PC_{i1} = \phi_{11} x_{i1} + \phi_{21} x_{i2} + \dots + \phi_{p1}x_{ip}$$`
+
+
+where we place the constraint
+
+`$$\sum^p_{j=1} \phi^2_{ji} = 1$$`
+
+---
+
+### Principal component analysis (PCA)
+
+&lt;br&gt;&lt;br&gt;
+
+We refer to `\(PC_{11}, PC_{21}, \dots , PC_{n1}\)` as the _scores_ of the first principal component. 
+
+--
+
+We can easily find the **_linear combination that maximize the sample variance_** by taking a eigendecomposition of the variance-covariance matrix (but that is a beyond the scope of this course).
+
+--
+
+The subsequent principal components we find are by definition _uncorrelated_ with the first component (we do this by making the second component _orthogonal_ to the first.)
+
+---
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Principal component analysis (PCA)
+
+
+Once we have computed the principal components, we can plot them against each other in order to produce low-dimensional views of the data.
+
+Geometrically, this amounts to projecting the original data down onto the subspace spanned by our eigenvectors.
+
+.center[&lt;img src = "Figures/pca-dim-reduction.png"&gt;]
+
+---
+
+### Example: Crime in America
+
+&lt;br&gt;
+
+
+```r
+dat &lt;- USArrests 
+skimr::skim_to_wide(dat) %&gt;% 
+  select(type:missing,n:sd,hist)
+```
+
+```
+## # A tibble: 4 x 7
+##   type    variable missing n     mean     sd    hist    
+##   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   
+## 1 integer Assault  0       50    170.76   83.34 ▇▇▅▇▂▇▅▂
+## 2 integer UrbanPop 0       50    " 65.54" 14.47 ▂▃▆▅▇▆▇▃
+## 3 numeric Murder   0       50    " 7.79"  4.36  ▇▇▇▇▃▇▁▃
+## 4 numeric Rape     0       50    21.23    9.37  ▆▇▇▆▃▂▂▂
+```
+
+---
+
+### Example: Crime in America
+
+First, be sure to scale the variables.
+
+
+```r
+dat &lt;- scale(dat) %&gt;% as.data.frame()
+skimr::skim_to_wide(dat) %&gt;% 
+  select(type:missing,n:sd,hist)
+```
+
+```
+## # A tibble: 4 x 7
+##   type    variable missing n     mean       sd    hist    
+##   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;   
+## 1 numeric Assault  0       50    " 1.1e-16" 1     ▇▇▅▇▂▇▅▂
+## 2 numeric Murder   0       50    -7.7e-17   1     ▇▇▇▇▃▇▁▃
+## 3 numeric Rape     0       50    " 8.9e-17" 1     ▆▇▇▆▃▂▂▂
+## 4 numeric UrbanPop 0       50    -4.3e-16   1     ▂▃▆▅▇▆▇▃
+```
+
+
+```r
+row.names(dat) &lt;- row.names(USArrests)
+```
+
+
+---
+
+### Example: Crime in America
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+There are many packages that perform PCA; some are even hard coded into base R. (e.g. `princomp()` and `prcomp()`). 
+
+We'll use two recent packages for PCA rather than the base `R` versions as these packages provide cleaner summaries and plotting functions.  
+
+
+```r
+require(FactoMineR)
+require(factoextra)
+```
+
+---
+
+### Example: Crime in America
+
+
+```r
+dat_pca &lt;- PCA(dat,graph=F)
+dat_pca
+```
+
+```
+## **Results for the Principal Component Analysis (PCA)**
+## The analysis was performed on 50 individuals, described by 4 variables
+## *The results are available in the following objects:
+## 
+##    name               description                          
+## 1  "$eig"             "eigenvalues"                        
+## 2  "$var"             "results for the variables"          
+## 3  "$var$coord"       "coord. for the variables"           
+## 4  "$var$cor"         "correlations variables - dimensions"
+## 5  "$var$cos2"        "cos2 for the variables"             
+## 6  "$var$contrib"     "contributions of the variables"     
+## 7  "$ind"             "results for the individuals"        
+## 8  "$ind$coord"       "coord. for the individuals"         
+## 9  "$ind$cos2"        "cos2 for the individuals"           
+## 10 "$ind$contrib"     "contributions of the individuals"   
+## 11 "$call"            "summary statistics"                 
+## 12 "$call$centre"     "mean of the variables"              
+## 13 "$call$ecart.type" "standard error of the variables"    
+## 14 "$call$row.w"      "weights for the individuals"        
+## 15 "$call$col.w"      "weights for the variables"
+```
+
+---
+
+### Example: Crime in America
+
+
+```r
+fviz_pca_biplot(dat_pca,col.var = "darkred")
+```
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Proportion of Variance Explained 
+
+&lt;br&gt;
+
+How much of the information in a given data set is lost by projecting the observations onto the first few principal components? 
+
+How many principal components should we keep around?
+
+--
+
+&lt;br&gt;
+
+To answer these questions: we need to know the **_proportion of variance explained_** (PVE) by each principal component. 
+
+
+- Aim is to keep the **smallest number of components** that explain the **_most_ variation**. 
+
+---
+
+### Scree plot
+
+
+```r
+fviz_eig(dat_pca, addlabels = TRUE)
+```
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+```r
+get_eigenvalue(dat_pca)
+```
+
+```
+##       eigenvalue variance.percent cumulative.variance.percent
+## Dim.1  2.4802416        62.006039                    62.00604
+## Dim.2  0.9897652        24.744129                    86.75017
+## Dim.3  0.3565632         8.914080                    95.66425
+## Dim.4  0.1734301         4.335752                   100.00000
+```
+
+---
+
+### Exploring Principal Components
+
+&lt;br&gt;&lt;br&gt;
+- Look at the first few principal components in order to find _interesting patterns in the data_. 
+
+- If no interesting patterns are found in the first few principal components, then further principal components are unlikely to be of interest. 
+
+- Conversely, if the first few principal components are interesting, then continue to look at subsequent principal components until no further interesting patterns are found. 
+
+---
+
+### Exploring Principal Components
+
+
+```r
+fviz_pca_biplot(dat_pca,axes = 1:2,col.ind = "grey60")
+```
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exploring Principal Components
+
+
+```r
+fviz_pca_biplot(dat_pca,axes = 2:3,col.ind = "grey60")
+```
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exploring Principal Components
+
+
+```r
+fviz_pca_biplot(dat_pca,axes = 3:4,col.ind = "grey60")
+```
+
+&lt;img src="lecture-week-09-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### How Many Principal Components to Use?
+
+
+- Choose the smallest number of principal components that are required in order to explain a sizable amount of the variation in the data.
+
+  - Look for the "elbow" in the scree plot.
+
+&lt;br&gt;
+
+- The aim is for **data reduction**. 
+
+&lt;br&gt;
+
+- Can treat the number of principal components selected as a **tuning parameter** (if using the components in a supervised machine learning task).
+
+
+
+---
+
+class: newsection
+
+### K-Means Clustering
+
+---
+
+### Clustering Methods
+
+- **Clustering** refers to techniques for finding _subgroups_ in a data set. 
+
+- When we cluster the observations of a data set, we seek to partition them into distinct groups so that 
+  
+  - the observations **_within_** each group are **_similar_** to each other.
+  
+  - while observations in different groups are **_different_** from each other.
+
+--
+
+- **PCA vs. Clustering**
+
+  - PCA looks to find a low-dimensional representation of the observations that explain a good fraction of the variance;
+  
+  - Clustering looks to find homogeneous subgroups among the observations.
+
+
+---
+
+### K-means clustering
+
+&lt;br&gt;&lt;br&gt;
+- **Aim**: partition a data set into `\(k\)` distinct, _non-overlapping_ clusters.
+
+&lt;br&gt;
+
+- An observation can only be member to one cluster.
+
+&lt;br&gt; 
+
+- "Good" clustering is when the **_within-cluster variation is as small as possible_**
+
+---
+
+### K is arbitrary
+
+&lt;br&gt;&lt;br&gt;
+.center[
+&lt;img src = "Figures/k-is-arbitrary.png"&gt;
+]
+
+
+---
+
+### Minimize the total within-cluster variation
+
+&lt;br&gt;&lt;br&gt;
+
+`$$\underset{C_1,\dots,C_k}{Min} \begin{Bmatrix}\sum^K_{k=1} W(C_k) \end{Bmatrix}$$`
+&lt;br&gt;&lt;br&gt;
+
+Where 
+
+- `\(k\)` indexes the number of clusters
+- `\(C_k\)` denotes a cluster 
+- `\(W(C_k)\)` denotes the within-cluster variation
+
+---
+
+### Within-cluster variation?
+
+First, what does it mean to be "close"?
+
+--
+
+Could use _squared Euclidean distance_ 
+
+`$$(x_{ij} - x_{i'j})^2$$`
+
+But "distance" can be conceptualized in many ways. 
+
+--
+
+Second, define within-cluster variance
+
+`$$W(C_k) = \frac{1}{|C_k|} \sum_{i,i' \in C_k}\sum^P_{j=1} (x_{ij} - x_{i'j})^2$$`
+
+where `\(|C_k|\)` denotes the number of observations in the `\(k\)` cluster.
+
+--
+
+&gt; Very difficult problem to solve because there are `\(K^n\)` ways to partition the data. 
+
+---
+
+### K-means clustering algorithm
+
+&lt;br&gt;&lt;br&gt;
+**Step 1**: Randomly assign a number, from 1 to `\(K\)`, to each of the observations.
+These serve as initial cluster assignments for the observations. 
+
+**Step 2**: Iterate until the cluster assignments stop changing:
+
+- **(a)** For each of the `\(K\)` clusters, compute the cluster centroid. The `\(k\)`th cluster centroid is the vector of the `\(p\)` feature means for the observations in the `\(k\)`th cluster.
+
+- **(b)** Assign each observation to the cluster whose centroid is closest (where closest is defined using Euclidean distance).
+
+---
+
+.center[
+&lt;img src = "Figures/k-mean-alg.png" width=600&gt;
+]
+
+---
+
+Because the K-means algorithm finds a **_local_** rather than a **_global optimum_**, the results obtained will depend on the initial (random) cluster assignment of each observation in Step 1.
+
+.center[
+&lt;img src = "Figures/k-means-diff-starts.png" width=500&gt;
+]
+
+---
+
+class: newsection
+
+### Hierarchical Clustering
+
+---
+
+### Hierarchical Clustering
+
+&lt;br&gt;&lt;br&gt;
+- One downside of `\(K\)`-means is that it requires us to **_pre-specify_** the number of clusters `\(K\)`
+
+- **Hierarchical clustering** is a _bottom-up_ clustering method that doesn't require use to define the number of clusters _ex anti_.
+
+- H. clustering builds a tree (dendrogram) which treats every observation as unique and then combines clusters up to the trunk.
+
+- We can determine the number of clusters by choosing a cutpoint (i.e. by "pruning the tree")
+
+---
+
+### Hierarchical Clustering
+
+&lt;br&gt;
+.center[
+&lt;img src = "Figures/hclust-dendrogram.png", width=1000&gt;
+]
+
+---
+
+### Hierarchical Clustering
+
+&lt;br&gt;
+
+We can draw conclusions regarding the similarity of observations by proximity on the verticle axis, _not_ the horizontal axis.
+
+
+&lt;br&gt;
+.center[
+&lt;img src = "Figures/simple-hclust.png", width=1000&gt;
+]
+
+---
+
+### Hierarchical Clustering Algorithm
+
+**Step 1**: Begin with n observations and a measure (such as Euclidean distance) of all the `\(\frac{n(n − 1)}{2}\)` pairwise dissimilarities. Treat each observation as its own cluster.
+
+**Step 2**: For `\(i=n,n−1,...,2\)`:
+
+- **(a)** Examine all pairwise inter-cluster dissimilarities among the `\(i\)` clusters and identify the pair of clusters that are least dissimilar (that is, most similar). Fuse these two clusters. The dissimilarity between these two clusters indicates the height in the dendro- gram at which the fusion should be placed.
+
+- **(b)** Compute the new pairwise **inter-cluster dissimilarities** among the `\(i − 1\)` remaining clusters.
+
+---
+
+.center[
+&lt;img src = "Figures/hclust-alg.png", width=600&gt;
+]
+
+---
+
+### Defining "Inter-Cluster" Dissimilarity
+
+The concept of dissimilarity between a pair of observations needs to be extended to a pair of **_groups of observations_**. 
+
+--
+
+This is known as **"Linkage"**
+
+|Linkage| Description|
+|-------|----------|
+| *Complete* | Maximal intercluster dissimilarity. Compute all pairwise dissimilarities between the observations in cluster A and the observations in cluster B, and record the _largest_ of these dissimilarities. |
+| *Single* | Minimal intercluster dissimilarity. Compute all pairwise dissimilarities between the observations in cluster A and the observations in cluster B, and record the _smallest_ of these dissimilarities. Single linkage can result in extended, trailing clusters in which single observations are fused one-at-a-time. |
+| *Average* | Mean intercluster dissimilarity. Compute all pairwise dis- similarities between the observations in cluster A and the observations in cluster B, and record the average of these dissimilarities. |
+| *Centroid* | Dissimilarity between the centroid for cluster A (a mean vector of length p) and the centroid for cluster B. Centroid linkage can result in undesirable _inversions_. |
+
+---
+
+### Linkage matters
+
+.center[
+&lt;img src = "Figures/linkage.png", width=1000&gt;
+]
+
+---
+
+### Small Decisions, Big Consequences
+
+In order to perform clustering, some decisions must be made:
+
+--
+
+- **_Should the observations or features first be standardized in some way?_**
+
+--
+
+- In the case of **hierarchical clustering**:
+  
+  - _What dissimilarity measure should be used?_
+  
+  - _What type of linkage should be used?_
+  
+  - _Where should we cut the dendrogram in order to obtain clusters?_
+
+--
+
+- In the case of **K-means clustering**: 
+
+  - _how many clusters should we look for in the data?_
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
