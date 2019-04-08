@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 11       GIS and Spatial Analysis Basics in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Nathan H. Lovin  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  nhl8@georgetown.edu" />
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 11 </font> <br> <br> <font size=100, face="bold"> GIS and Spatial Analysis Basics in R </font>
+### <font class = "title-footer">  Nathan H. Lovin  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:nhl8@georgetown.edu" class="email">nhl8@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to GIS and Spatial Analysis in R
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 11 &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+GIS and Spatial Analysis Basics in R  &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+- **GIS Basics**
+
+- **GIS in R**
+
+- **Spatial Analysis**
+
+---
+
+class: newsection
+
+# GIS Basics
+
+
+---
+
+class: center, middle
+
+## GIS vs Spatial Analysis
+
+
+---
+
+# Types of Data
+
+![:center_img 70](figs/vector_vs_raster.jpg)
+
+---
+
+# Projections
+
+![:center_img 90](figs/projections.png)
+
+---
+
+# Map types
+
+- Choropleth
+- Point
+- Flow
+- Density
+
+---
+
+# Issues
+
+- Modifiable areal unit problem (MAUP)
+
+
+---
+
+# MAUP
+
+![:center_img 38](figs/maup-college-degree.png)
+
+---
+
+# Issues
+
+- Modifiable areal unit problem (MAUP)
+- Ecological Fallacy
+- Unstable Rates
+
+---
+
+class: newsection
+
+# GIS in R
+
+
+---
+
+class: center
+## The R Spatial Ecosystem
+
+![:center_img 90](figs/spatial-package-growth.png)
+
+
+---
+
+## The R Spatial Ecosystem
+
+### Legacy Geography
+
+```r
+library(sp)
+library(rgdal)
+library(ggmap)
+```
+
+### Tidy Geography
+
+```r
+library(sf)
+library(tmap)
+library(leaflet)
+library(raster)
+```
+
+---
+
+## The R Spatial Ecosystem
+
+### Spatial Analysis
+
+```r
+library(spdep)
+```
+
+### Tools and Data
+
+```r
+library(maptools)
+library(spData)
+library(spDataLarge) # needs to be installed using devtools
+library(urbnmapr) # needs to be installed using devtools
+```
+
+---
+
+# Basic Maps
+
+```r
+library(tidyverse)
+library(sf)
+library(spData)
+```
+
+
+
+
+```r
+us_states %&gt;% 
+  plot()
+```
+
+![](slides-geo-ppol670_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
+
+# Basic Maps
+
+```r
+us_states %&gt;% 
+  select(total_pop_15) %&gt;% 
+  plot()
+```
+
+![](slides-geo-ppol670_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+---
+
+# Basic Maps
+
+```r
+library(tmap)
+```
+
+
+
+
+```r
+tm_shape(us_states, projection = "+proj=aea +lon_0=-90 +lat_1=33 +lat_2=45") +
+  tm_polygons("total_pop_10")
+```
+
+![](slides-geo-ppol670_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+# More tmap Code
+
+
+```r
+library(tidyverse)
+library(tmap)
+library(spData)
+library(spDataLarge)
+
+# Add fill layer to nz shape
+tm_shape(nz) +
+  tm_fill() 
+# Add border layer to nz shape
+tm_shape(nz) +
+  tm_borders() 
+# Add fill and border layers to nz shape
+tm_shape(nz) +
+  tm_fill() +
+  tm_borders() 
+```
+
+
+---
+
+# More tmap Code
+
+
+```r
+# layers and grids
+map_nz = tm_shape(nz) + tm_polygons()
+
+map_nz1 = map_nz +
+  tm_shape(nz_elev) + 
+  tm_raster(alpha = 0.7)
+
+nz_water = st_union(nz) %&gt;% 
+  st_buffer(22200) %&gt;% 
+  st_cast(to = "LINESTRING")
+
+map_nz2 = map_nz1 +
+  tm_shape(nz_water) + tm_lines()
+
+map_nz3 = map_nz2 +
+  tm_shape(nz_height) + tm_dots()
+
+tmap_arrange(map_nz1, map_nz2, map_nz3)
+
+
+# what about adding a projection?
+tm_shape(nz) + 
+  tm_fill(col = "Median_income", title="Medium Income") +
+  tm_borders()
+```
+
+---
+
+# Finding and Reading Shapefiles
+
+- https://www.nhgis.org/
+
+
+```r
+library(sf)
+fname &lt;- system.file("shape/nc.shp", package="sf")
+fname
+```
+
+```
+## [1] "C:/Users/natel/Documents/R/win-library/3.5/sf/shape/nc.shp"
+```
+
+```r
+## [1] "/tmp/Rtmpb7R1w9/Rinst7fecc45b12d/sf/shape/nc.shp"
+nc &lt;- st_read(fname)
+```
+
+```
+## Reading layer `nc' from data source `C:\Users\natel\Documents\R\win-library\3.5\sf\shape\nc.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 100 features and 14 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+## epsg (SRID):    4267
+## proj4string:    +proj=longlat +datum=NAD27 +no_defs
+```
+
+
+---
+
+class: newsection
+
+# Basic Spatial Analysis
+
+---
+
+## Spatial Autocorrelation
+
+- What is temporal autocorrelation?
+
+--- 
+
+## Spatial Autocorrelation
+
+![:center_img 90](figs/spatial-auto.png)
+
+---
+
+## Moran's I
+
+- Scale: -1 to 1
+- Weights Matrix
+  - Queen vs Rook
+
+![](figs/moransI.svg)
+
+![:center_img 50](figs/Rooks-vs-Queens-Contiguity.png)
+
+
+---
+
+## Moran's I in R
+
+
+```r
+load(url("http://github.com/mgimond/Spatial/raw/master/Data/moransI.RData"))
+
+library(tidyverse)
+
+glimpse(s1@data)
+```
+
+```
+## Observations: 16
+## Variables: 5
+## $ NAME       &lt;fct&gt; Aroostook, Somerset, Piscataquis, Penobscot, Washin...
+## $ Income     &lt;int&gt; 21024, 21025, 21292, 23307, 20015, 21744, 21885, 23...
+## $ NoSchool   &lt;dbl&gt; 0.01338720, 0.00521153, 0.00633830, 0.00684534, 0.0...
+## $ NoSchoolSE &lt;dbl&gt; 0.001406960, 0.001150020, 0.002128960, 0.001025450,...
+## $ IncomeSE   &lt;dbl&gt; 250.909, 390.909, 724.242, 242.424, 327.273, 530.90...
+```
+
+```r
+library(tmap)
+```
+
+
+```r
+tm_shape(s1) + 
+  tm_polygons(style="quantile", col = "Income") +
+  tm_legend(outside = TRUE, text.size = .8) 
+```
+
+
+---
+
+## Moran's I in R
+
+
+```r
+tm_shape(s1) + 
+  tm_polygons(style="quantile", col = "Income") +
+  tm_legend(outside = TRUE, text.size = .8) 
+```
+
+![](slides-geo-ppol670_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+
+---
+
+## Moran's I in R
+
+
+```r
+library(spdep)
+
+nb &lt;- poly2nb(s1, queen=TRUE) # create contiguity matrix
+
+
+library(sf)
+s2 &lt;- st_as_sf(s1)
+class(s1)
+```
+
+```
+## [1] "SpatialPolygonsDataFrame"
+## attr(,"package")
+## [1] "sp"
+```
+
+```r
+class(s2)
+```
+
+```
+## [1] "sf"         "data.frame"
+```
+
+
+---
+
+## Moran's I in R
+
+
+```r
+lw &lt;- nb2listw(nb, style="W", zero.policy=TRUE) # create spatial weights matrix
+
+# calculate Moran's I
+MC&lt;- moran.mc(s1$Income, lw, nsim=599)
+MC
+```
+
+```
+## 
+## 	Monte-Carlo simulation of Moran I
+## 
+## data:  s1$Income 
+## weights: lw  
+## number of simulations + 1: 600 
+## 
+## statistic = 0.28281, observed rank = 588, p-value = 0.02
+## alternative hypothesis: greater
+```
+
+```r
+# scale Income and create spatial lag variable
+s1@data &lt;- s1@data %&gt;% mutate(sIncome = scale(Income),
+                   lag_sIncome = lag.listw(lw, sIncome))
+```
+
+---
+
+## Moran's I in R
+
+
+```r
+# get correlation between income and neighbors' income
+reg &lt;- lm(sIncome ~ lag_sIncome, data=s1)
+reg
+```
+
+```
+## 
+## Call:
+## lm(formula = sIncome ~ lag_sIncome, data = s1)
+## 
+## Coefficients:
+## (Intercept)  lag_sIncome  
+##     0.05017      0.90532
+```
+
+
+```r
+ggplot(data = s1@data, aes(x = sIncome, y = lag_sIncome)) +
+  geom_point(color = "steelblue") +
+  geom_abline(linetype = "dashed", color = "red", slope = .905, intercept = 0.05017) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  ggthemes::theme_calc() +
+  ggtitle("Moran Scatterplot Income",
+          subtitle = "(scaled)") +
+  annotate(geom = "text", label = as.character(round(MC$statistic,3)), x = .25, y = .065)
+```
+
+---
+
+class: center
+
+### Relationship between Income and Lagged Income
+
+![](slides-geo-ppol670_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
