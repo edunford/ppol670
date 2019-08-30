@@ -1,0 +1,255 @@
+---
+title: "Shiny Walkthrough"
+subtitle: "Revisting the Chicago Crime Data"
+output: html_notebook
+---
+
+```{r}
+knitr::opts_chunk$set(warning = F,message = F,error = F)
+require(tidyverse)
+require(shiny)
+require(sf)
+```
+
+
+# Data 
+
+Recall the Chicago Crime Data from Week 6.
+
+```{r}
+dat = read_csv("Data/chicago-crime-data.csv") %>% 
+  mutate(month = lubridate::round_date(date_single,unit = "month"))
+head(dat)
+```
+
+Recall that there were different types of offenses recorded in the data. 
+```{r,fig.align="center",fig.width=14,fig.height=7}
+dat %>% 
+  ggplot(aes(offense_group)) +
+  geom_bar() +
+  coord_flip()
+```
+
+And that these offenses tool place at different locations in the city. 
+
+```{r}
+dat %>% 
+  ggplot(aes(longitude,latitude,color=offense_group)) +
+  geom_point(show.legend = F) 
+```
+
+Let's only look at the most prominent forms of crime. Let's say that crimes that occur more than 500 times across the relevant period.
+
+```{r}
+dat <- 
+  dat %>% 
+  group_by(offense_group) %>% 
+  mutate(total_n = n()) %>% 
+  ungroup %>% 
+  filter(total_n >= 500) 
+```
+
+This leaves us with the following offenses.
+
+```{r}
+unique(dat$offense_group)
+```
+
+
+# The AIM
+
+Let's build a **Shiny application** where we can **highlight** where the different offenses were most prominent in the city.
+
+# Spatial Map
+
+First, it would be useful if we were able to bin where each activity took place on a map of Chicago Neighborhoods.
+
+
+Let's use what we learned last week to build this map using the shapefile in the data folder. 
+
+```{r}
+geo = st_read("Data/Chicago-Communities/chicago_neighborhoods.shp")
+```
+
+```{r}
+head(geo)
+```
+
+```{r}
+geo %>% 
+  ggplot() +
+  geom_sf()
+```
+
+Second, now that we have a map of Chicago Neighborhoods. Let's overlay the event data on it. We can do this by first converting our points to an SF geometry object. 
+```{r}
+dat2 = st_as_sf(dat, coords = c('longitude','latitude'))
+st_crs(dat2) <- st_crs(geo) # Make sure the projections are the "same"
+head(dat2)
+```
+
+
+Then we can join this data. 
+
+```{r}
+dat3 <- st_join(geo,dat2,join=st_intersects)
+```
+
+
+```{r}
+head(dat3)
+```
+
+Let's now aggregate by event type for each offense for each community/neighborhood. Geospatial objects are fickle. So let's reduce this feature as data frame then merge back onto the data features we care about. 
+
+```{r}
+tmp <- 
+  dat3 %>% 
+  as.data.frame() %>% 
+  group_by(community,offense_group) %>% 
+  count()
+head(tmp)
+```
+
+```{r}
+dat4 <- 
+  dat3 %>% 
+  select(geometry,community) %>% 
+  left_join(tmp,by="community") %>% 
+  unique() # Eliminate redundancies
+dat4 
+```
+
+
+Now let's visualize again just to make sure everything went as planned. 
+
+```{r}
+dat4 %>% 
+  filter(offense_group == "robbery") %>% 
+  ggplot() +
+  geom_sf(aes(fill=log(n+1)),color="white") +
+  ggthemes::theme_map() +
+  scale_fill_viridis_c() + 
+  labs(fill="Log N Crimes") +
+  theme(panel.grid.major = element_line(colour = "white"),
+        legend.position = "bottom")
+```
+
+
+The data appears in order. Let's save it as a `.rds` file (R data storage) so that we can read it in easily for our future use.
+
+```{r}
+write_rds(dat4,"Data/chicago_crime_spatial.rds")
+```
+
+
+# Build Shiny App
+
+Construct the "user interface".
+```{r}
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("The Distribution of Crime in Chicago"),
+
+    # Sidebar with selection options for the different crime types
+    sidebarLayout(
+        sidebarPanel(
+            selectInput(inputId = "crimes",choices = unique(dat4$offense_group),
+                        label = "Select Crime Type",selected = "robbery")
+        ),
+
+        mainPanel(
+           plotOutput("map")
+        )
+    )
+)
+```
+
+
+Construct the Server.
+```{r}
+server <- function(input, output) {
+
+    output$map <- renderPlot({
+      dat4 %>% 
+        filter(offense_group == input$crimes) %>% 
+        ggplot() +
+        geom_sf(aes(fill=log(n+1)),color="white") +
+        ggthemes::theme_map() +
+        scale_fill_viridis_c() +
+        labs(fill="Log N Crimes") +
+        theme(panel.grid.major = element_line(colour = "white"),
+              legend.position = "bottom")
+    })
+    
+}
+```
+
+Run Application
+```{r}
+shinyApp(ui = ui, server = server)
+```
+
+
+## More Advanced
+
+We can build on top of this current application to offer more information. 
+
+The User Interface again...
+```{r}
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("The Distribution of Crime in Chicago"),
+
+    # Sidebar with selection options for the different crime types
+    sidebarLayout(
+        sidebarPanel(
+            selectInput(inputId = "crimes",choices = unique(dat4$offense_group),
+                        label = "Select Crime Type",selected = "robbery")
+        ),
+
+        mainPanel(
+          plotOutput("frequency"),
+          plotOutput("map")
+        )
+    )
+)
+```
+
+Now the Server....
+```{r}
+server <- function(input, output) {
+
+    output$map <- renderPlot({
+      dat4 %>% 
+        filter(offense_group == input$crimes) %>% 
+        ggplot() +
+        geom_sf(aes(fill=log(n+1)),color="white") +
+        ggthemes::theme_map() +
+        scale_fill_viridis_c() +
+        labs(fill="Log N Crimes") +
+        theme(panel.grid.major = element_line(colour = "white"),
+              legend.position = "bottom")
+    })
+    
+    output$frequency <- renderPlot({
+      dat %>% 
+        filter(offense_group == input$crimes) %>% 
+        ggplot() +
+        geom_bar(aes(x=month),fill="steelblue",color="white") +
+        theme_minimal() +
+        labs(title=str_glue("Number of '{str_to_title(input$crimes)}' by Month"),
+             y = "Number of Crimes",
+             x="Date by Month")
+    })
+    
+}
+```
+
+
+Run Application
+```{r}
+shinyApp(ui = ui, server = server)
+```

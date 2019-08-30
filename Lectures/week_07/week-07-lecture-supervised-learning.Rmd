@@ -1,0 +1,905 @@
+---
+title: 
+    <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
+  <font size=6, face="bold"> Week 7 </font> 
+  <br>
+  <br>
+  <font size=100, face="bold"> Introduction to Statistical Learning </font>
+author: 
+  <font class = "title-footer"> 
+  &emsp;Prof. Eric Dunford &emsp;&#9670;&emsp; Georgetown University &emsp;&#9670;&emsp; McCourt School of Public Policy &emsp;&#9670;&emsp; eric.dunford@georgetown.edu</font>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: "gu-theme.css"
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: False
+      highlightLines: true
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F,cache=T)
+require(tidyverse)
+require(caret)
+```
+
+layout: true
+
+<div class="slide-footer"><span> 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Week 7  <!-- Week of the Footer Here -->
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Introduction to Statistical Learning <!-- Title of the lecture here -->
+
+</span></div> 
+
+---
+class: outline
+
+# Outline for Today 
+
+- **What is Statistical Learning?**
+
+- Talk about **Supervised Learning** and issues of over/under fitting
+
+- Delve into **Cross-Validation**
+
+- Briefly discuss **Performance Metrics**
+
+- Introduce the **`caret`** package 
+
+<br>
+
+> This week covers the basics/theory, new week we'll apply what we learned.
+
+---
+
+class: newsection
+
+# Statistical Learning
+
+---
+
+### What is statistical learning?
+
+The aim is to model the  relationship between the outcome and some set of features features
+
+$$y = f(X) + \epsilon$$
+
+where 
+
+- $y$ is the outcome/dependent/response variable 
+
+- $X$ is a matrix of predictor/feature/independent variables 
+
+- $f$ is some fixed but unknown function mapping $X$ to $y$. The "signal" in the data.
+
+- $\epsilon$ is some random error term. The "noise" in the data.
+
+---
+
+### What is statistical learning?
+
+Statistical learning refers to a set of methods/approaches for estimating $f$. 
+
+$$\hat{y} = \hat{f}(X)$$
+
+Where $\hat{f}(X)$ is an approximation of the "true" functional form ( $f(X)$ ), and $\hat{y}$ is the predicted value.
+
+The aim is to find a $\hat{f}(X)$ that minimizes the **_reducible_ error**.
+
+--
+
+$$E(y - \hat{y})^2$$
+$$E[f(X) + \epsilon -  \hat{f}(X)]^2$$
+
+$$\underbrace{E[f(X) -\hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{var(\epsilon)}_{\text{Irreducible}}$$
+
+---
+
+### Reducible vs. Irreducible Error
+
+$$\underbrace{E[f(X) -\hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{var(\epsilon)}_{\text{Irreducible}}$$
+
+
+
+The **"reducible" error** is the systematic **signal**. We can reduce this error by using different functional forms, better data, or a mixture of those two. 
+
+The **"irreducible" error** is associated with the random **noise** around $y$. 
+
+Statistical learning is concerned with minimizing the reducible error. However, our predictions  will never be perfect given the irreducible error. There is a lower bound on how accurate we can be.
+
+---
+
+### Inference vs. Prediction
+
+Two reasons we want to estimate $f(\cdot)$: 
+
+--
+
+- **Inference**
+
+  + Goal is **_interpretation_**
+  
+      - _Which predictors are associated with the response?_
+      - _What is the relationship between the response and the predictors?_
+      - _Is the relationship causal?_
+      
+  + **<font color = "darkred"> Key limitation</font>**: 
+  
+    - using functional forms that are easy to interpret (like lines) might be far away from the true form of $f(X)$.
+  
+---
+  
+### Inference vs. Prediction
+
+Two reasons we want to estimate $f(\cdot)$: 
+  
+- **Prediction**
+
+  + Goal is to **_predict_** future values of the outcome
+  
+  + $\hat{f}(X)$ is treated as a **<font color=#282828>_black box_</font>**: model doesn't need to be interpretable as long as it provides an accurate prediction of $y$.
+  
+  + **<font color = "darkred"> Key limitation</font>**: 
+  
+      - Interpretation: it is difficult to know which variables are doing the heavy lifting and the exact influence of $x$ on $y$.
+      
+
+---
+
+### Supervised vs. Unsupervised Learning
+
+- <u>**Supervised Learning**</u> (our focus today)
+
+  - for each observation of the predictor measurement $x_i$ there is an associated response measurement $y_i$. In essence, there is an _outcome_ we are aiming to accurately predict or understand.
+  
+  - use regression and classification methods
+  
+```{r,echo=F,fig.align="center",fig.width=7,fig.height=4}
+set.seed(123)
+x <- rnorm(150)
+y = 1 + 2*x + rnorm(150)
+tibble(x,y) %>% 
+  ggplot(aes(x,y)) +
+  geom_point(size=3,color="grey30") +
+  geom_smooth(method="lm",se=F,size=2) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.title = element_text(size=18))
+```
+  
+ 
+---
+  
+### Supervised vs. Unsupervised Learning
+  
+- <u>**Unsupervised Learning**</u>  
+
+  - we observe a vector of measurements $x_i$ but _no_ associated response $y_i$.
+  
+  - "unsupervised" because we lack a response variable that can supervise our analysis.
+  
+```{r,echo=F,fig.align="center",fig.width=7,fig.height=4}
+set.seed(123)
+n = 50
+sigma = matrix(c(1,0,0,1),ncol=2,nrow=2)
+x1 <- MASS::mvrnorm(n,c(0,0),Sigma = sigma) %>% as_tibble() %>% mutate(group=1)
+x2 <- MASS::mvrnorm(n,c(-3,-3),Sigma = sigma) %>% as_tibble() %>% mutate(group=2)
+x3 <- MASS::mvrnorm(n,c(-3,3),Sigma = sigma) %>% as_tibble() %>% mutate(group=3)
+bind_rows(x1,x2,x3) %>% 
+  ggplot(aes(V1,V2,color=factor(group),pch=factor(group))) +
+  geom_point(size=3) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.title = element_text(size=18))
+```
+  
+
+---
+
+class: newsection
+
+# Supervised Learning
+
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+--
+
+- **Quantitative** outcome
+
+  + a continuous/interval-based outcome: e.g. housing price, number of bills passed, stock market prices, etc.
+  
+  + Regression Methods: linear, penalization, generalized additive models (GAMs) 
+  
+  + Both parametric and non-parametric ways of approximating $f(\cdot)$
+
+
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+- **Quantitative** outcome
+
+- **Qualitative** outcome
+
+  + a discrete categorical outcome
+  
+      + _Binary_: War/No War; Sick/Not Sick
+      
+      + _Ordered_: Don't Support, Neutral, Support
+      
+      + _Categorical_: Cat, Dog, Bus, ... 
+      
+  + Classification Methods: logistic regression, naive Bayes, support vector machines
+  
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+- **Quantitative** outcome
+
+- **Qualitative** outcome
+ 
+- Some methods can be used on either outcome type
+  - K nearest neighbors
+  - tree-based methods (random forest, gradient boosting)
+
+- Every model has specific **tuning parameters** that we can use to optimize performance. 
+  
+---
+
+### Interpretation vs. Flexibility
+
+<br>
+.center[_"There is no free lunch in statistics"_]
+
+.pull-left[
+- No one method dominates all others over all possible data sets. 
+
+- it is an important task to decide for any given set of data which method produces the best results
+
+- Balance between  model interpretation and model flexibility
+]
+
+.pull-right[
+<br><br>
+<img src="Figures/interpret-vs-flexible.png",width=700px,height=700>
+]
+
+---
+
+### Under-fitting (Bias)
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.heigh=6}
+set.seed(123)
+N = 100
+x <- rnorm(N)
+X <- splines::bs(x,degree=7)
+B <- runif(7,-5,5) 
+y <- X%*%B + rnorm(N,mean = 0,.2)
+D = tibble(x,y = as.numeric(y))
+
+
+modA = lm(y ~ x,data = D)
+D$yhatA = predict(modA,D)
+
+# Plot 
+D %>% 
+ggplot(aes(x,y)) +
+  geom_point(alpha=.7,size=5,color="grey30") +
+  theme_bw() +
+  geom_line(aes(x,yhatA),color="blue",size=3,alpha=.6) +
+  theme(legend.position = "none",
+        axis.title = element_text(size=20),
+        axis.text = element_text(size=18))
+```
+
+---
+
+### Over-fitting (Variance)
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.heigh=6}
+modD = lm(y ~ poly(x,21),data = D)
+D$yhatD = predict(modD,D)
+
+D %>% 
+  ggplot(aes(x,y)) +
+  geom_point(alpha=.7,size=5,color="grey30") +
+  theme_bw() +
+  geom_line(aes(x,yhatD),color="blue",size=3,alpha=.6) +
+  theme(legend.position = "none",
+        axis.title = element_text(size=20),
+        axis.text = element_text(size=18))
+```
+
+---
+
+### Model Accuracy
+
+- We need to quantify the extent to which the predicted response value for a given observation is close to the true response value for that observation
+
+--
+
+- There are many metrics for model accuracy. Which metric you use depends on:
+
+  + type of learning problem you are trying to solve 
+  
+  + what you aspect of the model you're aiming to optimize
+  
+--
+  
+- In the regression setting, the most common accuracy metric _mean squared error_ (MSE).
+
+$$MSE = \frac{\sum^N_{i=1} (y_i - \hat{f}(X_i))^2}{N}$$
+
+
+---
+
+### Model Accuracy
+
+```{r,echo=F,fig.align="center",fig.width=12,fig.height=8}
+modB = lm(y ~ poly(x,2),data = D)
+D$yhatB = predict(modB,D)
+modC = lm(y ~ poly(x,5),data = D)
+D$yhatC = predict(modC,D)
+mse = function(y,yh) { mean((y-yh)^2) }
+
+D %>% 
+  gather(mod,yh,-y,-x) %>% 
+  mutate(mod = str_remove(mod,"yhat")) %>% 
+  group_by(mod) %>% 
+  mutate(mse =mean((y-yh)^2),
+         mse_txt = str_glue("Model {mod}\nMSE = {round(mse,3)}")) %>% 
+  ggplot(aes(x,y)) +
+  geom_point(alpha=.7,size=3,color="grey30") +
+  geom_line(aes(x,yh),color="blue",size=2,alpha=.6) +
+  theme_bw() +
+  facet_wrap(~mse_txt) +
+  theme(legend.position = "none",
+        axis.title = element_text(size=18),
+        axis.text = element_text(size=20),
+        strip.text = element_text(size=24),
+        text = element_text(family="serif"))
+```
+
+
+---
+
+### Training and Test Data
+
+- Utilize accuracy metrics to assess model performance, <u>_but we can always make our models flexible enough to minimize the MSE_</u>. 
+
+--
+
+- Need to see how accurate the model is on **_previously unseen data_**.
+
+- Data is usually hard to come by so we partition the data into **training** and **test** sets. The idea is to hold the test data back (never look at it).
+
+--
+
+- Use the test data to calculate the **out of sample predictive accuracy**. 
+
+- By holding off some data we can reduce the tendency to **over-fit** the data.
+
+---
+
+### Model accuracy on New Data 
+
+```{r,echo=F}
+# New Data Draw
+set.seed(321)
+N = 100
+x <- rnorm(N)
+X <- splines::bs(x,degree=7)
+# Use the same betas
+y <- X%*%B + rnorm(N,mean = 0,.5)
+D2 = tibble(x,y = as.numeric(y))
+
+D2$yhatA = predict(modA,D2)
+D2$yhatB = predict(modB,D2)
+D2$yhatC = predict(modC,D2)
+D2$yhatD = predict(modD,D2)
+
+# Define Sets
+D$set = "Training Set"
+D2$set = "Test Set"
+
+DD = bind_rows(D,D2)
+```
+
+```{r,echo=F,fig.align="center",fig.width=12,fig.height=8}
+D2 %>% 
+  gather(mod,yh,-y,-x,-set) %>% 
+  mutate(mod = str_remove(mod,"yhat")) %>% 
+  group_by(mod) %>% 
+  mutate(mse =mean((y-yh)^2),
+         mse_txt = str_glue("Model {mod}\nMSE = {round(mse,3)}")) %>% 
+  ggplot(aes(x,y)) +
+  geom_point(alpha=.7,size=3,color='forestgreen') +
+  geom_line(aes(x,yh),color="blue",size=2,alpha=.6) +
+  theme_bw() +
+  facet_wrap(~mse_txt,scale="free") +
+  # ylim(-5,5) +
+  theme(legend.position = "none",
+        axis.title = element_text(size=18),
+        axis.text = element_text(size=20),
+        strip.text = element_text(size=24),
+        text = element_text(family="serif"))
+```
+
+---
+
+### Bias-Variance Tradeoff
+
+.center[<img src = "Figures/bias-variance-tradeoff.png",width=800>]
+
+- **high variance**: new data, new pattern.
+
+- **high bias**: rigid pattern, doesn't reflect the data 
+
+
+---
+
+### Bias-Variance Tradeoff
+
+.center[<img src = "Figures/bias-variance-tradeoff.png">]
+
+- Reality is a **tradeoff**
+
+  - More variance, less bias
+  
+  - More bias, less variance
+
+---
+
+class: newsection
+
+# Cross-Validation
+
+---
+
+### What is cross-validation?
+
+<br>
+
+- As we saw, the training error will always be less than the test error due to over-fitting. We need to see how our model performs on data it wasn't trained on (test error)
+
+- "**Re-sampling**" involves repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the fitted model. 
+
+- We can use re-sampling techniques to **generate estimates for the test error**. 
+
+- Let's look at **three** cross-validation approaches.
+
+
+---
+
+### Validation Set Approach
+
+- Involves randomly dividing the data into two comparably sized samples, a training set and a validation/test/hold-out set.
+
+- Model is fit to the training set then used to predict the response in the validation set. 
+
+- The resulting error provides an estimate of the test error rate. 
+<br>
+.center[
+<img src="Figures/validation-set.png">
+]
+
+---
+
+### Validation Set Approach
+
+**<font color = "darkred">Drawbacks</font>**
+
+- Highly variable: test error rate is sensitive to the estimates that are in the training and test set. 
+
+- Overestimates the test error: only trained on one sub-sample of the data. Models tend to perform worse when trained on less data. 
+<br>
+.center[
+<img src="Figures/validation-set.png">
+]
+
+---
+
+### "Leave-One-Out" Cross-Validation (LOOCV)
+
+- Involves splitting the set of observations into two parts. Rather than creating two subsets of comparable size, a single observation is used for the validation set. 
+
+- Estimate the model on $N-1$ observation, then test on the remaining observation.
+
+- Do this $N$ times and average the test error. 
+
+.center[
+<img src="Figures/LOOCV.png">
+]
+
+
+---
+
+### "Leave-One-Out" Cross-Validation (LOOCV)
+
+Far less biased than the validation approach. Does not overestimate the test error. No randomness in the training/test split
+
+**<font color = "darkred">Drawbacks</font>**: 
+
+- Computationally expensive: you have to re-estimate the same model N times!
+
+.center[
+<img src="Figures/LOOCV.png">
+]
+
+---
+
+
+### $K$-Fold Cross-Validation
+
+- Involves randomly dividing the data into $k$ groups (or folds). Model is trained on $k-1$ folds, then test on the remaining fold. 
+
+- Process is repeated $k$ times, each time using a new fold. Offers $k$ estimates of the test error, which we average. 
+
+.center[
+<img src="Figures/k-fold-validation.png">
+]
+
+---
+
+### $K$-Fold Cross-Validation
+
+- Less computationally expensive (LOOCV is a special case of $K$-fold where $k = n$) 
+
+- Gives more accurate estimates of the test error rate than LOOCV
+
+.center[
+<img src="Figures/k-fold-validation.png">
+]
+
+
+---
+
+class: newsection
+
+# Performance Metrics 
+
+---
+
+### How did we do? 
+
+- Our aim is to model the signal, not the noise. As we've seen, model over-fitting is a real problem, but re-sampling methods can offer us a way out. 
+
+- Central to any machine learning task is how we choose to define "good" performance. 
+
+--
+
+- When dealing with quantitative outcomes (intervals), we can utilize metrics like MSE to assess performance.
+
+$$MSE = \frac{\sum^N_{i=1} (y_i - \hat{f}(X_i))^2}{N}$$
+
+---
+
+### How did we do? 
+
+- Our aim is to model the signal, not the noise. As we've seen, model over-fitting is a real problem, but re-sampling methods can offer us a way out. 
+
+- Central to any machine learning task is how we choose to define "good" performance. 
+
+- When dealing with quantitative outcomes (intervals), we can utilize metrics like MSE to assess performance.
+
+- When dealing with qualitative outcome (categories), we need to rely on different metrics to assess performance.
+
+<br>
+
+$$\text{Accuracy} = \frac{\text{Correctly Classified}}{\text{Total Possible}}$$
+$$\text{Error} = 1 - \text{Accuracy}$$
+
+
+---
+
+### The Weather Today 
+
+Consider if we were testing the accuracy of two weather persons. Below are their forecasts for the weather in a given week alongside the observed weather pattern. (For now, let's just focus on binary outcomes: sunny day or rainy day)
+
+.center[
+|Weather Person | M | Tu | W | Th | F | St | Su |
+|---------------|---|----|---|----|---|----|----|
+| $WP_1$ Prediction | Rain | Sun  | Rain | Sun | Sun | Rain | Rain |
+| $WP_2$ Prediction | Sun  | Sun  | Sun  | Sun | Sun | Sun  | Sun  |
+| Actual            | Sun  | Sun  | Rain | Sun | Sun | Sun  | Sun |
+]
+
+--
+
+.center[
+|Weather Person | Correct | Total | Accuracy | Error |
+|---------------|---------|-------|----------|-------|
+| $WP_1$        |    4    |   7   |   57.1%  | 42.9% |
+| $WP_2$        |    6    |   7   |   85.7%  | 14.3% |
+]
+
+If we calculate the accuracy for each, it looks as if Weather Person 2 is the most accurate. Does that make sense?
+
+---
+
+### The Weather Today 
+
+Consider if we were testing the accuracy of two weather persons. Below are their forecasts for the weather in a given week alongside the observed weather pattern. (For now, let's just focus on binary outcomes: sunny day or rainy day)
+
+.center[
+|Weather Person | M | Tu | W | Th | F | St | Su |
+|---------------|---|----|---|----|---|----|----|
+| $WP_1$ Prediction | Rain | Sun  | Rain | Sun | Sun | Rain | Rain |
+| $WP_2$ Prediction | Sun  | Sun  | Sun  | Sun | Sun | Sun  | Sun  |
+| Actual            | Sun  | Sun  | Rain | Sun | Sun | Sun  | Sun |
+]
+
+.center[
+|Weather Person | Correct | Total | Accuracy | Error |
+|---------------|---------|-------|----------|-------|
+| $WP_1$        |    4    |   7   |   57.1%  | 42.9% |
+| $WP_2$        |    6    |   7   |   85.7%  | 14.3% |
+]
+
+Rain is **rare**. We can always have high accuracy if we just guess sun every day. This is generates a problem if what people care about is when to pack an umbrella!
+
+---
+
+### Confusion Matrix
+
+<br> 
+
+.center[
+|                       |  $Positive_{~~\text{Actual}}$ |  $Negative_{~~\text{Actual}}$ |
+|-----------------------|----------|----------|
+| $Positive_{~~\text{Predicted}}$  |   True Positive (TP)       | False Positive (FP)          |
+| $Negative_{~~\text{Predicted}}$  |   False Negative (FN)       |  True Negative (TN)         |
+
+]
+
+--
+
+<br>
+
+| Metric | Calculation |  Description |
+|---|-----| -----|
+| Accuracy | $\frac{TP + TN}{TP+FP+TN+FN}$ | In total, how accurate is the model |
+| Precision | $\frac{TP}{TP+FP}$ | Of the true positives classified, how many are actually positive | 
+| Specificity | $\frac{ TN }{ TN + FP }$ | Of the actual true negatives, how many were correctly classified | 
+| Recall/Sensitivity | $\frac{TP}{ TP + FN}$ | Of the actual true positives, how many were correctly classified |
+
+
+---
+
+### Weather Person 1
+
+<br>
+
+.center[
+|                       |  $Positive_{~~\text{Actual}}$ |  $Negative_{~~\text{Actual}}$ |
+|-----------------------|----------|----------|
+| $Positive_{~~\text{Predicted}}$  |   3      |  0   |
+| $Negative_{~~\text{Predicted}}$  |   3      |  1   |
+
+]
+
+<br>
+
+- Accuracy = 57.1%
+
+- Precision = 1%
+
+- Specificity = 100%
+
+- Recall = 50%
+
+
+---
+
+### Weather Person 2
+
+<br>
+
+.center[
+|                       |  $Positive_{~~\text{Actual}}$ |  $Negative_{~~\text{Actual}}$ |
+|-----------------------|----------|----------|
+| $Positive_{~~\text{Predicted}}$  |   6      |  1   |
+| $Negative_{~~\text{Predicted}}$  |   0      |  0   |
+
+]
+
+<br>
+
+- Accuracy = 85.7%
+
+- Precision = 85.7%
+
+- Specificity = 0%
+
+- Recall = 100%
+
+---
+
+### ROC Curves
+
+Consider the following: 
+
+- We want to predict how many rainy days (1) there will be, sunny otherwise (0). 
+
+- Our model outputs probabilities of a rainy day where 0 means no chance, 1 means it's absolutely going to rain. 
+  
+<br>  
+  
+```{r,echo=F}
+est_probs <- c(.4,.7,.3,.5,.9,.1,.7)
+true_values <-  c(1,1,0,0,1,0,1)
+```
+
+```{r}
+# Our estimated probabilities 
+est_probs 
+```
+
+
+
+---
+
+### ROC Curves
+
+Consider the following: 
+
+- We need to convert these probabilities to predictions. We can do this by setting a **threshold**.
+  
+<br><br><br>  
+```{r}
+threshold = .5
+our_preds = as.numeric(est_probs >= threshold)
+our_preds
+```
+
+
+---
+
+### ROC Curves
+
+
+Consider the following: 
+
+- We can now compare these predictions to the actual values. 
+
+```{r}
+table(our_preds,true_values)
+```
+
+- Thresholds reflect how sensitive we are to true or false positives. 
+  
+  + The higher the threshold, the less false positives.
+  + The lower the threshold, the more false positives but more true positives. 
+  + It's another tradeoff!
+  
+---
+
+### ROC Curves
+
+Receiver operating characteristic (ROC) curve offers a visual representation of model performance across different potential thresholds.  
+
+.center[<img src = "Figures/roc-plot.png", width=400>]
+
+
+---
+
+### Area Under the Curve (AUC)
+
+We can calculate the area under the ROC curve to quickly and easily compare model performance.
+
+
+.center[<img src = "Figures/roc-mueller-rauh.png">]
+
+
+---
+
+class: newsection
+
+# `caret`
+
+---
+
+### Machine learning in `R`
+
+<br><br>
+
+- There are LARGE assortment of ML packages in `R`: essentially one for every possible learning method. 
+
+- Each package has it's own unique ways of reading data in, outputting results, and post-processing. 
+
+- This can make it difficult to implement different types of models quickly.
+
+- The [`caret` package](http://topepo.github.io/caret/index.html) eases this process by creating a system of wrapper functions that make it very easy to implement models
+
+
+---
+
+### `caret` 
+
+- The main `caret` function is `train()`, 
+
+  + `method = ` argument allows us to select a specific machine learning algorithm. 
+  
+  + `trControl = ` argument allows us to feed it a `trainControl()` function which allows use to easily set cross-validation specifications. 
+  
+  + `metric =` argument allows us to specify what sorts of accuracy metrics the best performing model should be evaluated by. 
+  
+  + `tuneGrid =` argument allows us to easily try out different tuning parameters (more on this later).
+  
+---
+
+```{r}
+require(caret)
+library(mlbench) # Holds the Sonar Data 
+data(Sonar)
+str(Sonar[, 1:10])
+```
+
+```{r}
+# R == "Rock", M == "Mine"
+table(Sonar$Class) 
+```
+
+---
+
+
+```{r}
+# Break into training and test datasets
+set.seed(998)
+inTraining <- createDataPartition(Sonar$Class, p = .75, list = FALSE)
+training <- Sonar[ inTraining,]
+testing  <- Sonar[-inTraining,]
+
+dim(training)
+dim(testing)
+```
+
+
+---
+
+```{r}
+## 10-fold CV 
+fitControl <- trainControl(method = "cv",number = 10)
+
+fit <- train(Class ~ ., 
+             data = training, 
+             method = "gbm", 
+             trControl = fitControl,
+             verbose = FALSE)
+fit
+```
+
+
+---
+
+```{r}
+pred <-  predict(fit,newdata = testing)
+table(pred,testing$Class)
+```
+
+---
+
+```{r}
+confusionMatrix(table(pred,testing$Class))
+```
+
+

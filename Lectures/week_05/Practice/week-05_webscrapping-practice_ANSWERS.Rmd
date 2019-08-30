@@ -1,0 +1,113 @@
+---
+title: "PPOL670 | Webscraping Practice"
+output: html_document
+---
+
+
+```{r}
+require(tidyverse)
+require(rvest)
+require(xml2)
+```
+
+# Target
+
+The following `url` contains data regarding all bilateral investment treaties made between two states. The data is maintained by the United Nations and reflects trade networks both cross nationally and over time. 
+
+```{r}
+url <- "http://investmentpolicyhub.unctad.org/IIA/IiasByCountry#iiaInnerMenu"
+```
+
+# Task 1
+
+Scrape the data from the html table at the provided url. Make sure the data is formatted correctly. Change the variable names to `country`, `total_bits`, and `total_tips`. Drop the `No.` column. 
+
+
+Download website.
+```{r}
+raw <- read_html(url)
+```
+
+
+Extract data table.
+```{r}
+dat <- raw %>% 
+  html_nodes(xpath='//*[@id="country-list"]') %>% 
+  html_table() %>%  # Data is organized as a table on the site we can us html_table()
+  .[[1]]
+head(dat)
+```
+
+Clean data.
+```{r}
+dat_clean <-
+  dat %>% 
+  # Drop and rename variables
+  select(-`No.`) %>% 
+  rename(country=Name,
+         total_bits = `Total BITs *`,
+         total_tips = `Total TIPs *`) 
+dat_clean
+```
+
+# Task 2 
+
+Examine the webpage at the provided url. You'll note that if you click on country names there is a link to the specific trade agreement that the country enters into and with whom. This data is valuable if one wanted to build a network of international investment treaties. 
+
+Use the provided links to build a dataset of all bilateral investment treaties between two states. 
+
+```{r}
+# Following code extracts all the country links for you. 
+range <- 1:233 
+country_links <- rep(NA,233)
+for(i in 1:233){ #233 countries
+   link <- 
+    raw %>% 
+    html_nodes(.,xpath=str_glue("//*[@id='country-list']/tbody/tr[{i}]/td[2]/span/a")) %>%
+    html_attr("href")
+   country_links[i] <- paste0("http://investmentpolicyhub.unctad.org",link)
+}
+```
+
+
+```{r}
+# Let's start small with just one link to make sure we're doing what we need to do.
+country_links[1]
+```
+
+```{r}
+raw <- read_html(country_links[1]) 
+tmp_dat <- raw %>% html_table() %>% .[[1]]
+tmp_dat
+```
+
+This is great! But we need to know who the country that we clicked on the link to is... Luckily we already have this information! We just grabbed it in the last task!
+
+```{r}
+tmp_dat$Country <- dat_clean$country[1]
+tmp_dat %>% select(Country,Partners,everything(),-`No.`)
+```
+ 
+ Perfect! Now let's do this for _every_ country...
+ 
+```{r}
+bits_data <- c() # create a container
+for (i in 1:233){
+  
+  Sys.sleep(runif(1,1,3)) # put the scraper to sleep randomly.
+  
+  # Download the website
+  raw <- read_html(country_links[i]) # Index each link
+  
+  bits_data <- 
+    raw %>% 
+    html_table() %>% # Read in the data table
+    .[[1]] %>%  #access the position on the list
+    mutate(Country = dat_clean$country[i]) %>%  # store country name
+    select(Country,Partners,everything(),-`No.`) %>%  # re-arrange data
+    bind_rows(bits_data,.) # Bind output to the master data frame
+}
+```
+ 
+Takes a little bit of time to run. Why? Because we're pinging the site a number of times. To reduce our presense on the site, I also but the scraper to sleep randomly. As we discussed in class
+ 

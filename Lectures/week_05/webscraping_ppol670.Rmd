@@ -1,0 +1,642 @@
+---
+title: 
+    <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
+  <font size=6, face="bold"> Week 5 </font> 
+  <br>
+  <br>
+  <font size=100, face="bold"> Webscraping & APIs </font>
+author: 
+  <font class = "title-footer"> 
+  &emsp;Prof. Eric Dunford &emsp;&#9670;&emsp; Georgetown University &emsp;&#9670;&emsp; McCourt School of Public Policy &emsp;&#9670;&emsp; eric.dunford@georgetown.edu</font>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: "gu-theme.css"
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: False
+      highlightLines: true
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F,cache=F)
+require(rvest)
+require(tidyverse)
+```
+
+layout: true
+
+<div class="slide-footer"><span> 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Week 5 <!-- Week of the Footer Here -->
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Webscraping & APIs <!-- Title of the lecture here -->
+
+</span></div> 
+
+---
+class: outline
+
+# Outline for Today 
+
+```{css,echo=F}
+.remark-code, .remark-inline-code { 
+  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+  font-size: 80%;
+}
+```
+
+
+<br><br>
+
+- **Discussion of Loops and Functions**
+
+- **Webscraping**
+
+- **Using APIs**
+
+---
+
+class: newsection
+
+## So you wanna scrape the web...
+
+---
+
+### What does it mean to "scrape" something off the web?
+
+--
+
+<br>
+<br>
+
+- leveraging the structure of a website to **grab it's contents**
+
+- using a programming environment (such as R, Python, Java, etc.) to **systematically extract** that content.
+
+- accomplishing the above in an "unobtrusive" and **legal** way.
+
+---
+
+### Website 
+
+As internet consumers, we interact with the interface (or a **rendered version**) of a [webpage](https://www.bbc.com/news/world-middle-east-36156865). Since websites are just rendered code, every piece of that code can be tapped into.
+
+.pull-left[
+<img src = "Figures/rendered-webpage.png" width=400>
+]
+
+.pull-right[
+<img src = "Figures/html-webpage.png" width=400>
+]
+
+---
+
+### The many faces of HTML code
+
+Keep in mind that there is 5 types of coding playing out simultaneously when rendering a website:
+
+--
+
+- **HTML**: generates/creates the actual content of a website
+- **XML**: used to transmit data to a webpage from a server
+- **PHP**: relays information between a server and the page (think passwords)
+- **CSS**: responsible for the design of the website
+- **JavaScript**: handles changes and animation.
+
+--
+
+All these different pieces of code work in conjunction (so all will be simultaneously present when viewing a website).
+
+When scraping, we care primarily about **CSS** and **XML**.
+
+
+
+---
+
+### The Sturcture of HTML
+
+HTML code is structured using tags, and information is organized hierarchcially (like a list or an array) from top to bottom. When scraping, the tags that are of most use are:
+
+- **p** – paragraphs
+- **a href** – links
+- **div** – divisions
+- **h** – headings
+- **table** – tables
+
+We can examine the HTML of a website by inspecting the content within it.
+
+---
+
+### R Packages
+
+There are many packages that can be effectively used to download content from a website. Here I highlight a few, but new stuff is coming out all the time.
+
+<br><br>
+
+```{r,eval=F}
+require(rvest) # existing in the tidyverse 
+require(httr) # great for interacting with APIs
+require(xml2) # rvest draw from this package
+require(RCurl) # older but stable. Behaves well with other packages
+require(XML) # older but stable. Behaves well with other packages
+require(jsonlite) # for dealing with json output
+```
+
+
+---
+
+class:newsection
+
+## Scraping Content
+
+---
+
+### ABCs of Webscraping 
+
+Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/world-middle-east-36156865).
+
+--
+
+<br>
+
+When scraping data online, keep the following procedure in mind:
+
+- (**A**) identify what information you want
+- (**B**) examine the HTML structure and elements
+- (**C**) download website
+- (**D**) extract element (i.e. it's position)
+- (**E**) clean element
+- (**F**) store outcome
+
+---
+
+### ABCs of Webscraping 
+
+Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/world-middle-east-36156865).
+
+<br>
+
+Here let's aim to extract three pieces of information from the BBC story:
+
+- **Headline**
+
+- **Date**
+
+- **Story Content**
+
+---
+
+### Download the website
+
+```{r}
+require(rvest) 
+
+url = "http://www.bbc.com/news/world-middle-east-36156865"
+site = read_html(url)
+site
+```
+
+Here the entire information located on the website is no retained in a single object. **Why is this useful?**
+
+---
+
+### Extract and clean the desired element
+
+Let's locate the XML code for the headline.
+
+```{r}
+headline.path = "//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/h1"
+headline = site %>% html_node(.,xpath = headline.path)
+headline
+```
+
+Still jargon ...
+
+
+---
+
+### Extract and clean the desired element
+
+We need to clarify what _kind_ of element we are seeking to retrieve (think of this as translating the HTML).
+
+```{r}
+headline = headline %>% html_text(.)
+headline
+```
+
+**Success!**
+
+---
+
+### Extraction takes many forms
+
+```{r}
+site %>% 
+  html_node(.,xpath = headline.path) %>% 
+  html_name(.)
+```
+
+```{r}
+site %>% 
+  html_node(.,xpath = headline.path) %>% 
+  html_attrs(.)
+```
+
+```{r}
+site %>% 
+  html_node(.,xpath = headline.path) %>% 
+  html_structure(.)
+```
+
+---
+
+### Rinse, wash, and repeat: Date
+
+```{r}
+# Grab the date using CSS
+date.path = "#page > div:nth-child(1) > div.container > div > div.column--primary > div.story-body > div.with-extracted-share-icons > div > div.story-body__mini-info-list-and-share-row > div.mini-info-list-wrap > ul > li > div"
+
+# So long! That's why I prefer XML
+date = site %>% 
+  html_node(.,css = date.path) %>% 
+  html_text(.)
+
+# format date into a usable "R format"
+date = as.Date(date,"%d %b %Y")
+date
+```
+
+---
+
+### Rinse, wash, and repeat: Story
+
+To get **all** of the body text, we really need to think about what it is we are grabbing. Here comprehending the structure of the website can be really useful.
+
+```{r}
+body.path = "//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p[1]"
+
+site %>% 
+  html_node(.,xpath=body.path) %>% 
+  html_text(.)
+```
+
+This will only give us a piece of the story – **p[1]**
+
+---
+
+### Rinse, wash, and repeat: Story
+
+But we want the _whole_ thing
+
+```{r,highlight=T}
+body.path = "//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p"
+
+body <- 
+  site %>% 
+  html_nodes(.,xpath=body.path) %>% #<<
+  html_text(.) 
+body
+```
+
+---
+
+### Storage
+
+```{r}
+output <- 
+  tibble(headline,
+         date,
+         body = paste0(body,collapse=" "))  #<<
+output
+```
+
+<br><br>
+```{r,tidy=F}
+# Number of characters in the variable entry
+nchar(output$body) 
+```
+
+---
+
+class:newsection
+
+## Building a Scraper
+
+---
+
+### Got the bones? Get the goods
+
+Once you have a blueprint of the HTML structure, you can easily find your way around.
+
+We can **systematically use the information** we know about the HTML structure to grab new information with ease.
+
+This allows us to draw similar information from similarly composed html pages. 
+--
+
+### HTML structure changes over time!
+
+Websites are constantly being updated, reformatted, and changed in other ways. This presents a real challenge when scraping, because we need to understand the variability in the structure and adapt our code to it.
+
+---
+
+### Building a "BBC Scraper"
+
+The aim: 
+
+- wrap the three steps from the example into a convenient function. 
+
+- the function takes in a _url_ as **input**, and
+
+- **outputs** the desired web content. 
+
+---
+
+```{r}
+bbc_scraper <- function(url){
+     
+  # Download website   
+  raw = read_html(url)
+  
+  # Extract headline
+  headline = raw %>% 
+    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/h1") %>% 
+    html_text(.)
+  
+  # Extract data
+  date = raw %>% 
+    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[1]/div/div[1]/div[1]/ul/li/div") %>% 
+    html_text(.) %>% as.Date(.,"%d %b %Y")
+  
+  # Extract Story
+  story = raw %>% 
+    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p") %>% 
+    html_text(.) %>% paste0(.,collapse = " ")
+  
+  # Output as data frame and return
+  data.out = data.frame(headline,date,story)
+  return(data.out)
+}
+```
+
+
+---
+
+Now all we need is to feed it urls
+
+```{r,cache=T}
+urls <- c("http://www.bbc.com/news/world-middle-east-36156865",
+          "http://www.bbc.com/news/world-middle-east-36162701",
+          "http://www.bbc.com/news/world-australia-36166803",
+          "http://www.bbc.com/news/world-latin-america-36166632")
+
+output <- c()
+for(i in 1:length(urls)){
+  draw <- bbc_scraper(urls[i])  
+  output <- bind_rows(output,draw)
+}
+
+str(output)
+```
+
+---
+
+```{r}
+output$headline 
+```
+
+```{r}
+output$date
+```
+
+```{r}
+output$story
+```
+
+---
+
+class: break
+
+# Legality
+
+Now that you've learned how to build a simple scaper. Here are a few things to keep in mind…
+
+**Don't scrape too fast!</font>**
+
+- Your behavior is statistically distinguishable from human users.
+
+- Constitutes a [DDOS attack](https://en.wikipedia.org/wiki/Denial-of-service_attack)
+
+- Known the websites **terms of service** – breaking those terms can lead to being banned from the site or even [jail time](https://www.wired.com/2011/07/swartz-arrest/).
+
+
+---
+
+# Solution
+
+<br>
+
+- **Slow down**
+
+- **Add noise** to make your behavior less statistically distinguishable.
+
+- **Know what you're doing** and who you're doing it to.
+  + In the words of Nietzsche: “if thou gaze long into an abyss, the abyss will also gaze into thee”
+  + That is, the internet is a two way street. Scraping content from some sites puts you on peoples' radar.
+
+- [`robot.txt`](http://www.robotstxt.org/) to know what you can and can't scrape.
+  + `www.bbc.com/robots.txt`
+
+---
+
+# Solution
+
+<br>
+
+Create noise by **randomly** putting your scraper to **sleep**.
+
+```{r}
+# One random unit of time drawn from a uniform distribution
+runif(1,1,4) 
+```
+<br>
+<br>
+```{r,eval=F}
+# Put the system to sleep by that random unit
+Sys.sleep(runif(1,1,5))
+```
+
+---
+
+# Solution
+
+<br>
+
+Using our previous example, we deliberately slow `bbc_scraper()` down:
+
+
+```{r,eval=F}
+output <- c()
+for(i in 1:length(urls)){
+  Sys.sleep(runif(1,1,5)) #<<
+  draw <- bbc_scraper(urls[i])  
+  output <- bind_rows(output,draw)
+}
+```
+
+<br>
+
+Keep in mind that if you're a social scientist (which we are), nothing you're doing is **_that_** pressing. You can wait and everyone will be better off for it!
+
+---
+
+class: newsection
+
+# APIs
+
+---
+
+### Application Programming Interface (API)
+
+- APIs take user requests to a system and return a response (usually in the form of data)
+  + Classic example: think waiter at a restraunt, you give him/her your order, waiter goes to the kitchen, waiter brings back what you ordered.
+  
+- an API is the way applications speak to databases. 
+  + For example, when a news interface presents statistics regarding how often someone "liked" a story on social media, they are using an API to request from the social media's database how many time the story has been shared, the social media site's API then returns a number (likes/shares/retweets/etc.) which the news website then reports
+
+- We use APIs all the time: online forms, aggregation sites, apps, ect. 
+
+---
+
+### Application Programming Interface (API)
+
+- There are many kinds of APIs, but we'll focus on **REST APIs** 
+  
+  + REST == "**re**presntational **s**tate **t**ransfer"
+  
+  + Works like a website: client makes a request to a server via the http protocol. 
+  
+  + Looks and behaves much like a url
+  
+  + Returns data formated as Java Script Object Notation (JSON) data: structured as key value pairs. 
+  
+  + `httr` packages converts json to lists in `R`
+  
+- Most all APIs require and **API key** or token to access.
+  
+---
+
+### Example: Data.gov
+
+- Data.gov [documentation](https://api.data.gov/) for their various APIs
+
+- Need API Key: [get a key](https://api.data.gov/signup/)
+
+```{r}
+require(httr) # To make requests
+api <- 'https://catalog.data.gov/api/3/action/group_list'
+get_cat <- GET(api)
+content(get_cat)
+```
+
+---
+
+### Example: Department of Education
+
+```{r,echo=F}
+my_api_key = '6gpt6tLmcCpWw9SG234PD2uZVWDUprtmgsjYCeZ0'
+```
+
+Make request
+```{r,highlight=T}
+api <- 'https://api.data.gov/ed/collegescorecard/v1/schools'
+data_request <- GET(api,
+                    query=list(api_key=my_api_key, # Need your key #<<
+                               school.name="Georgetown University"))
+```
+
+```{r}
+# Extract content
+dat <- content(data_request)
+names(dat) # what is returned is a huge list!
+```
+
+Large list that we can handle into...
+```{r}
+# Number of Graduate students enrolled in 2016
+dat$results[[1]]$`2016`$student$grad_students
+```
+
+---
+
+### Example: FBI API
+
+[Crime Data Explorer](https://crime-data-explorer.fr.cloud.gov/api)
+
+API Set up: `/api/data/nibrs/{offense}/victim/national/{variable}`
+
+Make call to the API
+```{r}
+fbi_api <- 'https://api.usa.gov/crime/fbi/sapi/api/data/nibrs/homicide/victim/national/age'
+get_fbi_dat <- GET(fbi_api,query=list(api_key=my_api_key))
+fbi_dat <- content(get_fbi_dat)
+
+# Tap into the results...
+as_tibble(fbi_dat$results[[1]])
+```
+
+---
+
+Need to reorganize into a single data frame.We can build this data up by using a loop!
+```{r}
+total_entries <- length(fbi_dat$results) 
+total_entries
+```
+
+```{r,highlight=T}
+homicide_data <- c()
+for(i in 1:total_entries){
+  tmp <- as_tibble(fbi_dat$results[[i]])  #<<
+  homicide_data <- bind_rows(homicide_data,tmp)
+}
+homicide_data
+```
+
+---
+
+Now manipulate...
+
+```{r}
+homicide_data_clean <-
+  homicide_data %>%  
+  select(-offense_name) %>%   # Drop category (only homicides)
+  rename(year = data_year) %>%  # Rename year var
+  gather(age_range,count,-year) %>%  # Go from wide to long data
+  mutate(age_range = str_remove(age_range,'range_')) %>%  # remove from age categories
+  arrange(year,age_range) # Arrange by year, age
+
+# Print
+homicide_data_clean
+```
+
+---
+
+Finally, let's visualize!
+
+```{r,fig.align="center",fig.height=4.5,fig.width=9}
+homicide_data_clean %>% 
+  ggplot(aes(year,age_range,fill=log(count))) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  theme_minimal() +
+  labs(y="Age Range",x="Year",
+       title="Total Number of Deaths by Homicide by Age in the U.S. (1995 to 2018)",
+       subtitle="Data drawn from FBI database ")
+```
+

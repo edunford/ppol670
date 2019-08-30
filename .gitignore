@@ -2,7 +2,7 @@
 *.Rproj
 *.Rproj.user
 Assignments/
-Lectures/
+Lectures/.
 prior-iterations/
 Readings/ethics_readings/
 Readings/ml-readings/

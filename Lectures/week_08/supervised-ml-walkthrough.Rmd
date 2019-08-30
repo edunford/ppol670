@@ -1,0 +1,459 @@
+---
+title: "PPOL670 | Applications in Supervised Machine Learning"
+date: Week 8
+output: 
+  html_notebook:
+    toc: True
+    toc_float: True
+---
+
+# Overview 
+
+In this notebook, we'll apply the machine learning concepts covered in the supervised learning lecture. Note that there are many libraries that can perform the methods that we reviewed in class, but we'll focus here on using the `caret` package to perform these operations. 
+
+```{r Setup, include=F}
+knitr::opts_chunk$set(warning = F,error = F,message = F)
+require(tidyverse)
+require(caret) # for machine learning
+require(recipes) # For preprocessing your data
+require(rattle) # For nice tree plots
+library(pdp)  # for constructing Partial Dependence Plots
+```
+
+
+# Data 
+
+The following data contains information regarding weather or not someone has health coverage. The outcome of interest is whether of not an individual has healthcare coverage or not. The available predictive features capture socio-economic and descriptive factors. 
+
+```{r}
+set.seed(123)
+dat = suppressMessages(read_csv("Data/health-coverage.csv")) %>% 
+  sample_n(5000) # Only taking a random sample of the data so the models run quicker
+head(dat) # Peek at the data just to make sure everything was read in correctly. 
+```
+
+
+# Split the Sample: Training and test data
+
+Before event looking at the data, let's split the sample up into a training and test dataset. We'll completely hold off on viewing the test data, so as not to bias our development of the learning model. 
+
+```{r}
+index = createDataPartition(dat$coverage,p=.8,list=F) 
+train_data = dat[index,] # Use 80% of the data as training data 
+test_data = dat[-index,] # holdout 20% as test data 
+
+dim(train_data)
+dim(test_data) 
+```
+
+# Examine the data 
+
+```{r}
+skimr::skim(train_data)
+```
+
+
+Visualize the distribution for each variable.
+
+First, let's look at the categorical variables.
+```{r,fig.height=10,fig.width=5}
+train_data %>% 
+  select_if(is.character) %>% 
+  gather(var,val) %>% 
+  ggplot(aes(val)) +
+  geom_bar() +
+  scale_y_log10() +
+  facet_wrap(~var,scales="free",ncol=1) +
+  coord_flip()
+```
+
+Few things to note: 
+
+- Balanced classes on the outcome
+- large representation of whites in the data. 
+- Good variation on maritial outcomes and education
+
+
+Second, let's look at the distribution of the continuous variables
+
+```{r}
+train_data %>% 
+  select_if(is.numeric) %>% 
+  gather(var,val) %>% 
+  ggplot(aes(val)) +
+  geom_histogram(bins = 75) +
+  facet_wrap(~var,scales="free",ncol=1) 
+```
+
+Things to note:
+
+- wage is right skewed. There appears to an outlier making a lot of the money. This outlier could cause problems. 
+- Good distribution on the age variable.
+- The scales for both these variables will have to be adjusted. 
+
+Let's peek more closely at the distribution of wealth in the sample. 
+
+```{r}
+train_data %>% 
+  mutate(wealth_bins = case_when(
+    wage == 0 ~ "Unemployed",
+    wage > 0 & wage<= 30000 ~ "Low",
+    wage > 30000 & wage<= 75000 ~ "Mid",
+    wage > 75000 & wage<= 200000 ~ "High",
+    wage > 200000 ~ "Jeez...!",
+  )) %>% 
+  mutate(wealth_bins = fct_infreq(wealth_bins)) %>% 
+  ggplot(aes(wealth_bins)) +
+  geom_bar()
+```
+
+
+There are a lot of individuals that report 0 income (Unemployed). What is the age distribution for those individuals? 
+
+```{r}
+train_data %>% 
+  filter(wage==0) %>% 
+  ggplot(aes(age)) +
+  geom_density(fill="steelblue")
+```
+
+# Pre-process the Data 
+
+What do we need to do?
+
+- Categorical variables to dummies 
+- We'll likely need to log wage to deal with skew. 
+- Scale age and wage (so that they fall into a 0 to 1 range)
+- No need to impute missing values. All the data is there. 
+
+First, convert the wage scale.
+```{r}
+# Mutate the features 
+convert_wage <- . %>% mutate(employed = ifelse(wage==0,"yes","no"),
+                             wage = log(wage+1))
+
+# Apply to both the training and test data
+train_data2 <- train_data %>%  convert_wage()
+test_data2 <- test_data %>%  convert_wage()
+ 
+# Visualize the transformation
+train_data2 %>% 
+  ggplot(aes(wage)) +
+  geom_histogram()
+```
+
+
+```{r}
+rcp <- 
+  recipe(coverage~.,train_data2) %>% 
+  step_dummy(all_nominal(),-all_outcomes()) %>% 
+  step_range(wage,age) %>%  # Normalize scale
+  prep()
+
+
+# Apply the recipe to the training and test data
+train_data3 <- bake(rcp,train_data2)
+test_data3 <- bake(rcp,test_data2) 
+```
+
+
+Check that our pre-processing worked. 
+
+```{r}
+head(train_data3)
+```
+
+```{r}
+train_data3 %>% 
+  select(wage,age) %>% 
+  gather(var,val) %>% 
+  ggplot(aes(val)) +
+  geom_histogram(bins = 75) +
+  facet_wrap(~var,scales="free",ncol=1)
+```
+
+# Cross-validation
+
+When comparing different machine learning models, we want to make sure we're making a fair and equal comparison. One way that random chance can sneak into our assessments of model fit is through cross-validation. We want to make sure that we're cross-validating the data on the exact same data partitions. 
+
+`caret` makes this ease to do. Let's use the k-fold cross-validation method with 10 folds in the data. 
+```{r}
+set.seed(1988) # set a seed for replication purposes 
+
+folds <- createFolds(train_data3$coverage, k = 10) # Partition the data into 10 equal folds
+
+sapply(folds,length)
+```
+
+Now, let's use the `trainControl()` function from `caret` to set up our validation conditions
+
+```{r}
+control_conditions <- 
+  trainControl(method='cv', # K-fold cross validation
+               summaryFunction = twoClassSummary, # Need this b/c it's a classification problem
+               classProbs = TRUE, # Need this b/c it's a classification problem
+               index = folds # The indices for our folds (so they are always the same)
+  )
+```
+
+We'll now use this same cross-validation object for everything that we do. 
+
+# Models
+
+Let's explore the different models that we covered in the lecture using the same package framework. As we saw last time in class, `caret` facilitates this task nicely. 
+
+## K-Nearest Neighbors
+
+> Remember: these algorithms are computationally demanding, so they can take a little time to run depending on the power of your machine
+
+```{r}
+mod_knn <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "knn", # K-Nearest Neighbors Algorithm
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+Let's look at the performance plots. What do we see?
+
+```{r}
+mod_knn
+```
+
+
+- `caret` has default settings that auto explore different tunning parameters for the model. 
+- We can easily plot these tuning features using the standard plot functions (these function have been over-ridden in R)
+
+```{r}
+plot(mod_knn)
+```
+
+```{r}
+# Draw out the best model (the one with the best performance)
+mod_knn$finalModel
+```
+
+Let's examine the out-of-model predictive accuracy using the training data.
+
+```{r}
+pred <- predict(mod_knn,newdata = test_data3)
+confusionMatrix(table(pred,test_data3$coverage))
+```
+
+Now, let's say we wanted to adjust the tunning parameters. We can explore different model tunings by using the `tuneGrid` argument. 
+
+```{r}
+knn_tune = expand.grid(k = c(1,3,10,50))
+knn_tune
+```
+
+
+
+```{r}
+mod_knn2 <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "knn", # K-Nearest Neighbors Algorithm
+        metric = "ROC", # area under the curve
+        tuneGrid = knn_tune, # add the tuning parameters here 
+        trControl = control_conditions
+  )
+```
+
+```{r}
+plot(mod_knn2)
+```
+
+Out-of-sample predictive performance.
+```{r}
+pred <- predict(mod_knn2,newdata = test_data3)
+confusionMatrix(table(pred,test_data3$coverage))
+```
+
+
+## Classification and Regression Trees (CART)
+
+```{r}
+mod_cart <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "rpart", # Classification Tree
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+
+```{r}
+mod_cart
+```
+
+
+```{r}
+plot(mod_cart)
+```
+
+Shallower trees converge to a coin flip. The deepest tree appears to be the bets
+
+Let's visualize the decision tree...
+
+```{r}
+# This tree goes really deep
+fancyRpartPlot(mod_cart$finalModel)
+```
+
+We can actually print out the larger decision tree to look at it as a print out.... as we can see this is a LOT.
+```{r}
+print(mod_cart$finalModel)
+```
+
+
+Let's free the CART to grow deeper
+
+```{r}
+tune_cart2 <- expand.grid(cp = c(0.0010281)) # Complexity Parameter (how "deep" our trees should grow)
+mod_cart2 <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "rpart", # Classification Tree
+        metric = "ROC", # area under the curve
+        tuneGrid = tune_cart2, # Tuning parameters
+        trControl = control_conditions
+  )
+```
+
+The Model becomes far more complex!
+```{r,fig.width=10,fig.height=10}
+fancyRpartPlot(mod_cart2$finalModel)
+```
+
+
+
+Out-of-sample predictive performance for the shallower tree
+```{r}
+pred <- predict(mod_cart,newdata = test_data3)
+confusionMatrix(table(pred,test_data3$coverage))
+```
+
+Out-of-sample predictive performance for the deeper tree
+```{r}
+pred <- predict(mod_cart2,newdata = test_data3)
+confusionMatrix(table(pred,test_data3$coverage))
+``` 
+
+
+Depth buys us something!
+
+## Random Forest
+
+```{r}
+mod_rf <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "ranger", # random forest (ranger is much faster than rf)
+        metric = "ROC", # area under the curve
+        importance = 'impurity', # For variable importance metric (see below)
+        trControl = control_conditions
+  )
+```
+
+
+There are three tunning parameters in this model:
+
+- `mtry`: the number of predictors that we'll randomly select.
+- `splitrule`: the way we determine how the nodes should be split
+  - `gini` = node purity (see class lecture)
+  - `extratrees` = doesn't bag, randomly select vars, but just randomly split, accept the best split. (Short for "Extremely Randomize Trees")
+- 'min.node.size': the minimum number of observations that can be in each terminal node (default fixes this at 1)
+
+```{r}
+mod_rf
+```
+
+```{r}
+plot(mod_rf)
+```
+
+Out-of-sample predictive performance.
+```{r}
+pred <- predict(mod_rf,newdata = test_data3)
+confusionMatrix(table(pred,test_data3$coverage))
+``` 
+
+
+### Variable Importance
+
+Random forest models can be difficult to interpret. That said, we can extract which variables are most important from the feature set to see which factors did the heavy lifting. 
+
+Visualize it.
+```{r}
+plot(varImp(mod_rf))
+```
+
+
+### Partial Dependence Plots
+
+The partial dependence plot (short PDP or PD plot) shows the marginal effect a feature has on the predicted outcome of a machine learning model. A partial dependence plot can show whether the relationship between the target and a feature is linear, monotonous or more complex.
+
+Let's look at age. The most predictive feature in our model. We can see that as people get older, they are far more likely to have healthcare coverage. 
+
+```{r}
+partial(mod_rf,pred.var = "age",plot = T)
+```
+
+We can stack these plots to liook at the different effects. 
+
+- Poorer individuals are less likely to purchase coverage. 
+- The probability of being covered goes down if you were never married. 
+- The probability of being covered goes down if you aren't a US citizen.
+- The probability goes down if you only have a HS education. 
+
+```{r,fig.width=7,fig.height=7}
+grid.arrange(
+  partial(mod_rf,pred.var = "wage",plot = T),
+  partial(mod_rf,pred.var = "mar_Never.Married",plot = T),
+  partial(mod_rf,pred.var = "cit_Non.citizen", plot = T),
+  partial(mod_rf,pred.var = "educ_Less.than.HS",plot = T)
+)
+```
+
+We can represent the joint relationship between these two variables (note that this takes a while when you have continuous variables...)
+
+```{r}
+pdp_imp_vars <- partial(mod_rf,pred.var = c("mar_Never.Married","educ_Less.than.HS"))
+pdp_imp_vars 
+```
+
+
+```{r}
+pdp_imp_vars %>% 
+  ggplot(aes(factor(mar_Never.Married),factor(educ_Less.than.HS),fill=yhat)) +
+  geom_tile() +
+  scale_fill_viridis_c()
+```
+
+# Model Comparison
+
+How did the different methods perform? Which one did the best?
+
+```{r}
+# Organize all model imputs as a list.
+mod_list <-
+  list(
+    knn1 = mod_knn,
+    knn2 = mod_knn2,
+    cart1 = mod_cart,
+    cart2 = mod_cart2,
+    rf = mod_rf 
+  )
+
+# Resamples allows us to compare model output
+resamples(mod_list)
+```
+
+```{r,fig.width=10,fig.height=4}
+dotplot(resamples(mod_list))
+```
+

@@ -1,0 +1,521 @@
+---
+title: 
+    <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
+  <font size=6, face="bold"> Week 4 </font> 
+  <br>
+  <br>
+  <font size=100, face="bold"> Data Visualization </font>
+author: 
+  <font class = "title-footer"> 
+  &emsp;Prof. Eric Dunford &emsp;&#9670;&emsp; Georgetown University &emsp;&#9670;&emsp; McCourt School of Public Policy &emsp;&#9670;&emsp; eric.dunford@georgetown.edu</font>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: "gu-theme.css"
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: True
+      highlightLines: true
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F,cache = T)
+require(lubridate)
+require(tidyverse)
+```
+
+layout: true
+
+<div class="slide-footer"><span> 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Week 4 <!-- Week of the Footer Here -->
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Data Visualization <!-- Title of the lecture here -->
+
+</span></div> 
+
+---
+class: outline
+
+# Outline for Today 
+
+- Handling **dates** in `R`
+
+- Grammar of graphics with `ggplot2`
+
+- Building compelling and visualizations
+
+---
+
+class: newsection
+
+# Dates
+
+---
+
+## Dates and Time
+
+`R` has a specific `Date` class. We will use the function `as.Date()` to coerce a relevant string into a date class.
+
+```{r}
+str <- "2006-04-30"
+class(str)
+date_str <- as.Date(str)
+class(date_str)
+```
+
+---
+
+Objects of class date have some nice properties, that makes analysis and manipulation easy.
+
+```{r}
+date_str
+date_str + 30 # date in 30 days
+date_str - 3000 # date 300 days ago.
+```
+
+---
+
+This also allows us to look at the distance between two dates.
+```{r,echo=F}
+date1 = as.Date("2015-06-07")
+date2 = as.Date("2013-02-14")
+```
+```{r}
+date1
+date2
+date1-date2
+```
+
+
+---
+
+## Formatting Dates
+
+That said, dates come in many different formats. To let `R` know that a specific string is a date, we have to tell it the **date format**.
+
+```{r,eval=F}
+example <- "February 3, 1987"
+as.Date(example)
+```
+
+---
+
+## Formatting Dates
+
+That said, dates come in many different formats. To let `R` know that a specific string is a date, we have to tell it the **date format**.
+```{r}
+example <- "February 3, 1987"
+as.Date(example, format = "%B %d, %Y")
+```
+
+---
+
+**Formatting dates** is requires that we articulate to `R`via special syntax what each date feature is. In a string (i.e. using " "), we specify the exact pattern of the date with **_all appropriate punctuation and spacing_**.
+
+The following are the main expressions used in formatting.
+
+| Expression  | Type of Date |
+|------|-----------------|
+| `%d` | day as a number | 
+| `%a` | abbreviated weekday |
+| `%A` | unabbreviated weekday |
+| `%m` | month as number |
+| `%b` | abbreviated month |
+| `%B` | unabbreviated month
+| `%y` | 2 digit year |
+| `%Y` | 4 digit year |
+
+---
+
+```{r}
+as.Date("Friday March 13, 2009","%A %B %d, %Y")
+```
+
+```{r}
+as.Date("11/13/14","%m/%d/%y")
+```
+
+```{r}
+as.Date("7th of May 2000","%dth of %B %Y")
+```
+
+---
+
+## Practice
+
+How would we convert this date: `03Feb2009`?
+
+--
+```{r}
+as.Date("03Feb2009","%d%b%Y")
+```
+--
+
+How would we convert this date: `01/10/02`?
+
+-- 
+```{r}
+# Tricky... Which is the month? Year? Day?
+as.Date("01/10/02","%d/%m/%y")
+```
+```{r}
+# ???
+as.Date("01/10/02","%y/%m/%d")
+```
+```{r}
+# ???
+as.Date("01/10/02","%m/%y/%d")
+```
+
+---
+
+## Lubridate
+
+The `lubridate` package offers a useful toolkit for dealing with date features in `R`. It offers a number of parsing features that dramatically ease date manipulation. 
+
+```{r,eval=F}
+install.package("lubridate")
+require(lubridate)
+```
+
+
+---
+
+## Lubridate
+
+```{r}
+our_date = as.Date("1990-05-03")
+our_date
+```
+
+```{r}
+year(our_date)
+```
+
+```{r}
+month(our_date)
+```
+
+```{r}
+day(our_date)
+```
+
+---
+
+Quick parsing features
+
+```{r}
+ymd("1990/05/03")
+```
+
+```{r}
+ydm("1990/03/05")
+```
+
+```{r}
+dmy("03/05/1990")
+```
+
+---
+
+```{r}
+wday(our_date,label=T)
+```
+
+```{r}
+wday(our_date+5,label=T)
+```
+
+---
+
+More complex expressions of time.
+
+```{r}
+our_date2 <- "2009-05-04 05:11:33"
+ymd_hms(our_date2)
+```
+
+Specify time zone
+
+```{r}
+tt <- ymd_hms(our_date2,tz = "EST")
+tt
+```
+
+Convert time zone.
+
+```{r}
+with_tz(tt,tzone = "America/Boise")
+```
+
+---
+
+## Rounding dates 
+
+```{r}
+our_date
+```
+
+
+```{r}
+round_date(our_date,unit = "week")
+```
+
+```{r}
+round_date(our_date,unit = "month")
+```
+
+```{r}
+round_date(our_date,unit = "year")
+```
+
+---
+
+## Rounding dates 
+
+```{r}
+tt
+```
+
+
+```{r}
+floor_date(tt,unit = "hour")
+```
+
+
+```{r}
+ceiling_date(tt,unit = "minute")
+```
+
+
+---
+
+## Durations
+
+```{r}
+dyears(3)
+```
+
+```{r}
+dweeks(3)
+```
+
+```{r}
+# How many seconds of your youth am I taking from you?
+dhours(2.5) 
+```
+
+---
+
+## Dates are frustrating...
+
+- Dates in `R` can be frustrating, but lubridate eases manipulation and is readable to boot!
+
+- Check out the [Cheatsheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf) for a quick guide on date formating.
+
+- As suggested reading, check out the [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) chapter from the reading. 
+
+
+---
+
+class: newsection
+
+# Grammar of Graphics
+
+---
+
+## `ggplot2`
+
+
+`ggplot2` (a part of the `tidyverse` package) is a power graphics package that offers a flexible and intuitive graphics language capable of building sophisticated graphics.
+
+`ggplots` have a special syntax that we'll have to get use to, but once we understand the basics, we'll be able to produce some advanced and sophisticated graphics
+
+
+---
+
+## Logic of the `ggplot2` package
+
+`ggplot2` is based on a "**grammar of graphics**". In essence, you can build every graph from the same components:
+- a data set,
+- a coordinate system,
+- geoms.
+
+`ggplot2`s flexibility emerges from these **easy step-by-step builds**, where data is converted to a coordinate plan, and secondary features, such as groupings, size, and color, can be easily added to the data as an additional dimension.
+
+---
+
+For the following examples, let's use the `diamonds` data, which is an example dataset provided by ggplot that contains the prices and other attributes of almost 54,000 diamonds.
+
+```{r}
+glimpse(diamonds)
+```
+
+
+---
+
+## `ggplot()`
+
+The `ggplot()` object acts as a storage facility for the data. It is here where we define the data frame that houses the x and y coordinate values themselves and instructions on how to split the data.
+
+```{r,fig.align="center",fig.height=5}
+ggplot(data=diamonds)
+```
+
+
+---
+
+## `aes()`
+
+As we can see there is nothing in the frame since we have not added any layers. We need to specify which variables we are using with the `aes()` "Aesthetics" argument.
+
+The `aes()` aesthetic mapping function lives inside a ggplot object and is where we specify the set of plot attributes that remain constant throughout the subsequent layers
+
+---
+
+```{r,fig.align="center",fig.height=5}
+ggplot(data=diamonds,aes(x=price,y=carat))
+```
+
+We have the variables on both axises but still no graphical output. We must tell `gglot` what we want the data to be presented as using a `geom` function.
+
+---
+
+## Layers
+
+We use the `+` operator to append `geom` layers onto a `ggplot` object. This way we can build on a plot sequentially by **_adding_** layers.
+
+```{r,fig.align="center",fig.height=5,highlight=T}
+ggplot(data=diamonds,aes(x=price,y=carat)) +
+  geom_point() #<<
+```
+
+---
+
+```{r,fig.align="center",fig.height=5,highlight=T}
+ggplot(data=diamonds,aes(x=price,y=carat)) +
+  geom_line() #<<
+```
+
+---
+
+```{r,fig.align="center",fig.height=5}
+ggplot(data=diamonds,aes(x=price,y=carat)) +
+  geom_bin2d() #<<
+```
+
+---
+
+## Customizing plots
+
+From here, we just **building off** on what we've already specified by adding additional layer/features with an addition `+` and a new `geom` or plotting feature.
+
+    ggplot(data,aes(x,y)) + geom() +
+    another_geom() + labels() +
+    ... [anything else we need]
+
+---
+
+## Grouping and Visualizing Data
+
+The real power of `ggplot` is the easy by which you can fold in different features of the data either by incorporating it as a size or color variable, or grouping the data along some categorical dimension.
+
+```{r,fig.align="center",fig.height=5,highlight=T}
+ggplot(data=diamonds,aes(x=price,
+                         y=carat)) +
+  geom_point()
+```
+
+---
+
+```{r,fig.align="center",fig.height=5,highlight=T}
+ggplot(data=diamonds,aes(x=price,
+                         y=carat,
+                         color=cut)) + #<<
+  geom_point()
+```
+
+---
+
+```{r,fig.align="center",fig.height=5,highlight=T}
+ggplot(data=diamonds,aes(x=price,
+                         y=carat,
+                         color=cut,     #<<
+                         size=price)) + #<<
+  geom_point()
+```
+
+---
+
+## Customizing Themes
+
+GGPLOT has a number of themes that alter the look and feel of a plot. Moreover, we can customize these themes to suit our needs.
+
+```{r,fig.align="center",fig.height=5}
+ggplot(data=diamonds,aes(x=price,y=carat)) +
+  geom_point() +
+  theme_bw() #<<
+```
+
+---
+
+```{r,fig.align="center",fig.height=5}
+ggplot(data=diamonds,aes(x=price,y=carat)) +
+  geom_point() +
+  theme_classic() #<<
+```
+
+---
+
+```{r,fig.align="center",fig.height=5}
+ggplot(data=diamonds,aes(x=price,y=carat)) +
+  geom_point() +
+  theme_dark() #<<
+```
+
+---
+
+## ggthemes
+
+
+---
+
+## Example 
+
+[Walk through a data visualization]
+
+
+---
+
+# THINGS YOU STILL NEED 
+
+- Converstion on Facets and arranging plots (with `cowplot`)
+- A deeper discussion about what these visualizations should mean. 
+- Labels
+- Exporting figures and graphs...
+- Maybe everything should be case studies???
+
+- RIGHT NOW it's very "here is all the things ggplot can do"... you need it to be more "here is what you need to think about when you visualize data...
+
+---
+
+## Exploring the variety of plotting options
+
+We've only just touched the surface of what `ggplot` has to offer. As a quick reference and guide, feel free to consult the ggplot [cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf).
+
+In short, `ggplot2` is extremely powerful! The functionality and syntax allow us to easily visualize data, generating compelling summaries of our data.
+
+---
+
+class: newsection
+
+# Visualization Properties
+
+---

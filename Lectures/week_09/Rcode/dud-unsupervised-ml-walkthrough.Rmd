@@ -1,0 +1,122 @@
+---
+title: "PPOL670 | Applications in Unsupervised Machine Learning"
+date: Week 9
+output: 
+  html_notebook:
+    toc: True
+    toc_float: True
+---
+
+```{r Setup, include=F}
+knitr::opts_chunk$set(warning = F,error = F,message = F)
+require(tidyverse)
+require(factoextra)
+require(FactoMineR)
+```
+
+
+# Data 
+
+[About the data]
+
+```{r}
+dat <- read_csv('Data/icews-repressive-all.csv')
+head(dat)
+```
+
+
+List off all the variable in the data (There are a lot!)
+```{r}
+colnames(dat)
+```
+
+```{r}
+skimr::skim(dat)
+```
+
+
+
+# Principal Components
+
+Let's reduce these 73 variables down to a few underlying principal components. 
+
+```{r}
+features <- dat %>% select(-country)
+ncol(features)
+```
+
+
+Scale the features that we're aiming to decompose.
+```{r}
+features = scale(features) 
+```
+
+
+Assign country to row names.
+```{r}
+row.names(features) = dat$country
+head(features)[1:5,1:5]
+```
+
+
+Calculate the principal components for each observation. 
+```{r}
+pca_results <- PCA(features,graph=F)
+```
+
+
+Let's examine the variance explained with a **Scree Plot** (remember: we're looking for an elbow here).
+
+```{r}
+fviz_eig(pca_results,
+         addlabels = T) 
+```
+
+For a more numerical representation. **What does this tell us?**
+```{r}
+get_eig(pca_results) 
+```
+
+
+Roughly 80% of the variation can be explained with just a few (3) dimensions! Thus, we could greatly reduce these data. 
+
+Let's now explore the data...
+```{r,fig.width = 10,fig.height=7}
+fviz_pca_var(pca_results,axes = 1:2,repel = T)
+```
+
+```{r,fig.width = 10,fig.height=7}
+fviz_pca_biplot(pca_results,axes = 1:2)
+```
+
+```{r,fig.width = 10,fig.height=7}
+fviz_pca_var(pca_results,axes = 2:3,repel = T)
+```
+
+```{r,fig.width = 10,fig.height=7}
+fviz_pca_biplot(pca_results,axes = 2:3)
+```
+
+
+# K-Means Clustering
+
+```{r}
+cluster = kmeans(features,centers = 20)
+```
+
+```{r}
+cluster$betweenss
+```
+
+
+
+
+
+
+
+# Hierachical Clustering
+
+```{r}
+hclust_output <- hclust(features,method = "complete")
+```
+
