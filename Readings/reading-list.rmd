@@ -1,0 +1,214 @@
+---
+title: 'PPOL670 | Reading List'
+date: 'Fall 2019'
+output: 
+  html_document:
+    css: style.css
+    theme: united
+    highlight: default
+    toc_depth: 3
+    toc: true
+    toc_collapsed: true
+    toc_float: true
+---
+
+### [Home](../index.html)
+
+The following table is a compilation of all the main online resources referenced below. For the sake of conciseness, I use a shortened reference for the different resources. We'll utilize them selectively, but you'll be all the better for absorbing them completely. 
+
+### Sources
+
+| Source Site | Full Source Name | Short Source Reference |
+| ----------- | ------------| ------------- |
+| https://r4ds.had.co.nz | R for Data Science | `r4ds` |
+| https://git-scm.com/book/en/v2 | Pro Git | `progit` |
+| http://plain-text.co/ | The Plain Person's Guide to Plain Text Social Science | `ptext` |
+| https://swcarpentry.github.io/ | Software Carpentry | `carp`  |
+| https://serialmentor.com/dataviz/index.html | Fundamentals of Data Visualization | `datviz` |
+| https://bookdown.org/yihui/rmarkdown/ | R Markdown: The Definitive Guide | `rmark` |
+| https://moderndive.com/index.html | ModernDive | `MD` |
+| https://www.tidytextmining.com/index.html | TidyText | `TT` |
+| https://cfss.uchicago.edu/setup/git-cache-credentials/ | Computing for the Social Sciences | `css` |
+
+`RStudio` Cheat Sheets: while in the IDE click `help > Cheatsheets`
+
+----
+
+### Week 1: Work Flow and Reproducibility
+
+- **_Required Readings_**:
+
+  - **Reproducibility**: 
+  	- [Ch. 1: Introduction](http://plain-text.co/) - `ptext`
+  	- [Ch. 2: Keep a Record](http://plain-text.co/keep-a-record.html#keep-a-record) - `ptext`
+  	- [Ch. 3: Write and Edit](http://plain-text.co/write-and-edit.html#write-and-edit) - `ptext`
+  	- [Ch. 4: Reproduce Work](http://plain-text.co/reproduce-work.html#reproduce-work) - `ptext`
+  	- [Ch. 7: Do I Have to Use This Stuff?](http://plain-text.co/do-i-have-to-use-this-stuff.html#do-i-have-to-use-this-stuff) - `ptext`
+  
+  - **Version Control**
+  	- [Getting Started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control) - `progit`
+    - [Install Git](https://cfss.uchicago.edu/setup/git/)	- `css`
+    - [Setup Git and Github](https://cfss.uchicago.edu/setup/github/)	- `css`
+    - [Using Git within RStudio](https://cfss.uchicago.edu/setup/git-with-rstudio/)	- `css`
+    - [Cache Credentials](https://cfss.uchicago.edu/setup/git-cache-credentials/)	- `css`
+ 
+ - <font color = "grey">**_Additional Resources and Suggested Materials_**</font> 
+  	- [Git Basics](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) - `progit`
+		
+		
+		
+### Week 2: Introduction to Programming in `R`
+
+- **_Required Readings_**:
+
+  - **`R` Programming environment**:
+      + [Ch. 6: Workflow: Scripts](https://r4ds.had.co.nz/workflow-scripts.html) - `r4ds`
+      + [Ch. 4: Workflow: Basics](https://r4ds.had.co.nz/workflow-basics.html) - `r4ds` 
+      + [Ch. 8: Workflow: Projects](https://r4ds.had.co.nz/workflow-projects.html) - `r4ds`
+      
+  - **Data Structures in `R`**:
+      + [Data Types and Structures](https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures/index.html) - `carp`
+      + [Ch. 20: Vectors](https://r4ds.had.co.nz/vectors.html) - `r4ds`
+      + [Data Subsetting](https://swcarpentry.github.io/r-novice-gapminder/06-data-subsetting/index.html) - `carp`
+    
+  - **Importing/Exporting Data**: 
+      + [Read and Write `.csv` files](http://swcarpentry.github.io/r-novice-inflammation/11-supp-read-write-csv/index.html) - `carp`
+      + [Ch. 11: Import Data](https://r4ds.had.co.nz/data-import.html) - `r4ds`
+
+
+- <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
+    + (video) [DataCamp: the basic data types in R](https://www.youtube.com/watch?v=hxlHQ2AtLUk)
+    + [Addressing Data](https://swcarpentry.github.io/r-novice-inflammation/10-supp-addressing-data/index.html) - `carp`
+
+
+### Week 3: Reproducibility in Practice
+
+- **_Required Readings_**:
+
+  - **R Markdown**
+      + [Ch. 27: R Markdown](https://r4ds.had.co.nz/r-markdown.html) - `r4ds`
+      + [Ch. 29: R Markdown formats](https://r4ds.had.co.nz/r-markdown-formats.html) - `r4ds`
+      
+  - **Workflow**
+      + [Workflow vs. Script](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+      + [Using the `here` package for file path directory](https://github.com/jennybc/here_here)
+
+
+
+### Week 4: Data wrangling in R
+
+- **_Required Readings_**:
+    + [Ch. 5: Data Transformation](https://r4ds.had.co.nz/transform.html) - `r4ds`
+    + [Ch. 12: Tidy Data](https://r4ds.had.co.nz/tidy-data.html) - `r4ds`
+    + [Ch. 13: Relational Data](https://r4ds.had.co.nz/relational-data.html) - `r4ds`
+    + [Ch. 18: Pipes](https://r4ds.had.co.nz/pipes.html) - `r4ds`
+    + [Ch. 15: Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) - `r4ds`
+
+- <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
+    + [Ch. 10: Tibbles](https://r4ds.had.co.nz/tibbles.html) - `r4ds`
+    + [Data Manipulation using `dplyr`](https://swcarpentry.github.io/r-novice-gapminder/13-dplyr/index.html) - `carp`
+    + [Data Manipulation using `tidyr`](https://swcarpentry.github.io/r-novice-gapminder/14-tidyr/index.html) - `carp`
+    
+    
+### Week 5: Data Visualization
+
+- **_Required Readings_**:
+    + [Ch. 3: Data Visualization](https://r4ds.had.co.nz/data-visualisation.html) - `r4ds`
+    + [Ch. 2: Visualizing data: Mapping data onto aesthetics](https://serialmentor.com/dataviz/aesthetic-mapping.html) - `datviz`
+    + [Ch. 4: Color scales](https://serialmentor.com/dataviz/color-basics.html) - `datviz`
+    + **Visualizing Different Data Type**:
+        - [Ch. 5: Directory of Visualizations](https://serialmentor.com/dataviz/directory-of-visualizations.html) - `datviz`
+        - [Ch. 6: Visualizing Amounts](https://serialmentor.com/dataviz/visualizing-amounts.html) - `datviz`
+        - [Ch. 7: Visualizing Distributions](https://serialmentor.com/dataviz/histograms-density-plots.html) - `datviz`
+        - [Ch. 10: Visualizing Proportions](https://serialmentor.com/dataviz/visualizing-proportions.html) - `datviz`
+        - [Ch. 12: Visualizing Associations](https://serialmentor.com/dataviz/visualizing-associations.html) - `datviz`
+    + [Image File Formats](https://serialmentor.com/dataviz/image-file-formats.html) - `datviz`
+  
+  
+### Week 6: Web Scrapping and APIs
+
+- **_Required Readings_**:   
+    + [Ch. 19: Functions](https://r4ds.had.co.nz/functions.html) - `r4ds`
+    + [Ch. 21: Iteration](https://r4ds.had.co.nz/iteration.html) - `r4ds`
+        - Only 21.1 - 21.4
+    + [Ch. 14: Strings](https://r4ds.had.co.nz/strings.html) - `r4ds`
+    + **Web Scraping**
+      - [`rvest`: easy web scraping with R](https://blog.rstudio.com/2014/11/24/rvest-easy-web-scraping-with-r/)
+    + **APIs**
+      - [Using R to extract data from web APIs](https://www.tylerclavelle.com/code/2017/randapis/)
+      - [Accessing APIs from R](https://www.r-bloggers.com/accessing-apis-from-r-and-a-little-r-programming/): Good post, only need to read the first part of it.
+    + **Legal**
+      + [Web Scraping and Crawling are Perfectly Legal, Right?](https://benbernardblog.com/web-scraping-and-crawling-are-perfectly-legal-right/)
+      + [robots.txt](http://www.robotstxt.org/robotstxt.html)
+      
+      
+### Week 7: Text-as-Data
+
+- **_Required Readings_**:
+    + Refresh [Ch. 14: Strings](https://r4ds.had.co.nz/strings.html) - `r4ds`
+    + [Ch. 1: The tidy text format](https://www.tidytextmining.com/tidytext.html) - `TT`
+    + [Ch. 2: Sentiment analysis with tidy data](https://www.tidytextmining.com/sentiment.html) - `TT`
+    + [Ch. 3: Analyzing word and document frequency: tf-idf](https://www.tidytextmining.com/tfidf.html) - `TT` 
+    + [Ch. 5: Converting to and from non-tidy formats](https://www.tidytextmining.com/dtm.html) - `TT`
+    + [Ch. 6: Topic modeling](https://www.tidytextmining.com/topicmodeling.html) - `TT`
+
+    
+### Week 8: Introduction to Statistical Learning 
+
+- **_Required Readings_**:
+  - What is statistical learning?  - **James et al. Ch. 2** 
+  - Resampling Methods - **James et al. Ch. 5** 
+  - Feature Cleaning
+    - [Review basic tutorial for the `recipes` package](https://cran.r-project.org/web/packages/recipes/vignettes/Simple_Example.html)
+
+### Week 9: Applications in Supervised Statistical Learning (Regression)
+
+- **_Required Readings_**:
+  - Linear Models - **James et al. Ch. 3.1 - 3.3** 
+  - Linear Model Selection and Regularization - **James et al. Ch. 6.1 - 6.2** 
+  - Tree-Based Methods - **James et al. Ch. 8.1 - 8.2** 
+
+- <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
+    + [Decision Trees in `R` - Data Camp](https://www.datacamp.com/community/tutorials/decision-trees-R)
+    + Montgomery et. al. (2018) "Tree-Based Models for Political Science Data". American Journal of Political Science. (See Canvas)
+    
+
+### Week 10: Applications in Supervised Statistical Learning (Classification)
+
+- **_Required Readings_**:
+  - K Nearest Neighbors - **James et al. Ch. 2.2.3 & 3.5**
+  - Support Vector Machines - **James et al. Ch. 9.1 - 9.4**
+  - _(Refresh from last week)_ Tree-Based Methods 
+    
+
+### Week 11: Applications in Unsupervised Statistical Learning
+
+- **_Required Readings_**: 
+  - Unsupervised Learning - **James et al. Ch. 10.1 - 10.3** 
+  
+
+### Week 12: Exploratory Data Analysis
+
+- **_Required Readings_**:
+    + [Ch. 7: Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html) - r4ds
+    
+    + Modeling (Linear)
+      + [Model Basics](https://r4ds.had.co.nz/model-basics.html) - r4ds
+      + [Model Building](https://r4ds.had.co.nz/model-building.html) - r4ds
+      + [Many Models](https://r4ds.had.co.nz/many-models.html) - r4ds
+      
+    + Inference 
+      + [Sampling](https://moderndive.com/8-sampling.html) - MD
+      + [Confidence Intervals](https://moderndive.com/9-confidence-intervals.html) - MD
+      + [Hypothesis Testing](https://moderndive.com/10-hypothesis-testing.html) - MD
+      + [Inference for Regression](https://moderndive.com/11-inference-for-regression.html) -MD
+      
+      
+- <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
+    + [Permutation tests](http://genomicsclass.github.io/book/pages/permutation_tests.html)
+    + [Bootstrap](https://www.datacamp.com/community/tutorials/bootstrap-r) - Datacamp
+
+
+        
+
+      

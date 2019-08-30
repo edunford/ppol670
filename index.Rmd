@@ -1,0 +1,175 @@
+---
+title: "PPOL670"
+output: 
+  html_document:
+    css: style.css
+    theme: united
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+---
+
+```{r,include=F}
+# Packages for reading in the tables
+require(tidyverse)
+require(kableExtra)
+```
+
+
+
+<center><h1>Introduction to Data Science</h1></center>
+<center>**Fall 2019**</center>
+<center>**Georgetown University**</center>
+
+<br>
+
+
+
+# Course Outline {.tabset .tabset-fade .tabset-pills}
+
+## Course Schedule
+
+<br>
+<br>
+
+
+```{r,echo=F,message=F,results='asis'}
+read_csv('Syllabus/fall-2019-timeline.csv') %>%
+  filter(Topic != "No Class") %>% 
+  {.[is.na(.)]="";.} %>% 
+  kable(., "html", booktabs = T,align = c('c','l','l')) %>%
+  kable_styling(latex_options = c("striped", 
+                                  "scale_down","repeat_header"),
+                full_width = T,font_size = 16) %>% 
+  column_spec(1,width = '.5in') %>% 
+  column_spec(2,width = '1in') %>% 
+  column_spec(3,width = '4in') 
+```
+
+<br>
+<br>
+<br>
+<br>
+
+
+## Syllabus
+
+<br>
+<br>
+
+- Access an [**Online Version**](Syllabus/PPOL670-Introduction-to-DS_Syllabus.html)
+- [**Download**](Syllabus/PPOL670-Introduction-to-DS_Syllabus.pdf) a `.pdf` version locally. 
+
+<br>
+<br>
+<br>
+<br>
+
+## Readings
+
+<br>
+
+List of [**all required and suggested readings**](Readings/reading-list.html)
+
+<br>
+<br>
+<br>
+<br>
+
+## Installation
+
+<br>
+<br>
+
+The following are installation instructions for `R`, `RStudio`, and `Git`.
+
+<br>
+<br>
+
+**`R` Software**
+
+To install `R`, download `R` from CRAN via the following:
+ - Windows: https://cran.r-project.org/bin/windows/base/ (Links to an external site.)
+ - Mac: https://cran.r-project.org/bin/macosx/
+ 
+To install `RStudio`, download from the following (scroll to the bottom):
+
+- https://www.rstudio.com/products/rstudio/download/ (Links to an external site.)
+
+Video walkthroughs:
+
+- [TA Video Walkthrough](https://www.dropbox.com/s/7af77pyb1wh224w/R-startup.mp4?dl=0)
+- RStudio Videos
+  - [Install `R`](https://player.vimeo.com/video/203516510)
+  - [Install `RStudio`](https://player.vimeo.com/video/203516968)
+
+<br>
+<br>
+
+**Git** 
+
+- Windows/Mac: https://git-scm.com/downloads (Links to an external site.)
+    + Note that git comes pre-installed on the macOS operating system. 
+
+Video walkthroughs:
+ 
+ - [TA Video Walkthrough: Using Git with RStudio](https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0)
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+## Contact
+
+<br>
+
+#### [Eric Dunford](www.ericdunford.com) (Professor)
+
+- **Office**: 404 Old North
+- **Office Hours**: Tuesdays 3pm to 5pm
+- **Email**: [eric.dunford@georgetown.edu](mailto:eric.dunford@georgetown.edu)
+
+<br>
+
+#### Nathan Lovin (Teaching Assistant)
+
+- **Office Hours**: by appointment online (https://nathanlovin.youcanbook.me/)
+- **Email**: [nhl8@georgetown.edu](mailto:nhl8@georgetown.edu)
+- **Skype**: nathan.lovin
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+# Lecture Materials
+
+<br>
+<br>
+
+### _Week 1_: Reproducibility and Version Control
+### _Week 2_: Introduction to Programming in R
+### _Week 3_: Reproducibility in Practice
+### _Week 4_: Data Wrangling in R
+### _Week 5_: Data Visualization
+### _Week 6_: Web Scrapping and APIs
+### _Week 7_: Text as Data
+### _Week 8_: Introduction to Statistical Learning
+### _Week 9_: Applications in Supervised Learning (Regression)
+### _Week 10_: Applications in Supervised Learning (Classification)
+### _Week 11_: Applications in Unsupervised Learning
+### _Week 12_: Exploratory Data Analysis
+
+<br>
+---
+
+
+
+
