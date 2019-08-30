@@ -1,1 +1,12 @@
 .DS_Store
+*.Rproj
+*.Rproj.user
+Assignments/
+Lectures/
+prior-iterations/
+Readings/ethics_readings/
+Readings/ml_readings/
+Students/
+Supplementary-Resources/
+
+.Rproj.user
