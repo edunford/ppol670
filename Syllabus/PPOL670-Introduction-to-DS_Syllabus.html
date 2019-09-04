@@ -73,6 +73,8 @@ overflow: auto;
 margin-left: 2%;
 position: fixed;
 border: 1px solid #ccc;
+webkit-border-radius: 6px;
+moz-border-radius: 6px;
 border-radius: 6px;
 }
 
@@ -100,14 +102,9 @@ font-size: 12px;
 .tocify-subheader .tocify-subheader {
 text-indent: 30px;
 }
+
 .tocify-subheader .tocify-subheader .tocify-subheader {
 text-indent: 40px;
-}
-.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
-text-indent: 50px;
-}
-.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
-text-indent: 60px;
 }
 
 .tocify .tocify-item > a, .tocify .nav-list .nav-header {
@@ -511,13 +508,13 @@ float: none;
 
           item.append($("<a/>", {
 
-            "html": self.html()
+            "text": self.text()
 
           }));
 
         } else {
 
-          item.html(self.html());
+          item.text(self.text());
 
         }
 
@@ -1558,6 +1555,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -1597,8 +1596,8 @@ div.tocify {
 </div>
 
 
-<div id="home" class="section level1">
-<h1><a href="../index.html">Home</a></h1>
+<div id="home" class="section level3">
+<h3><a href="../index.html">Home</a></h3>
 
 </div>
 <div id="instructor" class="section level1">
@@ -1936,7 +1935,7 @@ els54@georgetown.edu</code></pre>
 </div>
 <div id="course-calendar" class="section level1">
 <h1>Course Calendar</h1>
-<table class="table" style="font-size: 13px; margin-left: auto; margin-right: auto;">
+<table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:center;">
