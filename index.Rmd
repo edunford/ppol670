@@ -155,17 +155,21 @@ Video walkthroughs:
 <br>
 
 ### _Week 1_: Reproducibility and Version Control
-### _Week 2_: Introduction to Programming in R
-### _Week 3_: Reproducibility in Practice
-### _Week 4_: Data Wrangling in R
-### _Week 5_: Data Visualization
-### _Week 6_: Web Scrapping and APIs
-### _Week 7_: Text as Data
-### _Week 8_: Introduction to Statistical Learning
-### _Week 9_: Applications in Supervised Learning (Regression)
-### _Week 10_: Applications in Supervised Learning (Classification)
-### _Week 11_: Applications in Unsupervised Learning
-### _Week 12_: Exploratory Data Analysis
+
+- [**Lecture**](Lectures/week_01/lecture-week-01.html)
+- [**Tutorial: Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html)
+
+<!-- ### _Week 2_: Introduction to Programming in R -->
+<!-- ### _Week 3_: Reproducibility in Practice -->
+<!-- ### _Week 4_: Data Wrangling in R -->
+<!-- ### _Week 5_: Data Visualization -->
+<!-- ### _Week 6_: Web Scrapping and APIs -->
+<!-- ### _Week 7_: Text as Data -->
+<!-- ### _Week 8_: Introduction to Statistical Learning -->
+<!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
+<!-- ### _Week 10_: Applications in Supervised Learning (Classification) -->
+<!-- ### _Week 11_: Applications in Unsupervised Learning -->
+<!-- ### _Week 12_: Exploratory Data Analysis -->
 
 <br>
 ---

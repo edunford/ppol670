@@ -1,0 +1,14 @@
+## Toward Reproducibility
+<br>
+<br>
+<br>
+Throughout the course, we will use `Rmarkdown` (or otherwise referred to as `R` "notebooks") to write code and to document our analyses.
+
+`Rmarkdown` embodies all the principles we discussed above. Allowing for use to implement best practices in our research and empirical work.
+
+<br>
+<br>
+
+For the "pitch" and valuable tutorials, see here
+
+## <center> [`R` Markdown](https://rmarkdown.rstudio.com/lesson-1.html) </center>

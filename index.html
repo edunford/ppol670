@@ -73,6 +73,8 @@ overflow: auto;
 margin-left: 2%;
 position: fixed;
 border: 1px solid #ccc;
+webkit-border-radius: 6px;
+moz-border-radius: 6px;
 border-radius: 6px;
 }
 
@@ -100,14 +102,9 @@ font-size: 12px;
 .tocify-subheader .tocify-subheader {
 text-indent: 30px;
 }
+
 .tocify-subheader .tocify-subheader .tocify-subheader {
 text-indent: 40px;
-}
-.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
-text-indent: 50px;
-}
-.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
-text-indent: 60px;
 }
 
 .tocify .tocify-item > a, .tocify .nav-list .nav-header {
@@ -511,13 +508,13 @@ float: none;
 
           item.append($("<a/>", {
 
-            "html": self.html()
+            "text": self.text()
 
           }));
 
         } else {
 
-          item.html(self.html());
+          item.text(self.text());
 
         }
 
@@ -1558,6 +1555,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -1916,39 +1915,21 @@ Final Project Due
 <p><br> <br></p>
 <div id="week-1-reproducibility-and-version-control" class="section level3">
 <h3><em>Week 1</em>: Reproducibility and Version Control</h3>
-</div>
-<div id="week-2-introduction-to-programming-in-r" class="section level3">
-<h3><em>Week 2</em>: Introduction to Programming in R</h3>
-</div>
-<div id="week-3-reproducibility-in-practice" class="section level3">
-<h3><em>Week 3</em>: Reproducibility in Practice</h3>
-</div>
-<div id="week-4-data-wrangling-in-r" class="section level3">
-<h3><em>Week 4</em>: Data Wrangling in R</h3>
-</div>
-<div id="week-5-data-visualization" class="section level3">
-<h3><em>Week 5</em>: Data Visualization</h3>
-</div>
-<div id="week-6-web-scrapping-and-apis" class="section level3">
-<h3><em>Week 6</em>: Web Scrapping and APIs</h3>
-</div>
-<div id="week-7-text-as-data" class="section level3">
-<h3><em>Week 7</em>: Text as Data</h3>
-</div>
-<div id="week-8-introduction-to-statistical-learning" class="section level3">
-<h3><em>Week 8</em>: Introduction to Statistical Learning</h3>
-</div>
-<div id="week-9-applications-in-supervised-learning-regression" class="section level3">
-<h3><em>Week 9</em>: Applications in Supervised Learning (Regression)</h3>
-</div>
-<div id="week-10-applications-in-supervised-learning-classification" class="section level3">
-<h3><em>Week 10</em>: Applications in Supervised Learning (Classification)</h3>
-</div>
-<div id="week-11-applications-in-unsupervised-learning" class="section level3">
-<h3><em>Week 11</em>: Applications in Unsupervised Learning</h3>
-</div>
-<div id="week-12-exploratory-data-analysis" class="section level3">
-<h3><em>Week 12</em>: Exploratory Data Analysis</h3>
+<ul>
+<li><a href="Lectures/week_01/lecture-week-01.html"><strong>Lecture</strong></a></li>
+<li><a href="Lectures/week_01/tutorial-git-with-rstudio.html"><strong>Tutorial: Using Git with Rstudio</strong></a></li>
+</ul>
+<!-- ### _Week 2_: Introduction to Programming in R -->
+<!-- ### _Week 3_: Reproducibility in Practice -->
+<!-- ### _Week 4_: Data Wrangling in R -->
+<!-- ### _Week 5_: Data Visualization -->
+<!-- ### _Week 6_: Web Scrapping and APIs -->
+<!-- ### _Week 7_: Text as Data -->
+<!-- ### _Week 8_: Introduction to Statistical Learning -->
+<!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
+<!-- ### _Week 10_: Applications in Supervised Learning (Classification) -->
+<!-- ### _Week 11_: Applications in Unsupervised Learning -->
+<!-- ### _Week 12_: Exploratory Data Analysis -->
 </div>
 <div id="section" class="section level2">
 <h2><br></h2>

@@ -1,9 +1,7 @@
 ---
 title: 
     <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
-  <font size=100, face="bold"> Reproducibility and </font>
-  <br>
-  <font size=100, face="bold"> Version Control </font>
+  <font size=100, face="bold"> Reproducibility <br> & <br>Version Control  </font>
   <br>
   <br>
   <font size=6, face="bold"> Week 1 </font> 
@@ -15,6 +13,7 @@ output:
     lib_dir: libs
     css: "gu-theme.css"
     nature:
+      beforeInit: "macros.js"
       highlightStyle: github
       countIncrementalSlides: True
       highlightLines: true
@@ -65,64 +64,40 @@ class: outline
     
 ---
 
-class: newsection
-
+<br><br><br><br><br><br>
 # What is data science?
 
+---
 
-???
-
-- term "data scientist" is a catch-all
-- aim is to generate: unbiased and valid results that are compelling enough to influence and inform decision-making.
-
+<br>
+.center[<img src="figures/data_science.JPG" width="700">]
 
 ---
 
-class: biglist
+## The Aim of Data Science 
 
-## The Aim
-
-<br>
-
-Generate
-
-  + **Valid**
-  + **Unbiased**
-  + **Repoducible**
-  + **Compelling**
-  
-insights using data to <u> influence and inform decision-making</u>.
-
----
-
-class: biglist
-
-## The Aim
-
-<br>
-
-Generate
+### Generate
 
   + **Valid**  
       + <span style="color:#477acc"> scrutiny, discussion & limitations <span>
   + **Unbiased**
       + <span style="color:#477acc"> introspection, diversity & substantive knowledge <span>
-  + **Repoducible** 
+  + **Reproducible** 
       + <span style="color:#477acc"> data provenance, code transparency & version control <span>
   + **Compelling** 
       + <span style="color:#477acc"> interpretable, intuitive & clear <span>
   
-insights using data to <u> influence and inform decision-making</u>.
+### insights using data to _influence and inform decision-making_.
+
 
 ---
-
 
 ## This Course focuses on
 
 -  **Tools**: building a fundamental data science toolkit using `R`
     + Become a competent user of `R`
-    + Promote self-learning: don't just pass this course, make this part of your life.
-    + Art of managing errors
+    + Promote self-learning: _don't just pass this course, make this part of your life_.
+    + Master the art of managing errors
     
 - **Data Management**: getting, tidying, and managing data 
     + Cleaning Dirty Data 
@@ -131,48 +106,65 @@ insights using data to <u> influence and inform decision-making</u>.
     + Incorporating a "Never touch the data" philosophy
     
 - **Analytic Approaches**: drawing insights
-    + Exploring 
-    + Modeling 
-    + Prediction
+    + Exploring, Modeling, and Prediction
 
 ---
 
 ## Course Calendar
 
 ```{r,echo=F,message=F,tidy=T}
-read_csv(here('Syllabus/spring-2019-timeline.csv')) %>% 
+read_csv(here('Syllabus/fall-2019-timeline.csv')) %>% 
   {.[is.na(.)]="";.} %>% 
-  select(-Date,-Assignment,-Week) %>%
+  select(-Date,-Assignment) %>%
   rename(Topics=Topic) %>% 
-  slice(1:(n()-1)) %>% 
+  slice(1:(n()-3)) %>% 
   kable(., "html") %>% 
-  kable_styling(font_size = 30,position = 'center')
+  kable_styling(font_size = 24,position = 'center')
 ```
 
 ---
 
-## Who is the course for?
+**Who is the course for?**
 
-- Anyone who (a) finds this stuff fascinating, (b) wants to understand how to fold data into their decision-making proces, and (c) wants to build up their data skills.
+- Anyone who (a) finds this stuff fascinating, (b) wants to understand how to fold data into their decision-making process, and (c) wants to build up their data skills.
 
 - New `R` users; no programming experience assumed.
 
 - This course is a survey of data science approaches using `R`. You'll walk out of this class being able to do a lot, but it is just a starting point. 
 
-## What this course is not?
+--
+
+**What this course is not?**
 
 - CS course on functional programming.
 
 - A machine learning course (we dabble, but don't delve into any concept in depth).
 
-- a "big data" course (we won't delve into database structures such as SQL and Haddop).
+- a "big data" course (we won't delve into database structures such as SQL and Hadoop).
 
 ---
 
+## Installing `R` and `Rstudio`
+
+<br>
+
+**`R` Software**
+
+To install `R`, download `R` from CRAN via the following:
+ - Windows: https://cran.r-project.org/bin/windows/base/ (Links to an external site.)
+ - Mac: https://cran.r-project.org/bin/macosx/
+ 
+<br>
+
+**`RStudio`**
+
+To install `RStudio`, download from the following [site](https://www.rstudio.com/products/rstudio/download/) (scroll to the bottom):
+
+---
 
 class: newsection
 
-# Reproducibility as a Practical Reality
+# Reproducibility<br>as a<br>Practical Reality
 
 ---
 
@@ -191,9 +183,9 @@ class: newsection
 
 ---
 
-## Reproducibility with a captial "R"
 
-**...is fundamental to the scientific method, but it is also a <u> practical reality </u>.**
+<br><br>
+### Reproducibility is fundamental to the scientific method, but it is also a <u>practical reality</u>.
 
 <br>
 
@@ -266,28 +258,37 @@ clear, readable.
 - **Project can easily travel across computers**
     - e.g. R Project (`.rproj`) and python's Virtual Environments (`venv`)
 
+--
+
 - **Scripts avoid "machine" specific designations**
     + Avoid **specific file paths**: `/Users/my-user-name/data-projects/my-project`
-    + **Retain software and packages versions**, so when the project is spun up months or years later, everything runs (even though python or R have long since moved on).
-      - e.g. `R`'s `packrat` package -->
+    + **Retain software and packages versions** (e.g. `R`'s `packrat` package )
+
+--
 
 - **Use text files**
-    + Not software dependent (e.g. .docx, .ia)
-    + Can open on any system
+    + Not software dependent (e.g. .docx, .ia); Can open on any system
     + Can be easily searched via the commandline
     + Easy to track changes via version control
 ---
-
 
 # Well-named
 
 - **No spaces!**
     + A space between designations can mean many things
     + spaces are ambiguous for the computer
-    + `data analysis 2.py` &rarr; `data-analysis-2.py`
-    
+
+.center[`data analysis 2.py` <br> &darr; <br> `data-analysis-2.py`]
+
+--
+
 - **Names that state the purpose of the file** (no matter how long).
-    + `data-analysis-2.py` &rarr; `Analysis01_wrangling-census-data-for-visualization_v2.py`
+
+.center[`data-analysis-2.py` <br> &darr; <br>`Analysis01_wrangling-census-data-for-visualization_v2.py`]
+
+---
+
+# Well-named
 
 - Maintain **designated folders** for different aspects of the project.
 
@@ -306,17 +307,22 @@ data-project
 
 ## Repeatable
 
-- **Every step of the project can be expressed as code**
+<br><br>
 
-- **Automate what you can**
+- Every step of the **_project expressed as code_**
 
-- **Use functions to repeat common tasks**
+- **Automate** what you can
 
-- **Clearly state all depdendencies** (i.e. packages/modules) at the top of every script
+- Use **_functions_** to **_repeat common tasks_**
+
+- Clearly **_state all dependencies** (i.e. packages/modules) at the top of every script
+
+---
 
 ## Version Control
+<br>
 
-- **Retain a record of all changes** made throughout the project's lifespan**
+- **Retain a record of all changes** made throughout the project's lifespan
 
 - **Easily handle collaboration**:
     + track who did what
@@ -325,23 +331,6 @@ data-project
 - **Provides a room for experimentation and non-linear exploration**
 
 - No more **version file names**!
-
-
----
-## Toward Reproducibility 
-<br>
-<br>
-<br>
-Throughout the course, we will use `Rmarkdown` (or otherwise referred to as `R` "notebooks") to write code and to document our analyses. 
-
-`Rmarkdown` embodies all the principles we discussed above. Allowing for use to implement best practices in our research and empirical work. 
-
-<br>
-<br>
-
-For the "pitch" and valuable tutorials, see here
-
-## <center> [`R` Markdown](https://rmarkdown.rstudio.com/lesson-1.html) </center>
 
 ---
 
@@ -384,7 +373,7 @@ Version control in this manner is **error prone and complicates collaboration**
 
 - Changes are made **locally** and then can be easily incorporated and merged with the work of others. No network dependencies required.
 
-- it’s impossible to change the contents of any file or directory without Git knowing about it.
+- It’s impossible to change the contents of any file or directory without Git knowing about it.
 
 ---
 
@@ -397,7 +386,7 @@ Three states:
 - **Staged** &rarr; marked a modified file in its current version to go into the next commit snapshot.
 
 
-.center[<img src="figures/lecture01_git-process-image.png" width="600">]
+.center[<img src="figures/lecture01_git-process-image.png" width="500">]
 
 ---
 ## What is Github?
@@ -458,32 +447,43 @@ Then,
 
 All current versions of Mac-OS come pre-installed with `git`. If that's not the case, or you have a windows computer, you can download `git` here: https://git-scm.com/downloads
 
-<br>
-
 Once installed, we'll access git using `RStudio`. Here are two useful tutorials for connecting `git` with `R` Studio. 
 
 - [RStudio Blog - Getting Started with Version Control using Git](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN) 
-- [UChicago cfss post - Using Git within RStudio](https://cfss.uchicago.edu/git05.html#). Also, note that I've put an `.html` version of this walkthrough on Canvas.
+- [UChicago cfss post - Using Git within RStudio](https://cfss.uchicago.edu/git05.html#). Also, note that I've put an `.html` version of this walkthrough on the class website.
+- Also consult the [screencast](https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0) the TA made on this. 
 
 ---
 
 ## Using `git` within Rstudio
 
+<br>
 ### 1
-.center[<img src="figures/lecture01_git-rep-step8.png" width="350">]
-
-### 2
-.center[<img src="figures/lecture01_git-rep-step9.png" width="350">]
+.center[<img src="figures/lecture01_git-rep-step8.png" width="700">]
 
 ---
 
 ## Using `git` within Rstudio
 
-### 3
-.center[<img src="figures/lecture01_git-rep-step10.png" width="200">]
+<br>
+### 2
+.center[<img src="figures/lecture01_git-rep-step9.png" width="500">]
 
+---
+
+## Using `git` within Rstudio
+
+<br>
+### 3
+.center[<img src="figures/lecture01_git-rep-step10.png" width="500">]
+
+---
+
+## Using `git` within Rstudio
+
+<br>
 ### 4
-.center[<img src="figures/lecture01_git-rep-step11.png" width="300">]
+.center[<img src="figures/lecture01_git-rep-step11.png" width="500">]
 
 
 
