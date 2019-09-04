@@ -42,7 +42,7 @@ read_csv('Syllabus/fall-2019-timeline.csv') %>%
   kable(., "html", booktabs = T,align = c('c','l','l')) %>%
   kable_styling(latex_options = c("striped", 
                                   "scale_down","repeat_header"),
-                full_width = T,font_size = 16) %>% 
+                full_width = T,font_size = 24) %>% 
   column_spec(1,width = '.5in') %>% 
   column_spec(2,width = '1in') %>% 
   column_spec(3,width = '4in') 
