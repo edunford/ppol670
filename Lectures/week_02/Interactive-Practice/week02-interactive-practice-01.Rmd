@@ -1,0 +1,169 @@
+---
+title: "Week02 | Objects, Data Structures, and Operators"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Objects
+
+### Exercise 1
+
+*Let's create a object called `my_vector` that is a vector containing all intergers from 1 to 100*. Make sure to print your object
+
+```{r vector-practice, exercise=TRUE, exercise.eval=TRUE}
+
+
+```
+
+```{r vector-practice-hint}
+# Recall we can make a vector using c()
+x <- c(1,2,3,4)
+
+# Or we can do so with a colon to specify a range
+x <- 1:4
+
+# Recall we can print an object using 
+print(x)
+
+# or just evaluating the object in the console
+x
+```
+
+### Exercise 2
+
+```{r vector-quiz}
+quiz(
+  question("How many data points can you store into a single vector?",
+    answer("1"),
+    answer("1000"),
+    answer("1e100"),
+    answer("As many as you like",correct = TRUE)
+  )
+)
+```
+
+
+### Exercise 3
+
+*I have created a vector called `foods` that contains character values of different types of foods. Please subset the vector so that it only contains `bananas`, `grapes`, and `strawberries`, and assign it to the object `fruits`.*
+
+
+```{r subsetting-vectors, exercise=TRUE, exercise.eval=TRUE,exercise.lines = 5}
+foods <- c('bananas','bread','beef','grapes',
+           'cheese','strawberries','milk')
+```
+
+
+```{r subsetting-vectors-hint,exercise.lines = 3}
+# Recall we can subset a vector by referencing its index position
+x <- c(1,200,3,5,2,10)
+x[c(1,3,6)]
+```
+
+### Exercise 4
+
+*What type of data object is `volcano`? Use the `class()` or `typeof()` function to find out.*
+
+*Note that `volcano` is loaded into the environment. We can see everything loaded into an environment using the `ls()` function.*
+
+```{r class-example, exercise=TRUE, exercise.eval=TRUE,exercise.lines = 5}
+# volcano
+
+
+```
+
+
+### Exercise 4
+
+*Convert ("coerce") the object `volcano` into a `data.frame` object.*
+
+```{r coerce,exercise=TRUE, exercise.eval=TRUE,exercise.lines = 5}
+
+```
+
+
+```{r coerce-hint}
+# recall that we can coerce object into different classes using the as.___ functions
+x = 1
+as.character(x)
+as.double(x)
+as.matrix(x)
+```
+
+
+## Data Frames
+
+### Exercise 1 
+
+*The data set `mtcars` is loaded into your environment. How many rows and columns does the data frame have?*
+
+```{r,echo=F}
+mtcars = mtcars
+```
+
+
+```{r dim,exercise=TRUE, exercise.eval=TRUE,exercise.lines = 5}
+
+```
+
+
+```{r dim-hint}
+# Recall we can find out the dimensions of a data frame using the following functions
+dim()
+nrow()
+ncol()
+```
+
+
+### Exercise 2
+
+*Print off the first top 6 entries of (`head()`) or bottom 6 entries (`tail()`) of `mtcars`.*
+
+```{r head,exercise=TRUE, exercise.eval=TRUE,exercise.lines = 5}
+
+```
+
+
+### Exercise 3
+
+*Subset `mtcars` to only contain the last two columns and for rows 6 through 20.*
+
+```{r subset1,exercise=TRUE, exercise.eval=TRUE,exercise.lines = 5}
+
+```
+
+
+```{r subset1-hint}
+# Recall we can subset a data.frame by referencing its rows and columns
+head(cars)
+cars[2,2]
+cars[1:5,]
+```
+
+
+### Exercise 4
+
+*Subset the `mtcars` data to only contain retain cars with greater than $24$ miles per gallon (`mpg`).*
+
+```{r subset2,exercise=TRUE, exercise.eval=TRUE,exercise.lines = 5}
+
+```
+
+```{r subset2-hint}
+# Recall we use $ to pull out specific variables
+cars$speed
+
+# And we can use these vectors of values to make logical statements
+cars$speed > 15
+
+# And we can subset a data frame with a logical vector
+cars[cars$speed > 15, ]
+```

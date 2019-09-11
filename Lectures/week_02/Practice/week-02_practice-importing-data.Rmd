@@ -1,0 +1,66 @@
+---
+title: "Week 2 - Practice Set"
+output:
+  html_document:
+    theme: united
+    toc: true
+    toc_float: true
+---
+
+# Overview
+
+The following assignment seeks to reinforce some of the concepts we honed in class. Only through repeated practice will you being to really hone your skills as an `R` user. 
+
+
+# Practice 
+
+In a new `R` script, doing the following:
+
+## Exporting and Importing data 
+
+### (1) Set the working directory to your desktop.
+
+R doesn't inherently know where your data is, so we need to tell R where to look. One of the most straightforward ways of doing this is to set the "working directory" to the location of your data in R. Alternatively, one can specify the individual "path" when importing data.
+
+relevant functions: `getwd()` and `setwd()`.
+  
+```{r}
+
+```
+
+
+### (2) Exporting the `sleep` data
+
+For the following example, we are going to use the `sleep` example dataset, which is inherent in R.
+
+```{r}
+?sleep # to see what it's all about
+```
+
+
+Let's **EXPORT** the `sleep` data into a number of different formats:
+
+1. as a stata file `.dta`
+2. as a `.csv` file, and
+3. as an excel spreadsheet `.xlxs`.
+4. as `.Rdata`
+
+See the lecture slides for guidance on how to do this. Also, make sure your files export to your working directory (i.e. your desktop).
+
+```{r}
+
+```
+
+   
+Now let's **IMPORT** that data back into R 
+
+    
+1. assign the `.dta` data file into object `S1`
+2. assign the `.xlxs` data file into the object `S2`
+3. load the `.Rdata` object. 
+
+
+```{r}
+
+```
+
