@@ -7,8 +7,6 @@ output:
     toc_float: true
 ---
 
-### [Home](../index.html)
-
 # Overview
 
 The following assignment seeks to reinforce some of the concepts we honed in class. Only through repeated practice will you being to really hone your skills as an `R` user. 

@@ -166,7 +166,7 @@ Video walkthroughs:
 - **Practice**
   + [Objects, Data Structures, and Operators - Interactive Practice Set](https://dunforde.shinyapps.io/week02-interactive-practice-01/)
   + <a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> Objects and Operators (an overview) (download `.R` script)
-  + [Practice Prompt for Importing Data](Lectures/week_02/Practice/week-02_practice-importing-data.html)
+  + <a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice Prompt for Importing Data</a>
   
 <!-- ### _Week 3_: Reproducibility in Practice -->
 <!-- ### _Week 4_: Data Wrangling in R -->
