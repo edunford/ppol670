@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -1389,7 +1390,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -1463,48 +1463,9 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -1701,7 +1662,6 @@ div.tocify {
 <ul>
 <li><a href="https://r4ds.had.co.nz/workflow-scripts.html">Ch. 6: Workflow: Scripts</a> - <code>r4ds</code></li>
 <li><a href="https://r4ds.had.co.nz/workflow-basics.html">Ch. 4: Workflow: Basics</a> - <code>r4ds</code></li>
-<li><a href="https://r4ds.had.co.nz/workflow-projects.html">Ch. 8: Workflow: Projects</a> - <code>r4ds</code></li>
 </ul></li>
 <li><strong>Data Structures in <code>R</code></strong>:
 <ul>
@@ -1734,9 +1694,19 @@ div.tocify {
 </ul></li>
 <li><strong>Workflow</strong>
 <ul>
+<li><a href="https://r4ds.had.co.nz/workflow-projects.html">Ch. 8: Workflow: Projects</a> - <code>r4ds</code></li>
 <li><a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/">Workflow vs. Script</a></li>
 <li><a href="https://github.com/jennybc/here_here">Using the <code>here</code> package for file path directory</a></li>
 </ul></li>
+<li><strong>Generating Reproducible Examples</strong> with <code>reprex</code>
+<ul>
+<li><a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html#main-requirements">Reprex do’s and don’ts</a></li>
+<li><a href="https://reprex.tidyverse.org/articles/articles/magic-reprex.html">Magic reprex</a></li>
+</ul></li>
+</ul></li>
+<li><font color="grey"><strong><em>Additional Resources and Suggested Materials</em></strong></font>
+<ul>
+<li><a href="https://reprex.tidyverse.org/articles/articles/learn-reprex.html">Making reproducible examples with <code>repex</code> - Webinar</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1917,6 +1887,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

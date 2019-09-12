@@ -64,7 +64,6 @@ The following table is a compilation of all the main online resources referenced
   - **`R` Programming environment**:
       + [Ch. 6: Workflow: Scripts](https://r4ds.had.co.nz/workflow-scripts.html) - `r4ds`
       + [Ch. 4: Workflow: Basics](https://r4ds.had.co.nz/workflow-basics.html) - `r4ds` 
-      + [Ch. 8: Workflow: Projects](https://r4ds.had.co.nz/workflow-projects.html) - `r4ds`
       
   - **Data Structures in `R`**:
       + [Data Types and Structures](https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures/index.html) - `carp`
@@ -90,8 +89,16 @@ The following table is a compilation of all the main online resources referenced
       + [Ch. 29: R Markdown formats](https://r4ds.had.co.nz/r-markdown-formats.html) - `r4ds`
       
   - **Workflow**
+      + [Ch. 8: Workflow: Projects](https://r4ds.had.co.nz/workflow-projects.html) - `r4ds`
       + [Workflow vs. Script](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
       + [Using the `here` package for file path directory](https://github.com/jennybc/here_here)
+    
+  - **Generating Reproducible Examples** with `reprex`
+      + [Reprex do's and don'ts](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html#main-requirements)
+      + [Magic reprex](https://reprex.tidyverse.org/articles/articles/magic-reprex.html)
+      
+- <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
+  - [Making reproducible examples with `repex` - Webinar](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
 
 
 
