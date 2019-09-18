@@ -196,6 +196,8 @@ The following table is a compilation of all the main online resources referenced
 
 ### Week 12: Exploratory Data Analysis
 
+<!-- Add interpretable ML discussion this week -->
+
 - **_Required Readings_**:
     + [Ch. 7: Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html) - r4ds
     

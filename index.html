@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -73,8 +74,6 @@ overflow: auto;
 margin-left: 2%;
 position: fixed;
 border: 1px solid #ccc;
-webkit-border-radius: 6px;
-moz-border-radius: 6px;
 border-radius: 6px;
 }
 
@@ -102,9 +101,14 @@ font-size: 12px;
 .tocify-subheader .tocify-subheader {
 text-indent: 30px;
 }
-
 .tocify-subheader .tocify-subheader .tocify-subheader {
 text-indent: 40px;
+}
+.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
+text-indent: 50px;
+}
+.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
+text-indent: 60px;
 }
 
 .tocify .tocify-item > a, .tocify .nav-list .nav-header {
@@ -508,13 +512,13 @@ float: none;
 
           item.append($("<a/>", {
 
-            "text": self.text()
+            "html": self.html()
 
           }));
 
         } else {
 
-          item.text(self.text());
+          item.html(self.html());
 
         }
 
@@ -1391,7 +1395,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -1465,48 +1468,9 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -1555,8 +1519,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -1930,20 +1892,22 @@ Final Project Due
 <li><strong>Practice</strong>
 <ul>
 <li><a href="https://dunforde.shinyapps.io/week02-interactive-practice-01/">Objects, Data Structures, and Operators - Interactive Practice Set</a></li>
-<li><a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> Objects and Operators (an overview) (download <code>.R</code> script)</li>
+<li><a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> Objects and Operators (an overview) (download <code>.R</code> script)</a></li>
 <li><a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice Prompt for Importing Data</a></li>
 </ul></li>
 </ul>
-<!-- ### _Week 3_: Reproducibility in Practice -->
-<!-- ### _Week 4_: Data Wrangling in R -->
-<!-- ### _Week 5_: Data Visualization -->
-<!-- ### _Week 6_: Web Scrapping and APIs -->
-<!-- ### _Week 7_: Text as Data -->
-<!-- ### _Week 8_: Introduction to Statistical Learning -->
-<!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
-<!-- ### _Week 10_: Applications in Supervised Learning (Classification) -->
-<!-- ### _Week 11_: Applications in Unsupervised Learning -->
-<!-- ### _Week 12_: Exploratory Data Analysis -->
+</div>
+<div id="week-3-reproducibility-in-practice" class="section level3">
+<h3><em>Week 3</em>: Reproducibility in Practice</h3>
+<ul>
+<li><a href="Lectures/week_03/lecture-week03-reproducibility-in-practice.html"><strong>Lecture</strong></a></li>
+<li><strong>Practice</strong>:
+<ul>
+<li><a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download <code>.R</code> script) </a></li>
+<li><a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd" download> R Markdown Walkthrough (download <code>.Rmd</code> script) </a></li>
+</ul></li>
+</ul>
+<p><a href></a> <!-- ### _Week 4_: Data Wrangling in R --> <!-- ### _Week 5_: Data Visualization --> <!-- ### _Week 6_: Web Scrapping and APIs --> <!-- ### _Week 7_: Text as Data --> <!-- ### _Week 8_: Introduction to Statistical Learning --> <!-- ### _Week 9_: Applications in Supervised Learning (Regression) --> <!-- ### _Week 10_: Applications in Supervised Learning (Classification) --> <!-- ### _Week 11_: Applications in Unsupervised Learning --> <!-- ### _Week 12_: Exploratory Data Analysis --></p>
 </div>
 <div id="section" class="section level2">
 <h2><br></h2>
@@ -1968,6 +1932,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

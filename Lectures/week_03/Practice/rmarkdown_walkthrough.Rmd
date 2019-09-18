@@ -1,0 +1,144 @@
+---
+title: "Markdown Basics"
+author: "Prof. Dunford"
+date: "Fall 2019"
+output: html_notebook
+---
+
+R Markdown is a useful way to present results. The goal is reproducibility: every line of data and code must be located in the document for it to "knit". If anything is missing then the document won't compile. 
+
+What does it mean to "knit" a document: let's knit this one. Press...
+
+- Mac: `command + shift + k`
+- Windows: `control + shift + k`
+
+ When doing so, R is going to ask you to save the file somewhere. 
+ 
+ When we compile the document, we get a new file that just has our code words and results. Look where you saved your code. There should be a `.html` file there now. Click on it. 
+ 
+ 
+There are three ways in which we can compile a document: a PDF (if you have a latex distribution), html, and a word document. To change how a document is compiled, alter the `output` argument in the preamble with one of the three:
+
+- `word_document`
+- `pdf_document`
+- `html_document`
+
+If you try all three, you'll find all three files types in the folder where you saved this script. 
+
+
+------------------------------------
+
+Markdown is an easy to use html language. Let's review some of the **basics**.
+
+# Header
+## Header
+### Header 
+#### Header
+
+**Bold** or _italize_ text. Or **_both_**! ~~Even cross things out~~
+
+[Hyperlink to an Rmarkdown Cheatsheet!](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+
+> We can emphasize text and quotes.
+List items:
+
+* Important point!
+    + And another...
+    + And another...
+    
+Or enumerate:
+
+Things to do:
+
+1. "Do Research"
+2. Stare blankly at the wall and wonder why I came to grad school.
+3. Eat chipotle.
+
+We can even embed latex equations! Both as it's own thing. 
+$$ \hat{y} = \beta_0 + \beta_1x + \beta_2x^2 + \epsilon $$
+And as something that is nested in a sentence $\beta\epsilon\epsilon\rho$. The key difference is between two dollar signs `$$` and one `$`. Either way, always make sure to sandwich your equation!
+
+$$ x_1 
+
+$$ x_1 $$
+
+For help using, Markdown refer to the "Markdown Quick Reference" guide: `Help > Markdown Quick Reference`
+
+### Embedding Code
+
+The real point of R markdown is to embed your R code in your working script. Here we can create a code chunk by pressing:
+
+- mac: `alt + command + i`
+- windows: `alt + control + i`
+
+
+In the code chunk, we can do all things R. 
+
+
+```{r}
+x = rnorm(100,.5,3)
+hist(x,breaks=10,col="lightblue",border="white")
+```
+
+
+We can even embed values right in our text. "The value of the coefficient that I care about is `r round(x[1],3)`".
+
+
+There are a background features built into the R code chucks which allow us to customize. 
+
+```{r,echo=F}
+# Echo == F means the code chunk won't render.
+y = x + rnorm(100,8,100)
+```
+
+
+```{r,fig.height=3}
+plot(y,x,pch=16,cex=3,col="darkgrey")
+```
+
+
+```{r,eval=F}
+# Eval == F means the code chunk won't be evaluated
+5 + 8 + 9
+```
+
+
+There are many sub-options. One can even use a different programming languages.
+
+```{python}
+text = "This is an important bit of text."
+print(text.split(' '))
+```
+
+
+## Configuring the YAML
+
+Finally there are a bunch of different ways that the preamble can be set up. Different configurations yield different layouts. One can even create their own layout using `css`. 
+
+Try some of these:
+
+For a Table of Contents with a header depth of 2 (i.e. `##`)
+```{}
+title: "Markdown Basics"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+```
+
+```{}
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+    toc_depth: 4
+```
+
+Explore Different Themes
+```{}
+output:
+  html_document:
+    theme: spacelab
+    highlight: espresso
+```
+

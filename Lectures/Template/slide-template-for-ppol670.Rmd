@@ -57,12 +57,3 @@ class: newsection
 # Section 1
 
 ---
-
-```{r tidy=FALSE,fig.height=3,fig.width=10}
-library(ggplot2)
-ggplot(mtcars) + aes(mpg, disp) +
-  geom_point() +   #<< 
-  geom_smooth()    #<<
-```
-
-

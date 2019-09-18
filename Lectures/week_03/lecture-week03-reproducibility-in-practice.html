@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 3       Reproducibility in Practice</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 3 </font> <br> <br> <font size=100, face="bold"> Reproducibility in Practice </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 3 &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Reproducibility in Practice &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+![:space 3]
+
+- More on **_basic programming in `R`_**
+  
+  - **_![:text_color darkorange](indexing)_** and **_![:text_color darkorange](iteration)_**
+  
+  - **_![:text_color darkorange](control statements)_**
+
+- Using **_`R` Markdown_**
+
+
+- Generating **_Reproducible Examples_**
+
+---
+
+class: newsection
+
+# Iteration
+
+---
+
+### Indexing Refresher
+
+Recall that we can index data objects in `R`. By taping into each object's structure and using integers to extract data that belong to specific **positions**. 
+
+
+```r
+x = c(-5:5)
+x
+```
+
+```
+##  [1] -5 -4 -3 -2 -1  0  1  2  3  4  5
+```
+
+
+```r
+x[1]
+```
+
+```
+## [1] -5
+```
+
+
+```r
+x[9]
+```
+
+```
+## [1] 3
+```
+
+---
+
+### Indexing Refresher
+
+We can call hole ranges of numbers using colon (`:`) operator.
+
+
+```r
+x[4:8]
+```
+
+```
+## [1] -2 -1  0  1  2
+```
+
+--
+
+And when using the negative, we can use indices as exclusion calls (i.e. "give me back everything _but_ these positions")
+
+
+```r
+x[-4:-8]
+```
+
+```
+## [1] -5 -4 -3  3  4  5
+```
+
+--
+
+We can also use specific index position to extract elements out of the original order.
+
+
+```r
+x[c(1,10,5,2)]
+```
+
+```
+## [1] -5  4 -1 -4
+```
+
+---
+
+### Indexing Refresher
+
+Likewise, we can do the same with `data.frame` or `matric` objects -- except this time we have two index positions to keep track of: `rows` and `columns`. 
+
+
+```r
+str(mtcars)
+```
+
+```
+## 'data.frame':	32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
+```
+
+---
+
+### Indexing Refresher
+
+![:space 3]
+
+
+```r
+mtcars[1,]
+```
+
+```
+##           mpg cyl disp  hp drat   wt  qsec vs am gear carb
+## Mazda RX4  21   6  160 110  3.9 2.62 16.46  0  1    4    4
+```
+
+
+```r
+mtcars[,1]
+```
+
+```
+##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+## [29] 15.8 19.7 15.0 21.4
+```
+
+
+```r
+mtcars[1:2,1:2]
+```
+
+```
+##               mpg cyl
+## Mazda RX4      21   6
+## Mazda RX4 Wag  21   6
+```
+
+---
+
+## `for` loops
+
+A **loop** is offers a way to iterate through a series of items stored as data object in `R`. 
+
+The below codes pulls out each item once at a time, stores it in the object `i` and then prints it. 
+
+
+```r
+items &lt;- c("grapes","bananas","chocolate","bread")
+
+for(i in items){
+  print(i)
+}
+```
+
+```
+## [1] "grapes"
+## [1] "bananas"
+## [1] "chocolate"
+## [1] "bread"
+```
+
+---
+
+The code in the last slide is equivalent to this.
+
+
+```r
+i &lt;- items[1]
+print(i)
+```
+
+```
+## [1] "grapes"
+```
+
+```r
+i &lt;- items[2]
+print(i)
+```
+
+```
+## [1] "bananas"
+```
+
+```r
+i &lt;- items[3]
+print(i)
+```
+
+```
+## [1] "chocolate"
+```
+
+```r
+i &lt;- items[4]
+print(i)
+```
+
+```
+## [1] "bread"
+```
+
+---
+
+### `for` loop components
+
+There are two thing really important features of a loop. 
+
+1. the **_`for()` function_** which we use to specify 
+  
+  a. what object we're drawing from and 
+  
+  b. what object we are writing to.
+
+&lt;br&gt; 
+
+```{}
+            for( i  in  items  )
+                 ^        ^
+                 |        |___ object we are drawing from
+                 |
+          obj. we write each item to 
+```
+
+---
+
+### `for` loop components
+
+Second, the **_brackets `{}`_**. Inside the brackets we &lt;u&gt;house the code that is going to happen each iteration&lt;/u&gt;. 
+
+&lt;br&gt; 
+```{}
+        for( i  in  items  ){
+          |~~~~~~~~~~~~~~~~|   
+          |~~~~~~~~~~~~~~~~|
+          |~~~~~~~~~~~~~~~~| code we need perform on each iteration.
+          |~~~~~~~~~~~~~~~~|
+          |~~~~~~~~~~~~~~~~|
+        }
+```
+
+&lt;br&gt; 
+Together, `for` loops allow us to repeat complicated processes. This prevents us from having to arduously repeat the same chunk of code over and over again. 
+
+---
+
+### `for` loop components
+
+
+```r
+# Create an array of numbers
+numbers = c(10,100,-1000,345,-7,999,21345,444457)
+
+# Iterate from the 2nd index until the last
+for(i in 2:length(numbers)){
+  
+  # Multiply the two numbers together 
+  new_number &lt;- numbers[i]*numbers[i-1] 
+  
+  print(new_number) # print the numbers 
+}
+```
+
+```
+## [1] 1000
+## [1] -1e+05
+## [1] -345000
+## [1] -2415
+## [1] -6993
+## [1] 21323655
+## [1] 9486934665
+```
+
+---
+
+## `while()` loops
+
+Similar to `for` loops, `while()` loops only stop when some condition is met. As long as the statement within `while()` is `TRUE`, will the loop keep looping.  
+
+In the below example, as long as `i` is less than `5` the loop will keep looping. 
+
+
+```r
+i &lt;- 0
+while( i &lt; 5 ){
+  print(i)
+  i &lt;- i + 1
+}
+```
+
+```
+## [1] 0
+## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+```
+
+---
+
+### `for()` loops and storing output
+
+
+```r
+letters
+```
+
+```
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q"
+## [18] "r" "s" "t" "u" "v" "w" "x" "y" "z"
+```
+
+
+
+```r
+# Container with 10 spaces
+container &lt;- rep(0,10)
+container
+```
+
+```
+##  [1] 0 0 0 0 0 0 0 0 0 0
+```
+
+
+
+```r
+# Each loop, we store the output of some code.
+for(i in 1:10){
+  container[i] &lt;- paste0(letters[i],letters[i+1])
+}
+container
+```
+
+```
+##  [1] "ab" "bc" "cd" "de" "ef" "fg" "gh" "hi" "ij" "jk"
+```
+
+
+---
+
+### Container &amp;rarr; any non-scalar data structure
+
+
+```r
+dat_container &lt;- as.data.frame(matrix(0, nrow = 5,ncol = 2))
+dat_container
+```
+
+```
+##   V1 V2
+## 1  0  0
+## 2  0  0
+## 3  0  0
+## 4  0  0
+## 5  0  0
+```
+
+
+
+```r
+for( i in 1:5){
+  dat_container[i,1] &lt;- i
+  dat_container[i,2] &lt;- letters[i]
+}
+dat_container
+```
+
+```
+##   V1 V2
+## 1  1  a
+## 2  2  b
+## 3  3  c
+## 4  4  d
+## 5  5  e
+```
+
+
+---
+
+## `for()` loops and binding output
+
+Likewise, we can build objects up by binding them together.
+
+
+```r
+containter2 &lt;- c()
+containter2
+```
+
+```
+## NULL
+```
+
+
+
+```r
+tmp_data &lt;- data.frame(v1=1,v2=2)
+tmp_data
+```
+
+```
+##   v1 v2
+## 1  1  2
+```
+
+
+
+```r
+containter2 &lt;- rbind(containter2,tmp_data)
+containter2 &lt;- rbind(containter2,tmp_data)
+containter2 
+```
+
+```
+##   v1 v2
+## 1  1  2
+## 2  1  2
+```
+
+
+---
+
+## `for()` loops and binding output
+
+
+```r
+containter2 &lt;- c()
+for( i in 1:10){
+  
+  tmp_data &lt;- data.frame(v1=i,v2=letters[i])
+  
+  containter2 &lt;- rbind(containter2,tmp_data)
+  
+}
+containter2
+```
+
+```
+##    v1 v2
+## 1   1  a
+## 2   2  b
+## 3   3  c
+## 4   4  d
+## 5   5  e
+## 6   6  f
+## 7   7  g
+## 8   8  h
+## 9   9  i
+## 10 10  j
+```
+
+---
+
+## Which is most efficient?
+
+![:space 5]
+
+**Contender 1**: Filling a pre-defined container
+
+```r
+require(tictoc) # for counting how long it takes R to run
+N = 5000
+tic()
+dat_container &lt;- as.data.frame(matrix(0, nrow = N,ncol = 2))
+for( i in 1:N){
+  dat_container[i,1] &lt;- i
+  dat_container[i,2] &lt;- 1/i
+}
+toc()
+```
+
+```
+## 0.578 sec elapsed
+```
+
+---
+
+## Which is most efficient?
+
+![:space 5]
+
+**Contender 2**: Binding each iteraction
+
+```r
+N = 5000
+tic()
+dat_container &lt;- c()
+for( i in 1:N){
+  tmp &lt;- data.frame(V1 = i,V2 = 1/i)
+  dat_container &lt;- rbind(dat_container,tmp)
+}
+toc()
+```
+
+```
+## 2.365 sec elapsed
+```
+
+
+---
+
+class: newsection
+
+# Control Statements
+
+---
+
+## `if` - `else`
+
+
+```r
+if(TRUE){
+  print("Hello")
+}else{
+  print("Goodbye")
+}
+```
+
+```
+## [1] "Hello"
+```
+
+
+```r
+if(FALSE){
+  print("Hello")
+}else{
+  print("Goodbye")
+}
+```
+
+```
+## [1] "Goodbye"
+```
+
+---
+
+**_Boolean statement dictates whether one code chunk is executed, or another is executed_**. 
+
+We can combine these conditionals with `for()` loops to powerful effect. 
+
+
+```r
+for(i in 1:10){
+  if(i &lt;= 5){
+    print("Hello")
+  }else{
+    print("Goodbye")
+  }
+}
+```
+
+```
+## [1] "Hello"
+## [1] "Hello"
+## [1] "Hello"
+## [1] "Hello"
+## [1] "Hello"
+## [1] "Goodbye"
+## [1] "Goodbye"
+## [1] "Goodbye"
+## [1] "Goodbye"
+## [1] "Goodbye"
+```
+
+
+---
+
+## `ifelse()`
+
+Same idea just vectorized.
+
+
+```r
+ifelse(T,"Hello","Goodbye")
+```
+
+```
+## [1] "Hello"
+```
+
+
+```r
+ifelse(F,"Hello","Goodbye")
+```
+
+```
+## [1] "Goodbye"
+```
+
+
+```r
+x &lt;- 1:10
+ifelse(x&lt;5,"Hello","Goodbye")
+```
+
+```
+##  [1] "Hello"   "Hello"   "Hello"   "Hello"   "Goodbye" "Goodbye" "Goodbye"
+##  [8] "Goodbye" "Goodbye" "Goodbye"
+```
+
+---
+
+
+class: newsection
+
+# `R` Markdown
+
+---
+
+## Toward Reproducibility
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Throughout the course, we will use `Rmarkdown` (or otherwise referred to as `R` "notebooks") to write code and to document our analyses.
+
+`Rmarkdown` embodies all the principles we discussed above. Allowing for use to implement best practices in our research and empirical work.
+
+&lt;br&gt;
+&lt;br&gt;
+
+For the "pitch" and valuable tutorials, see here
+
+## &lt;center&gt; [`R` Markdown](https://rmarkdown.rstudio.com/lesson-1.html) &lt;/center&gt;
+
+---
+
+
+
+# R Notebooks
+
+
+.left[&lt;img src="Figures/rmarkdown-1.png", width=800&gt;]
+
+---
+
+# R Notebooks
+
+
+.left[&lt;img src="Figures/rmarkdown-2.png", width=800&gt;]
+
+---
+
+# R Notebooks
+
+
+.left[&lt;img src="Figures/rmarkdown-3.png", width=800&gt;]
+
+---
+
+# R Notebooks
+
+
+.left[&lt;img src="Figures/rmarkdown-4.png", width=800&gt;]
+
+---
+
+# R Notebooks
+
+
+.left[&lt;img src="Figures/rmarkdown-5.png", width=800&gt;]
+
+---
+
+### Compiling documents
+
+To turn code into a report (`.html`,`.pdf`,`.doc`, ect) we need to **_knit_** (or "compile" the document). 
+
+The YAML headers gives `R` the instructions for how to do this. Specifically, we tell `R` what type of output we want.
+
+`.html`
+```
+    output: html_document 
+```
+`.docx`
+```
+    output: word_document
+```
+`.pdf` ... requires a [LaTex distribution](https://miktex.org/download)
+```
+    output: pdf_document
+```
+
+---
+
+### Compiling documents
+
+To turn code into a report (`.html`,`.pdf`,`.doc`, ect) we need to **_knit_** (or "compile" the document). 
+
+The YAML headers gives `R` the instructions for how to do this. Specifically, we tell `R` what type of output we want.
+
+&lt;br&gt; 
+
+`.nb.html`
+```
+output: html_notebook
+```
+
+An **_`R` Markdown Notebook_** allows you to write code and then see the rendered code in _real time_. 
+
+---
+
+### Compiling documents
+
+We can **`knit`** a R Markdown document in one of three ways: 
+
+![:space 2]
+
+i. click the `Knit` button in `RStudio`
+
+.center[&lt;img src="Figures/knit_button.png", width=600&gt;]
+
+![:space 2]
+
+ii. Use the keyboard shortcut
+
+- Mac: `command + shift + k`
+- Windows: `control + shift + k`
+
+![:space 2]
+
+ii. Knit the document using the `knit()` function in the `knitr` package.
+
+---
+
+### Using Markdown
+
+![:space 10]
+
+.center[
+.pull-left[ 
+```
+
+# Header
+
+## Header
+
+### Header
+
+#### Header
+```
+] 
+
+.pull-right[
+# Header
+## Header
+### Header
+#### Header
+
+]
+]
+
+---
+
+### Using Markdown
+
+![:space 10]
+
+```
+**Bold** or _italize_ text. Or **_both_**! ~~Even cross things out~~
+```
+
+.center[**Bold** or _italize_ text. Or **_both_**! ~~Even cross things out~~]
+
+--
+
+&lt;br&gt;
+
+```
+&gt; We can emphasize text and quotes.
+```
+
+&gt; We can emphasize text and quotes.
+
+
+---
+
+### Using Markdown
+
+![:space 10]
+
+**Generate lists**
+```
+- Important point!
+    + And another...
+    + And another...
+```
+
+.center[&amp;darr;]
+
+- Important point!
+    + And another...
+    + And another...
+    
+---
+
+### Using Markdown
+
+![:space 7]
+
+**Enumerated Lists**
+
+```
+Things to do:
+
+1. "Do Research"
+2. Stare blankly at the wall and wonder why I came to grad school.
+3. Eat chipotle.
+```
+
+.center[&amp;darr;]
+
+Things to do:
+
+1. "Do Research"
+2. Stare blankly at the wall and wonder why I came to grad school.
+3. Eat chipotle.
+
+---
+
+### Using Markdown
+
+Even write some fancy math!
+
+--
+
+**inline**
+```
+...assume $x \sim N(\mu,\sigma)$ and $x \ge 0$ so that....
+```
+.center[&amp;darr;]
+
+...assume `\(x \sim N(\mu,\sigma)\)` and `\(x \ge 0\)` so that....
+
+--
+
+**its own line**
+```
+$$\hat{y_i} = \beta_0 + \beta_1x_i + \beta_2_ix^2 + \epsilon_i$$
+```
+
+.center[&amp;darr;]
+
+`$$\hat{y_i} = \beta_0 + \beta_1x_i + \beta_2x_i^2 + \epsilon_i$$`
+---
+
+### Code Chunks
+
+The real point of `R` Markdown is to embed your R code in your working script so that the document is **_reproducible_** and **_transparent_**. 
+
+**_To write code_**, we need to create a **_code chunk_**. We can do this by:
+
+- click `insert`, and selec an `R` code chunk.
+- press `cmd` + `option/alt` + `i` or `ctrl` + `option/alt` + `i`
+
+.center[&lt;img src="Figures/code_chunk.png", width=1000&gt;]
+
+This will yield a discolored chunk that looks like this. Everything written in this chunk will be evaluated as `R` code. Everything written outside of it will be evaluated as prose.
+
+
+---
+
+### Code Chunks
+
+
+Chunk output can be customised with options, arguments supplied to chunk header. Knitr provides almost [60 options](http://yihui.name/knitr/options/) that you can use to customize your code chunks.
+
+
+|Option |Run code |	Show code |	Output	|Plots |	Messages |	Warnings| errors|
+|:-----|:-----:|:-----|:-----:|:-----:|:-----:|:-----:|:-----:|
+|`eval = FALSE` | &amp;#10006; | | &amp;#10006; |&amp;#10006; | &amp;#10006; |&amp;#10006; |&amp;#10006;
+|`include = FALSE` | | &amp;#10006; | &amp;#10006;| &amp;#10006;| &amp;#10006;| &amp;#10006;|&amp;#10006;
+|`echo = FALSE` |	| &amp;#10006; | | | | | |
+|`results = "hide"` | | |&amp;#10006; | | | ||
+|`fig.show = "hide"` | | | | &amp;#10006;|  | | |
+|`message = FALSE`	 | | | | |&amp;#10006; | | |
+|`warning = FALSE`	 | | | | | |&amp;#10006; | |
+|`error = FALSE`	 | | | | | | | &amp;#10006; |
+
+---
+
+### YAML Header
+
+Finally there are a bunch of different ways that the YAML can be set up. Different configurations yield different layouts.
+
+As we already saw, we can change how the document is compiled. 
+
+```
+---
+title: "Markdown Basics"
+author: "Prof. Dunford"
+date: "Fall 2019"
+output: html_notebook
+---
+```
+
+```
+---
+title: "Markdown Basics"
+author: "Prof. Dunford"
+date: "Fall 2019"
+output: pdf_notebook
+---
+```
+
+---
+
+### YAML Header
+
+We can customize the YAML to include different output themes, table of contents, parameters, and more!  
+
+&lt;br&gt;
+
+```
+---
+title: "Markdown Basics"
+author: "Prof. Dunford"
+date: "Fall 2019"
+output:
+  html_document:
+    theme: spacelab
+    highlight: espresso
+    toc: true
+    toc_depth: 2
+---
+```
+
+---
+
+## Best practices
+
+### 1. Code chunks should be broken up
+
+### 2. No excessive output
+  
+  - i.e don't print of pages and pages of a data frame.
+  
+### 3. Figures should be appropriately sized for the rendered document
+
+
+### 4. All data and code should be self-contained
+
+  - Given the data and the `.Rmd` file, the `R` Markdown down document should knit.
+
+
+&lt;!-- Go through this together... --&gt;
+
+---
+
+class: newsection
+
+# Reprex
+
+---
+
+### Life as an new `R` user....
+
+So you ran into an issue...
+
+--
+
+You can't find answer on the internet...
+
+--
+
+.center[
+**![:text_color darkred](Help!)**
+]
+
+--
+
+.center[
+&lt;a title="JM Gif"&gt;&lt;img src="https://media.giphy.com/media/fdLR6LGwAiVNhGQNvf/giphy.gif" width=80% height = 80% alt="JM GIF"&gt;&lt;/a&gt;&lt;div style="font-size:11px;"&gt;&lt;/div&gt;
+]
+
+
+
+
+&lt;!-- When asking for help, you need to make the problem as transparent and easy to work through as possible.  --&gt;
+
+---
+
+### Generating reproducible examples
+
+![:space 5]
+
+
+```r
+require(reprex)
+```
+
+.center[&lt;img src="Figures/reprex_logo.png", width=300&gt;]
+
+---
+
+### Generating reproducible examples
+
+**Steps**:
+
+1. **_Reduce the problem down into a workable example_**.
+  
+  - Small toy example that doesn't require loading in data.
+  
+  - Replicate the issue.
+  
+2. **_Copy that code_**.
+
+3. **_Then run `reprex()` in the consol_**. 
+
+  - a html rendering of the example will render.
+  
+  - everything you need to post will be copied to your clipboard
+  
+---
+
+### Output examples for any venue...
+
+**_Github_** (or Slack!)
+
+
+```r
+reprex(venue = "gh")
+```
+
+
+**_Stack Overflow_**
+
+
+```r
+reprex(venue = "so")
+```
+
+
+**_HTML only slides_**
+
+
+```r
+reprex(venue = "html")
+```
+
+
+Finally, produce an example with all your **_session info_** (really useful for Stack Overflow)
+
+
+```r
+reprex(venue = "gh",si = T) 
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
