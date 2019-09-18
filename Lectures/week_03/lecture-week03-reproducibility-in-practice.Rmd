@@ -691,10 +691,16 @@ This will yield a discolored chunk that looks like this. Everything written in t
 
 ### Code Chunks
 
+![:space 15]
 
 Chunk output can be customised with options, arguments supplied to chunk header. Knitr provides almost [60 options](http://yihui.name/knitr/options/) that you can use to customize your code chunks.
 
 
+---
+
+### Code Chunks
+
+.center[
 |Option |Run code |	Show code |	Output	|Plots |	Messages |	Warnings| errors|
 |:-----|:-----:|:-----|:-----:|:-----:|:-----:|:-----:|:-----:|
 |`eval = FALSE` | &#10006; | | &#10006; |&#10006; | &#10006; |&#10006; |&#10006;
@@ -705,6 +711,7 @@ Chunk output can be customised with options, arguments supplied to chunk header.
 |`message = FALSE`	 | | | | |&#10006; | | |
 |`warning = FALSE`	 | | | | | |&#10006; | |
 |`error = FALSE`	 | | | | | | | &#10006; |
+]
 
 ---
 
