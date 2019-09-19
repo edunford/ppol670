@@ -7,7 +7,6 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -1390,6 +1389,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -1463,9 +1463,48 @@ summary {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -1703,6 +1742,13 @@ div.tocify {
 <li><a href="https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html#main-requirements">Reprex do’s and don’ts</a></li>
 <li><a href="https://reprex.tidyverse.org/articles/articles/magic-reprex.html">Magic reprex</a></li>
 </ul></li>
+<li><strong>Iteration</strong>
+<ul>
+<li><a href="https://r4ds.had.co.nz/iteration.html">Ch. 21: Iteration</a> - <code>r4ds</code>
+<ul>
+<li>Only 21.1 - 21.4</li>
+</ul></li>
+</ul></li>
 </ul></li>
 <li><font color="grey"><strong><em>Additional Resources and Suggested Materials</em></strong></font>
 <ul>
@@ -1755,7 +1801,7 @@ div.tocify {
 <li><strong><em>Required Readings</em></strong>:
 <ul>
 <li><a href="https://r4ds.had.co.nz/functions.html">Ch. 19: Functions</a> - <code>r4ds</code></li>
-<li><a href="https://r4ds.had.co.nz/iteration.html">Ch. 21: Iteration</a> - <code>r4ds</code>
+<li><em>refresh</em> <a href="https://r4ds.had.co.nz/iteration.html">Ch. 21: Iteration</a> - <code>r4ds</code>
 <ul>
 <li>Only 21.1 - 21.4</li>
 </ul></li>
@@ -1843,6 +1889,7 @@ div.tocify {
 </div>
 <div id="week-12-exploratory-data-analysis" class="section level3">
 <h3>Week 12: Exploratory Data Analysis</h3>
+<!-- Add interpretable ML discussion this week -->
 <ul>
 <li><strong><em>Required Readings</em></strong>:
 <ul>
@@ -1887,49 +1934,6 @@ $(document).ready(function () {
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

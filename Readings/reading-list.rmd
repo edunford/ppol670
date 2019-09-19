@@ -84,6 +84,8 @@ The following table is a compilation of all the main online resources referenced
 
 - **_Required Readings_**:
 
+
+
   - **R Markdown**
       + [Ch. 27: R Markdown](https://r4ds.had.co.nz/r-markdown.html) - `r4ds`
       + [Ch. 29: R Markdown formats](https://r4ds.had.co.nz/r-markdown-formats.html) - `r4ds`
@@ -96,6 +98,10 @@ The following table is a compilation of all the main online resources referenced
   - **Generating Reproducible Examples** with `reprex`
       + [Reprex do's and don'ts](https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html#main-requirements)
       + [Magic reprex](https://reprex.tidyverse.org/articles/articles/magic-reprex.html)
+    
+  - **Iteration**
+    + [Ch. 21: Iteration](https://r4ds.had.co.nz/iteration.html) - `r4ds`
+        - Only 21.1 - 21.4
       
 - <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
   - [Making reproducible examples with `repex` - Webinar](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
@@ -136,7 +142,7 @@ The following table is a compilation of all the main online resources referenced
 
 - **_Required Readings_**:   
     + [Ch. 19: Functions](https://r4ds.had.co.nz/functions.html) - `r4ds`
-    + [Ch. 21: Iteration](https://r4ds.had.co.nz/iteration.html) - `r4ds`
+    + _refresh_ [Ch. 21: Iteration](https://r4ds.had.co.nz/iteration.html) - `r4ds`
         - Only 21.1 - 21.4
     + [Ch. 14: Strings](https://r4ds.had.co.nz/strings.html) - `r4ds`
     + **Web Scraping**
