@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 4       Data Wrangling</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 4 </font> <br> <br> <font size=100, face="bold"> Data Wrangling </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 4 &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Data Wrangling &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+90% of data science is **data wrangling**, which involves...
+
+- **manipulating** 
+
+- **piping**
+
+- **joining**  
+
+- **reshaping** 
+
+...data!
+
+---
+
+class: newsection
+
+# Data Wrangling
+
+---
+
+# What is data wrangling?
+
+- **raw &amp;rarr; processed**: the process of transforming data from one format to another.
+
+- **converting the structure** to facilitate some analysis
+  + **_altering the unit of analysis_**: going from individuals in a state in a given year to state-year by
+  
+  + changing from a **_"wide"_** (many columns, few rows) **_to a "long" structure_** (few colums, many rows)
+  
+  + **_summarizing data_** across specific subgroups 
+
+---
+
+## Thinking about Data Generation
+
+- **Data rarely works "out of the box"** 
+
+  + constructed for a different purpose
+  
+  + requires adding additional information (merging other data to it)
+  
+- **Codebooks offer clues, but not the story**
+
+  + If a codebook exists, it can outline the data generation process, variable names, issues with the data, etc. 
+  
+  + Codebooks can't won't reveal underlying issues or biases in the data. locating these requires exploration through summarization, visualization, and reshaping the data structure. 
+
+---
+
+## Thinking about Data Generation
+ 
+- **Data Provenance**
+
+  + Data changes hands, edits are made, variables/observations are accidentally dropped. Without probing, one might overlook flaws.
+
+
+- **Automated Data**
+
+  + Scraping data can ease collection, but difficult to know where/if the process broke down. 
+  
+  + Manipulating data can reveal algorithmic failure/limitations. 
+  
+  + Never assume "everything worked"
+ 
+---
+
+## `tidyverse` approach 
+
+Throughout this course, we are going to cover the basics of data manipulation and visualization in `R`. By focusing on a suite of packages known as the "[tidyverse](https://www.tidyverse.org)". 
+
+These packages were designed to ease the process of data manipulation and management so that it is more intuitive, efficient, and interpretable.
+
+Specifically, the `tidyverse` is a housing package that holds the following packages:
+- [readr](http://readr.tidyverse.org/) - for reading data in (_which we encountered last time_)
+- [tibble](https://tibble.tidyverse.org/) - for "tidy" data structures
+- [dplyr](http://dplyr.tidyverse.org/) - for data manipulation
+- [ggplot2](http://ggplot2.tidyverse.org/) - for data visualization
+- [tidyr](http://tidyr.tidyverse.org/) - for cleaning
+- [purrr](http://purrr.tidyverse.org/) - functional programming toolkit
+
+---
+
+## `tidyverse` approach 
+
+Most of everything we will do will require in data manipulation just **one** package
+
+
+```r
+# Install tidyverse package
+install.packages('tidyverse')
+
+# Load the package
+require(tidyverse)
+```
+  
+---
+
+class:newsection
+
+# Tidy Data
+
+---
+
+The same data can be represented in many different ways...
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+.center[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; cases &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; population &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 745 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19987071 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2666 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20595360 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 37737 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 172006362 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 80488 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 174504898 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 212258 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1272915272 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 213766 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1280428583 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+&lt;br&gt;&lt;br&gt;
+.center[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; type &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; count &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; cases &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 745 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; population &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19987071 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; cases &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2666 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; population &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20595360 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; cases &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 37737 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; population &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 172006362 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; cases &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 80488 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; population &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 174504898 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; cases &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 212258 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; population &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1272915272 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; cases &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 213766 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; population &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1280428583 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+.center[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; rate &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 745/19987071 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2666/20595360 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 37737/172006362 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 80488/174504898 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 212258/1272915272 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 213766/1280428583 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+&lt;br&gt;&lt;br&gt;
+.center[
+&lt;table&gt;
+&lt;caption&gt;Cases&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 1999 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 2000 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 745 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2666 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 37737 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 80488 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 212258 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 213766 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+&lt;br&gt;
+
+.center[
+&lt;table&gt;
+&lt;caption&gt;Population&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 1999 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 2000 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19987071 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20595360 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 172006362 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 174504898 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1272915272 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1280428583 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+
+---
+
+There are three interrelated rules which make a dataset **tidy**:
+&lt;br&gt;&lt;br&gt;
+1. **Each variable must have its own column.**
+
+2. **Each observation must have its own row.**
+
+3. **Each value must have its own cell.**
+
+.center[&lt;img src="Figures/tidy-data.png"&gt;]
+
+---
+
+## Tidy!
+
+&lt;br&gt;&lt;br&gt;
+
+.center[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; cases &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; population &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 745 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19987071 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2666 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20595360 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 37737 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 172006362 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 80488 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 174504898 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 212258 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1272915272 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 213766 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1280428583 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+## `tibble()` data frames
+
+&gt; "Tibbles _are_ data frames, but they tweak some older behaviours to make life a little easier."
+
+Differences between `tibbles` and `data.frames`
+
+1. Tibbles have a refined print method that shows only the first 10 rows, and all the columns that fit on screen. This makes it much easier to work with large data.
+
+2. More explicit errors: tibbles are strict. They throw lots of errors, meaning we catch mistakes early. 
+
+---
+
+class: newsection
+
+# Manipulating
+
+---
+
+&lt;br&gt;&lt;br&gt;
+The `dplyr` package (part of the `tidyverse`) offers an intuitive **verb based** approach to data management in `R`. The goal of the `dplyr` logic is to provide an easy, intuitive naming convention for ubiquitous to data management tasks.
+
+&lt;br&gt;&lt;br&gt;
+&gt; Note that the tidyverse moves to a `tibble` data.frame, which is a special kind of data.frame class that keeps the best parts of `data.frame` but drops the unnecessary bits, such as printing the entire data object.
+
+---
+
+## 6 main `dplyr` verbs
+
+- **`select()`**: Pick variables by their names.
+
+- **`filter()`**: Pick observations by their values
+
+- **`arrange()`**: Reorder the rows.
+
+- **`mutate()`**: Create new variables with functions of existing variables.
+
+- **`summarise()`**: Collapse many values down to a single summary.
+
+- **`group_by()`**: changes the scope of each function from operating on the entire dataset to operating on it group-by-group. 
+---
+
+class:biglist
+
+
+## How they work...
+
+&lt;br&gt;
+&lt;br&gt;
+
+**All verbs work similarly:**
+
+1. The first argument is a data frame.
+
+2. The subsequent arguments describe what to do with the data frame, using the variable names (without quotes).
+
+3. The result is a new data frame.
+
+---
+
+To walk through the performance of the main `dplyr` verbs, we'll use an internal dataset called `presidential`.
+
+
+```r
+?presidential # for information on the data
+```
+
+```r
+dat &lt;- presidential
+head(dat)
+```
+
+```
+## # A tibble: 6 x 4
+##   name       start      end        party     
+##   &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;     
+## 1 Eisenhower 1953-01-20 1961-01-20 Republican
+## 2 Kennedy    1961-01-20 1963-11-22 Democratic
+## 3 Johnson    1963-11-22 1969-01-20 Democratic
+## 4 Nixon      1969-01-20 1974-08-09 Republican
+## 5 Ford       1974-08-09 1977-01-20 Republican
+## 6 Carter     1977-01-20 1981-01-20 Democratic
+```
+
+
+---
+
+# `select()`
+
+.center[&lt;img src="Figures/select.png"&gt;]
+
+---
+
+
+```r
+select(dat,name,party)
+```
+
+```
+## # A tibble: 11 x 2
+##    name       party     
+##    &lt;chr&gt;      &lt;chr&gt;     
+##  1 Eisenhower Republican
+##  2 Kennedy    Democratic
+##  3 Johnson    Democratic
+##  4 Nixon      Republican
+##  5 Ford       Republican
+##  6 Carter     Democratic
+##  7 Reagan     Republican
+##  8 Bush       Republican
+##  9 Clinton    Democratic
+## 10 Bush       Republican
+## 11 Obama      Democratic
+```
+
+---
+
+Or variable ranges using `:`
+
+The following will provide all variables in-between `name` and `end`.
+
+
+```r
+select(dat,name:end)
+```
+
+```
+## # A tibble: 11 x 3
+##    name       start      end       
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;    
+##  1 Eisenhower 1953-01-20 1961-01-20
+##  2 Kennedy    1961-01-20 1963-11-22
+##  3 Johnson    1963-11-22 1969-01-20
+##  4 Nixon      1969-01-20 1974-08-09
+##  5 Ford       1974-08-09 1977-01-20
+##  6 Carter     1977-01-20 1981-01-20
+##  7 Reagan     1981-01-20 1989-01-20
+##  8 Bush       1989-01-20 1993-01-20
+##  9 Clinton    1993-01-20 2001-01-20
+## 10 Bush       2001-01-20 2009-01-20
+## 11 Obama      2009-01-20 2017-01-20
+```
+
+---
+
+The **order** in which variables are selected will translate to the output. Thus, one can easily **reorder columns** with `select()`.
+
+```r
+select(dat,name,end,start)
+```
+
+```
+## # A tibble: 11 x 3
+##    name       end        start     
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;    
+##  1 Eisenhower 1961-01-20 1953-01-20
+##  2 Kennedy    1963-11-22 1961-01-20
+##  3 Johnson    1969-01-20 1963-11-22
+##  4 Nixon      1974-08-09 1969-01-20
+##  5 Ford       1977-01-20 1974-08-09
+##  6 Carter     1981-01-20 1977-01-20
+##  7 Reagan     1989-01-20 1981-01-20
+##  8 Bush       1993-01-20 1989-01-20
+##  9 Clinton    2001-01-20 1993-01-20
+## 10 Bush       2009-01-20 2001-01-20
+## 11 Obama      2017-01-20 2009-01-20
+```
+
+---
+
+We can also easily **rename** variables by simply providing a new name within the function.
+
+```r
+select(dat,president=name,
+       startdate=start,
+       enddate=end)
+```
+
+```
+## # A tibble: 11 x 3
+##    president  startdate  enddate   
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;    
+##  1 Eisenhower 1953-01-20 1961-01-20
+##  2 Kennedy    1961-01-20 1963-11-22
+##  3 Johnson    1963-11-22 1969-01-20
+##  4 Nixon      1969-01-20 1974-08-09
+##  5 Ford       1974-08-09 1977-01-20
+##  6 Carter     1977-01-20 1981-01-20
+##  7 Reagan     1981-01-20 1989-01-20
+##  8 Bush       1989-01-20 1993-01-20
+##  9 Clinton    1993-01-20 2001-01-20
+## 10 Bush       2001-01-20 2009-01-20
+## 11 Obama      2009-01-20 2017-01-20
+```
+
+---
+
+Lastly, `select()` offers us a convenient way to drop variables by using the same logic that we employed with putting a **negative sign** in front of a dimension. The only difference here is that we can do the same but with a variable name.
+
+Here we **drop** the `start` date variable.
+
+```r
+select(dat,-start)
+```
+
+```
+## # A tibble: 11 x 3
+##    name       end        party     
+##    &lt;chr&gt;      &lt;date&gt;     &lt;chr&gt;     
+##  1 Eisenhower 1961-01-20 Republican
+##  2 Kennedy    1963-11-22 Democratic
+##  3 Johnson    1969-01-20 Democratic
+##  4 Nixon      1974-08-09 Republican
+##  5 Ford       1977-01-20 Republican
+##  6 Carter     1981-01-20 Democratic
+##  7 Reagan     1989-01-20 Republican
+##  8 Bush       1993-01-20 Republican
+##  9 Clinton    2001-01-20 Democratic
+## 10 Bush       2009-01-20 Republican
+## 11 Obama      2017-01-20 Democratic
+```
+
+---
+
+## `filter()`
+
+.center[&lt;img src="Figures/filter.png"&gt;]
+
+---
+
+
+```r
+filter(dat,party == "Republican")
+```
+
+```
+## # A tibble: 6 x 4
+##   name       start      end        party     
+##   &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;     
+## 1 Eisenhower 1953-01-20 1961-01-20 Republican
+## 2 Nixon      1969-01-20 1974-08-09 Republican
+## 3 Ford       1974-08-09 1977-01-20 Republican
+## 4 Reagan     1981-01-20 1989-01-20 Republican
+## 5 Bush       1989-01-20 1993-01-20 Republican
+## 6 Bush       2001-01-20 2009-01-20 Republican
+```
+
+---
+
+## `arrange()`
+
+.center[&lt;img src="Figures/arrange.png"&gt;]
+---
+
+
+```r
+arrange(dat,party)
+```
+
+```
+## # A tibble: 11 x 4
+##    name       start      end        party     
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;     
+##  1 Kennedy    1961-01-20 1963-11-22 Democratic
+##  2 Johnson    1963-11-22 1969-01-20 Democratic
+##  3 Carter     1977-01-20 1981-01-20 Democratic
+##  4 Clinton    1993-01-20 2001-01-20 Democratic
+##  5 Obama      2009-01-20 2017-01-20 Democratic
+##  6 Eisenhower 1953-01-20 1961-01-20 Republican
+##  7 Nixon      1969-01-20 1974-08-09 Republican
+##  8 Ford       1974-08-09 1977-01-20 Republican
+##  9 Reagan     1981-01-20 1989-01-20 Republican
+## 10 Bush       1989-01-20 1993-01-20 Republican
+## 11 Bush       2001-01-20 2009-01-20 Republican
+```
+
+---
+
+`arrange()` with the internal function `desc()` can change to a **descending** ordering.
+
+```r
+arrange(dat,desc(start))
+```
+
+```
+## # A tibble: 11 x 4
+##    name       start      end        party     
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;     
+##  1 Obama      2009-01-20 2017-01-20 Democratic
+##  2 Bush       2001-01-20 2009-01-20 Republican
+##  3 Clinton    1993-01-20 2001-01-20 Democratic
+##  4 Bush       1989-01-20 1993-01-20 Republican
+##  5 Reagan     1981-01-20 1989-01-20 Republican
+##  6 Carter     1977-01-20 1981-01-20 Democratic
+##  7 Ford       1974-08-09 1977-01-20 Republican
+##  8 Nixon      1969-01-20 1974-08-09 Republican
+##  9 Johnson    1963-11-22 1969-01-20 Democratic
+## 10 Kennedy    1961-01-20 1963-11-22 Democratic
+## 11 Eisenhower 1953-01-20 1961-01-20 Republican
+```
+
+---
+
+## `mutate()`
+
+.center[&lt;img src="Figures/mutate.png"&gt;]
+
+---
+
+
+```r
+mutate(dat,
+       # in office during cold war
+       CW = start &lt;= '1990-03-11')
+```
+
+```
+## # A tibble: 11 x 5
+##    name       start      end        party      CW   
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;      &lt;lgl&gt;
+##  1 Eisenhower 1953-01-20 1961-01-20 Republican TRUE 
+##  2 Kennedy    1961-01-20 1963-11-22 Democratic TRUE 
+##  3 Johnson    1963-11-22 1969-01-20 Democratic TRUE 
+##  4 Nixon      1969-01-20 1974-08-09 Republican TRUE 
+##  5 Ford       1974-08-09 1977-01-20 Republican TRUE 
+##  6 Carter     1977-01-20 1981-01-20 Democratic TRUE 
+##  7 Reagan     1981-01-20 1989-01-20 Republican TRUE 
+##  8 Bush       1989-01-20 1993-01-20 Republican TRUE 
+##  9 Clinton    1993-01-20 2001-01-20 Democratic FALSE
+## 10 Bush       2001-01-20 2009-01-20 Republican FALSE
+## 11 Obama      2009-01-20 2017-01-20 Democratic FALSE
+```
+
+---
+
+`mutate()` also allows us to **_instantly_** use variables we just created.
+
+
+```r
+mutate(dat,
+       CW = start &lt;= '1990-03-11',
+       CW = as.numeric(CW))
+```
+
+```
+## # A tibble: 11 x 5
+##    name       start      end        party         CW
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;      &lt;dbl&gt;
+##  1 Eisenhower 1953-01-20 1961-01-20 Republican     1
+##  2 Kennedy    1961-01-20 1963-11-22 Democratic     1
+##  3 Johnson    1963-11-22 1969-01-20 Democratic     1
+##  4 Nixon      1969-01-20 1974-08-09 Republican     1
+##  5 Ford       1974-08-09 1977-01-20 Republican     1
+##  6 Carter     1977-01-20 1981-01-20 Democratic     1
+##  7 Reagan     1981-01-20 1989-01-20 Republican     1
+##  8 Bush       1989-01-20 1993-01-20 Republican     1
+##  9 Clinton    1993-01-20 2001-01-20 Democratic     0
+## 10 Bush       2001-01-20 2009-01-20 Republican     0
+## 11 Obama      2009-01-20 2017-01-20 Democratic     0
+```
+
+---
+
+Like `mutate()`, `transmute()` provides a method for generating a new variable, but unlike the former, it **returns only the newly created variable**.
+
+
+```r
+transmute(dat,CW = start &lt;= '1990-03-11')
+```
+
+```
+## # A tibble: 11 x 1
+##    CW   
+##    &lt;lgl&gt;
+##  1 TRUE 
+##  2 TRUE 
+##  3 TRUE 
+##  4 TRUE 
+##  5 TRUE 
+##  6 TRUE 
+##  7 TRUE 
+##  8 TRUE 
+##  9 FALSE
+## 10 FALSE
+## 11 FALSE
+```
+
+---
+
+## `summarize()`
+
+
+```r
+summarize(presidential,
+          days_in_office = mean(end-start),
+          max = max(end-start),
+          min = min(end-start))
+```
+
+```
+## # A tibble: 1 x 3
+##   days_in_office max       min     
+##   &lt;drtn&gt;         &lt;drtn&gt;    &lt;drtn&gt;  
+## 1 2125.091 days  2922 days 895 days
+```
+
+---
+
+There are a number of internal functions that can be used with `mutate()`, `transmute()`,
+and `summarize()`.
+
+- `n()` ::: counts the number of observations
+- `n_distinct()` ::: counts the number of distinct entries
+
+
+```r
+summarize(dat,N=n(),N_party=n_distinct(party))
+```
+
+```
+## # A tibble: 1 x 2
+##       N N_party
+##   &lt;int&gt;   &lt;int&gt;
+## 1    11       2
+```
+
+---
+
+## `group_by()`
+
+.center[&lt;img src="Figures/group_by.png"&gt;]
+
+---
+
+When used in conjunction with some of the other functions, `group_by()` becomes a powerful **clustering function**.
+
+```r
+# group by party
+x &lt;- group_by(presidential,party)
+summarize(x,min_in_office = min(end-start))
+```
+
+```
+## # A tibble: 2 x 2
+##   party      min_in_office
+##   &lt;chr&gt;      &lt;drtn&gt;       
+## 1 Democratic 1036 days    
+## 2 Republican  895 days
+```
+
+
+---
+
+### Other functions in the tidyverse...
+
+`tally()` or `count()` offers quick counts of a variable which can be quite useful when used alongside some of the other functions.
+
+Here we are seeing how many observations we have _by group_.
+
+```r
+x &lt;- group_by(dat,party)
+count(x)
+```
+
+```
+## # A tibble: 2 x 2
+## # Groups:   party [2]
+##   party          n
+##   &lt;chr&gt;      &lt;int&gt;
+## 1 Democratic     5
+## 2 Republican     6
+```
+
+
+---
+
+### Other functions in the tidyverse...
+
+`recode()` allows you to quickly **recode a variable** (though conditional statements prove to be the most efficient way to do this)
+
+```r
+mutate(dat,party = recode(party,'Republican'=1,'Democratic'=0))
+```
+
+```
+## # A tibble: 11 x 4
+##    name       start      end        party
+##    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt;
+##  1 Eisenhower 1953-01-20 1961-01-20     1
+##  2 Kennedy    1961-01-20 1963-11-22     0
+##  3 Johnson    1963-11-22 1969-01-20     0
+##  4 Nixon      1969-01-20 1974-08-09     1
+##  5 Ford       1974-08-09 1977-01-20     1
+##  6 Carter     1977-01-20 1981-01-20     0
+##  7 Reagan     1981-01-20 1989-01-20     1
+##  8 Bush       1989-01-20 1993-01-20     1
+##  9 Clinton    1993-01-20 2001-01-20     0
+## 10 Bush       2001-01-20 2009-01-20     1
+## 11 Obama      2009-01-20 2017-01-20     0
+```
+
+---
+
+### And much more...
+
+We've only covered a few functions here. Here are some more...
+- `sample_n()` - Grab an N random sample of your data
+- `sample_frac()` - Grab a random sample that is some fraction of your total data
+- `top_n()` - get the top N number of entries from a data frame
+- `slice()` - grab specific row ranges
+- `glimpse()` - quickly preview the data
+
+See [here](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) to download a cheatsheet containing an entire list of the tidyverse `dplyr` verbs.
+
+---
+
+class:newsection
+
+# Piping 
+
+---
+
+## Combining `dplyr` functions
+
+When we need to do a series of manipulations, we can **perform each manipulation individually and save each entry as a new object** that we write over.
+
+```r
+x &lt;- filter(presidential,party=='Republican')
+x &lt;- group_by(x,name)
+x &lt;- transmute(x,t_in_office = end-start)
+x &lt;- arrange(x,t_in_office)
+x
+```
+
+```
+## # A tibble: 6 x 2
+## # Groups:   name [5]
+##   name       t_in_office
+##   &lt;chr&gt;      &lt;drtn&gt;     
+## 1 Ford        895 days  
+## 2 Bush       1461 days  
+## 3 Nixon      2027 days  
+## 4 Eisenhower 2922 days  
+## 5 Reagan     2922 days  
+## 6 Bush       2922 days
+```
+
+---
+
+Or we can **nest** functions _within_ each other.
+
+```r
+arrange(
+  transmute(
+    group_by(
+      filter(presidential,party=='Republican'),name),
+    t_in_office = end-start),
+  t_in_office)
+```
+
+```
+## # A tibble: 6 x 2
+## # Groups:   name [5]
+##   name       t_in_office
+##   &lt;chr&gt;      &lt;drtn&gt;     
+## 1 Ford        895 days  
+## 2 Bush       1461 days  
+## 3 Nixon      2027 days  
+## 4 Eisenhower 2922 days  
+## 5 Reagan     2922 days  
+## 6 Bush       2922 days
+```
+
+--
+
+&gt; The issue with **nesting functions** is that it is &lt;font color = 'red'&gt; difficult to (a) read and (b) detect a mistake!&lt;/font&gt;
+
+---
+
+### Piping Functions
+
+The **pipe** is a useful tool that allows us to **pass** output from one function to the next.
+
+To pipe we write **`%&gt;%`** _in-between_ each function.
+
+.center[`data %&gt;% function1() %&gt;% function2()`]
+
+We pass the output to specific locations in the proceeding function using the pointer `.`
+
+.center[`data %&gt;% function1(arg = .)`]
+
+Piping offers is a clean way of manipulating data that is **intuitive and easy to read**.
+
+---
+
+Here we **pass** our `data` to `filter()` then to `group_by()` then to `transmute()` and then finally to `arrange()` which returns our output!
+
+
+```r
+presidential %&gt;%
+  filter(party=='Republican') %&gt;%
+  group_by(name) %&gt;%
+  transmute(t_in_office = end-start) %&gt;%
+  arrange(t_in_office)
+```
+
+```
+## # A tibble: 6 x 2
+## # Groups:   name [5]
+##   name       t_in_office
+##   &lt;chr&gt;      &lt;drtn&gt;     
+## 1 Ford        895 days  
+## 2 Bush       1461 days  
+## 3 Nixon      2027 days  
+## 4 Eisenhower 2922 days  
+## 5 Reagan     2922 days  
+## 6 Bush       2922 days
+```
+
+---
+
+### Two things to keep in mind when piping...
+
+1. Functions **_must_** be linked with `%&gt;%`
+
+2. When functions have **multiple arguments**, point to where the data should go with a period (`.`)
+
+```r
+data %&gt;% function(arg1= ., arg2=TRUE)
+```
+
+
+---
+
+# PRACTICE: ![:text_color steelblue](_Wrangling Data_)
+
+![:space 5]
+
+Please **_download and complete_** the following practice on your own:
+
+.center[ **[Download the Data Wrangling Practice Set](practice/week04-practice-01_Data-Wrangling.Rmd)** (`.Rmd`)]
+
+![:space 5]
+
+Then **_compare your answers_** to the answers in the **_answer key_**:
+
+.center[ **[Download Answer Key](practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd)** (`.Rmd`)]
+
+---
+
+class:newsection
+
+# Joining
+
+
+---
+
+## `_join` functions (dplyr)
+
+`dplyr` offers a range of joining/merging functions that are more intuitive to use. These functions provide a **SQL framework** that is easier to read and more efficient.
+- `left_join()`
+- `right_join()`
+- `inner_join()`
+- `full_join()`
+- `anti_join()`
+
+When joining data, you must have a **unique** identifier on the dimension you're matching on.
+
+---
+
+Consider the following two example datasets...
+
+
+```r
+data_A
+```
+
+```
+##    country Var1
+## 1  Nigeria    4
+## 2  England    3
+## 3 Botswana    6
+```
+
+```r
+data_B
+```
+
+```
+##         country   Var2
+## 1       Nigeria    Low
+## 2 United States   High
+## 3      Botswana Medium
+```
+
+---
+
+## `left_join()`
+
+.center[&lt;img src="Figures/left_join.png", height=100px&gt;]
+
+.center[&lt;img src="Figures/left-join.gif", height=400px&gt;]
+
+---
+
+## `left_join()`
+
+.center[&lt;img src="Figures/left_join.png", height=100px&gt;]
+
+
+```r
+left_join(data_A,data_B,by="country")
+```
+
+```
+##    country Var1   Var2
+## 1  Nigeria    4    Low
+## 2  England    3   &lt;NA&gt;
+## 3 Botswana    6 Medium
+```
+
+
+---
+
+## `right_join()`
+
+.center[&lt;img src="Figures/right_join.png", height=100px&gt;]
+
+.center[&lt;img src="Figures/right-join.gif", height=400px&gt;]
+
+---
+
+## `right_join()`
+
+.center[&lt;img src="Figures/right_join.png", height=100px&gt;]
+
+
+```r
+right_join(data_A,data_B,by="country")
+```
+
+```
+##         country Var1   Var2
+## 1       Nigeria    4    Low
+## 2 United States   NA   High
+## 3      Botswana    6 Medium
+```
+
+---
+
+## `inner_join()`
+
+.center[&lt;img src="Figures/inner_join.png", height=100px&gt;]
+
+.center[&lt;img src="Figures/inner-join.gif", height=400px&gt;]
+
+---
+
+## `inner_join()`
+
+.center[&lt;img src="Figures/inner_join.png", height=100px&gt;]
+
+
+```r
+inner_join(data_A,data_B,by="country")
+```
+
+```
+##    country Var1   Var2
+## 1  Nigeria    4    Low
+## 2 Botswana    6 Medium
+```
+
+---
+
+ ### `full_join()` 
+ 
+.center[&lt;img src="Figures/full_join.png", height=100px&gt;]
+
+.center[&lt;img src="Figures/full-join.gif", height=400px&gt;]
+
+
+
+---
+
+### `full_join()`
+
+&lt;center&gt; &lt;img src="Figures/full_join.png", height=100px&gt; &lt;/center&gt;
+
+
+```r
+full_join(data_A,data_B,by="country")
+```
+
+```
+##         country Var1   Var2
+## 1       Nigeria    4    Low
+## 2       England    3   &lt;NA&gt;
+## 3      Botswana    6 Medium
+## 4 United States   NA   High
+```
+
+---
+
+### `anti_join()` 
+ 
+.center[&lt;img src="Figures/anti_join_left.png", height=100px&gt;]
+
+.center[&lt;img src="Figures/anti-join.gif", height=400px&gt;]
+
+---
+
+### `anti_join()` 
+
+.center[&lt;img src="Figures/anti_join_left.png", height=100px&gt;]
+
+
+```r
+anti_join(data_A,data_B,by="country")
+```
+
+```
+##   country Var1
+## 1 England    3
+```
+
+---
+
+## `bind_rows()`
+
+&lt;center&gt; &lt;img src="Figures/rbind.png"&gt; &lt;/center&gt;
+
+```r
+bind_rows(data_A,data_B)
+```
+
+```
+##         country Var1   Var2
+## 1       Nigeria    4   &lt;NA&gt;
+## 2       England    3   &lt;NA&gt;
+## 3      Botswana    6   &lt;NA&gt;
+## 4       Nigeria   NA    Low
+## 5 United States   NA   High
+## 6      Botswana   NA Medium
+```
+
+---
+
+## `bind_cols()`
+
+&lt;center&gt; &lt;img src="Figures/cbind.png"&gt; &lt;/center&gt;
+
+```r
+bind_cols(data_A,data_B)
+```
+
+```
+##    country Var1      country1   Var2
+## 1  Nigeria    4       Nigeria    Low
+## 2  England    3 United States   High
+## 3 Botswana    6      Botswana Medium
+```
+
+---
+
+## Disparate column names
+
+Sometimes the naming conventions of two datasets don't perfectly align. When this happens, we can specify how data merges onto one another more explicitly using the `by=` argument.
+
+Moreover, we can merge on **_more_ than one dimension** by specifying all relevant column names.
+
+---
+
+Once again, consider the following example data..
+
+
+```r
+data_A
+```
+
+```
+##    country year Var1
+## 1  Nigeria 1999    4
+## 2  England 2001    3
+## 3 Botswana 2000    6
+```
+
+```r
+data_B
+```
+
+```
+##    country_name year   Var2
+## 1       Nigeria 1999    Low
+## 2 United States 2004   High
+## 3      Botswana 2003 Medium
+```
+
+---
+
+
+```r
+full_join(data_A,data_B,
+          by=c('country'='country_name',
+               'year'))
+```
+
+```
+##         country year Var1   Var2
+## 1       Nigeria 1999    4    Low
+## 2       England 2001    3   &lt;NA&gt;
+## 3      Botswana 2000    6   &lt;NA&gt;
+## 4 United States 2004   NA   High
+## 5      Botswana 2003   NA Medium
+```
+
+
+---
+
+## Merging as a subsetting strategy 
+
+Using set operations to subset and join data...
+
+.center[&lt;img src="Figures/intersect.gif", height=400px&gt;]
+
+---
+
+## Merging as a subsetting strategy 
+
+Using set operations to subset and join data...
+
+.center[&lt;img src="Figures/setdiff.gif", height=400px&gt;]
+
+---
+
+## Merging as a subsetting strategy 
+
+Using set operations to subset and join data...
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+.center[&lt;img src="Figures/union.gif", height=400px&gt;]
+
+---
+
+## Merging as a subsetting strategy 
+
+Using set operations to subset and join data...
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+.center[&lt;img src="Figures/union-all.gif", height=400px&gt;]
+
+---
+
+class:newsection
+
+# Reshaping
+
+---
+
+Often, we need to alter the structure of a `data.frame` from a **wide format**...
+&lt;br&gt;&lt;br&gt;
+
+.center[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 1992 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 1993 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 1994 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Nigeria &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.72 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.06 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.66 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Iran &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.88 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.86 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.78 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Cambodia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.78 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.23 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.61 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Australia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.04 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.37 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.18 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+...into a **long format**
+
+.center[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; var &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Nigeria &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1992 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.72 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Nigeria &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1993 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.06 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Nigeria &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1994 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.66 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Iran &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1992 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.88 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Iran &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1993 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.86 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Iran &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1994 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.78 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Cambodia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1992 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.78 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Cambodia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1993 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Cambodia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1994 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.61 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Australia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1992 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.04 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Australia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1993 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9.37 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Australia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1994 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10.18 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+---
+
+## `tidyr`
+
+`tidyr` is a tidyverse package built to help reshape data. The package contains an array of functions that are all useful cleaning a data construct. 
+
+`tidyr` eases tasks such as:
+
+- dropping missing values
+- filling missing values
+- separating a column into two variables or uniting two columns into one
+
+We'll focus on two important functions designed to reshape data: **`gather()`** and **`spread()`**
+
+---
+
+&lt;br&gt;
+.center[&lt;img src="Figures/tidyr-spread-gather.gif"&gt;]
+
+
+---
+
+## `gather()`: from wide-to-long
+
+.center[&lt;img src ="Figures/gather.png"&gt;]
+
+---
+
+
+
+
+## `gather()`: from wide-to-long
+
+Two arguments:
+
+- `key`: name of the variable that all the _variable **names**_ will be stored as. 
+- `value`: name of the variable that all the _variable **values**_ will be stored as.
+
+
+```r
+dat
+```
+
+```
+##      country year     X Y
+## 1    Nigeria 1992  9.72 2
+## 2       Iran 1992  9.88 2
+## 3   Cambodia 1992 10.78 1
+## 4  Australia 1992 10.04 2
+## 5    Nigeria 1993 10.06 1
+## 6       Iran 1993 10.86 0
+## 7   Cambodia 1993 10.23 4
+## 8  Australia 1993  9.37 3
+## 9    Nigeria 1994  9.66 2
+## 10      Iran 1994  9.78 2
+## 11  Cambodia 1994 10.61 0
+## 12 Australia 1994 10.18 1
+```
+
+---
+
+## `gather()`: from wide-to-long
+
+Two arguments:
+
+- `key`: name of the variable that all the _variable **names**_ will be stored as. 
+- `value`: name of the variable that all the _variable **values**_ will be stored as.
+
+
+```r
+dat %&gt;% gather(key,value)
+```
+
+```
+##        key     value
+## 1  country   Nigeria
+## 2  country      Iran
+## 3  country  Cambodia
+## 4  country Australia
+## 5  country   Nigeria
+## 6  country      Iran
+## 7  country  Cambodia
+## 8  country Australia
+## 9  country   Nigeria
+## 10 country      Iran
+## 11 country  Cambodia
+## 12 country Australia
+## 13    year      1992
+## 14    year      1992
+## 15    year      1992
+## 16    year      1992
+## 17    year      1993
+## 18    year      1993
+## 19    year      1993
+## 20    year      1993
+## 21    year      1994
+## 22    year      1994
+## 23    year      1994
+## 24    year      1994
+## 25       X      9.72
+## 26       X      9.88
+## 27       X     10.78
+## 28       X     10.04
+## 29       X     10.06
+## 30       X     10.86
+## 31       X     10.23
+## 32       X      9.37
+## 33       X      9.66
+## 34       X      9.78
+## 35       X     10.61
+## 36       X     10.18
+## 37       Y         2
+## 38       Y         2
+## 39       Y         1
+## 40       Y         2
+## 41       Y         1
+## 42       Y         0
+## 43       Y         4
+## 44       Y         3
+## 45       Y         2
+## 46       Y         2
+## 47       Y         0
+## 48       Y         1
+```
+
+
+---
+
+## `gather()`: from wide-to-long
+
+Two arguments:
+
+- `key`: name of the variable that all the _variable **names**_ will be stored as. 
+- `value`: name of the variable that all the _variable **values**_ will be stored as.
+
+
+```r
+dat %&gt;% gather(var_names,var_values) # Any naming convention works
+```
+
+```
+##    var_names var_values
+## 1    country    Nigeria
+## 2    country       Iran
+## 3    country   Cambodia
+## 4    country  Australia
+## 5    country    Nigeria
+## 6    country       Iran
+## 7    country   Cambodia
+## 8    country  Australia
+## 9    country    Nigeria
+## 10   country       Iran
+## 11   country   Cambodia
+## 12   country  Australia
+## 13      year       1992
+## 14      year       1992
+## 15      year       1992
+## 16      year       1992
+## 17      year       1993
+## 18      year       1993
+## 19      year       1993
+## 20      year       1993
+## 21      year       1994
+## 22      year       1994
+## 23      year       1994
+## 24      year       1994
+## 25         X       9.72
+## 26         X       9.88
+## 27         X      10.78
+## 28         X      10.04
+## 29         X      10.06
+## 30         X      10.86
+## 31         X      10.23
+## 32         X       9.37
+## 33         X       9.66
+## 34         X       9.78
+## 35         X      10.61
+## 36         X      10.18
+## 37         Y          2
+## 38         Y          2
+## 39         Y          1
+## 40         Y          2
+## 41         Y          1
+## 42         Y          0
+## 43         Y          4
+## 44         Y          3
+## 45         Y          2
+## 46         Y          2
+## 47         Y          0
+## 48         Y          1
+```
+
+---
+
+## `gather()`: from wide-to-long
+
+Two arguments:
+
+- `key`: name of the variable that all the _variable **names**_ will be stored as. 
+- `value`: name of the variable that all the _variable **values**_ will be stored as.
+
+
+```r
+# variables can be excluded from the reshape
+dat %&gt;% gather(var_names,var_values,-country,-year) 
+```
+
+```
+##      country year var_names var_values
+## 1    Nigeria 1992         X       9.72
+## 2       Iran 1992         X       9.88
+## 3   Cambodia 1992         X      10.78
+## 4  Australia 1992         X      10.04
+## 5    Nigeria 1993         X      10.06
+## 6       Iran 1993         X      10.86
+## 7   Cambodia 1993         X      10.23
+## 8  Australia 1993         X       9.37
+## 9    Nigeria 1994         X       9.66
+## 10      Iran 1994         X       9.78
+## 11  Cambodia 1994         X      10.61
+## 12 Australia 1994         X      10.18
+## 13   Nigeria 1992         Y       2.00
+## 14      Iran 1992         Y       2.00
+## 15  Cambodia 1992         Y       1.00
+## 16 Australia 1992         Y       2.00
+## 17   Nigeria 1993         Y       1.00
+## 18      Iran 1993         Y       0.00
+## 19  Cambodia 1993         Y       4.00
+## 20 Australia 1993         Y       3.00
+## 21   Nigeria 1994         Y       2.00
+## 22      Iran 1994         Y       2.00
+## 23  Cambodia 1994         Y       0.00
+## 24 Australia 1994         Y       1.00
+```
+
+
+---
+
+## `spread()`: from long-to-wide
+
+.center[&lt;img src ="Figures/spread.png"&gt;]
+
+---
+
+## `spread()`: from long-to-wide
+
+Two arguments:
+
+- `key`: name of the variable that will be spread out into columns. 
+- `value`: variable that will be spread out along the key variable.
+- `fill`: what values should fill missing cells? (`NA` by default)
+
+
+```r
+dat 
+```
+
+```
+##      country year     X Y
+## 1    Nigeria 1992  9.72 2
+## 2       Iran 1992  9.88 2
+## 3   Cambodia 1992 10.78 1
+## 4  Australia 1992 10.04 2
+## 5    Nigeria 1993 10.06 1
+## 6       Iran 1993 10.86 0
+## 7   Cambodia 1993 10.23 4
+## 8  Australia 1993  9.37 3
+## 9    Nigeria 1994  9.66 2
+## 10      Iran 1994  9.78 2
+## 11  Cambodia 1994 10.61 0
+## 12 Australia 1994 10.18 1
+```
+
+---
+
+## `spread()`: from long-to-wide
+
+Two arguments:
+
+- `key`: name of the variable that will be spread out into columns. 
+- `value`: variable that will be spread out along the key variable.
+- `fill`: what values should fill missing cells? (`NA` by default)
+
+
+```r
+dat %&gt;% spread(key = country, value = X)
+```
+
+```
+##   year Y Nigeria  Iran Cambodia Australia
+## 1 1992 1      NA    NA    10.78        NA
+## 2 1992 2    9.72  9.88       NA     10.04
+## 3 1993 0      NA 10.86       NA        NA
+## 4 1993 1   10.06    NA       NA        NA
+## 5 1993 3      NA    NA       NA      9.37
+## 6 1993 4      NA    NA    10.23        NA
+## 7 1994 0      NA    NA    10.61        NA
+## 8 1994 1      NA    NA       NA     10.18
+## 9 1994 2    9.66  9.78       NA        NA
+```
+
+---
+
+## `spread()`: from long-to-wide
+
+Two arguments:
+
+- `key`: name of the variable that will be spread out into columns. 
+- `value`: variable that will be spread out along the key variable.
+- `fill`: what values should fill missing cells? (`NA` by default)
+
+
+```r
+dat %&gt;% spread(key = country, value = X, fill = 0) 
+```
+
+```
+##   year Y Nigeria  Iran Cambodia Australia
+## 1 1992 1    0.00  0.00    10.78      0.00
+## 2 1992 2    9.72  9.88     0.00     10.04
+## 3 1993 0    0.00 10.86     0.00      0.00
+## 4 1993 1   10.06  0.00     0.00      0.00
+## 5 1993 3    0.00  0.00     0.00      9.37
+## 6 1993 4    0.00  0.00    10.23      0.00
+## 7 1994 0    0.00  0.00    10.61      0.00
+## 8 1994 1    0.00  0.00     0.00     10.18
+## 9 1994 2    9.66  9.78     0.00      0.00
+```
+
+---
+
+## `spread()`: from long-to-wide
+
+Two arguments:
+
+- `key`: name of the variable that will be spread out into columns. 
+- `value`: variable that will be spread out along the key variable.
+- `fill`: what values should fill missing cells? (`NA` by default)
+
+
+```r
+dat %&gt;% spread(key = year, value = Y, fill = 0) 
+```
+
+```
+##      country     X 1992 1993 1994
+## 1    Nigeria  9.66    0    0    2
+## 2    Nigeria  9.72    2    0    0
+## 3    Nigeria 10.06    0    1    0
+## 4       Iran  9.78    0    0    2
+## 5       Iran  9.88    2    0    0
+## 6       Iran 10.86    0    0    0
+## 7   Cambodia 10.23    0    4    0
+## 8   Cambodia 10.61    0    0    0
+## 9   Cambodia 10.78    1    0    0
+## 10 Australia  9.37    0    3    0
+## 11 Australia 10.04    2    0    0
+## 12 Australia 10.18    0    0    1
+```
+
+
+---
+
+# PRACTICE: 
+## ![:text_color steelblue](_Joining and Reshaping Data_)
+
+![:space 2]
+
+
+Please **_download and complete_** the following practice on your own:
+
+.center[ **[Download the Joining &amp; Reshaping Practice Set](practice/week04-practice-02_joining-reshaping.Rmd)** (`.Rmd`)]
+
+![:space 5]
+
+Then **_compare your answers_** to the answers in the **_answer key_**:
+
+.center[ **[Download Answer Key](practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd)** (`.Rmd`)]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

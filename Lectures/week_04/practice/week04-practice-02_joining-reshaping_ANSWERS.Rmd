@@ -1,0 +1,135 @@
+---
+title: "Week 4 - Practice 2 - Joining and Reshaping Data"
+subtitle: "ANSWER KEY"
+output: html_notebook
+---
+
+
+# Instructions
+
+Use data located in the `Data/` folder to complete the questions below. Please use the `_join()` functions from the tidyverse (`dplyr`) to complete each question. In addition, some of the questions require you to reshape the data. For these question, please use the `gather()` and `spread()` functions (`tidyr`). Both functions can be acquired by loading the `tidyverse` package
+
+```{r}
+require(tidyverse)
+```
+
+
+
+# Questions
+
+
+## Question 1
+
+#### (a) Read in `states-dogs-data.csv`, `states-beer-data.csv`, and `states-traffic-data.csv` from the `Data/` folder. Assign the data to the respective object names `dogs`, `beertax`, and `traffic`.
+
+```{r}
+dogs <- read_csv('Data/states-dogs-data.csv')
+beertax <- read_csv('Data/states-beer-data.csv')
+traffic <- read_csv('Data/states-traffic-data.csv')
+```
+
+#### (b) Print off the column names in each data set. Are there any ID variables that are mutually occurring across the 3 datasets? Any potential issues?
+
+```{r}
+colnames(dogs)
+```
+
+```{r}
+colnames(beertax)
+```
+
+```{r}
+colnames(traffic)
+```
+
+#### (c) Examine the structure (`str()`) of all three datasets. What are the differences across the datasets?
+
+
+```{r}
+str(dogs)
+```
+
+```{r}
+str(beertax)
+```
+
+
+```{r}
+str(traffic)
+```
+
+
+## Question 2
+
+#### (a) Join `beertax` and `dogs` data so that only the states in `dogs` are retained? Assign to the object named `join1`.
+
+```{r}
+join1 = right_join(beertax,dogs,by=c('STATE'='state','YEAR'='year'))
+join1
+```
+
+#### (b) How many entries for the `beer_tax` variable are missing from the `join1` data? Why are these values missing?
+
+```{r}
+join1 %>% 
+  summarize(missing = sum(is.na(beer_tax)))
+```
+
+
+#### (c) Join `beertax` and `dogs` data so that only the states in `beertax` are retained? Assign to the object named `join2`.
+
+```{r}
+join2 = left_join(beertax,dogs,by=c('STATE'='state','YEAR'='year'))
+join2
+```
+
+#### (d) How many entries for the `dogs_per_1000` variable are missing from the `join2` data? Why are these values missing?
+
+```{r}
+join2 %>% 
+  summarize(missing = sum(is.na(dogs_per_1000)))
+```
+
+
+## Question 3
+
+#### (a) join the three datasets so that no values are dropped from either the right or left dataset and assign to the object name `fulldat`.
+
+```{r}
+fulldat <-
+  full_join(dogs,beertax,by=c('state'='STATE','year'='YEAR')) %>% 
+  full_join(.,traffic,by=c('state'='state_name','year'='date_year'))
+fulldat
+```
+
+#### (b) how many observations are missing from the `dogs_per_1000`, `beer_tax`, and `traffic_per_1000` variables in `fulldat`? Why are some values missing in some of the variable columns?
+
+```{r}
+fulldat %>% 
+  summarize(missing_dogs = sum(is.na(dogs_per_1000)),
+            missing_beer = sum(is.na(beer_tax)),
+            missing_traffic = sum(is.na(traffic_per_1000)))
+```
+
+
+## Question 4
+
+#### (a) spread the `fulldat` data into a wide format. Where the `year` makes up the spread columns and `traffic_per_1000` populate the values for the spread columns. Fill all missing values with a `-99`. Assign the output to the object `fulldat2`.
+
+```{r}
+fulldat2<-
+  fulldat %>% 
+  spread(year,traffic_per_1000,fill=-99)
+
+fulldat2
+```
+
+
+#### (b) using `replace_na()` replace all missing values with `-99` in `fulldat2`. Overwrite the `fulldat2` object to retain your changes. (Tip: use the documentation to learn how to use `?replace_na()`)
+
+```{r}
+fulldat2 <-
+  fulldat2 %>% 
+  replace_na(list(dogs_per_1000 = -99, beer_tax = -99))
+fulldat2
+```
