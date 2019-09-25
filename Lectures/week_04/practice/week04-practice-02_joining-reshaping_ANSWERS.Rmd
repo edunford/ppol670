@@ -4,15 +4,25 @@ subtitle: "ANSWER KEY"
 output: html_notebook
 ---
 
+```{r include = FALSE}
+knitr::opts_chunk$set(warning=F,error=F,message = F)
+```
 
-# Instructions
+## Instructions
 
-Use data located in the `Data/` folder to complete the questions below. Please use the `_join()` functions from the tidyverse (`dplyr`) to complete each question. In addition, some of the questions require you to reshape the data. For these question, please use the `gather()` and `spread()` functions (`tidyr`). Both functions can be acquired by loading the `tidyverse` package
+The following code reads in three data files (on Github) and assign the data to the respective object names `dogs`, `beertax`, and `traffic`.
+
+```{r}
+beertax <- read_csv('https://raw.githubusercontent.com/edunford/ppol670/gh-pages/Lectures/week_04/practice/Data/states-beer-data.csv')
+dogs <- read_csv('https://raw.githubusercontent.com/edunford/ppol670/gh-pages/Lectures/week_04/practice/Data/states-dogs-data.csv')
+traffic <- read_csv('https://raw.githubusercontent.com/edunford/ppol670/gh-pages/Lectures/week_04/practice/Data/states-traffic-data.csv')
+```
+
+Please use the `_join()` functions from the tidyverse (`dplyr`) to complete each question. In addition, some of the questions require you to reshape the data. For these question, please use the `gather()` and `spread()` functions (`tidyr`). Both functions can be acquired by loading the `tidyverse` package
 
 ```{r}
 require(tidyverse)
 ```
-
 
 
 # Questions
@@ -20,15 +30,7 @@ require(tidyverse)
 
 ## Question 1
 
-#### (a) Read in `states-dogs-data.csv`, `states-beer-data.csv`, and `states-traffic-data.csv` from the `Data/` folder. Assign the data to the respective object names `dogs`, `beertax`, and `traffic`.
-
-```{r}
-dogs <- read_csv('Data/states-dogs-data.csv')
-beertax <- read_csv('Data/states-beer-data.csv')
-traffic <- read_csv('Data/states-traffic-data.csv')
-```
-
-#### (b) Print off the column names in each data set. Are there any ID variables that are mutually occurring across the 3 datasets? Any potential issues?
+#### (a) Print off the column names in each data set. Are there any ID variables that are mutually occurring across the 3 datasets? Any potential issues?
 
 ```{r}
 colnames(dogs)
@@ -42,7 +44,7 @@ colnames(beertax)
 colnames(traffic)
 ```
 
-#### (c) Examine the structure (`str()`) of all three datasets. What are the differences across the datasets?
+#### (b) Examine the structure (`str()`) of all three datasets. What are the differences across the datasets?
 
 
 ```{r}
