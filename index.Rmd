@@ -182,9 +182,15 @@ Video walkthroughs:
   + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd" download> answer key (download `.Rmd`) </a>
   + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd" download> answer key (download `.Rmd`) </a>
 
-<!-- [](Lectures/week_04/practice/) -->
 
-<!-- ### _Week 5_: Data Visualization -->
+
+### _Week 5_: Data Visualization
+
+- [**Lecture**](Lectures/week_05/lecture-week-05_data-visualization.html)
+- Practice: 
+  - Practice materials and data for the visualizations generated in the lecture can be downloaded [here](Lectures/week_05/Practice-Week-05-Visualization.zip) as a `.zip`.
+
+
 <!-- ### _Week 6_: Web Scrapping and APIs -->
 <!-- ### _Week 7_: Text as Data -->
 <!-- ### _Week 8_: Introduction to Statistical Learning -->
