@@ -61,9 +61,7 @@ class: outline
 ---
 
 .center[
-
 <img src="Figures/drake-img.png", width = 550>
-
 ]
 
 ---
