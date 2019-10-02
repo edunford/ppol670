@@ -61,7 +61,9 @@ class: outline
 ---
 
 .center[
+
 <img src="Figures/drake-bad-plot.png", width = 550>
+
 ]
 
 ---
