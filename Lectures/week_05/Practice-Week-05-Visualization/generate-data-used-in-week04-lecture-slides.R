@@ -4,8 +4,8 @@
 
 require(tidyverse)
 
-dat <- read_csv('data_from_lecture/dem-gdp-data.csv')
-
+# Download the data from Github
+dat <- read_csv('https://raw.githubusercontent.com/edunford/ppol670/gh-pages/Lectures/week_05/R-code/dem-gdp-data.csv')
 
 # Create `pol` data object used in the examples.
 pol = dat %>%
