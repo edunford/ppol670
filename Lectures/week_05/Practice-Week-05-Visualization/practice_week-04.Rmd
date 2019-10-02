@@ -1,0 +1,120 @@
+---
+title: "Data Visualization Practice"
+output: html_notebook
+---
+
+# Overview 
+
+The following practice will focus entirely on plotting. As per usual, we'll use in-house data to plot various event occurrences. We'll draw on multiple datasets rather than just sticking to one, as we've done in the past. 
+
+Please use `ggplot2` for _all_ plots.
+
+```{r}
+require(tidyverse)
+```
+
+
+# Question 1
+
+## Using the `cars` dataset, plot the relationship as points with `speed` on the x-axis and `dist` on the y-axis. Save the plot as an object named `plt1`
+
+```{r}
+
+```
+
+
+# Question 2
+
+## (a) Using the `diamonds` data, plot the distribution of the different `cut` categories. Have the color (i.e. the `fill=`) of the bars be `steelblue`. Save the plot as object `plt2`.
+
+```{r}
+
+```
+
+## (b) Using `plt2`, flip the coordinates so that the x-axis is on the y-axis. _Don't render a new plot_. Overwrite the `plt2` with the new plot.
+
+```{r}
+
+```
+
+
+## (c) Change the theme of the plot (i.e. the background color) to be black and white instead of grey using the `plt2` object. Overwrite the `plt2` with the new plot.
+
+```{r}
+
+```
+
+## (d) Using `plt2` change the labels of the plot. Label the axis with the "count" to "Number of Diamonds", the axis with "cut" to "Type of Cut", and add the title "Distribution of Diamond Cut Types" with the subtitle "Data drawn from the ggplot2 package". Overwrite the `plt2` with the new plot.
+
+```{r}
+
+```
+
+## (e) Save plot to your desktop as a `.pdf` using `ggsave()`. Make sure the height is 5 inches and width is 10 inches. 
+
+```{r}
+
+```
+
+
+# Question 3
+
+## (a) using the `diamonds` data, plot distribution of `price` using a histogram. Set the color to `white` and the fill to `wheat`, and the theme to `minimal`. Save as object `plt3`
+
+```{r}
+
+```
+
+## (b) using the `plt3`, change the distribution to a log_10 distribution.
+
+```{r}
+ 
+```
+
+## (c) using the `diamonds` data, plot distribution of `price` using a density plot. Change the scale to a square root scale. Fill the density plot with a "red", set the alpha to .5 (so it's translucent), and set the color to "white". Use a dark theme.
+
+```{r}
+
+```
+
+
+## (d) using the `diamonds` data, plot a histogram by `carat` and fill by `cut` type. Set the theme to black and white. Change the plot so that the legend is on the bottom. 
+
+```{r}
+
+```
+
+
+
+# Question 4
+
+For this question, I'm going to simulate some data. Note that to generate this data, I'm going to draw from a multivariate normal distribution. This uses the `MASS` package. 
+
+```{r}
+fake_data <- MASS::mvrnorm(1000,mu = c(0,1),Sigma = matrix(c(1,.25,.57,1),nrow = 2)) %>% 
+  as.tibble()
+head(fake_data)
+```
+
+
+## (a) Using this `fake_data`, plot a scatter plot with a `light` theme a title of some kind, and changing the shape of the points to something else (like a square). Set the color of the points to "grey30" and increase the point size to 2, and the alpha at .85 (again, to male the points slightly transparent). Set the theme to "void". Save as object `plt4`
+
+```{r}
+
+```
+
+
+## (b) Using object `plt4`, plot a 2d density plot to the points. Set the color to "red" and the linewidth to 1. What does this plot tell us?
+
+```{r}
+
+```
+
+## Using `fake_data`, build a heatmap using `geom_bin2d()`. Change the color scale to move from "grey20" (low) to "gold" (high). Set theme to minimal.
+
+```{r}
+
+```
+
+
+
