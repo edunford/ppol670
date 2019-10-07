@@ -1,1 +1,16 @@
-Week , Date, Topic, Assignment1,4-Sep,Reproducibility and Version Control,2,11-Sep,Introduction to Programming in R,3,18-Sep,Reproducibility in Practice,4,25-Sep,Data Wrangling in R,Problem Set 1 Due5,2-Oct,Data Visualization,Problem Set 2 Due6,9-Oct,Web Scrapping and APIs,7,16-Oct,Text as Data,Problem Set 3 Due8,23-Oct,Introduction to Statistical Learning,Problem Set 4 Due9,30-Oct,Applications in Supervised Learning (Regression),10,6-Nov,Applications in Supervised Learning (Classification),Problem Set 5 Due11,13-Nov,Applications in Unsupervised Learning,Problem Set 6 Due12,20-Nov,Exploratory Data Analysis,Project Proposal Due13,27-Nov,Work on projects (No Class),14,4-Dec,Project Presentations,Final,14-Dec,Final Project Due,
+Week , Date, Topic, Assignment
+1,4-Sep,Reproducibility and Version Control,
+2,11-Sep,Introduction to Programming in R,
+3,18-Sep,Reproducibility in Practice,
+4,25-Sep,Data Wrangling in R,Problem Set 1 Due
+5,2-Oct,Data Visualization,Problem Set 2 Due
+6,9-Oct,Web Scrapping and APIs,
+7,16-Oct,Text as Data,Problem Set 3 Due
+8,23-Oct,Introduction to Statistical Learning,Problem Set 4 Due
+9,30-Oct,Applications in Supervised Learning (Regression),
+10,6-Nov,Applications in Supervised Learning (Classification),Problem Set 5 Due
+11,13-Nov,Applications in Unsupervised Learning,Problem Set 6 Due & Project Proposal Due
+12,20-Nov,Exploratory Data Analysis,
+13,27-Nov,Work on projects (No Class),
+14,4-Dec,Project Presentations,
+Final,14-Dec,Final Project Due,
