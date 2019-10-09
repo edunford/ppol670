@@ -191,7 +191,12 @@ Video walkthroughs:
   - Practice materials and data for the visualizations generated in the lecture can be downloaded [here](Lectures/week_05/Practice-Week-05-Visualization.zip) as a `.zip`.
 
 
-<!-- ### _Week 6_: Web Scrapping and APIs -->
+### _Week 6_: Web Scrapping and APIs
+
+- [**Lecture**](Lectures/week_06/lecture-week-06_webscraping-and-apis.html)
+- Practice: 
+  - The following practice has you download a dataset on all bilaterial investment treaties. The practice and answer key can be downloaded [here](Lectures/week_06/week_06_practice.zip) as a `.zip`.
+
 <!-- ### _Week 7_: Text as Data -->
 <!-- ### _Week 8_: Introduction to Statistical Learning -->
 <!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
