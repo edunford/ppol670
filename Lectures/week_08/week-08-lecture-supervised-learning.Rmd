@@ -1195,7 +1195,7 @@ our_recipe
 
 ---
 
-### (1) Imput any missing values
+### (1) Impute any missing values
 
 `recipes` offers many different forms of imputation.
 
@@ -1212,7 +1212,7 @@ grep("impute$", ls("package:recipes"), value = TRUE) %>%
 
 ---
 
-### (1) Imput any missing values
+### (1) Impute any missing values
 
 `recipes` offers many different forms of imputation.
 
@@ -1316,7 +1316,7 @@ This becomes really important when pre-processing **training data** that we then
 
 The `prep()` function allows us to use the same statistics (like the mean when centering) that we used to process the old and new data. 
 
-Then `bake()` allows allows us to seemlessly and implement those steps. 
+Then `bake()` allows allows us to seamlessly and implement those steps. 
 
 
 
