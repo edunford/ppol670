@@ -203,14 +203,17 @@ Video walkthroughs:
 - **Practice**: 
   - The following provides a walkthrough of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`.
 
+### _Week 8_: Introduction to Statistical Learning
 
-<!-- ### _Week 8_: Introduction to Statistical Learning -->
+- [**Lecture**](Lectures/week_08/week-08-lecture-supervised-learning.html)
+
 <!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
 <!-- ### _Week 10_: Applications in Supervised Learning (Classification) -->
 <!-- ### _Week 11_: Applications in Unsupervised Learning -->
 <!-- ### _Week 12_: Exploratory Data Analysis -->
 
 <br>
+
 ---
 
 
