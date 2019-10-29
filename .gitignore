@@ -1,7 +1,8 @@
 .DS_Store
 *.Rproj
 *.Rproj.user
-Assignments/
+Assignments/Problem_Sets
+Assignments/Project/Examples
 Lectures/old
 prior-iterations/
 Readings/ethics_readings/
