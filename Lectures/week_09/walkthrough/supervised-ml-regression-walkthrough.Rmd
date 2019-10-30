@@ -352,14 +352,14 @@ dotplot(resamples(mod_list),metric = "Rsquared")
 
 
 
-## Test the Predictive Accuracy of the Best Model 
+# Test the Predictive Accuracy of the Best Model 
 
 Of the models we ran, it looks like the Random Forest model did the best. Let's now see how well it does on predicting the test data.
 
 ```{r}
 pred <- predict(mod_rf,newdata = test_data2)
 mse = sum(test_data2$cnt-pred^2)/nrow(test_data2)
-mse 
+mse # 1.21 Riders off! Not bad.
 ``` 
 
 
