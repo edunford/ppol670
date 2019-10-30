@@ -93,7 +93,6 @@ What do we need to do?
 
 - Seasons variable to dummies 
 - Scale all the variables so that they fall into a 0 to 1 range.
-- Let's create year and month dummies (to soak up specific temporal effects).
 - No need to impute missing values. All the data is there.
 
 
@@ -359,7 +358,7 @@ Of the models we ran, it looks like the Random Forest model did the best. Let's 
 ```{r}
 pred <- predict(mod_rf,newdata = test_data2)
 mse = sum(test_data2$cnt-pred^2)/nrow(test_data2)
-mse # 1.21 Riders off! Not bad.
+mse 
 ``` 
 
 
