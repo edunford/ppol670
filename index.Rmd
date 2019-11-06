@@ -228,7 +228,14 @@ Video walkthroughs:
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`. 
 
-<!-- ### _Week 10_: Applications in Supervised Learning (Classification) -->
+### _Week 10_: Applications in Supervised Learning (Classification)
+
+- [**Lecture**](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html)
+- **Practice**:
+  - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week_10-practice.zip) as a `.zip`. 
+  
+  
+
 <!-- ### _Week 11_: Applications in Unsupervised Learning -->
 <!-- ### _Week 12_: Exploratory Data Analysis -->
 

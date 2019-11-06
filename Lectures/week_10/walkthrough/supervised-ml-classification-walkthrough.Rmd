@@ -1,0 +1,477 @@
+---
+title: "PPOL670 | Supervised Learning - Classification"
+subtitle: "Walkthrough"
+date: Week 10
+output: 
+  html_document:
+    toc: True
+    toc_float: True
+---
+
+```{r Setup, include=F}
+knitr::opts_chunk$set(warning = F,error = F,message = F,cache=T)
+```
+
+# Overview 
+
+In this notebook, we'll apply the machine learning concepts covered in the classification supervised learning lecture. Note that there are many libraries that can perform the methods that we reviewed in class, but we'll focus here on using the `caret` package to perform these operations. 
+
+```{r}
+require(tidyverse)
+require(caret) # for machine learning
+require(recipes) # For preprocessing your data
+require(rattle) # For nice tree plots
+
+# For parallelization (to run the models across many cores) -- speeds up computation!
+# install.packages("doMC")
+doMC::registerDoMC()
+```
+
+
+# Data 
+
+The following data contains information regarding whether or not someone has health coverage. The outcome of interest is whether of not an individual has healthcare coverage or not. The available predictive features capture socio-economic and descriptive factors. 
+
+```{r}
+set.seed(123)
+dat = suppressMessages(read_csv("health-coverage.csv")) %>% 
+  sample_n(5000) # Only taking a random sample of the data so the models run quicker
+head(dat) # Peek at the data just to make sure everything was read in correctly. 
+```
+
+
+# Split the Sample: Training and test data
+
+Before event looking at the data, let's split the sample up into a training and test dataset. We'll completely hold off on viewing the test data, so as not to bias our development of the learning model. 
+
+```{r}
+index = createDataPartition(dat$coverage,p=.8,list=F) 
+train_data = dat[index,] # Use 80% of the data as training data 
+test_data = dat[-index,] # holdout 20% as test data 
+
+dim(train_data)
+dim(test_data) 
+```
+
+# Examine the data 
+
+```{r}
+skimr::skim(train_data)
+```
+
+
+Visualize the distribution for each variable.
+
+First, let's look at the categorical variables.
+```{r,fig.height=6,fig.width=15}
+train_data %>% 
+  select_if(is.character) %>% 
+  gather(var,val) %>% 
+  ggplot(aes(val)) +
+  geom_bar() +
+  scale_y_log10() +
+  facet_wrap(~var,scales="free",ncol=3) +
+  coord_flip()
+```
+
+Few things to note: 
+
+- Balanced classes on the outcome
+- Over representativeness of some racial groups in the data. 
+- Good variation on maritial outcomes and education
+
+Let's peek at the data a little closer. We see that there are potential issues in this data with **perfect prediction**. That is, among some categorical configurations, there lie arrangements where there is no variation in the outcome. For these instances, we can predict Coverage or lack there of perfectly. This can cause issues for some models (logistic regression, SVM). 
+```{r}
+train_data %>% 
+  select_if(is.character) %>% 
+  group_by_all() %>% 
+  count() %>% 
+  spread(coverage,n,fill=0) %>% 
+  arrange(Coverage)
+```
+
+For these models, we might need to restict the types of variables we use as to not run into issues.
+```{r}
+train_data %>% 
+  select(-race,-mar) %>% 
+  select_if(is.character) %>% 
+  group_by_all() %>% 
+  count() %>% 
+  spread(coverage,n,fill=0) %>% 
+  arrange(Coverage)
+```
+
+
+Second, let's look at the distribution of the continuous variables
+
+```{r}
+train_data %>% 
+  select_if(is.numeric) %>% 
+  gather(var,val) %>% 
+  ggplot(aes(val)) +
+  geom_histogram(bins = 75) +
+  facet_wrap(~var,scales="free",ncol=1) 
+```
+
+Things to note:
+
+- Wage is right skewed. There appears to an outlier making a lot of the money. This outlier could cause problems. 
+- Good distribution on the age variable.
+- The scales for both these variables will have to be adjusted. 
+
+Let's peek more closely at the distribution of wealth in the sample. 
+
+```{r,fig.height=5,fig.width=10}
+train_data %>% 
+  mutate(wealth_bins = case_when(
+    wage == 0 ~ "Unemployed",
+    wage > 0 & wage<= 30000 ~ "Low",
+    wage > 30000 & wage<= 75000 ~ "Mid",
+    wage > 75000 & wage<= 200000 ~ "High",
+    wage > 200000 ~ "Jeez...!",
+  )) %>% 
+  mutate(wealth_bins = fct_infreq(wealth_bins)) %>% 
+  ggplot(aes(wealth_bins)) +
+  geom_bar()
+```
+
+
+There are a lot of individuals that report 0 income (Unemployed?). What is the age distribution for those individuals?
+
+```{r,fig.height=5,fig.width=10}
+train_data %>% 
+  filter(wage==0) %>% 
+  ggplot(aes(age)) +
+  geom_density(fill="steelblue",alpha=.5,color="white")
+```
+
+# Pre-process the Data 
+
+What do we need to do?
+
+- Categorical variables to dummies 
+- We'll likely need to log wage to deal with skew. 
+- Scale age and wage (so that they fall into a 0 to 1 range)
+- No need to impute missing values. All the data is there. 
+
+First, convert the wage scale.
+```{r}
+# Mutate the features 
+convert_wage <- . %>% mutate(#employed = ifelse(wage==0,"yes","no"),
+                             wage = log(wage+1))
+
+# Apply to both the training and test data
+train_data2 <- train_data %>%  convert_wage()
+test_data2 <- test_data %>%  convert_wage()
+ 
+# Visualize the transformation
+train_data2 %>% 
+  ggplot(aes(wage)) +
+  geom_histogram()
+```
+
+
+```{r}
+rcp <- 
+  recipe(coverage ~  .,train_data2) %>% 
+  step_dummy(all_nominal(),-all_outcomes()) %>% # Why exclude outcomes?
+  step_range(all_numeric()) %>%  # Normalize scale
+  prep()
+
+
+# Apply the recipe to the training and test data
+train_data3 <- bake(rcp,train_data2)
+test_data3 <- bake(rcp,test_data2) 
+```
+
+
+Check that our pre-processing worked. 
+
+```{r}
+head(train_data3)
+```
+
+```{r}
+train_data3 %>% 
+  select(wage,age) %>% 
+  gather(var,val) %>% 
+  ggplot(aes(val)) +
+  geom_histogram(bins = 75) +
+  facet_wrap(~var,scales="free",ncol=1)
+```
+
+
+# Cross-validation
+
+When comparing different machine learning models, we want to make sure we're making a fair and equal comparison. One way that random chance can sneak into our assessments of model fit is through cross-validation. We want to make sure that we're cross-validating the data on the exact same data partitions. 
+
+`caret` makes this ease to do. Let's use the k-fold cross-validation method with 10 folds in the data. 
+```{r}
+set.seed(1988) # set a seed for replication purposes 
+
+folds <- createFolds(train_data3$coverage, k = 5) # Partition the data into 10 equal folds
+
+sapply(folds,length)
+```
+
+Now, let's use the `trainControl()` function from `caret` to set up our validation conditions. An important changes from last week: we have to tell `caret` that we are dealing with a classification problem. We can do this by adding `summaryFunction = twoClassSummary` and `classProbs = TRUE` to the cross-validation function. 
+
+
+```{r}
+control_conditions <- 
+  trainControl(method='cv', # K-fold cross validation
+               summaryFunction = twoClassSummary, # Need this b/c it's a classification problem
+               classProbs = TRUE, # Need this b/c it's a classification problem
+               index = folds # The indices for our folds (so they are always the same)
+  )
+```
+
+We'll now use this same cross-validation object for everything that we do. 
+
+# Models
+
+Let's explore the different models that we covered in the lecture using the same package framework. As we saw last time in class, `caret` facilitates this task nicely. 
+
+## Logistic Regression
+
+Recall we have issues with some of the variable categories (i.e. do to insufficient variation), so we'll use a retricted model here and just include _some_of the variables.
+
+```{r}
+mod_logit <-
+  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
+          educ_Less.than.HS + educ_Undergraduate.Degree, 
+        data=train_data3, # Training data 
+        method = "glm", # logit function
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+mod_logit
+```
+
+
+
+## K-Nearest Neighbors
+
+> Remember: these algorithms are computationally demanding, so they can take a little time to run depending on the power of your machine
+
+```{r}
+mod_knn <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "knn", # K-Nearest Neighbors Algorithm
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+Let's look at the performance plots. What do we see?
+
+```{r}
+mod_knn
+```
+
+
+- `caret` has default settings that auto explore different tunning parameters for the model. 
+- We can easily plot these tuning features using the standard plot functions (these function have been over-ridden in R)
+
+```{r}
+plot(mod_knn)
+```
+
+
+Now, let's say we wanted to adjust the tunning parameters. We can explore different model tunings by using the `tuneGrid` argument. 
+
+```{r}
+knn_tune = expand.grid(k = c(1,3,10,50))
+knn_tune
+```
+
+
+
+```{r}
+mod_knn2 <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "knn", # K-Nearest Neighbors Algorithm
+        metric = "ROC", # area under the curve
+        tuneGrid = knn_tune, # add the tuning parameters here 
+        trControl = control_conditions
+  )
+```
+
+```{r}
+plot(mod_knn2)
+```
+
+
+## Classification and Regression Trees (CART)
+
+```{r}
+mod_cart <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "rpart", # Classification Tree
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+
+```{r}
+plot(mod_cart)
+```
+
+Shallower trees converge to a coin flip. The deepest tree appears to be the bets
+
+Let's visualize the decision tree...
+
+```{r}
+# This tree goes really deep
+fancyRpartPlot(mod_cart$finalModel)
+```
+
+We can actually print out the larger decision tree to look at it as a print out.... as we can see this is a LOT.
+```{r}
+print(mod_cart$finalModel)
+```
+
+
+Let's free the CART to grow deeper
+
+```{r}
+tune_cart2 <- expand.grid(cp = c(0.0010281)) # Complexity Parameter (how "deep" our trees should grow)
+mod_cart2 <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "rpart", # Classification Tree
+        metric = "ROC", # area under the curve
+        tuneGrid = tune_cart2, # Tuning parameters
+        trControl = control_conditions
+  )
+```
+
+The Model becomes far more complex!
+```{r,fig.width=10,fig.height=10}
+fancyRpartPlot(mod_cart2$finalModel)
+```
+
+
+## Random Forest
+
+```{r}
+mod_rf <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data3, # Training data 
+        method = "ranger", # random forest (ranger is much faster than rf)
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+
+There are three tunning parameters in this model:
+
+- `mtry`: the number of predictors that we'll randomly select.
+- `splitrule`: the way we determine how the nodes should be split
+  - `gini` = node purity (see class lecture)
+  - `extratrees` = doesn't bag, randomly select vars, but just randomly split, accept the best split. (Short for "Extremely Randomize Trees")
+- 'min.node.size': the minimum number of observations that can be in each terminal node (default fixes this at 1)
+
+```{r}
+mod_rf
+```
+
+```{r}
+plot(mod_rf)
+```
+
+## Support Vector Machine
+
+Let's explore three versions of the support vector algorithm: linear boundary, a polynomial (kernel) boundary, and a radial boundary. Like the Logistic regression, SVM will complain when there isn't sufficient variation within a variable.  
+
+
+### Linear Boundary
+```{r}
+mod_svm_linear <-
+  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
+          educ_Less.than.HS + educ_Undergraduate.Degree,
+        data=train_data3, # Training data 
+         method = "svmLinear", # SVM with a polynomial Kernel
+        metric = "ROC", # area under the curve
+        tuneGrid = expand.grid(C = c(.5,1)), # Add two tuning parameters
+        trControl = control_conditions
+  )
+```
+
+```{r}
+mod_svm_linear
+```
+
+
+### Polynomial Boundary
+
+```{r}
+mod_svm_poly <-
+  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
+          educ_Less.than.HS + educ_Undergraduate.Degree,
+        data=train_data3, # Training data 
+         method = "svmPoly", # SVM with a polynomial Kernel
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+``` 
+
+```{r}
+mod_svm_poly
+```
+
+
+### Radial Boundary
+
+```{r}
+mod_svm_radial <-
+  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
+          educ_Less.than.HS + educ_Undergraduate.Degree,
+        data=train_data3, # Training data 
+         method = "svmPoly", # SVM with a Radial Kernel
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+
+```{r}
+mod_svm_radial
+```
+
+
+# Model Comparison
+
+How did the different methods perform? Which one did the best?
+
+```{r,fig.width=12,fig.height=4}
+# Organize all model imputs as a list.
+mod_list <-
+  list(
+    knn1 = mod_knn,
+    knn2 = mod_knn2,
+    cart1 = mod_cart,
+    cart2 = mod_cart2,
+    rf = mod_rf,
+    svm_linear = mod_svm_linear,
+    svm_poly = mod_svm_poly,  
+    svm_radial = mod_svm_radial 
+  )
+
+# Generate Plot to compare output. 
+dotplot(resamples(mod_list))
+```
+
+
+# Predictive Performance
+
+Examine the predictive performance of the best performing model. 
+```{r}
+pred <- predict(mod_rf,newdata = test_data3)
+confusionMatrix(table(pred,test_data3$coverage))
+``` 

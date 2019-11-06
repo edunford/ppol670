@@ -1,0 +1,819 @@
+---
+title: 
+    <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
+  <font size=6, face="bold"> Week 10 </font> 
+   <br>
+  <br>
+  <font size=50, face="bold">Applications in Supervised Learning<br><br>_Classification_</font>
+  <br>
+  <br>
+author: 
+  <font class = "title-footer"> 
+  &emsp;Prof. Eric Dunford &emsp;&#9670;&emsp; Georgetown University &emsp;&#9670;&emsp; McCourt School of Public Policy &emsp;&#9670;&emsp; eric.dunford@georgetown.edu</font>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: "gu-theme.css"
+    nature:
+      highlightStyle: github
+      beforeInit: "macros.js"
+      countIncrementalSlides: False
+      highlightLines: true
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+---
+
+```{r setup, include=FALSE}
+# Run for Interactive Slide Editing: 
+# xaringan::inf_mr()
+knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F,cache=T)
+require(tidyverse)
+require(ggthemes)
+```
+
+layout: true
+
+<div class="slide-footer"><span> 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Week 10 <!-- Week of the Footer Here -->
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Classification <!-- Title of the lecture here -->
+
+</span></div> 
+
+---
+class: outline
+
+# Outline for Today 
+
+<br>
+
+- **Refresh on Classification Problems**
+
+- **Logistic Regression**
+
+- **K Nearest Neighbors**
+
+- **Classification Trees**
+
+- **Support Vector Machines**
+
+
+---
+
+class: newsection
+
+# Classification
+
+---
+
+<br>
+
+.center[<img src = "Figures/seperability.gif", width = 500>]
+
+---
+
+### Decision Boundary 
+
+.center[<img src = "Figures/decision-boundary.png", width = 600>]
+
+---
+
+### Conditional Probability 
+
+Given $y \in 0,1$ (two classes)
+
+$$pr(y_i = 1 | X = \vec{x_i})$$
+
+--
+
+<br>
+
+
+$$\hat{f}(\vec{x_i}) \in [0,1]$$ 
+
+where $\hat{f}(\cdot)$ is an approximation for the true data generating process $f(\cdot)$ and $\vec{x_i}$ is a vector of variables for observation $i$.
+
+--
+
+<br> 
+
+$$\hat{y_i} =\begin{cases} 1~~\text{if}~~\hat{f}(\vec{x_i})  > .5 \\ 0~~\text{if}~~\hat{f}(\vec{x_i})  \le .5 \end{cases}$$
+
+---
+
+<br><br><br>
+
+$$\hat{y_i} =\begin{cases} 1~~\text{if}~~\hat{f}(\vec{x_i})  > .5 \\ 0~~\text{if}~~\hat{f}(\vec{x_i})  \le .5 \end{cases}$$
+
+<br>
+
+.center[.5 is an arbitrary threshold ( $\tau$ ) that we can adjust. 
+
+larger $\tau$ means more false negatives
+
+smaller $\tau$ means more false positives
+ ]
+
+
+---
+
+### Accuracy 
+
+
+$$\hat{y}^{test}_i = \hat{f}(x^{test}_i)$$
+
+.center[
+| | $y^{test}_i$ |  $\hat{y}^{test}_i$ |  
+|----|:------------:|:-------------------:|
+| **True Positive** | 1 |  1 |  
+| **False Positive** | 0 |  1 | 
+| **False Negative** | 1 |  0 |  
+| **True Negative** | 0 |  0 |  
+]
+
+--
+
+<br>
+
+$$ \text{average test error} = \frac{\sum^N_{i=1} I(y^{test}_i \ne \hat{y}^{test}_i)}{N}$$
+
+---
+
+### Accuracy
+
+.center[
+|                       |  $actual~(+)$ |  $actual~(-)$ |
+|-----------------------|----------|----------|
+| $Predicted~(+)$  |   True Positive (TP)       | False Positive (FP)          |
+| $Predicted~(-)$  |   False Negative (FN)       |  True Negative (TN)         |
+
+]
+
+--
+
+<br>
+
+| Metric | Calculation |  Description |
+|:---:|:-----:| -----|
+| Accuracy | $\frac{TP + TN}{TP+FP+TN+FN}$ | In total, how accurate is the model |
+| Precision | $\frac{TP}{TP+FP}$ | Of the true positives classified, how many are actually positive | 
+| Specificity | $\frac{ TN }{ TN + FP }$ | Of the actual true negatives, how many were correctly classified | 
+| Recall/Sensitivity | $\frac{TP}{ TP + FN}$ | Of the actual true positives, how many were correctly classified |
+
+---
+
+### ROC and AUC
+
+.center[<img src = "Figures/roc-plot.png", width = 600>]
+
+---
+
+class: newsection
+
+<br>
+
+# Logistic Regression
+
+---
+
+## The problem with linear regression 
+
+When we have a binary outcome (0/1), we can use OLS to estimate the relationship. This is known as a **linear probability model** (LPM).  
+
+--
+
+We start with the usual equation: 
+
+$$y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
+Here $y \in [0,1]$
+   
+- The probability of "success": $pr(y_i = 1) = p_i$
+- The probability of "failure": $pr(y_i = 0) = 1 - p_i$ 
+
+--
+
+$y$ follows a **Bernoulli** distribution
+
+$$ E(y_i) = 0 \times (1-p_i) + 1 \times p_i = p_i$$
+$$ E(y_i | x_i) = \beta_0 + \beta_1 x_i = p_i $$
+
+
+---
+
+## The problem with linear regression 
+
+```{r,echo=F,fig.align='center',fig.width=7,fig.height=5}
+set.seed(123)
+N = 100
+x <- rnorm(N)
+z =  pnorm(1 + 2*x)
+y = rbinom(N,1,z)
+D = tibble(y,x)
+
+tt = element_text(family='serif',face='bold',size = 20)
+ggplot(D,aes(x,y)) +
+  geom_point(size=4,alpha=.5) +
+  geom_smooth(method="lm",se=F,color="darkred",size=1.5) +
+  theme_bw() +
+  theme(axis.title = tt,
+        axis.text = tt ) 
+  # ylim(-.5,2)
+```
+
+--
+
+.center[
+```{r,echo=F}
+broom::tidy(lm(y~x,data=D)) %>% 
+  mutate_if(is.numeric,function(x) round(x,3)) %>% 
+  kableExtra::kable(.)
+```
+]
+
+---
+
+## The problem with linear regression 
+
+```{r,echo=F,fig.align='center',fig.width=7,fig.height=5}
+set.seed(123)
+N = 100
+x <- rnorm(N)
+pr =  pnorm(1 + 2*x)
+y = rbinom(N,1,pr)
+D = tibble(y,x)
+
+tt = element_text(family='serif',face='bold',size = 20)
+ggplot(D,aes(x,y)) +
+  geom_point(size=4,alpha=.5) +
+  geom_smooth(method="lm",se=F,color="darkred",size=1.5) +
+  theme_bw() +
+  theme(axis.title = tt,
+        axis.text = tt ) 
+  # ylim(-.5,2)
+```
+
+
+
+.center[
+```{r,echo=F}
+mod = lm(y~x,data=D)
+broom::tidy(mod) %>% 
+  mutate_if(is.numeric,function(x) round(x,3)) %>% 
+  mutate(estimate = str_glue("{estimate*100}%")) %>% 
+  kableExtra::kable(.)
+```
+]
+
+---
+
+## The problem with linear regression 
+
+- OLS may produce **non-sense predictions** (recall that OLS assumes continuous interval level data)
+
+--
+
+  + But we can **recode**
+  
+```{r,echo=F,fig.align="center",fig.width=7,fig.height=5}
+x2 = seq(-4,34,.01)
+p = predict(mod,tibble(x=x2))
+p[p>1] = 1; p[p<0] = 0
+D2 = tibble(p,x2) 
+ggplot(D,aes(x,y)) +
+  geom_point(size=4,alpha=.2) +
+  geom_line(data=D2,aes(x2,p),inherit.aes = F,color="darkred",size=3) +
+  theme_bw() +
+  xlim(-3,3) +
+  theme(axis.title = tt,
+        axis.text = tt ) 
+```
+
+
+---
+
+## The problem with linear regression 
+
+- OLS may produce **non-sense predictions** (recall that OLS assumes continuous interval level data)
+
+- Disturbances are <u>_not_</u> normally distributed, they follow the Bernoulli distribution.
+
+--
+
+```{r,echo=F,fig.align="center",fig.width=7,fig.height=5}
+D$resid = resid(mod)
+D$pred = predict(mod)
+ggplot(D,aes(x,y)) +
+  geom_segment(aes(xend=x,x=x,yend=y,y=pred),
+               color="steelblue",size=1,alpha=.5) +
+  geom_point(size=4,alpha=.5) +
+  geom_smooth(method="lm",se=F,color="darkred",size=3) +
+  theme_bw() +
+  theme(axis.title = tt,
+        axis.text = tt ) 
+```
+
+
+
+---
+
+## The problem with linear regression 
+
+- OLS may produce **non-sense predictions** (recall that OLS assumes continuous interval level data)
+
+- Disturbances are <u>_not_</u> normally distributed, they follow the Bernoulli distribution.
+
+```{r,echo=F,fig.align="center",fig.width=7,fig.height=5}
+ggplot(D,aes(x,resid)) +
+  geom_point(size=4,alpha=.5,color="steelblue") +
+  theme_bw() +
+  labs(y="Residuals") +
+  theme(axis.title = tt,
+        axis.text = tt ) 
+```
+
+
+---
+
+
+### Generalized Linear Model
+
+- Let's specify a relationship between $x$ and the probability of an event such that $pr(y_i = 1 | x)$ is a function that ranges from $-\infty$ to $\infty$. 
+
+
+- First, we transform the outcome into the **odds**
+
+$$\frac{pr(y_i = 1 | x)}{pr(y_i = 0 | x)} = \frac{pr(y_i = 1 | x)}{1 - pr(y_i = 1 | x)}$$
+
+- **Odds** indicate how often something happens relative to how often it doesn't happen. 
+
+- The **log of the odds** which ranges from $-\infty$ to $\infty$.
+
+$$ln\begin{bmatrix}\frac{pr(y_i = 1 | x)}{1 - pr(y_i = 1 | x)}\end{bmatrix}  = X \beta$$
+
+---
+
+We need a function $F(\cdot)$ (which is known as a **link function**) that maps our linear combination of independent variables ( $X\beta$ ) onto a probability space (ranging from 0 to 1).
+
+$$ F(X\beta) \mapsto [0,1]$$
+
+.center[<img src="Figures/lin-to-pr-space.gif", width=400 >]
+
+---
+
+![:space 10]
+
+The **logistic (logit)** and **Normal (probit)** distributions are used frequently. 
+
+![:space 10]
+
+.center[
+| Model | Distribution  | CDF | PDF  |
+|---|---|-----|---|---|
+| **_Probit_** | _Normal_ | $\Phi(\epsilon) = \int^\epsilon_{-\infty} \frac{1}{(\sqrt{2 \pi})} e^{-\frac{t^2}{2}} dt~~$ | $\phi(\epsilon) = \frac{1}{(\sqrt{2 \pi})} e^{-\frac{\epsilon^2}{2}}$ |
+| **_Logit_** | _Logistic_ | $\Lambda(\epsilon) = \frac{e^\epsilon}{1 + e^\epsilon}$ | $\lambda(\epsilon) = \frac{e^\epsilon}{(1 + e^\epsilon)^2}$ |
+]
+
+---
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=8}
+bind_rows(
+  tibble(x=seq(-5,5,.1),
+         `CDF\nPr(y = 1)`=pnorm(seq(-5,5,.1)),
+         `PDF\nDensity`=dnorm(seq(-5,5,.1)),type="Normal"),
+  tibble(x=seq(-5,5,.1),
+         `CDF\nPr(y = 1)`=plogis(seq(-5,5,.1),location = 0,scale=1),
+         `PDF\nDensity` = dlogis(seq(-5,5,.1),location = 0,scale=1),
+         type="Logistic")
+) %>% 
+  gather(key,val,-x,-type) %>% 
+ggplot(aes(x,val,color=type)) +
+  geom_line(size=2,alpha=.75) +
+  labs(y='',color="",pch="",x= latex2exp::TeX("$\\beta_0 + \\beta_1 x_i$")) +
+  scale_color_manual(values=c("#410B9E", "#FF791F"))+
+  theme_bw() +
+  theme(axis.title = tt,
+        axis.text = tt,
+        legend.text = tt,
+        legend.position = "top",
+        strip.text = tt,strip.background = element_blank()) +
+  facet_wrap(~key,scales="free",strip.position = "right",ncol=1)
+```
+
+
+---
+
+
+
+The outcome $y_i$ follows a **Bernoulli distribution**.
+
+$$y_i \sim bernoulli(p_i)$$
+$$y_i \sim p_i^{y_i}(1-p_i)^{1-y_i}$$
+
+--
+
+<br>
+
+We can plug in our linear combination of predictors into this probability distribution. All we need to make sure is that our predictors map to a probablity space (this is our "probability model") 
+
+$$ \pi_i =logit(\beta_0 + \beta_1 x_i)  $$
+<br>
+$$y_i \sim bernoulli(\pi_i)$$
+
+$$y_i \sim \pi_i^{y_i}(1-\pi_i)^{1-y_i}$$
+
+---
+
+```{r,echo=F,cache=F}
+set.seed(123)
+N = 600
+x1 <- rnorm(N)           
+x2 <- rnorm(N)           
+y_star <- .5*x1 + .6*x2
+
+# convert to a probability space
+pr <- exp(y_star)/(1+exp(y_star))
+
+# Drop the probability into a bernoulli dist. (0 or 1)
+y <- rbinom(N, size=1, prob = pr) 
+
+# Gather as dataset
+dat <- tibble(y,x1,x2)
+training_data = dat[1:500,]
+test_data = dat[500:600,]
+```
+
+```{r}
+head(training_data,3)
+```
+
+
+```{r,fig.align="center",fig.width=10,fig.height=3.75,cache=F}
+pairs(training_data,col="steelblue")
+```
+
+---
+
+### Estimate
+
+```{r,cache=F}
+mod = glm(y~x1 + x2,data=training_data,family=binomial(link = "probit"))
+broom::tidy(mod)
+```
+
+
+### Predict
+
+```{r,cache=F}
+preds = predict(mod,test_data,type = "response")
+head(preds)
+```
+
+---
+
+### Estimate
+
+```{r,cache=F}
+mod = glm(y~x1 + x2,data=training_data,family=binomial(link = "probit"))
+broom::tidy(mod)
+```
+
+
+### Predict
+```{r,cache=F}
+preds = predict(mod,test_data,type = "response")
+table(preds>.5,test_data$y)
+```
+
+---
+
+class: newsection
+
+<br>
+
+# $K$-Nearest Neighbors
+
+---
+
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=8}
+# Create Data
+set.seed(1234)
+N = 50
+x1 = runif(N)
+x2 = runif(N)
+y = rbinom(N,1,.5)
+D = tibble(x1,x2,y)
+D$x1_star = .63
+D$x2_star = .37
+D <- 
+  D %>% 
+  mutate(distance_x1 = sqrt((x1 - x1_star)^2),
+         distance_x2 = sqrt((x2 - x2_star)^2),
+         distance = (distance_x1 + distance_x2)/2 )
+
+new_size = 6
+
+D %>% 
+  ggplot(aes(x1,x2,color=factor(y))) +
+  geom_point(size=3) +
+  scale_color_manual(values=c("steelblue","darkred")) +
+  theme_minimal() +
+  theme(text = element_text(size=24),
+        legend.position = "none",
+        legend.text = element_text(size=20),
+        title = element_text(hjust=.5)) 
+```
+
+
+---
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=8}
+D %>% 
+  ggplot(aes(x1,x2,color=factor(y))) +
+  geom_point(size=3) +
+  scale_color_manual(values=c("steelblue","darkred")) +
+  geom_point(x=.63,y=.37,color="black",pch=18,size=new_size) +
+  theme_minimal() +
+  theme(text = element_text(size=24),
+        legend.position = "none",
+        legend.text = element_text(size=20),
+        title = element_text(hjust=.5)) 
+```
+
+---
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=8}
+D %>% 
+  ggplot(aes(x1,x2,color=factor(y))) +
+  geom_point(size=3) +
+  scale_color_manual(values=c("steelblue","darkred")) +
+  geom_point(x=.63,y=.37,color="black",pch=18,size=new_size) +
+  geom_segment(aes(x=x1_star,xend=x1,y=x2_star,yend=x2),alpha=.2,size=1) +
+  geom_point(x=.63,y=.37,color="black",pch=18,size=new_size) +
+  theme_minimal() +
+  theme(text = element_text(size=24),
+        legend.position = "none",
+        legend.text = element_text(size=20),
+        title = element_text(hjust=.5)) 
+```
+
+---
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=8}
+D %>% 
+  ggplot(aes(x1,x2,color=factor(y))) +
+  geom_point(size=3) +
+  scale_color_manual(values=c("steelblue","darkred")) +
+  geom_point(x=.63,y=.37,color="black",pch=18,size=new_size) +
+  geom_segment(aes(x=x1_star,xend=x1,y=x2_star,yend=x2),alpha=.2,size=1) +
+  geom_point(x=.63,y=.37,color="black",pch=18,size=new_size) +
+  gghighlight::gghighlight(distance <.07  ) +
+  theme_minimal() +
+  theme(text = element_text(size=24),
+        legend.position = "none",
+        legend.text = element_text(size=20),
+        title = element_text(hjust=.5)) 
+```
+
+
+---
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=8}
+D %>% 
+  ggplot(aes(x1,x2,color=factor(y))) +
+  geom_point(size=3) +
+  scale_color_manual(values=c("steelblue","darkred")) +
+  geom_point(x=.63,y=.37,color="black",pch=18,size=new_size) +
+  geom_segment(aes(x=x1_star,xend=x1,y=x2_star,yend=x2),alpha=.2,size=1) +
+  geom_point(x=.63,y=.37,color="black",pch=18,size=new_size) +
+  gghighlight::gghighlight(distance <.07  ) +
+  geom_point(x=.63,y=.37,color="darkred",pch=18,size=new_size + .5) +
+  theme_minimal() +
+  theme(text = element_text(size=24),
+        legend.position = "none",
+        legend.text = element_text(size=20),
+        title = element_text(hjust=.5)) 
+```
+
+---
+
+### KNN
+
+<br>
+
+.center[<img src =  "Figures/knn.png", width = 700> ]
+
+---
+
+### KNN
+
+- Non-parametric method that treats inputs as coordinate sets
+
+- Classifies by distance of the new entry (test data) to existing entries (training data). 
+
+--
+
+- Distance can be conceptualized in a number ways. Euclidean distance is common:
+
+$$distance = \sqrt{(x_{ij} - x_{0j})^2}$$
+
+--
+
+- Classification occurs as a "_majority vote_"
+
+$$Pr(y_{ik} = j~|~X = x_{ik}) = \frac{\sum^K_{k=1} I(y_{ik} =j )}{K}$$
+
+--
+
+- Poor performance well in high dimensions
+
+
+---
+
+### $k$ is a tuning parameter
+
+<br>
+
+.center[<img src =  "Figures/low-high-k.png", width = 700> ]
+
+
+---
+
+### $k$ is a tuning parameter
+
+.center[<img src =  "Figures/knn-overfitting.png", width = 700> ]
+
+
+---
+
+class: newsection
+
+# Classification Trees
+
+
+---
+
+## Refresh on Regression Trees 
+
+- The goal is to ﬁnd boxes that minimize the predictive error in our training data. 
+
+- **_Recursive Binary Splitting_**
+
+  - **Top-down**: start with one region and break from there.
+
+  - **Greedy**: best split is made at each step (best split given the other splits that have been made)
+
+- **_Tree Depth_**
+  
+  - Shallow trees (a few splits) can result in underfitting. 
+
+  - Deep trees (many splits) can result in overfitting
+
+---
+
+### Classification Trees
+
+<br>
+
+- Categorical rather than continuous outcome
+
+- Similar process to a regression tree.
+
+- Predict most commonly occurring class of training observations in the region to which it belongs.
+
+- Use the **_Gini Index_** as a measurement of error
+
+$$G = \sum^K_{k=1} \hat{p}_{mk} (1-\hat{p}_{mk})$$
+
+- Gini index gets small if all $\hat{p}_{mk}$ are close to zero or one ("node purity")
+
+---
+
+<br><br><br><br>
+
+.center[
+<img src =  "Figures/classification-tree-01.png", width = 1000> 
+]
+
+
+---
+
+### Reminder: Regression vs. Trees
+
+.center[
+<img src =  "Figures/reg-v-trees.png", width = 600> 
+]
+
+---
+
+class: newsection
+
+# Support Vector Machines
+
+---
+
+### Let's Build a Wall
+
+```{r,echo=F,fig.align="center",fig.height=7,fig.width=10}
+set.seed(123)
+n = 1e4
+x1 = runif(n)
+x2 = runif(n)
+y = 0+1*x1 >= x2
+D = tibble(y,x1,x2)
+D %>% 
+  ggplot(aes(x1,x2,color=as.factor(y))) +
+  geom_point(show.legend = F,alpha=.3,size=3) +
+  geom_abline(intercept = 0,slope=1,size=3,color="grey20") +
+  ggthemes::theme_fivethirtyeight() +  
+  ggthemes::scale_color_gdocs()  
+```
+
+
+---
+
+### Separating Hyperplane
+
+$$y_i(\beta_0 + x_{1i}\beta_1 + \dots + x_{pi}\beta_p) > 0, \text{ if }y_i = 1$$
+$$y_i(\beta_0 + x_{1i}\beta_1 + \dots + x_{pi}\beta_p) < 0, \text{ if }y_i = -1$$
+
+.center[
+<img src =  "Figures/hyperplane.png", width = 1000> 
+]
+
+---
+
+### Maximal Margin Hyperplane
+
+.center[
+<img src =  "Figures/mm_hyperplane.png", width = 550> 
+]
+
+---
+
+### Non-separable
+
+.center[
+<img src =  "Figures/nonseparable.png", width = 550> 
+]
+
+---
+
+### Support Vector Classifier 
+
+![:space 10]
+.center[
+<img src =  "Figures/svc_01.png", width = 1000> 
+]
+
+---
+
+### Support Vector Classifier 
+
+**_Aim_**: maximize the margin that separates most of the training observations but misclassifies only a few observations. 
+
+$$max_{\beta, \epsilon}~M~\text{ subject to } \sum_{j=1}^p \beta_j^2 = 1$$
+
+$$y_i(\beta_0 + x_{1i}\beta_1 + \dots + x_{pi}\beta_p) \ge M (1-\epsilon_i)$$
+
+$$\epsilon \ge 0, \sum_{i=1}^n \epsilon_i \le C$$
+Where $C$ is a nonnegative tuning parameter. 
+
+- $C$ dictates how many individuals observations can be on the wrong side of the margin. 
+
+- $C$ &rarr; 0 high bias; $C$ &rarr; 1 high variability
+
+---
+
+### Tuning $C$
+
+.center[
+<img src =  "Figures/tune_c.png", width = 530> 
+]
+
+---
+
+### Dealing with Non-Linear Boundaries 
+
+![:space 5]
+
+.center[
+<img src =  "Figures/nonlinear_boundary.png", width = 1000> 
+]
+
+---
+
+### Support Vector Machine
+
+Use a (polynomial, radial) _kernel_ to generate a decision boundary.
+
+<br>
+
+.center[
+<img src =  "Figures/svm.png", width = 1000> 
+]
