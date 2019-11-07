@@ -41,7 +41,7 @@ Week 9 <!-- Week of the Footer Here -->
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
-Supervised Learning <!-- Title of the lecture here -->
+Regression <!-- Title of the lecture here -->
 
 </span></div> 
 

@@ -1,7 +1,7 @@
 ---
 fontsize: 12pt
 output:
-  # pdf_document: default
+  pdf_document: default
   html_document:
     css: style.css
     theme: united
@@ -137,7 +137,7 @@ The follow schedule lays out when each assignment will be assigned and due.
     No. 3   |  October 9    | October 16 
     No. 4   |  October 16   | October 23
     No. 5   |  October 30   | November 6
-    No. 6   |  November 6   | November 13
+    No. 6   |  November 20   | November 27
 
 
 
@@ -283,8 +283,8 @@ More information about campus resources and reporting sexual misconduct can be f
 ```{r,echo=F,message=F,results='asis'}
 read_csv('fall-2019-timeline.csv') %>% 
   {.[is.na(.)]="";.} %>% 
-  # kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
-  kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
+  kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
+  # kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
   kable_styling(latex_options = c("striped",
                                   "scale_down","repeat_header"),
                 font_size = 20,
