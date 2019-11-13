@@ -1,0 +1,230 @@
+---
+title: "PPOL670 | Applications in Unsupervised Machine Learning"
+date: Week 11
+output: 
+  html_notebook:
+    toc: True
+    toc_float: True
+---
+
+```{r Setup, include=F}
+knitr::opts_chunk$set(warning = F,error = F,message = F)
+require(tidyverse)
+require(factoextra)
+require(FactoMineR)
+```
+
+
+# Data
+
+The Afghanistan Nationwide Quarterly Assessment Research (ANQAR) survey collects information from a subnational random sample of Afghan respondents from Sept. 2008 to May 2015 — resulting in a total of 32 survey waves. The survey gathers information on a variety of metrics, including for example, perceptions of the government, a respondent’s quality of life, the provision of services, and view on occupying forces in the country to name a few.
+
+The ANQAR survey data randomly samples respondents from various administrative districts and provinces in Afghanistan across the relevant time period (see the ANQAR codebook for speciﬁc details on how the data was collected). There are a total of 426 districts where respondents are situated in 1 and 34 provinces housed in 7 broad regions. 
+
+The following data contains aggregated responses for questions regarding security for each district sampled during the survey's initial wave around September 2008. 5 survey response questions (hereafter "items") are retained in total. These items are 
+
+- **Q2**: How is the security situation in your mantaqa? Is it good, fair, or bad?
+- **Q263**: How safe are the children in your village when they go to school and study in school? Are they completely safe, mostly safe, a little safe, a little unsafe, or very unsafe?
+- **Q3**: Is security in your mantaqa better, the same or worse than it was 6 months ago? Is security in your mantaqa better, worse, or the same than it was 6 months ago?
+- **Q4**: How safe do you feel traveling outside of your mantaqa during the day? Do you feel completely safe, mostly safe, a little safe, a little unsafe, or very unsafe?
+- **Q5**: If you use roads in your district, how safe do you feel using the roads in your district? Do you feel completely safe, mostly safe, a little safe, a little unsafe, or very unsafe?
+
+In addition, event data regarding the occurrence of violence within a Anfghan province is retained. The data on event occurrences was generated through reports of activity by the US army. 
+
+
+```{r}
+dat <- read_csv('Data/afg-security-survey-2008.csv')
+head(dat)
+```
+
+
+# Summarize
+
+
+```{r}
+skimr::skim(dat)
+```
+
+Just pull out the numerical values of interest
+```{r}
+features <- dat %>% select(contains("Q"))
+ncol(features)
+```
+
+
+# Principal Components
+
+Calculate the principal components for each observation. 
+```{r}
+pca_results <- PCA(features,graph=F,scale.unit = T)
+```
+
+Let's examine the variance explained with a **Scree Plot** (remember: we're looking for an elbow here).
+```{r}
+fviz_eig(pca_results,
+         addlabels = T) 
+```
+
+
+For a more numerical representation. **What does this tell us?**
+```{r}
+get_eig(pca_results) 
+```
+
+
+Roughly 80% of the variation can be explained with just one dimension! 
+
+
+Let's now explore the data...
+```{r,fig.width = 10,fig.height=7}
+fviz_pca_var(pca_results,axes = 1:2)
+```
+
+```{r,fig.width = 10,fig.height=7}
+fviz_pca_var(pca_results,axes = 2:3)
+```
+
+```{r}
+scores = get_pca_ind(pca_results)
+scores_dat <-  scores$coord
+head(scores_dat)
+```
+
+```{r}
+dat$score_1 <- scores_dat[,1]
+dat$score_2 <- scores_dat[,2]
+```
+
+
+```{r}
+dat %>% 
+  select(score_1,score_2) %>% 
+  gather(key,val) %>% 
+  ggplot(aes(val,fill=key)) +
+  geom_histogram(alpha=.5)
+```
+
+
+Let's plot the two axes against one another.
+```{r}
+dat %>% 
+  ggplot(aes(score_1,score_2)) +
+  geom_point()
+```
+
+
+How do our concepts relate to the occurrence of conflict?
+```{r}
+dat %>% 
+  ggplot(aes(event_count,score_1)) +
+  geom_point() +
+  geom_smooth(method="lm")
+```
+
+```{r}
+dat %>% 
+  ggplot(aes(event_count,score_2)) +
+  geom_point() +
+  geom_smooth(method="lm")
+```
+
+
+```{r}
+dat %>% 
+  ggplot(aes(occurrence,score_1)) +
+  geom_boxplot()
+```
+
+```{r}
+dat %>% 
+  ggplot(aes(occurrence,score_2)) +
+  geom_boxplot()
+```
+
+
+# K Means
+
+Let's now use the same data to try and cluster districts into groups. 
+
+```{r}
+set.seed(123)
+cluster1 = kmeans(features,centers = 3,nstart=20)
+
+cluster1
+```
+
+For information on the Total Withinness
+```{r}
+cluster1$tot.withinss
+```
+
+Cluster Membership
+```{r}
+cluster1$cluster
+```
+
+Plot
+```{r}
+dat$group = cluster1$cluster
+ggplot(dat,aes(Q2,Q5,color=factor(group))) +
+  geom_point()
+```
+
+
+Remember we want to select $k$ that minimizes the within variance.... but this value gets smaller and smaller as we expand the number of clusters...
+
+```{r}
+set.seed(123)
+K = 3:100
+W = rep(0,length(K))
+for(i in 1:length(K)){
+  clust = kmeans(features,centers = K[i],nstart = 20)
+  W[i] = clust$tot.withinss
+}
+W
+```
+
+
+# Hierarchical Clustering 
+
+To be more precise about how we're clustering the data, let's leverage what we know about Hierarchical clustering. 
+
+
+
+```{r,fig.width=15,fig.height=9}
+hc_complete=hclust(dist(features), method="complete")
+plot(hc_complete)
+```
+ 
+```{r}
+# H for the height of the dendrogram that we want to cut
+hc_complete_cut = cutree(hc_complete, h = 5) 
+hc_complete_cut
+```
+ 
+```{r}
+dat$group = hc_complete_cut
+ggplot(dat,aes(Q2,Q5,color=factor(group))) +
+  geom_point()
+```
+ 
+ 
+ 
+Explore the other linkage methods.
+
+```{r,fig.width=15,fig.height=9}
+hc_average=hclust(dist(features), method="average")
+plot(hc_average)
+```
+
+
+```{r,fig.width=15,fig.height=9}
+hc_single=hclust(dist(features), method="single")
+plot(hc_single)
+```
+
+
+```{r,fig.width=15,fig.height=9}
+hc_centroid=hclust(dist(features), method="centroid")
+plot(hc_centroid)
+```

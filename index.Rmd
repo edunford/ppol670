@@ -234,9 +234,13 @@ Video walkthroughs:
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week_10-practice.zip) as a `.zip`. 
   
-  
 
-<!-- ### _Week 11_: Applications in Unsupervised Learning -->
+### _Week 11_: Applications in Unsupervised Learning
+
+- [**Lecture**](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html)
+- **Practice**:
+  - The following provides a [walkthrough](Lectures/week_11/week_11-practice/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-practice.zip) as a `.zip`. 
+
 <!-- ### _Week 12_: Exploratory Data Analysis -->
 
 <br>
