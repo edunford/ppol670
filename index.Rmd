@@ -241,7 +241,9 @@ Video walkthroughs:
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_11/week_11-practice/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-practice.zip) as a `.zip`. 
 
-<!-- ### _Week 12_: Exploratory Data Analysis -->
+### _Week 12_: Exploratory Data Analysis
+
+- [**Lecture**](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html)
 
 <br>
 
