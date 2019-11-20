@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -1389,7 +1390,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -1463,48 +1463,9 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -1658,6 +1619,11 @@ div.tocify {
 <td><a href="https://cfss.uchicago.edu/setup/git-cache-credentials/" class="uri">https://cfss.uchicago.edu/setup/git-cache-credentials/</a></td>
 <td>Computing for the Social Sciences</td>
 <td><code>css</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://christophm.github.io/interpretable-ml-book/index.html" class="uri">https://christophm.github.io/interpretable-ml-book/index.html</a></td>
+<td>Interpretable Machine Learning</td>
+<td><code>iml</code></td>
 </tr>
 </tbody>
 </table>
@@ -1894,24 +1860,30 @@ div.tocify {
 <li><strong><em>Required Readings</em></strong>:
 <ul>
 <li><p><a href="https://r4ds.had.co.nz/exploratory-data-analysis.html">Ch. 7: Exploratory Data Analysis</a> - r4ds</p></li>
-<li>Modeling (Linear)
+<li><strong>Interpretable Machine Learning</strong>
+<ul>
+<li><a href="https://christophm.github.io/interpretable-ml-book/interpretability.html">Ch. 2: Interpretability</a> - <code>iml</code></li>
+<li><a href="https://christophm.github.io/interpretable-ml-book/pdp.html">Partial Dependency Plots</a> - <code>iml</code></li>
+<li><a href="https://christophm.github.io/interpretable-ml-book/ice.html">Individual Conditional Expectation</a> - <code>iml</code></li>
+</ul></li>
+</ul></li>
+<li><font color="grey"><strong><em>Additional Resources and Suggested Materials</em></strong></font>
+<ul>
+<li>Modeling
 <ul>
 <li><a href="https://r4ds.had.co.nz/model-basics.html">Model Basics</a> - r4ds</li>
 <li><a href="https://r4ds.had.co.nz/model-building.html">Model Building</a> - r4ds</li>
 <li><a href="https://r4ds.had.co.nz/many-models.html">Many Models</a> - r4ds</li>
 </ul></li>
-<li>Inference
-<ul>
-<li><a href="https://moderndive.com/8-sampling.html">Sampling</a> - MD</li>
-<li><a href="https://moderndive.com/9-confidence-intervals.html">Confidence Intervals</a> - MD</li>
-<li><a href="https://moderndive.com/10-hypothesis-testing.html">Hypothesis Testing</a> - MD</li>
-<li><a href="https://moderndive.com/11-inference-for-regression.html">Inference for Regression</a> -MD</li>
-</ul></li>
-</ul></li>
-<li><font color="grey"><strong><em>Additional Resources and Suggested Materials</em></strong></font>
-<ul>
 <li><a href="http://genomicsclass.github.io/book/pages/permutation_tests.html">Permutation tests</a></li>
 <li><a href="https://www.datacamp.com/community/tutorials/bootstrap-r">Bootstrap</a> - Datacamp</li>
+<li><strong>Inference</strong>
+<ul>
+<li><a href="https://moderndive.com/7-sampling.html">Sampling</a> - MD</li>
+<li><a href="https://moderndive.com/8-confidence-intervals.html">Confidence Intervals</a> - MD</li>
+<li><a href="https://moderndive.com/9-hypothesis-testing.html">Hypothesis Testing</a> - MD</li>
+<li><a href="https://moderndive.com/10-inference-for-regression.html">Inference for Regression</a> -MD</li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
@@ -1934,6 +1906,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

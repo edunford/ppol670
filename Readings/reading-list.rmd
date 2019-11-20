@@ -29,6 +29,7 @@ The following table is a compilation of all the main online resources referenced
 | https://moderndive.com/index.html | ModernDive | `MD` |
 | https://www.tidytextmining.com/index.html | TidyText | `TT` |
 | https://cfss.uchicago.edu/setup/git-cache-credentials/ | Computing for the Social Sciences | `css` |
+| https://christophm.github.io/interpretable-ml-book/index.html | Interpretable Machine Learning | `iml` |
 
 `RStudio` Cheat Sheets: while in the IDE click `help > Cheatsheets`
 
@@ -207,21 +208,24 @@ The following table is a compilation of all the main online resources referenced
 - **_Required Readings_**:
     + [Ch. 7: Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html) - r4ds
     
-    + Modeling (Linear)
+    + **Interpretable Machine Learning**
+      + [Ch. 2: Interpretability](https://christophm.github.io/interpretable-ml-book/interpretability.html) - `iml`
+      + [Partial Dependency Plots](https://christophm.github.io/interpretable-ml-book/pdp.html) - `iml`
+      + [Individual Conditional Expectation](https://christophm.github.io/interpretable-ml-book/ice.html) - `iml`
+    
+      
+- <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
+    + Modeling 
       + [Model Basics](https://r4ds.had.co.nz/model-basics.html) - r4ds
       + [Model Building](https://r4ds.had.co.nz/model-building.html) - r4ds
       + [Many Models](https://r4ds.had.co.nz/many-models.html) - r4ds
-      
-    + Inference 
-      + [Sampling](https://moderndive.com/8-sampling.html) - MD
-      + [Confidence Intervals](https://moderndive.com/9-confidence-intervals.html) - MD
-      + [Hypothesis Testing](https://moderndive.com/10-hypothesis-testing.html) - MD
-      + [Inference for Regression](https://moderndive.com/11-inference-for-regression.html) -MD
-      
-      
-- <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
     + [Permutation tests](http://genomicsclass.github.io/book/pages/permutation_tests.html)
     + [Bootstrap](https://www.datacamp.com/community/tutorials/bootstrap-r) - Datacamp
+    + **Inference**
+      + [Sampling](https://moderndive.com/7-sampling.html) - MD
+      + [Confidence Intervals](https://moderndive.com/8-confidence-intervals.html) - MD
+      + [Hypothesis Testing](https://moderndive.com/9-hypothesis-testing.html) - MD
+      + [Inference for Regression](https://moderndive.com/10-inference-for-regression.html) -MD
 
 
         
