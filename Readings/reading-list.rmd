@@ -206,7 +206,7 @@ The following table is a compilation of all the main online resources referenced
 <!-- Add interpretable ML discussion this week -->
 
 - **_Required Readings_**:
-    + [Ch. 7: Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html) - r4ds
+    + [Ch. 7: Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html) - `r4ds`
     
     + **Interpretable Machine Learning**
       + [Ch. 2: Interpretability](https://christophm.github.io/interpretable-ml-book/interpretability.html) - `iml`
@@ -216,16 +216,16 @@ The following table is a compilation of all the main online resources referenced
       
 - <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
     + Modeling 
-      + [Model Basics](https://r4ds.had.co.nz/model-basics.html) - r4ds
-      + [Model Building](https://r4ds.had.co.nz/model-building.html) - r4ds
-      + [Many Models](https://r4ds.had.co.nz/many-models.html) - r4ds
+      + [Model Basics](https://r4ds.had.co.nz/model-basics.html) - `r4ds`
+      + [Model Building](https://r4ds.had.co.nz/model-building.html) - `r4ds`
+      + [Many Models](https://r4ds.had.co.nz/many-models.html) - `r4ds`
     + [Permutation tests](http://genomicsclass.github.io/book/pages/permutation_tests.html)
-    + [Bootstrap](https://www.datacamp.com/community/tutorials/bootstrap-r) - Datacamp
-    + **Inference**
-      + [Sampling](https://moderndive.com/7-sampling.html) - MD
-      + [Confidence Intervals](https://moderndive.com/8-confidence-intervals.html) - MD
-      + [Hypothesis Testing](https://moderndive.com/9-hypothesis-testing.html) - MD
-      + [Inference for Regression](https://moderndive.com/10-inference-for-regression.html) -MD
+    + [Bootstrap](https://www.datacamp.com/community/tutorials/bootstrap-r) - `Datacamp`
+    + Inference
+      + [Sampling](https://moderndive.com/7-sampling.html) - `MD`
+      + [Confidence Intervals](https://moderndive.com/8-confidence-intervals.html) - `MD`
+      + [Hypothesis Testing](https://moderndive.com/9-hypothesis-testing.html) - `MD`
+      + [Inference for Regression](https://moderndive.com/10-inference-for-regression.html) -`MD`
 
 
         
