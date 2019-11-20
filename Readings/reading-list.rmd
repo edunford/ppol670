@@ -220,12 +220,13 @@ The following table is a compilation of all the main online resources referenced
       + [Model Building](https://r4ds.had.co.nz/model-building.html) - `r4ds`
       + [Many Models](https://r4ds.had.co.nz/many-models.html) - `r4ds`
     + [Permutation tests](http://genomicsclass.github.io/book/pages/permutation_tests.html)
-    + [Bootstrap](https://www.datacamp.com/community/tutorials/bootstrap-r) - `Datacamp`
+    + [Bootstrap](https://www.datacamp.com/community/tutorials/bootstrap-r) - Datacamp
     + Inference
-      + [Sampling](https://moderndive.com/7-sampling.html) - `MD`
-      + [Confidence Intervals](https://moderndive.com/8-confidence-intervals.html) - `MD`
-      + [Hypothesis Testing](https://moderndive.com/9-hypothesis-testing.html) - `MD`
-      + [Inference for Regression](https://moderndive.com/10-inference-for-regression.html) -`MD`
+      + [Sampling](https://moderndive.com/7-sampling.html) - MD
+      + [Confidence Intervals](https://moderndive.com/8-confidence-intervals.html) - MD
+      + [Hypothesis Testing](https://moderndive.com/9-hypothesis-testing.html) - MD
+      + [Inference for Regression](https://moderndive.com/10-inference-for-regression.html) -MD
+
 
 
         
