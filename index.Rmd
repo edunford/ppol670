@@ -88,6 +88,8 @@ Data science is an applied field and therefore, it is important that you underst
 
 <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center>
 
+<center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center>
+
 <br>
 <br>
 <br>
