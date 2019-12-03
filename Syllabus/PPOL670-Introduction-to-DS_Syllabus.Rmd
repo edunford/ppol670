@@ -1,7 +1,7 @@
 ---
 fontsize: 12pt
 output:
-  pdf_document: default
+  # pdf_document: default
   html_document:
     css: style.css
     theme: united
@@ -12,7 +12,7 @@ output:
     toc_float: true
 ---
 
-<!-- ### [Home](../index.html) -->
+### [Home](../index.html)
 
 \begin{center}
  
@@ -40,7 +40,7 @@ require(kableExtra)
 
 **Teaching Assistant**: Nathan Lovin
 
-- **Office Hours**: by appointment online (https://nathanlovin.youcanbook.me/)
+- **Office Hours**: by appointment online (https://calendly.com/nhl8/one-on-one)
 - **Email**: [nhl8@georgetown.edu](mailto:nhl8@georgetown.edu)
 - **Skype**: nathan.lovin
 - **Pronouns**: he/him
@@ -283,8 +283,8 @@ More information about campus resources and reporting sexual misconduct can be f
 ```{r,echo=F,message=F,results='asis'}
 read_csv('fall-2019-timeline.csv') %>% 
   {.[is.na(.)]="";.} %>% 
-  kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
-  # kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
+  # kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
+  kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
   kable_styling(latex_options = c("striped",
                                   "scale_down","repeat_header"),
                 font_size = 20,
