@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Project Name**: ________________________________________
 
-**Total Score**: ____ / 15
+**Total Score**: ____ / 16
 
 > _The score on each item will take the value of 1 (met expectation), .5 (partially met expectation), 0 (fell below expectation)._
 
@@ -24,6 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Materials were posted on Canvas? score: (_score_:___)
 - Materials were generated using R? (_score_:___)
+- Student rendered their materials as slides in R Markdown (or Rpres)? (_score_:___)
 - Student's presentation materials were version controlled on Github?  (_score_:___)
 - Student used professional looking visualizations in the presentation materials:
   
