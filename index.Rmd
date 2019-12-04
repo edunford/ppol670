@@ -90,7 +90,9 @@ Data science is an applied field and therefore, it is important that you underst
 
 <center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center>
 
-<center>[**Class Project Presentation Peer Feedback**](https://docs.google.com/document/d/1ZNP9OUtu3h4clVMaUl0L__RG0be9C5Io79gL6ilxI_s/edit?usp=sharing)</center>
+<center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center>
+
+
 
 <br>
 <br>
@@ -262,6 +264,10 @@ Video walkthroughs:
 <br>
 
 Students are listed in the order that they'll present in class on Dec. 4. 
+
+<br>
+
+<center>[**_Class Project Presentation Peer Feedback_**](https://docs.google.com/document/d/1ZNP9OUtu3h4clVMaUl0L__RG0be9C5Io79gL6ilxI_s/edit?usp=sharing)</center>
 
 <br>
 
