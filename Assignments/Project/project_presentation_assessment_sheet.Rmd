@@ -33,11 +33,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Slides**
 
-- (1-3 slides) Problem statement and background (_score_:___)
+- 1-3 slides on problem statement and background (_score_:___)
 
-- (1-3 slides on the methods/approaches the student considered using (_score_:___)
+- 1-3 slides on the methods/approaches the student considered using (_score_:___)
 
-- (1-3 slides) The methods/tools used (to date), and the rationale for their use (_score_:___)
+- 1-3 slides on the methods/tools used (to date), and the rationale for their use (_score_:___)
 
 - 2-4 slides on preliminary results and conclusions (_score_:___)
 
