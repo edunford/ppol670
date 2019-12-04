@@ -263,23 +263,23 @@ Students are listed in the order that they'll present in class on Dec. 4.
 
 <br>
 
-- [Kelly Chen](student_project_presentations/chen_kelly.pdf)
-- [Chenyue Zhu](student_project_presentations/Chenyue_Zhu.pdf)
-- [Vincent Morin](student_project_presentations/Vincent_Morin.pdf)
-- [Yiwei Chu](student_project_presentations/Chu_Yiwei.html)
-- [Meshal Alkhowaiter](student_project_presentations/alkhowaiter_meshal.html)
-- [Hanwen Luo](student_project_presentations/Hanwen_Luo.html)
-- [Kristina Costa](student_project_presentations/Kristina_Costa/Final-Presentation.html)
-- [Xun Zhang](student_project_presentations/zhang_xun.pdf)
+- [Kelly Chen](Assignments/Project/student_project_presentations/chen_kelly.pdf)
+- [Chenyue Zhu](Assignments/Project/student_project_presentations/Chenyue_Zhu.pdf)
+- [Vincent Morin](Assignments/Project/student_project_presentations/Vincent_Morin.pdf)
+- [Yiwei Chu](Assignments/Project/student_project_presentations/Chu_Yiwei.html)
+- [Meshal Alkhowaiter](Assignments/Project/student_project_presentations/alkhowaiter_meshal.html)
+- [Hanwen Luo](Assignments/Project/student_project_presentations/Hanwen_Luo.html)
+- [Kristina Costa](Assignments/Project/student_project_presentations/Kristina_Costa/Final-Presentation.html)
+- [Xun Zhang](Assignments/Project/student_project_presentations/zhang_xun.pdf)
 - [Alberto Rodriguez Alvarez](student_project_presentations/rodriguez_alvarez_alberto.html)
-- [Yutong Wu](student_project_presentations/Yutong_Wu.html)
+- [Yutong Wu](Assignments/Project/student_project_presentations/Yutong_Wu.html)
 - Ana Gabriela Tamayo Alatriste
-- [Alex Richardson](student_project_presentations/Alex_Richardson.html)
+- [Alex Richardson](Assignments/Project/student_project_presentations/Alex_Richardson.html)
 - Liping Wang
-- [Jagir Pipalia](student_project_presentations/pipalia_jagir.html)
+- [Jagir Pipalia](Assignments/Project/student_project_presentations/pipalia_jagir.html)
 - Ana Paula Pellegrino
-- [Bridget Silha](student_project_presentations/silha_bridget.pdf)
-- [Dingqing Qian](student_project_presentations/qian_dingqing/qian_dingqing.html)
+- [Bridget Silha](Assignments/Project/student_project_presentations/silha_bridget.pdf)
+- [Dingqing Qian](Assignments/Project/student_project_presentations/qian_dingqing/qian_dingqing.html)
 - Diego Del Pilar Miranda
 
 
