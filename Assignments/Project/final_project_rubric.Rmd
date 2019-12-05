@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Project Name**: ________________________________________
 
-**Total Score**: ____ / 51
+**Total Score**: ____ / 52
 
 
 ### Project Materials
@@ -55,6 +55,8 @@ knitr::opts_chunk$set(echo = TRUE)
   + Report contained no (or few) gramatical/spelling errors. (1 point)
   + Report reads as a single cohesive document. (1 point)
   + Report is 12 pages in length (double-spaced; 12 pt font). (1 point)
+  + Student cited academic, data, and package sources. (1 point)
+    - To cite a package, use `citation("package_name")`, e.g. `citation("ggplot2")`
   
 ### Content
 
