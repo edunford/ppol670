@@ -1,18 +1,18 @@
 ---
 fontsize: 12pt
 output:
-  # pdf_document: default
-  html_document:
-    css: style.css
-    theme: united
-    highlight: default
-    toc_depth: 3
-    toc: true
-    toc_collapsed: true
-    toc_float: true
+  pdf_document: default
+  # html_document:
+  #   css: style.css
+  #   theme: united
+  #   highlight: default
+  #   toc_depth: 3
+  #   toc: true
+  #   toc_collapsed: true
+  #   toc_float: true
 ---
 
-### [Home](../index.html)
+<!-- ### [Home](../index.html) -->
 
 \begin{center}
  
@@ -49,9 +49,7 @@ require(kableExtra)
 
 # Course Description
 
-The Introduction to Data Science is a survey course of fundamental concepts and techniques used in data science. This course teaches students how to synthesize disparate, possibly unstructured data to better understand and characterize the world around us and to draw meaningful inferences from data. Topics covered include fundamentals of functional programming in R, data wrangling, data visualization, data extraction (via web scraping and APIs), text analysis, and machine learning methods.
-
-The course is focused on telling stories with data in order to make compelling, fact-based arguments. The value of this course is in the mortar, not the bricks. The course aims at offering students a practical toolkit for data analytics and exposure to different analytical approaches and tools. The objective of the course is to equip students with the skills to incorporate data into their decision-making and analysis. No prior programming experience is assumed or required.
+This course teaches students how to synthesize disparate, possibly unstructured data in order to draw meaningful insights from data. Topics covered include fundamentals of functional programming in R, literate programming, data wrangling, data visualization, data extraction (via web scraping and APIs), text analysis, and machine learning methods. In addition, students will be exposed to Git and Github for reproducible research. The course aims to offer students a practical toolkit for data exploration. The objective of the course is to equip students with the skills to incorporate data into their decision-making and analysis. No prior programming experience is assumed, but prior statistics training is required. 
 
 # Time and location
 
@@ -70,20 +68,20 @@ Holidays/Breaks (No class):
 
 This course focuses on providing students with an applied knowledge of the `R` programming environment while placing emphasis on developing a practical data science toolkit that students can implement quickly and efficiently. To this end, the course takes a ‘Tidyverse’ approach to `R` programming, which provides users an intuitive grammar for data manipulation and visualization. The goal is to establish a practical toolkit for analysis in `R` without getting too bogged down in the nuts and bolts of functional programming.
 
-1. Receive exposure to the main concepts associated with data science.
+1. Understand the basics of programming in `R` with emphasis on the "tidy" ecosystem of packages. 
 
 2. Learn how to wrangle (prepare and clean) different types of data.
 
-3. Learn to analyze data for descriptive and predictive purposes.
+3. Learn to identify and visualize important trends and findings. 
 
-4. Understand the basics of programming in `R` with emphasis on the "tidy" ecosystem of packages. 
+4. Learn to extract and process data from unstructured sources, such as the web and/or text.
 
-5. Learn to identify and visualize important trends and findings. 
+5. Learn to use statistical learning approaches to effectively explore and ask questions from data.
 
-6. Debate and articulate ideas related to data.
+# Pre-Requisites
 
-7. Tell a coherent, meaningful data science story.
-
+- **_Required_**: PPOL501 - Statistical Methods for Policy Analysis (or an equivalent course)
+- **_Preferred_**: PPOL502 - Regression Methods for Policy Analysis (or an equivalent course)
 
 # Required Materials
 
@@ -243,7 +241,7 @@ Increasingly, with the proliferation of certain websites, questions about the ow
 
 
 ### Academic Resource Center/Disability Support 
-If you believe you have a'disability, then you should contact the Academic Resource Center ([arc@georgetown.edu](arc@georgetown.edu)) for further information. The Center is located in the Leavey Center, Suite 335 (202-687-8354). The Academic Resource Center is the campus office responsible for reviewing documentation provided by students with disabilities and for determining reasonable accommodations in accordance with the Americans with Disabilities Act (ASA) and University policies. For more information, go to [http://academicsupport.georgetown.edu/disability/](http://academicsupport.georgetown.edu/disability/).
+If you believe you have a disability, then you should contact the Academic Resource Center ([arc@georgetown.edu](arc@georgetown.edu)) for further information. The Center is located in the Leavey Center, Suite 335 (202-687-8354). The Academic Resource Center is the campus office responsible for reviewing documentation provided by students with disabilities and for determining reasonable accommodations in accordance with the Americans with Disabilities Act (ASA) and University policies. For more information, go to [http://academicsupport.georgetown.edu/disability/](http://academicsupport.georgetown.edu/disability/).
 
 					
 ### Important Academic Policies and Academic Integrity				
@@ -283,12 +281,12 @@ More information about campus resources and reporting sexual misconduct can be f
 ```{r,echo=F,message=F,results='asis'}
 read_csv('fall-2019-timeline.csv') %>% 
   {.[is.na(.)]="";.} %>% 
-  # kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
-  kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
+  kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
+  # kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
   kable_styling(latex_options = c("striped",
                                   "scale_down","repeat_header"),
-                font_size = 20,
-                # font_size = 13,
+                # font_size = 20,
+                font_size = 13,
                 full_width = T) %>% 
   column_spec(1,width = '.5in') %>% 
   column_spec(2,width = '1in') %>% 
