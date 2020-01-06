@@ -1,18 +1,18 @@
 ---
 fontsize: 12pt
 output:
-  # pdf_document: default
-  html_document:
-    css: style.css
-    theme: united
-    highlight: default
-    toc_depth: 3
-    toc: true
-    toc_collapsed: true
-    toc_float: true
+  pdf_document: default
+  # html_document:
+  #   css: style.css
+  #   theme: united
+  #   highlight: default
+  #   toc_depth: 3
+  #   toc: true
+  #   toc_collapsed: true
+  #   toc_float: true
 ---
 
-### [Home](../index.html)
+<!-- ### [Home](../index.html) -->
 
 \begin{center}
  
@@ -97,7 +97,7 @@ This course focuses on providing students with an applied knowledge of the `R` p
 
 **Class Website**: A class website (www.ericdunford.com/ppol670) will be used throughout the course and should be checked on a regular basis for lecture materials and required readings. 
 
-**Class Slack Channel**: The class also has a dedicated slack channel (ppol670_Intro-to-DS_Fall2019). The channel serves as an open forum to discuss, collaborate, pose problems/questions, and offer solutions. Students are encouraged to pose any questions they have there as this will provide the professor and TA the means of answering the question so that all can see the response. If you're unfamiliar with Slack, please consult the following start-up tutorial (https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members). Please follow the [**_invite link_**](https://join.slack.com/t/ppol670introt-vji9553/shared_invite/enQtNzQ0MzM5MTczNjk2LTllMTc2MTBkMmQ5OTQyNmZhZjZkNjUxODU5MDBiMGMxYjVjNjJiYjhkMDZkOThjOWNkNzM3YjFlNTIxODUzOTA) to be added to the Slack channel.
+**Class Slack Channel**: The class also has a dedicated slack channel (ppol670_Intro-to-DS_Fall2019). The channel serves as an open forum to discuss, collaborate, pose problems/questions, and offer solutions. Students are encouraged to pose any questions they have there as this will provide the professor and TA the means of answering the question so that all can see the response. If you're unfamiliar with Slack, please consult the following start-up tutorial (https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members). Please follow the [**_invite link_**](https://join.slack.com/t/ppol670introt-vcq1395/shared_invite/enQtODgyMDYyNDQ4ODgyLTFjMTJiZmJlNGQzMTkyNDMwNmUyYjZjZWQxOGIwMmIzZTFmYTAyZWEzOWE5ZDNlNjk4MWZjZTE2OTA3Y2ZhOWQ) to be added to the Slack channel.
 
 **Canvas**: A Canvas site (**http://canvas.georgetown.edu**) will be used periodically throughout the course and should be checked on a regular basis. All assignments will be posted on Canvas; they will not be distributed in class or by e-mail. Support for Canvas is available at (202) 687-4949
 
@@ -282,12 +282,12 @@ More information about campus resources and reporting sexual misconduct can be f
 ```{r,echo=F,message=F,results='asis'}
 read_csv('spring-2020-timeline.csv') %>% 
   {.[is.na(.)]="";.} %>% 
-  # kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
-  kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
+  kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
+  # kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
   kable_styling(latex_options = c("striped",
                                   "scale_down","repeat_header"),
-                font_size = 20,
-                # font_size = 12,
+                # font_size = 20,
+                font_size = 12,
                 full_width = T) %>% 
   column_spec(1,width = '.5in') %>% 
   column_spec(2,width = '1in') %>% 
