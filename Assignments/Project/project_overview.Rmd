@@ -1,7 +1,7 @@
 ---
 title: \textbf{Project Overview}
-author: \Large PPOL670 -- Introduction to Data Science
-date: 'Fall 2019'
+author: \Large PPOL670 - 02 -- Introduction to Data Science
+date: 'Spring 2019'
 toc: TRUE
 fontsize: 12pt
 output: 
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo=FALSE,message=FALSE,error = FALSE,warning = FALSE)
 
 The following provides an overview of the data science project that you will be responsible for completing by the end of the semester. The project is an opportunity to apply the skills and tools that you've learned throughout the course on an area of substantive interest to you. 
 
-The project is composed of three distinct parts: a proposal, a presentation, and a report. The proposal should outline the general plan for the project and will serve as an opportunity for the professor and teaching assistant to provide guidance on its feasibility. The presentation is an opportunity to present your work in mid-stream to receive verbal feedback from the professor, TA, and classmates. These comments will hopefully help you as you move forward with the final report. The report is the written analysis of the project in its entirety. The report will be due on Dec. 14 @ 9pm (PPOL670's designated finals slot).
+The project is composed of three distinct parts: a proposal, a presentation, and a report. The proposal should outline the general plan for the project and will serve as an opportunity for the professor and teaching assistant to provide guidance on its feasibility. The presentation is an opportunity to present your work in mid-stream to receive verbal feedback from the professor, TA, and classmates. These comments will hopefully help you as you move forward with the final report. The report is the written analysis of the project in its entirety. The report will be due on May 7 @ 6pm (PPOL670's designated finals slot).
 
 While completing your project, you will be responsible for creating and maintaining a public repository on `Github`, tracking all progress made on your project using the version control implementations discussed at the start of the semester. All work product should be reflected on the repository. The proposal, presentation materials, and the report should be generated using [RMarkdown](https://rmarkdown.rstudio.com/authoring_quick_tour.html) and should follow all reproducibility practices discussed in class. 
 
@@ -32,19 +32,21 @@ While completing your project, you will be responsible for creating and maintain
 
 | **Due** | **Proportion of Grade** | **Length** |
 |---- | ---- | ----|
-November 13 | 5% | 2 pages (single-spaced; 12pt font)
+March 25 | 5% | 2 pages (single-spaced; 12pt font)
 
 The project proposal asks that you sketch out a general 2 page (single-spaced; 12pt font) project proposal. The proposal should offer the following information:
 
 1. A high-level statement of the problem you intend to address or the analysis you aim to generate;
 2. The data source(s) you intend to use;
+    - The data you choose to utilize should take some effort to compose (it shouldn't be entirely "off-the-shelf data", i.e. data easily downloaded online). 
+    - If using API's or other easily downloadable data sources (such as World Bank data) to collect your data, try joining other data to the downloaded data, change the unit of analysis, etc. 
+    - In general, one should not rely on using data that requires no wrangling. 
 3. Your plan to obtain that data; 
 4. The methods (learned in class) that you aim to employ; and 
     - The project must contain:
-      + Data wrangling
-        - The data you choose utilize should take some effort to compose (i.e. it shouldn't be data easily downloaded online). If using API's to collect your data (which one could argue is easy to get), try joining other data to the downloaded data, change the unit of analysis, etc. In general, one should not use "off-the-shelf" data that requires no wrangling. 
-      + Visualizations
-      + Machine (statistical) learning
+      + a data wrangling component
+      + (multiple) data visualizations
+      + a machine (statistical) learning component
 5. A definition for what "success" means with respect to your project. 
     - In your words, what would a successful project look like? How will you know that you solved the problem or accomplished your goal? 
     - Four weeks isn't a long time to complete a project like this. Thinking serious about what a "finished" or "successful" project might look like. This will help you set realistic goals/expectations. 
@@ -55,7 +57,7 @@ Please be detailed but _succinct_ as possible when writing. _Any material that e
 
 | **Due** | **Proportion of Grade** | **Length** |
 |---- | ---- | ----|
-December 4 | 10% | 8 minutes in length
+April 22 | 10% | 7 minutes in length
 
 Please prepare a slide presentation _using `R Markdown`_, which walks us through the progress you've made on your project. The presentation will offer you the opportunity to summarize your project and talk through your (preliminary) results. Moreover, it'll (a) provide an opportunity for the Professor/TA to provide constructive feedback, which you can incorporate into your final paper, and (b) motivate you to make significant progress on the project before the final deadline. 
 
@@ -73,7 +75,7 @@ When preparing your talk, use the following format. You should plan on having wi
 
 5. (1-2 slides) Lessons learned thus far and/or plans to mitigate challenges.
 
-Keep in mind that 8 minutes passes quickly. The time will be _strictly_ enforced (we need to make sure we get through everyone's presentation in time), so be sure to practice/polish your presentation prior to giving it. In addition, note that presentations will start promptly at the beginning of class. If you're presenting first, then you must be ready to go at the start of class. Failure to do so will only eat into your time.  
+Keep in mind that 7 minutes passes quickly. The time will be _strictly_ enforced (we need to make sure we get through everyone's presentation in time), so be sure to practice/polish your presentation prior to giving it. In addition, note that presentations will start promptly at the beginning of class. If you're presenting first, then you must be ready to go at the start of class. Failure to do so will only eat into your time.  
 
 Note again that the presentation should be rendered using a `.rmd` file and the slides should be rendered as either a `.html`, `.pdf`, or power point file. Students must submit both their slides _and_ the `.rmd` file used to render the slides to CANVAS. 
 
@@ -83,9 +85,9 @@ Order of the speakers will be randomly assigned and circulated on CANVAS a week 
 
 | **Due** | **Proportion of Grade** | **Length** |
 |---- | ---- | ----|
-December 14 | 30% | 12 pages (double-spaced; 12pt font)
+May 7 | 30% | 12 pages (double-spaced; 12pt font)
 
-The report is a complete description of the project's analysis and results. The report should be 12 pages in length (double-spaced; 12 pt font) and cover the below bullet points. As with the proposals, no written material will be considered beyond page 12 when reviewing the report (a work cited can span onto a 13th page). 
+The report is a complete description of the project's analysis and results. The report should be 12 pages in length (double-spaced; 12 pt font) and cover the below bullet points. As with the proposals, no written material will be considered beyond page 12 when reviewing the report (a work cited can span onto a 13th page). Below I've outlined points that one should aim to discuss in each section. Note that report should read as a cohesively report, so do not respond to these bullet points verbatim. 
 
 
 - **Introduction**
@@ -138,5 +140,5 @@ The report is a complete description of the project's analysis and results. The 
   
   + How would you expand the analysis if given more time? 
   
-The reports must be submitted as a hardcopy (i.e. the `.rmd` notebook must be rendered as a `.pdf`) to CANVAS by 9PM on December 14th. The code for all the tables and visuals in the rendered document must be included in your Github repository. The professor or TA should be able to clone the repository and run your code without issue. Note that given the page constraints, all `R` code should _not_ be visible in the rendered document. 
+The reports must be submitted as a hardcopy (i.e. the `.rmd` notebook must be rendered as a `.pdf`) to CANVAS by 6PM on May 7th. **_The code for all the tables and visuals in the rendered document must be included in your Github repository_**. The professor or TA should be able to clone the repository and run your code without issue. **_Note that given the page constraints, no `R` code should be visible in the rendered document._**
 
