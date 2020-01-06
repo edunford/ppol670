@@ -50,7 +50,7 @@ knitr::opts_chunk$set(echo = TRUE)
   
 - **Student used `R` Markdown for a professional looking report:**
   + Report was rendered without errors or warnings. (1 point)
-  + No `R` was visible in the report. (1 point)
+  + No `R` code was visible in the report. (1 point)
   + Report contained a table of contents. (1 point)
   + Report contained no (or few) gramatical/spelling errors. (1 point)
   + Report reads as a single cohesive document. (1 point)
