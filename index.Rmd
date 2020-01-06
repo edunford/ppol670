@@ -115,8 +115,9 @@ The following are installation instructions for `R`, `RStudio`, and `Git`.
 **`R` Software**
 
 To install `R`, download `R` from CRAN via the following:
- - Windows: https://cran.r-project.org/bin/windows/base/ (Links to an external site.)
- - Mac: https://cran.r-project.org/bin/macosx/
+ 
+- Windows: https://cran.r-project.org/bin/windows/base/ (Links to an external site.)
+- Mac: https://cran.r-project.org/bin/macosx/
  
 To install `RStudio`, download from the following (scroll to the bottom):
 
@@ -139,7 +140,7 @@ Video walkthroughs:
 
 Video walkthroughs:
  
- - [TA Video Walkthrough: Using Git with RStudio](https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0)
+ - [TA Video Walkthrough: Using Git with RStudio](https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0) - [_Put together by former TA (Nathan Lovin)_]
 
 
 <br>
