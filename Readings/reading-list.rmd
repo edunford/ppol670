@@ -1,6 +1,6 @@
 ---
 title: 'PPOL670 | Reading List'
-date: 'Fall 2019'
+date: 'Spring 2019'
 output: 
   html_document:
     css: style.css
@@ -179,29 +179,33 @@ The following table is a compilation of all the main online resources referenced
 
 - **_Required Readings_**:
   - Linear Models - **James et al. Ch. 3.1 - 3.3** 
-  - Linear Model Selection and Regularization - **James et al. Ch. 6.1 - 6.2** 
   - Tree-Based Methods - **James et al. Ch. 8.1 - 8.2** 
 
 - <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
     + [Decision Trees in `R` - Data Camp](https://www.datacamp.com/community/tutorials/decision-trees-R)
     + Montgomery et. al. (2018) "Tree-Based Models for Political Science Data". American Journal of Political Science. (See Canvas)
     
+    
+### Week 10: Using Spatial Data
 
-### Week 10: Applications in Supervised Statistical Learning (Classification)
+- **_Required Readings_**:
+  - TBA
+
+### Week 11: Applications in Supervised Statistical Learning (Classification)
 
 - **_Required Readings_**:
   - K Nearest Neighbors - **James et al. Ch. 2.2.3 & 3.5**
   - Support Vector Machines - **James et al. Ch. 9.1 - 9.4**
-  - _(Refresh from last week)_ Tree-Based Methods 
+  - _(Refresh from Week 9)_ Tree-Based Methods 
     
 
-### Week 11: Applications in Unsupervised Statistical Learning
+### Week 12: Applications in Unsupervised Statistical Learning
 
 - **_Required Readings_**: 
   - Unsupervised Learning - **James et al. Ch. 10.1 - 10.3** 
   
 
-### Week 12: Exploratory Data Analysis
+### Week 13: Exploratory Data Analysis
 
 <!-- Add interpretable ML discussion this week -->
 
@@ -210,8 +214,8 @@ The following table is a compilation of all the main online resources referenced
     
     + **Interpretable Machine Learning**
       + [Ch. 2: Interpretability](https://christophm.github.io/interpretable-ml-book/interpretability.html) - `iml`
-      + [Partial Dependency Plots](https://christophm.github.io/interpretable-ml-book/pdp.html) - `iml`
-      + [Individual Conditional Expectation](https://christophm.github.io/interpretable-ml-book/ice.html) - `iml`
+      + [Ch. 5.1: Partial Dependency Plots](https://christophm.github.io/interpretable-ml-book/pdp.html) - `iml`
+      + [Ch. 5.2: Individual Conditional Expectation](https://christophm.github.io/interpretable-ml-book/ice.html) - `iml`
     
       
 - <font color = "grey">**_Additional Resources and Suggested Materials_**</font>

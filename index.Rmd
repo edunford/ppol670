@@ -20,7 +20,7 @@ require(kableExtra)
 
 
 <center><h1>Introduction to Data Science</h1></center>
-<center>**Fall 2019**</center>
+<center>**Spring 2019**</center>
 <center>**Georgetown University**</center>
 
 <br>
@@ -36,7 +36,7 @@ require(kableExtra)
 
 
 ```{r,echo=F,message=F,results='asis'}
-read_csv('Syllabus/fall-2019-timeline.csv') %>%
+read_csv('Syllabus/spring-2020-timeline.csv') %>%
   filter(Topic != "No Class") %>% 
   {.[is.na(.)]="";.} %>% 
   kable(., "html", booktabs = T,align = c('c','l','l')) %>%
@@ -84,13 +84,15 @@ List of [**all required and suggested readings**](Readings/reading-list.html)
 
 Data science is an applied field and therefore, it is important that you understand how to conduct a complete analysis from collecting data, to cleaning and analyzing it, to presenting your findings. Toward this end, students are required to complete an independent data science project, _applying concepts learned throughout the course_. The project is composed of three parts: a 2 page project proposal, an in-class presentation, and a 12-page project report.
 
-<br>
+More information regarding the final project will be circulated during class on Week 8. 
 
-<center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center>
+<!-- <br> -->
 
-<center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center>
+<!-- <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center> -->
 
-<center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center>
+<!-- <center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center> -->
+
+<!-- <center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center> -->
 
 
 
@@ -122,7 +124,7 @@ To install `RStudio`, download from the following (scroll to the bottom):
 
 Video walkthroughs:
 
-- [TA Video Walkthrough](https://www.dropbox.com/s/7af77pyb1wh224w/R-startup.mp4?dl=0)
+- [Video Walkthrough](https://www.dropbox.com/s/7af77pyb1wh224w/R-startup.mp4?dl=0) - [_Put together by former TA (Nathan Lovin)_]
 - RStudio Videos
   - [Install `R`](https://player.vimeo.com/video/203516510)
   - [Install `RStudio`](https://player.vimeo.com/video/203516968)
@@ -153,16 +155,15 @@ Video walkthroughs:
 #### [Eric Dunford](www.ericdunford.com) (Professor)
 
 - **Office**: 404 Old North
-- **Office Hours**: Tuesdays 3pm to 5pm
+- **Office Hours**: Tuesdays 1pm to 3pm
 - **Email**: [eric.dunford@georgetown.edu](mailto:eric.dunford@georgetown.edu)
 
 <br>
 
-#### Nathan Lovin (Teaching Assistant)
+#### [Trey Billing](https://www.treybilling.com/) (Teaching Assistant)
 
-- **Office Hours**: by appointment -- [book Nathan via calendly](https://calendly.com/nhl8/one-on-one)
-- **Email**: [nhl8@georgetown.edu](mailto:nhl8@georgetown.edu)
-- **Skype**: nathan.lovin
+- **Office Hours**: by appointment -- [book Trey via calendly](https://calendly.com/billingtt/ppol670)
+- **Email**: [billingtt@gmail.com](mailto:billingtt@gmail.com)
 
 <br>
 <br>
@@ -176,119 +177,83 @@ Video walkthroughs:
 <br>
 <br>
 
-### _Week 1_: Reproducibility and Version Control
+<!-- ### _Week 1_: Reproducibility and Version Control -->
 
-- [**Lecture**](Lectures/week_01/lecture-week-01.html)
-- **Tutorial**
-  + [**Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html)
+<!-- - [**Lecture**](Lectures/week_01/lecture-week-01.html) -->
+<!-- - **Tutorial** -->
+<!--   + [**Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html) -->
 
-### _Week 2_: Introduction to Programming in R
+<!-- ### _Week 2_: Introduction to Programming in R -->
 
-- [**Lecture**](Lectures/week_02/lecture-week-02_intro-to-R.html)
-- **Practice**
-  + [Objects, Data Structures, and Operators - Interactive Practice Set](https://dunforde.shinyapps.io/week02-interactive-practice-01/)
-  + <a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> Objects and Operators (an overview) (download `.R`)</a>
-  + <a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice Prompt for Importing Data</a>
-  
-### _Week 3_: Reproducibility in Practice
+<!-- - [**Lecture**](Lectures/week_02/lecture-week-02_intro-to-R.html) -->
+<!-- - **Practice** -->
+<!--   + [Objects, Data Structures, and Operators - Interactive Practice Set](https://dunforde.shinyapps.io/week02-interactive-practice-01/) -->
+<!--   + <a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> Objects and Operators (an overview) (download `.R`)</a> -->
+<!--   + <a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice Prompt for Importing Data</a> -->
 
-- [**Lecture**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html)
-- **Practice**:
-  + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a>
-  + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd" download> R Markdown Walkthrough (download `.Rmd`) </a>
+<!-- ### _Week 3_: Reproducibility in Practice -->
 
-### _Week 4_: Data Wrangling in R
+<!-- - [**Lecture**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
+<!-- - **Practice**: -->
+<!--   + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a> -->
+<!--   + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd" download> R Markdown Walkthrough (download `.Rmd`) </a> -->
 
-- [**Lecture**](Lectures/week_04/lecture-week-04_data-wrangling.html)
-- **Practice**:
-  + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd" download> answer key (download `.Rmd`) </a>
-  + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd" download> answer key (download `.Rmd`) </a>
+<!-- ### _Week 4_: Data Wrangling in R -->
 
-
-
-### _Week 5_: Data Visualization
-
-- [**Lecture**](Lectures/week_05/lecture-week-05_data-visualization.html)
-- **Practice**: 
-  - Practice materials and data for the visualizations generated in the lecture can be downloaded [here](Lectures/week_05/Practice-Week-05-Visualization.zip) as a `.zip`.
+<!-- - [**Lecture**](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
+<!-- - **Practice**: -->
+<!--   + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd" download> answer key (download `.Rmd`) </a> -->
+<!--   + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd" download> answer key (download `.Rmd`) </a> -->
 
 
-### _Week 6_: Web Scrapping and APIs
+<!-- ### _Week 5_: Data Visualization -->
 
-- [**Lecture**](Lectures/week_06/lecture-week-06_webscraping-and-apis.html)
-- **Practice**: 
-  - The following practice has you download a dataset on all bilaterial investment treaties. The practice and answer key can be downloaded [here](Lectures/week_06/week_06_practice.zip) as a `.zip`.
+<!-- - [**Lecture**](Lectures/week_05/lecture-week-05_data-visualization.html) -->
+<!-- - **Practice**:  -->
+<!--   - Practice materials and data for the visualizations generated in the lecture can be downloaded [here](Lectures/week_05/Practice-Week-05-Visualization.zip) as a `.zip`. -->
 
-### _Week 7_: Text as Data
 
-- [**Lecture**](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html)
-- **Practice**: 
-  - The following provides a walkthrough of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`.
+<!-- ### _Week 6_: Web Scrapping and APIs -->
 
-### _Week 8_: Introduction to Statistical Learning
+<!-- - [**Lecture**](Lectures/week_06/lecture-week-06_webscraping-and-apis.html) -->
+<!-- - **Practice**:  -->
+<!--   - The following practice has you download a dataset on all bilaterial investment treaties. The practice and answer key can be downloaded [here](Lectures/week_06/week_06_practice.zip) as a `.zip`. -->
 
-- [**Lecture**](Lectures/week_08/week-08-lecture-supervised-learning.html)
+<!-- ### _Week 7_: Text as Data -->
 
-### _Week 9_: Applications in Supervised Learning (Regression)
+<!-- - [**Lecture**](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html) -->
+<!-- - **Practice**:  -->
+<!--   - The following provides a walkthrough of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`. -->
 
-- [**Lecture**](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html)
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`. 
+<!-- ### _Week 8_: Introduction to Statistical Learning -->
 
-### _Week 10_: Applications in Supervised Learning (Classification)
+<!-- - [**Lecture**](Lectures/week_08/week-08-lecture-supervised-learning.html) -->
 
-- [**Lecture**](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html)
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week_10-practice.zip) as a `.zip`. 
-  
+<!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
 
-### _Week 11_: Applications in Unsupervised Learning
+<!-- - [**Lecture**](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`.  -->
 
-- [**Lecture**](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html)
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_11/week_11-practice/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-practice.zip) as a `.zip`. 
+<!-- ### _Week 10_: Using Spatial Data-->
 
-### _Week 12_: Exploratory Data Analysis
+<!-- ### _Week 11_: Applications in Supervised Learning (Classification) -->
 
-- [**Lecture**](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html)
+<!-- - [**Lecture**](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week_10-practice.zip) as a `.zip`.  -->
 
-<br> 
+
+<!-- ### _Week 12_: Applications in Unsupervised Learning -->
+
+<!-- - [**Lecture**](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_11/week_11-practice/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-practice.zip) as a `.zip`.  -->
+
+<!-- ### _Week 13_: Exploratory Data Analysis -->
+
+<!-- - [**Lecture**](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html) -->
+
+<!-- <br>  -->
 
 ---
-
-<br>
-<br>
-
-<!-- # Project Presentations -->
-
-<!-- <br> -->
-
-<!-- Students are listed in the order that they'll present in class on Dec. 4.  -->
-
-<!-- <br> -->
-
-<!-- <center>[**_Class Project Presentation Peer Feedback_**](https://docs.google.com/document/d/1ZNP9OUtu3h4clVMaUl0L__RG0be9C5Io79gL6ilxI_s/edit?usp=sharing)</center> -->
-
-<!-- <br> -->
-
-<!-- - [Kelly Chen](Assignments/Project/student_project_presentations/chen_kelly.pdf) -->
-<!-- - [Chenyue Zhu](Assignments/Project/student_project_presentations/Chenyue_Zhu.pdf) -->
-<!-- - [Vincent Morin](Assignments/Project/student_project_presentations/Vincent_Morin.pdf) -->
-<!-- - [Yiwei Chu](Assignments/Project/student_project_presentations/Chu_Yiwei.html) -->
-<!-- - [Meshal Alkhowaiter](Assignments/Project/student_project_presentations/alkhowaiter_meshal.html) -->
-<!-- - [Hanwen Luo](Assignments/Project/student_project_presentations/Hanwen_Luo.html) -->
-<!-- - [Kristina Costa](Assignments/Project/student_project_presentations/Kristina_Costa/Final-Presentation.html) -->
-<!-- - [Xun Zhang](Assignments/Project/student_project_presentations/zhang_xun.pdf) -->
-<!-- - [Alberto Rodriguez Alvarez](student_project_presentations/rodriguez_alvarez_alberto.html) -->
-<!-- - [Yutong Wu](Assignments/Project/student_project_presentations/Yutong_Wu.html) -->
-<!-- - Ana Gabriela Tamayo Alatriste -->
-<!-- - [Alex Richardson](Assignments/Project/student_project_presentations/Alex_Richardson.html) -->
-<!-- - Liping Wang -->
-<!-- - [Jagir Pipalia](Assignments/Project/student_project_presentations/pipalia_jagir.html) -->
-<!-- - Ana Paula Pellegrino -->
-<!-- - [Bridget Silha](Assignments/Project/student_project_presentations/silha_bridget.pdf) -->
-<!-- - [Dingqing Qian](Assignments/Project/student_project_presentations/qian_dingqing/qian_dingqing.html) -->
-<!-- - Diego Del Pilar Miranda -->
-
-
-
