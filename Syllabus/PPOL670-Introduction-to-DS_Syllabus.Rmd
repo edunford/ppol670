@@ -1,18 +1,18 @@
 ---
 fontsize: 12pt
 output:
-  # pdf_document: default
-  html_document:
-    css: style.css
-    theme: united
-    highlight: default
-    toc_depth: 3
-    toc: true
-    toc_collapsed: true
-    toc_float: true
+  pdf_document: default
+  # html_document:
+  #   css: style.css
+  #   theme: united
+  #   highlight: default
+  #   toc_depth: 3
+  #   toc: true
+  #   toc_collapsed: true
+  #   toc_float: true
 ---
 
-### [Home](../index.html)
+<!-- ### [Home](../index.html) -->
 
 \begin{center}
  
@@ -20,7 +20,7 @@ output:
 \huge \textit{PPOL 670-02}\\
 \huge\textbf{Introduction to Data Science}\\
 
-\Large Spring 2019
+\Large Spring 2020
 \end{center}
 
 
@@ -53,7 +53,7 @@ This course teaches students how to synthesize disparate, possibly unstructured 
 
 # Time and location
 
-Classes will be held on **Wednesdays** from **_3:30pm to 6:00pm_** in **[TBA]**: 
+Classes will be held on **Wednesdays** from **_3:30pm to 6:00pm_** in **Healy 105**: 
 
 - January 15, 22, 29
 - February 5, 12, 19, 26
@@ -210,46 +210,58 @@ I reserve the right to deduct attendance points from students who are not partic
 
 Attendance will be taken daily. A sheet of paper will be made available at the front of the room at the start of every class. Students must write their name on the paper. The **paper will be removed 5 minutes after the start of class**. Students who walk in late after that point will not have an opportunity to write their name and will be considered absent. This log will be used, in part, to calculate the attendance grade.
 
-If absent, each student is responsible to make up the materials missed during a lecture on their own. All lecture notes will be posted on the class website. Thus, students who missed a lecture should reach out to their peers in the class for lecture notes. It is not the responsibility of the Professor/TA to fill absentee students in on any missed content
+If absent, each student is responsible to make up the materials missed during a lecture on their own. All lecture notes will be posted on the class website. Thus, students who missed a lecture should reach out to their peers in the class for lecture notes. It is not the responsibility of the Professor/TA to fill absentee students in on any missed content.
 
 
 ### Communication
 
-- For private questions concerning the class, email is the preferred method of communication. All email messages must originate from your Georgetown University email account(s). Please use a professional salutation, proper spelling and grammar, and patience in waiting for a response. The professor reserves the right to not respond to emails that are drafted inappropriately. **_Please email the professor and the TA directly rather than through the Canvas messaging system._** Emails sent through CANVAS will be ignored. 
+- For private questions concerning the class, email is the preferred method of communication. All email messages must originate from your Georgetown University email account(s). Please use a professional salutation, proper spelling and grammar, and patience in waiting for a response. The professor reserves the right to not respond to emails that are drafted inappropriately. **_Please email the professor and the TA directly rather than through the Canvas messaging system._** Emails sent through Canvas will be ignored. 
 
 - For general, class-relevant questions, `Slack` is the preferred method of communication. Please use the general or the relevant channel for these questions. 
 
 - I will respond to all emails/slack questions within 24 hours of being sent during a weekday. I will not respond to emails/slack sent late Friday (after 5PM) or during the weekend until Monday (9AM). Please plan accordingly if you have questions regarding current or upcoming assignments. Please address the professor and TA by their last name unless stated otherwise.
 
 ### Electronic Devices
+
 The use of laptops, tablets, or other mobile devices is permitted _only for class-related work_. Audio and video recording is not allowed unless prior approval is given by the professor. Please mute all electronic devices during class.
 
 
 ### Assignments and Late Work
+
 Assignments should be clear, legible, and submitted in the required format. Writing assignments will be graded on the basis of content, logic, analysis, mechanics, organization, and research. Due dates for all assignments will be posted on Canvas and are non-negotiable. Exceptions to this policy will be made only under extremely unusual circumstances and will require valid documentation from the student. **_Late problem sets will be penalized a letter grade per day._**
 
 
 ### Proof of Diligent Debugging
-When reaching out to the professor or teaching assistant regarding a technical question, error, or issue you **_must_** demonstrate that you made a good faith effort to debugging/isolate your problem prior to reaching out. In as concise a way as possible, send a record of what you tried to do and reproducible example emulating the error. (See the materials for Week 3 on how to generate a reproducible example (`reprex`)). As software is continually being refined in data science and new approaches continually emerge and changing, learning how to frame your question and find a similar solution online is a key tool for success in this domain. If you make a diligent effort beforehand to solve your problem, we will do the same in trying to help you figure out a solution. Note that the **_professor/TA is a resource of last resort_**: only come to them after you've exausted all other options. 
+
+When reaching out to the professor or teaching assistant regarding a technical question, error, or issue you **_must_** demonstrate that you made a good faith effort to debugging/isolate your problem prior to reaching out. In as concise a way as possible, send a record of what you tried to do along with a reproducible example emulating the error. (See the materials for Week 3 on how to generate a reproducible example (`reprex`)). As software is continually being refined in data science and new approaches continually emerge and changing, learning how to frame your question and find a similar solution online is a key tool for success in this domain. If you make a diligent effort beforehand to solve your problem, we will do the same in trying to help you figure out a solution. Note that the **_professor/TA is a resource of last resort_**: only come to them after you've exhausted all other options. 
 
 
 ### Class Seating
+
 Students should (and must) sit beside a different student each time the class meets. The aim is to facilitate diverse interactions. If all or some students fail to follow this procedure, then the professor reserves the right to generate a random seating assignment each class. Failure to comply with the class seating policy will result in a deduction in participation points. 
 
 
+### Instructional Continuity
+
+In the event the university is closed for a scheduled class, lecture materials will be provided via a video link on Canvas. Students will be expected to watch the recording and answer a brief quiz on the materials cover therein before the next scheduled class period. Students will be notified via Slack when the video lecture has been posted to Canvas. Assignment due dates will not change due to the closure. 
+
+
 ### Use of Class Materials
+
 Increasingly, with the proliferation of certain websites, questions about the ownership of course materials have arisen (and Georgetown is actively working on policies to address these concerns).  I consider my syllabus, lectures, handouts, problem sets, and problem set answers to be my intellectual property. I respectfully request that you refrain from sharing my materials in any electronic (or paper) format.  You are welcome to record my lectures for your own use, but they should not be posted anywhere. Sharing notes, on an occasional basis, with others in the class is fine as long as they are not posted elsewhere online. Students found in breach of this policy will fail the course. 
 
 
 ### Academic Resource Center/Disability Support 
+
 If you believe you have a disability, then you should contact the Academic Resource Center ([arc@georgetown.edu](arc@georgetown.edu)) for further information. The Center is located in the Leavey Center, Suite 335 (202-687-8354). The Academic Resource Center is the campus office responsible for reviewing documentation provided by students with disabilities and for determining reasonable accommodations in accordance with the Americans with Disabilities Act (ASA) and University policies. For more information, go to [http://academicsupport.georgetown.edu/disability/](http://academicsupport.georgetown.edu/disability/).
 
 					
-### Important Academic Policies and Academic Integrity				
+### Important Academic Policies and Academic Integrity
+
 McCourt School students are expected to uphold the academic policies set forth by Georgetown University and the Graduate School of Arts and Sciences. Students should therefore familiarize themselves with all the rules, regulations, and procedures relevant to their pursuit of a Graduate School degree. The policies are located at:'http://grad.georgetown.edu/academics/policies/
 
 					
-### Provosts Policy Accommodating Students Religious Observances			
+### Provosts Policy Accommodating Students Religious Observances	
 
 Georgetown University promotes respect for all religions. Any student who is unable to attend classes or to participate in any examination, presentation, or assignment on a given day because of the observance of a major religious holiday (see below) or related travel shall be excused and provided with the opportunity to make up, without unreasonable burden, any work that has been missed for this reason and shall not in any other way be penalized for the absence or rescheduled work. Students will remain responsible for all assigned work. Students should notify professors in writing at the beginning of the semester of religious observances that conflict with their classes. The Office of the Provost, in consultation with Campus Ministry and the Registrar, will publish, before classes begin for a given term, a list of major religious holidays likely to affect Georgetown students. The Provost and the Main Campus Executive Faculty encourage faculty to accommodate students whose bona fide religious observances in other ways impede normal participation in a course. Students who cannot be accommodated should discuss the matter with an advising dean.
 					
@@ -282,12 +294,12 @@ More information about campus resources and reporting sexual misconduct can be f
 ```{r,echo=F,message=F,results='asis'}
 read_csv('spring-2020-timeline.csv') %>% 
   {.[is.na(.)]="";.} %>% 
-  # kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
-  kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
+  kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
+  # kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
   kable_styling(latex_options = c("striped",
                                   "scale_down","repeat_header"),
-                font_size = 20,
-                # font_size = 12,
+                # font_size = 20,
+                font_size = 12,
                 full_width = T) %>% 
   column_spec(1,width = '.5in') %>% 
   column_spec(2,width = '1in') %>% 
