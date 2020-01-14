@@ -50,6 +50,9 @@ read_csv('Syllabus/spring-2020-timeline.csv') %>%
 
 <br>
 <br>
+
+---
+
 <br>
 <br>
 
@@ -64,6 +67,9 @@ read_csv('Syllabus/spring-2020-timeline.csv') %>%
 
 <br>
 <br>
+
+---
+
 <br>
 <br>
 
@@ -75,6 +81,9 @@ List of [**all required and suggested readings**](Readings/reading-list.html)
 
 <br>
 <br>
+
+---
+
 <br>
 <br>
 
@@ -98,6 +107,9 @@ More information regarding the final project will be circulated during class on 
 
 <br>
 <br>
+
+---
+
 <br>
 <br>
 
@@ -145,6 +157,9 @@ Video walkthroughs:
 
 <br>
 <br>
+
+---
+
 <br>
 <br>
 
@@ -174,8 +189,12 @@ Video walkthroughs:
 
 <br>
 <br>
+
+---
+
 <br>
 <br>
+
 
 
 
@@ -263,4 +282,4 @@ Video walkthroughs:
 
 <!-- <br>  -->
 
----
+
