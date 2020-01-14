@@ -184,11 +184,11 @@ Video walkthroughs:
 <br>
 <br>
 
-<!-- ### _Week 1_: Reproducibility and Version Control -->
+### _Week 1_: Reproducibility and Version Control
 
-<!-- - [**Lecture**](Lectures/week_01/lecture-week-01.html) -->
-<!-- - **Tutorial** -->
-<!--   + [**Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html) -->
+- [**Lecture**](Lectures/week_01/lecture-week-01.html)
+- **Tutorial**
+  + [**Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html)
 
 <!-- ### _Week 2_: Introduction to Programming in R -->
 

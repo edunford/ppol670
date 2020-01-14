@@ -112,14 +112,16 @@ class: outline
 
 ## Course Calendar
 
+<center>
+
 ```{r,echo=F,message=F,tidy=T}
-read_csv(here('Syllabus/fall-2019-timeline.csv')) %>% 
+read_csv(here('Syllabus/spring-2020-timeline.csv')) %>% 
   {.[is.na(.)]="";.} %>% 
   select(-Date,-Assignment) %>%
   rename(Topics=Topic) %>% 
-  slice(1:(n()-3)) %>% 
+  slice(1:(n()-1)) %>%
   kable(., "html") %>% 
-  kable_styling(font_size = 24,position = 'center')
+  kable_styling(font_size = 18,position = 'center')
 ```
 
 ---
@@ -138,9 +140,9 @@ read_csv(here('Syllabus/fall-2019-timeline.csv')) %>%
 
 - CS course on functional programming.
 
-- A machine learning course (we dabble, but don't delve into any concept in depth).
+- A machine learning course (we dabble, but don't delve into any one concept in depth).
 
-- a "big data" course (we won't delve into database structures such as SQL and Hadoop).
+- A "big data" course: we won't delve into database structures, e.g. SQL and Hadoop, or cloud computing, e.g. Azure and AWS.
 
 ---
 
@@ -164,7 +166,7 @@ To install `RStudio`, download from the following [site](https://www.rstudio.com
 
 class: newsection
 
-# Reproducibility<br>as a<br>Practical Reality
+# Reproducibility
 
 ---
 
@@ -256,7 +258,7 @@ clear, readable.
 ## Portable
 
 - **Project can easily travel across computers**
-    - e.g. R Project (`.rproj`) and python's Virtual Environments (`venv`)
+    - e.g. R Project (`.rproj`), [`packrat`](https://rstudio.github.io/packrat/), and [`renv`](https://rstudio.github.io/renv/articles/renv.html)
 
 --
 
@@ -290,6 +292,8 @@ clear, readable.
 
 # Well-named
 
+![:space 5] 
+
 - Maintain **designated folders** for different aspects of the project.
 
 ```bash
@@ -307,7 +311,7 @@ data-project
 
 ## Repeatable
 
-<br><br>
+<br>
 
 - Every step of the **_project expressed as code_**
 
@@ -315,7 +319,16 @@ data-project
 
 - Use **_functions_** to **_repeat common tasks_**
 
-- Clearly **_state all dependencies** (i.e. packages/modules) at the top of every script
+- Clearly **_state all dependencies_** (i.e. packages/modules) at the top of every script
+
+```R
+# Pacakges at the top
+require(tidyverse)
+require(sf)
+
+# Then code
+...
+```
 
 ---
 

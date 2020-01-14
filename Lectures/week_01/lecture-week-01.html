@@ -105,7 +105,9 @@ class: outline
 
 ## Course Calendar
 
-&lt;table class="table" style="font-size: 24px; margin-left: auto; margin-right: auto;"&gt;
+&lt;center&gt;
+
+&lt;table class="table" style="font-size: 18px; margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:left;"&gt; Week &lt;/th&gt;
@@ -151,15 +153,23 @@ class: outline
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; 10 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Applications in Supervised Learning (Classification) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Using Spatial Data (Guest Lecture: Trey Billing) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; 11 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Applications in Unsupervised Learning &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Applications in Supervised Learning (Classification) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Applications in Unsupervised Learning &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Exploratory Data Analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Project Presentations &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -180,9 +190,9 @@ class: outline
 
 - CS course on functional programming.
 
-- A machine learning course (we dabble, but don't delve into any concept in depth).
+- A machine learning course (we dabble, but don't delve into any one concept in depth).
 
-- a "big data" course (we won't delve into database structures such as SQL and Hadoop).
+- A "big data" course: we won't delve into database structures, e.g. SQL and Hadoop, or cloud computing, e.g. Azure and AWS.
 
 ---
 
@@ -206,7 +216,7 @@ To install `RStudio`, download from the following [site](https://www.rstudio.com
 
 class: newsection
 
-# Reproducibility&lt;br&gt;as a&lt;br&gt;Practical Reality
+# Reproducibility
 
 ---
 
@@ -300,7 +310,7 @@ clear, readable.
 ## Portable
 
 - **Project can easily travel across computers**
-    - e.g. R Project (`.rproj`) and python's Virtual Environments (`venv`)
+    - e.g. R Project (`.rproj`), [`packrat`](https://rstudio.github.io/packrat/), and [`renv`](https://rstudio.github.io/renv/articles/renv.html)
 
 --
 
@@ -334,6 +344,8 @@ clear, readable.
 
 # Well-named
 
+![:space 5] 
+
 - Maintain **designated folders** for different aspects of the project.
 
 ```bash
@@ -351,7 +363,7 @@ data-project
 
 ## Repeatable
 
-&lt;br&gt;&lt;br&gt;
+&lt;br&gt;
 
 - Every step of the **_project expressed as code_**
 
@@ -359,7 +371,16 @@ data-project
 
 - Use **_functions_** to **_repeat common tasks_**
 
-- Clearly **_state all dependencies** (i.e. packages/modules) at the top of every script
+- Clearly **_state all dependencies_** (i.e. packages/modules) at the top of every script
+
+```R
+# Pacakges at the top
+require(tidyverse)
+require(sf)
+
+# Then code
+...
+```
 
 ---
 
