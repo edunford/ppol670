@@ -20,7 +20,7 @@ require(kableExtra)
 
 
 <center><h1>Introduction to Data Science</h1></center>
-<center>**Spring 2019**</center>
+<center>**Spring 2020**</center>
 <center>**Georgetown University**</center>
 
 <br>
