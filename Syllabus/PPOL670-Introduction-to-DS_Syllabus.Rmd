@@ -1,18 +1,18 @@
 ---
 fontsize: 12pt
 output:
-  # pdf_document: default
-  html_document:
-    css: style.css
-    theme: united
-    highlight: default
-    toc_depth: 3
-    toc: true
-    toc_collapsed: true
-    toc_float: true
+  pdf_document: default
+  # html_document:
+  #   css: style.css
+  #   theme: united
+  #   highlight: default
+  #   toc_depth: 3
+  #   toc: true
+  #   toc_collapsed: true
+  #   toc_float: true
 ---
 
-### [Home](../index.html)
+<!-- ### [Home](../index.html) -->
 
 \begin{center}
  
@@ -53,7 +53,7 @@ This course teaches students how to synthesize disparate, possibly unstructured 
 
 # Time and location
 
-Classes will be held on **Wednesdays** from **_3:30pm to 6:00pm_** in **Healy 105**: 
+Classes will be held on **Wednesdays** from **_3:30pm to 6:00pm_** in **Car Barn 203**: 
 
 - January 15, 22, 29
 - February 5, 12, 19, 26
@@ -115,7 +115,7 @@ This course focuses on providing students with an applied knowledge of the `R` p
 
 > _Note that the grades on Canvas are not weighted, and thus, may not accurately reflect a student's final grade._ 
 
-**Preparation and Participation** (10%): It is imperative that you arrive to class prepared for lecture and any hands-on activities during the lab. As a result, 10% of each student’s grade will be based on class participation. See "Attendance/Participation" in the Course Policies section for more details. 
+**Preparation and Participation** (10%): It is imperative that you arrive to class prepared for lecture and any hands-on activities. As a result, 10% of each student’s grade will be based on class participation. See "Attendance/Participation" in the Course Policies section for more details. 
 
 **Problem Sets** (45%): Students will be assigned five problem sets. While you are encouraged to discuss the problem sets with your peers and/or consult online resources, **the finished product must be your own work**. Problem sets are due on the date and time posted on Canvas and must be submitted on Canvas. Late assignments will be penalized a letter grade for every day they are overdue.
 
@@ -294,12 +294,12 @@ More information about campus resources and reporting sexual misconduct can be f
 ```{r,echo=F,message=F,results='asis'}
 read_csv('spring-2020-timeline.csv') %>% 
   {.[is.na(.)]="";.} %>% 
-  # kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
-  kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
+  kable(., "latex", booktabs = T,align = c('c','c','l','l')) %>%
+  # kable(., "html", booktabs = T,align = c('c','c','l','l')) %>%
   kable_styling(latex_options = c("striped",
                                   "scale_down","repeat_header"),
-                font_size = 20,
-                # font_size = 12,
+                # font_size = 20,
+                font_size = 12,
                 full_width = T) %>% 
   column_spec(1,width = '.5in') %>% 
   column_spec(2,width = '1in') %>% 
