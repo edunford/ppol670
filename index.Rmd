@@ -208,7 +208,20 @@ Video walkthroughs:
 - **Tutorial**
   + [**Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html)
 
+<br>
+
 ### _Week 2_: [Introduction to Programming in `R`](Lectures/week_02/lecture-week-02_intro-to-R.html)
+
+- **Table of Contents**
+  + [Interacting with `R`](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
+  + [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20)
+  + [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#37)
+  + [Accessing Relational Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#45)
+  + [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70)
+  + [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#84)
+  + [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#90)
+  + [Importing/Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#99)
+  + [Directories](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#114)
 
 - **Practice**
   + [An interactive practice set covering objects, data structures, and operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/)
