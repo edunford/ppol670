@@ -205,6 +205,10 @@ Video walkthroughs:
 
 ### _Week 1_: [Reproducibility and Version Control](Lectures/week_01/lecture-week-01.html)
 
+- **Table of Contents**
+  + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#11)
+  + [Version Control](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#25)
+
 - **Tutorial**
   + [**Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html)
 
