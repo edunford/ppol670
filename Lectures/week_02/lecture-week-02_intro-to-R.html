@@ -61,6 +61,8 @@ class: newsection
 
 # R in a Nut Shell
 
+![:space 5]
+
 `R` is a statistical and graphical programming language that is based off a much older language called `S`. It's source code is written in C, Fortran, and R. And it's completely **free** under a [GNU General Public License](https://en.wikipedia.org/wiki/GNU_General_Public_License0).
 
 --
@@ -76,6 +78,8 @@ class: newsection
 
 # Why use R?
 
+![:space 10]
+
 `R` offers a powerful way to
 
 - **analyze** data
@@ -89,6 +93,8 @@ class: newsection
 
 # R Studio
 
+![:space 10]
+
 **R Studio** is a graphical user interface (GUI) for the R programming language. The software makes `R` more user-friendly adding some point-and-click functionality along with a complete integration of graphs, the data environment, and the coding script.
 
 --
@@ -99,6 +105,8 @@ Think of it like this..
 ---
 
 # Installing R and R Studio
+
+![:space 5]
 
 To install **R**, download R from CRAN via the following:
 
@@ -111,7 +119,7 @@ To install **R Studio**, download from the following:
 
 Useful **video tutorials**:
 
-- [Nathan's (TA) walkthrough](https://www.dropbox.com/s/7af77pyb1wh224w/R-startup.mp4?dl=0)
+- [Prior TA's walkthrough](https://www.dropbox.com/s/7af77pyb1wh224w/R-startup.mp4?dl=0)
 - Rstudio's Walkthrough:
   + [Install R](https://player.vimeo.com/video/203516510)
   + [Install RStudio](https://player.vimeo.com/video/203516968)
@@ -203,6 +211,8 @@ class: newsection
 
 # Objects
 
+![:space 10]
+
 R uses a specific set of rules to govern how it looks up values in the environment.
 
 We manage data by assigning it a name, and referencing that name when we need to use the information again.
@@ -212,6 +222,8 @@ Officially, this is called `lexical scoping`, which comes from the computer scie
 ---
 
 # Assigning an Object
+
+![:space 10]
 
 In simple terms, an `object` is a bit of text that represents a specific value.
 
@@ -229,6 +241,8 @@ Here we've assigned the value `3` to the letter `x`. Whenever we type `x`, `R` u
 ---
 
 # Assigning an Object
+
+![:space 5]
 
 There are three standard assignment operators:
 - `&lt;-`
@@ -251,6 +265,8 @@ c(x1, x2, x3)
 ---
 
 # Assigning an Object
+
+![:space 5]
 
 Note that lexical scoping is flexible. Objects can be written and re-written when necessary.
 
@@ -288,6 +304,8 @@ One can see all the objects in the environment by either looking at the user int
 
 # Objects
 
+![:space 10]
+
 One can see all the objects in the environment by either looking at the user interface in RStudio (specifically, the **environment tab**)... or by typing `ls()` in the console.
 
 
@@ -303,6 +321,7 @@ ls()
 
 # Object Classes
 
+![:space 10]
 
 Once assigned, an object has a **class**. A class describes the properties of the **data type** or **data structure** assigned to an object.
 
@@ -346,6 +365,8 @@ c(class(obj1),class(obj2),class(obj3))
 
 # Object Classes
 
+![:space 10]
+
 As noted, there are many different **data types** in `R`. We will primarily run into the following types:
 &lt;br&gt;
 &lt;br&gt;
@@ -362,6 +383,8 @@ As noted, there are many different **data types** in `R`. We will primarily run 
 ---
 
 # Object Coercion
+
+![:space 10]
 
 When need be, an object can be **coerced** to be a different class.
 
@@ -385,6 +408,8 @@ Here we transformed `x` -- which was an object containing the value `3` --  into
 ---
 
 # Removing objects from the Environment
+
+![:space 10]
 
 We often want to get rid of objects after creating them. To **delete** (or drop) an object from the working directory, use the function `rm()` -- which stands for "remove".
 
@@ -424,6 +449,7 @@ Or we can do so from R Studio by clicking on the `broom icon`.
 
 # Objects: So what's the point?
 
+![:space 5]
 
 **Objects** offer a way to **reference different data**. This means that we can play around with _a lot_ of different data type simultaneously.
 
@@ -447,6 +473,8 @@ class:newsection
 
 ## Data Structures
 
+![:space 10]
+
 There are also many ways data can be **organized** in `R`.
 
 The same object can be organized in different ways depending on the needs to the user. Some commonly used data structures include:
@@ -460,6 +488,8 @@ The same object can be organized in different ways depending on the needs to the
 ---
 
 # Vector
+
+![:space 10]
 
 
 ```r
@@ -491,6 +521,8 @@ length(X)
 
 # Data Frame
 
+![:space 10]
+
 
 ```r
 data.frame(X)
@@ -510,6 +542,8 @@ data.frame(X)
 ---
 
 # Matrix
+
+![:space 10]
 
 
 ```r
@@ -531,6 +565,8 @@ matrix(X)
 
 # List
 
+![:space 10]
+
 
 ```r
 list(X)
@@ -544,6 +580,8 @@ list(X)
 ---
 
 # Array
+
+![:space 10]
 
 
 ```r
@@ -568,11 +606,13 @@ array(X,dim = c(2,2,2))
 
 # The point...
 
+![:space 5]
 
-&gt; We need to understand the **_structure_** of a data object to understand how to **_access_** the information inside.
 
 - **Many ways to organize the same piece of information `R`**
   + different data structures afford us different advantages and bring with them different limitations.
+  
+-  We need to understand the **_structure_** of a data object to understand how to **_access_** the information inside.
 
 - As you become more acquainted with `R`, you'll see and use other types of data structures more often.
 
@@ -583,11 +623,13 @@ array(X,dim = c(2,2,2))
 
 class:newsection
 
-# Accessing Relational Data in a Data Frame
+# Accessing&lt;br&gt;Relational&lt;br&gt;Data
 
 ---
 
 ## Accessing a `data.frame` Object
+
+![:space 10]
 
 One must understand the **structure of an object** in order to systematically access the material contained within it.
 
@@ -751,6 +793,8 @@ We do this by using brackets `[]` alongside the data object. We then can access 
 
 ## Dimensions
 
+![:space 10]
+
 The function `dim()` can tell use about the dimensions of a data object.
 
 
@@ -767,6 +811,8 @@ We now know that the object `data` has **50 rows** and **2 columns**.
 ---
 
 ## Accessing relational data 
+
+![:space 10]
 
 
 ```r
@@ -792,6 +838,8 @@ data[49,] # Access just the 49th row
 ---
 
 ## Accessing relational data 
+
+![:space 5]
 
 
 ```r
@@ -845,6 +893,8 @@ If we hit **Tab** after specifying the `$` after our data object, R Studio will 
 
 ## Accessing variables 
 
+![:space 10]
+
 Here we call the `speed` variable from our dataset.
 
 ```r
@@ -859,6 +909,8 @@ data$speed
 
 
 ---
+
+![:space 15]
 
 There are many functions designed to help us understand the **dimensions** of a data structure.
 
@@ -889,6 +941,8 @@ ncol(data) # Number of Columns
 
 ---
 
+![:space 10]
+
 There are also some useful functions built into R to view portions of a data structure.
 
 
@@ -915,6 +969,8 @@ tail(data,3) # Reports the 3 last entries
 ```
 
 ---
+
+![:space 15]
 
 `summary()` allows for one to quickly summarize the distributions across a set of variables
 
@@ -964,6 +1020,8 @@ In the example, we'll walk through a few more operators.
 
 # Mathematical Functions
 
+![:space 10]
+
 There are a range of functions designed to ease mathematical calculations. Some of these functions are to calculate specific values, such as the **natural log** or **Euler's number** ($e^a$).
 
 
@@ -984,6 +1042,8 @@ exp(5)
 ```
 
 ---
+
+![:space 10]
 
 There are a range of functions designed to ease mathematical calculations. Others can be used to find the **sum** for a numerical vector, the **mean**, or the **median**
 
@@ -1046,6 +1106,8 @@ x==1 | y==5 # "or" conditional statements
 
 ---
 
+![:space 10]
+
 Boolean statements can be fed directly into data objects via the brackets method `[]`. This offers a powerful and simple way to subset data.
 
 
@@ -1067,6 +1129,8 @@ x[x &gt; 30]
 ```
 
 ---
+
+![:space 10]
 
 There are also a number of base functions that provide useful boolean evaluations. Here are just a few examples...
 
@@ -1096,6 +1160,8 @@ identical(1+1,2) # are these entries the same?
 ```
 
 ---
+
+![:space 10]
 
 Finally, boolean statements have a nice property in `R`. If we convert a boolean statement to a **numeric class**, `TRUE` values convert to `1` and `FALSE` values convert to `0`.
 
@@ -1185,7 +1251,7 @@ class: newsection
 
 # What are functions?
 
-&lt;br&gt; 
+![:space 10]
 
 A **function** is a type of object in `R` that can perform a specific task. Unlike objects that hold data, functions take **arguments** and return the output of some manipulation.
 
@@ -1205,6 +1271,8 @@ log(4)
 
 # Where are functions exactly?
 
+![:space 10]
+
 Functions operate in the **background**.
 
 There are a number of functions in `R`, known as **base functions**, that are always running when you turn `R` on.
@@ -1214,6 +1282,8 @@ When we need to do things that are &lt;u&gt;**not**&lt;/u&gt; a part of the base
 ---
 
 # Some common functions
+
+![:space 5]
 
 We've already come a across a few functions, and we'll learn a lot more moving forward. Just keep in mind that whenever something is wrapped in parentheses `()`, it's a function.
 
@@ -1251,6 +1321,8 @@ class:newsection
 
 ## R Packages
 
+![:space 10]
+
 There are a number of `packages` that are supplied with the R distribution. These are known as "[base packages](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html)" and they are in the background the second one starts a session in R.
 
 --
@@ -1262,6 +1334,8 @@ There are a number of `packages` that are supplied with the R distribution. Thes
 ---
 
 ## R Packages
+
+![:space 10]
 
 To use the content in a package, one first needs to **install it**. One can do this by utilizing the following function: `install.packages()`. By inserting the name of a specific package, we can connect to an R "mirror" and download the binary of the package.
 
@@ -1275,6 +1349,8 @@ The version of that package is then saved on your computer and can be called at 
 ---
 
 ## R Packages
+
+![:space 10]
 
 Once installed, it's on the system for good. You can then reference or load the package any time you wish to use a function from it.
 
@@ -1425,6 +1501,8 @@ Here we will review how to import five separate data types:
 
 # .dta
 
+![:space 10]
+
 For all versions of STATA
 
 ```r
@@ -1462,6 +1540,8 @@ These functions have specific **arguments** that we are referencing:
 
 # .csv
 
+![:space 10]
+
 The `readr` package provides a much simpler approach.
 
 ```r
@@ -1473,7 +1553,9 @@ data &lt;- read_csv("data.csv")
 
 ---
 
-#.sav
+# .sav
+
+![:space 10]
 
 For `SPSS` and `SAS` file formats, the `haven` packages offers a simple way of reading in data.
 
@@ -1485,6 +1567,8 @@ data &lt;- read_sav(file = "data.sav") # SPSS
 ---
 
 # .xlsx
+
+![:space 10]
 
 
 ```r
@@ -1508,6 +1592,8 @@ data &lt;- read_excel("data.xlsx",
 ---
 
 # .Rdata
+
+![:space 10]
 
 `.Rdata` is the data source inherent to `R`. It saves and loads `objects`.
 
@@ -1539,6 +1625,8 @@ Each require that you input the **data** that you're looking to export and speci
 
 # Exporting data
 
+![:space 10]
+
 
 ```r
 write_dta(data,path ="data.dta")
@@ -1557,6 +1645,8 @@ write_tsv(data,path ="data.tab")
 ---
 
 # .Rdata
+
+![:space 10]
 
 `.Rdata` offers two options to save data. We can either save a single data object, or save the entire workspace
 
@@ -1580,6 +1670,7 @@ class: newsection
 
 # But where is my data exactly?
 
+![:space 10]
 
 `R` doesn't intuitively know where your data is. If the data is in a special folder entitled "`my_data`", we have to tell `R` how to get there.
 
@@ -1595,6 +1686,8 @@ We can do this three ways:
 
 # Setting the Working Directory
 
+![:space 10]
+
 Every time `R` boots up, it does so in the same place, unless we tell it to go somewhere else.
 
 We can find out which directory we are in by using the `getwd()` function.
@@ -1608,6 +1701,8 @@ getwd() # Get the current working directory
 ---
 
 # Setting the Working Directory
+
+![:space 10]
 
 Every time `R` boots up, it does so in the same place, unless we tell it to go somewhere else.
 
@@ -1623,6 +1718,8 @@ getwd()
 
 # Setting the WD via R Studio
 
+![:space 10]
+
 R Studio also makes setting the working directory really easy.
 
 Click: `Session` &amp;rarr; `Set Working Directory` &amp;rarr; `Choose Directory...`
@@ -1632,6 +1729,8 @@ This will allow you to set the working directly quickly. The downside is that yo
 ---
 
 # Establishing the Path
+
+![:space 10]
 
 Finally, we can also just point directly to the data by outlining the specific path.
 
@@ -1651,6 +1750,8 @@ read.csv(path)
 
 # Beyond Working Directories
 
+![:space 10]
+
 Working directories are limiting:
 
 - If files are **moved** or **renamed**, &lt;font color = "red"&gt; a script won't run &lt;/font&gt;.
@@ -1661,7 +1762,6 @@ Working directories are limiting:
 ---
 
 # Beyond Working Directories
-
 
 The solutions:
 
@@ -1685,6 +1785,7 @@ The solutions:
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "countIncrementalSlides": false,
