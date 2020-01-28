@@ -232,12 +232,17 @@ Video walkthroughs:
   + <a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> An overview of objects and operators (download `.R`)</a>
   + <a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice importing data</a>
 
-<!-- ### _Week 3_: Reproducibility in Practice -->
+### _Week 3_: [Reproducibility in Practice](Lectures/week_03/lecture-week03-reproducibility-in-practice.html)
 
-<!-- - [**Lecture**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
-<!-- - **Practice**: -->
-<!--   + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a> -->
-<!--   + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd" download> R Markdown Walkthrough (download `.Rmd`) </a> -->
+- **Table of Contents**
+  + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3)
+  + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22)
+  + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26)
+  + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50)
+
+- **Practice**:
+  + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a>
+  + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd" download> R Markdown Walkthrough (download `.Rmd`) </a>
 
 <!-- ### _Week 4_: Data Wrangling in R -->
 

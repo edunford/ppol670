@@ -353,7 +353,7 @@ toc()
 
 ![:space 5]
 
-**Contender 2**: Binding each iteraction
+**Contender 2**: Binding each iteration
 ```{r}
 N = 5000
 tic()
@@ -589,7 +589,7 @@ ii. Knit the document using the `knit()` function in the `knitr` package.
 **Bold** or _italize_ text. Or **_both_**! ~~Even cross things out~~
 ```
 
-.center[**Bold** or _italize_ text. Or **_both_**! ~~Even cross things out~~]
+.center[**Bold** or _italicize_ text. Or **_both_**! ~~Even cross things out~~]
 
 --
 
@@ -679,7 +679,7 @@ The real point of `R` Markdown is to embed your R code in your working script so
 
 **_To write code_**, we need to create a **_code chunk_**. We can do this by:
 
-- click `insert`, and selec an `R` code chunk.
+- click `insert`, and select an `R` code chunk.
 - press `cmd` + `option/alt` + `i` or `ctrl` + `option/alt` + `i`
 
 .center[<img src="Figures/code_chunk.png", width=1000>]
@@ -693,7 +693,7 @@ This will yield a discolored chunk that looks like this. Everything written in t
 
 ![:space 15]
 
-Chunk output can be customised with options, arguments supplied to chunk header. Knitr provides almost [60 options](http://yihui.name/knitr/options/) that you can use to customize your code chunks.
+Chunk output can be customized with options, arguments supplied to chunk header. Knitr provides almost [60 options](http://yihui.name/knitr/options/) that you can use to customize your code chunks.
 
 
 ---
@@ -795,9 +795,13 @@ So you ran into an issue...
 
 --
 
+![:space 5]
+
 You can't find answer on the internet...
 
 --
+
+![:space 5]
 
 .center[
 **![:text_color darkred](Help!)**
@@ -805,14 +809,13 @@ You can't find answer on the internet...
 
 --
 
-.center[
-<a title="JM Gif"><img src="https://media.giphy.com/media/fdLR6LGwAiVNhGQNvf/giphy.gif" width=80% height = 80% alt="JM GIF"></a><div style="font-size:11px;"></div>
-]
+![:space 5]
+
+<!-- .center[ -->
+<!-- <a title="JM Gif"><img src="https://media.giphy.com/media/fdLR6LGwAiVNhGQNvf/giphy.gif" width=80% height = 80% alt="JM GIF"></a><div style="font-size:11px;"></div>] -->
 
 
-
-
-<!-- When asking for help, you need to make the problem as transparent and easy to work through as possible.  -->
+When asking for help, you need to make the problem as transparent and easy to work through as possible.
 
 ---
 
@@ -848,6 +851,30 @@ require(reprex)
   
 ---
 
+### Generating a small toy example
+
+![:space 5 ]
+
+You'll need to run this in your console.
+
+```{r,eval=F}
+
+# Copy this...
+x = 1:5
+for(i in x){
+  print(i)
+}
+
+# Then run this in the console...
+reprex()
+
+# Finally, click 'paste' in where ever you're 
+# posting the issue (e.g. slack)
+```
+
+
+---
+
 ### Output examples for any venue...
 
 **_Github_** (or Slack!)
@@ -876,4 +903,83 @@ Finally, produce an example with all your **_session info_** (really useful for 
 ```{r,eval=F}
 reprex(venue = "gh",si = T) 
 ```
+
+---
+
+
+### Generating a small toy example
+
+`reprex` requires that all the code and data exist in the example. This is so that one can reproduce it by copying and pasting the example.
+
+Your issue might be due to something wrong with your data or your code, so often, it helps to give a little sample of the data you're using. 
+
+--
+
+Steps for **generating reproducible data** (for your reproducible example):
+
+1. Generate a **_small subset_** of data (when you're copying and pasting, size matters)
+  - use `head()`, `tail()` or sample randomly (we'll learn this next time!)
+2. Break the data down into a **_raw structure_** using the base function `dput()`
+3. **_Paste_** this raw data **_at the top of the code_** you're aiming to reproduce.
+
+---
+
+
+### Generating a small toy example
+
+```{r}
+mtcars
+```
+
+
+---
+
+
+### Generating a small toy example
+
+```{r}
+small_mtcars <- head(mtcars)
+small_mtcars
+```
+
+
+---
+
+
+### Generating a small toy example
+
+```{r}
+dput(small_mtcars)
+```
+
+
+---
+
+
+### Generating a small toy example
+
+```{r,eval=F}
+# (Mote I'm assigning the data structure to an object)
+dat <- structure(list(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1), 
+                      cyl = c(6, 6, 4, 6, 8, 6), 
+                      disp = c(160, 160, 108, 258, 360, 225), 
+                      hp = c(110, 110, 93, 110, 175, 105), 
+                      drat = c(3.9, 3.9, 3.85, 3.08, 3.15, 2.76), 
+                      wt = c(2.62, 2.875, 2.32, 3.215, 3.44, 3.46), 
+                      qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22), 
+                      vs = c(0, 0, 1, 1, 0, 1), 
+                      am = c(1, 1, 1, 0, 0, 0), 
+                      gear = c(4, 4, 4, 3, 3, 3), 
+                      carb = c(4, 4, 1, 1, 2, 1)), 
+                 row.names = c("Mazda RX4", "Mazda RX4 Wag", "Datsun 710", 
+                               "Hornet 4 Drive", "Hornet Sportabout", "Valiant"), 
+                 class = "data.frame")
+
+dat$mgq # Fake issue: mispelled the column name
+
+# Copy the above and run
+reprex(venue = "gh",si = T) 
+```
+
+
 
