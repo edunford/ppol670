@@ -46,6 +46,8 @@ class: outline
 
 # Outline for Today 
 
+![:space 5]
+
 90% of data science is **data wrangling**, which involves...
 
 - **manipulating** 
@@ -128,7 +130,9 @@ Specifically, the `tidyverse` is a housing package that holds the following pack
 
 ---
 
-## `tidyverse` approach 
+## `tidyverse` advantage 
+
+![:space 15]
 
 Most of everything we will do will require in data manipulation just **one** package
 
@@ -149,7 +153,9 @@ class:newsection
 ---
 
 The same data can be represented in many different ways...
-<br><br><br>
+
+![:space 15]
+
 .center[
 ```{r,echo=F}
 tab <- 
@@ -243,7 +249,11 @@ tab %>% kableExtra::kable(.,align = 'c')
 
 ## `tibble()` data frames
 
-> "Tibbles _are_ data frames, but they tweak some older behaviours to make life a little easier."
+![:space 5]
+
+> "Tibbles _are_ data frames, but they tweak some older behaviours to make life a little easier." - Hadley Wickham
+
+![:space 5]
 
 Differences between `tibbles` and `data.frames`
 
@@ -255,19 +265,35 @@ Differences between `tibbles` and `data.frames`
 
 class: newsection
 
-# Manipulating
+# Manipulating Data<br>
+
 
 ---
 
-<br><br>
-The `dplyr` package (part of the `tidyverse`) offers an intuitive **verb based** approach to data management in `R`. The goal of the `dplyr` logic is to provide an easy, intuitive naming convention for ubiquitous to data management tasks.
+![:space 20]
 
-<br><br>
-> Note that the tidyverse moves to a `tibble` data.frame, which is a special kind of data.frame class that keeps the best parts of `data.frame` but drops the unnecessary bits, such as printing the entire data object.
+.pull-left[
+ ![:center_img 85](Figures/dplyr_logo.png)
+]
+
+.pull-right[
+
+- The `dplyr` package (part of the `tidyverse`) offers an intuitive **_verb based_** approach to data management in `R`. 
+
+- The goal of the `dplyr` logic is to provide an easy, intuitive naming convention for ubiquitous to data management tasks.
+
+]
+
+![:space 60]
+
+<!-- > Note that the tidyverse moves to a `tibble` data.frame, which is a special kind of data.frame class that keeps the best parts of `data.frame` but drops the unnecessary bits, such as printing the entire data object. -->
+
 
 ---
 
 ## 6 main `dplyr` verbs
+
+![:space 3]
 
 - **`select()`**: Pick variables by their names.
 
@@ -319,6 +345,8 @@ head(dat)
 
 ---
 
+![:space 10]
+
 ```{r}
 select(dat,name,party)
 ```
@@ -362,9 +390,13 @@ select(dat,-start)
 
 ## `filter()`
 
+![:space 3]
+
 .center[<img src="Figures/filter.png">]
 
 ---
+
+![:space 10]
 
 ```{r}
 filter(dat,party == "Republican")
@@ -374,8 +406,12 @@ filter(dat,party == "Republican")
 
 ## `arrange()`
 
+![:space 3]
+
 .center[<img src="Figures/arrange.png">]
 ---
+
+![:space 10]
 
 ```{r}
 arrange(dat,party)
@@ -392,10 +428,13 @@ arrange(dat,desc(start))
 
 ## `mutate()`
 
+![:space 3]
+
 .center[<img src="Figures/mutate.png">]
 
 ---
 
+![:space 10]
 ```{r}
 mutate(dat,
        # in office during cold war
@@ -424,8 +463,9 @@ transmute(dat,CW = start <= '1990-03-11')
 
 ## `summarize()`
 
+![:space 15]
 ```{r}
-summarize(presidential,
+summarize(dat,
           days_in_office = mean(end-start),
           max = max(end-start),
           min = min(end-start))
@@ -433,11 +473,15 @@ summarize(presidential,
 
 ---
 
+![:space 10]
+
 There are a number of internal functions that can be used with `mutate()`, `transmute()`,
 and `summarize()`.
 
-- `n()` ::: counts the number of observations
-- `n_distinct()` ::: counts the number of distinct entries
+- `n()` counts the number of observations
+- `n_distinct()` counts the number of distinct entries
+
+![:space 10]
 
 ```{r}
 summarize(dat,N=n(),N_party=n_distinct(party))
@@ -447,14 +491,18 @@ summarize(dat,N=n(),N_party=n_distinct(party))
 
 ## `group_by()`
 
+![:space 3]
+
 .center[<img src="Figures/group_by.png">]
 
 ---
 
+![:space 10]
+
 When used in conjunction with some of the other functions, `group_by()` becomes a powerful **clustering function**.
 ```{r}
 # group by party
-x <- group_by(presidential,party)
+x <- group_by(dat,party)
 summarize(x,min_in_office = min(end-start))
 ```
 
@@ -464,6 +512,8 @@ summarize(x,min_in_office = min(end-start))
 ### Other functions in the tidyverse...
 
 `tally()` or `count()` offers quick counts of a variable which can be quite useful when used alongside some of the other functions.
+
+![:space 5]
 
 Here we are seeing how many observations we have _by group_.
 ```{r}
@@ -484,6 +534,8 @@ mutate(dat,party = recode(party,'Republican'=1,'Democratic'=0))
 ---
 
 ### And much more...
+
+![:space 5]
 
 We've only covered a few functions here. Here are some more...
 - `sample_n()` - Grab an N random sample of your data
@@ -527,7 +579,7 @@ arrange(
 
 --
 
-> The issue with **nesting functions** is that it is <font color = 'red'> difficult to (a) read and (b) detect a mistake!</font>
+The issue with **nesting functions** is that it is **![:text_color darkred](difficult to [1] read and [2] detect a mistake!)**
 
 ---
 
@@ -561,6 +613,8 @@ presidential %>%
 
 ### Two things to keep in mind when piping...
 
+![:space 15]
+
 1. Functions **_must_** be linked with `%>%`
 
 2. When functions have **multiple arguments**, point to where the data should go with a period (`.`)
@@ -577,24 +631,26 @@ data %>% function(arg1= ., arg2=TRUE)
 
 Please **_download and complete_** the following practice on your own:
 
-.center[ **[Download the Data Wrangling Practice Set](practice/week04-practice-01_Data-Wrangling.Rmd)** (`.Rmd`)]
+.center[ **[Download the Data Wrangling Practice Set](practice/week04-practice-01_Data-Wrangling.Rmd.zip)** (`.Rmd`)]
 
 ![:space 5]
 
 Then **_compare your answers_** to the answers in the **_answer key_**:
 
-.center[ **[Download Answer Key](practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd)** (`.Rmd`)]
+.center[ **[Download Answer Key](practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip)** (`.Rmd`)]
 
 ---
 
 class:newsection
 
-# Joining
+# Joining Data
 
 
 ---
 
 ## `_join` functions (dplyr)
+
+![:space 5]
 
 `dplyr` offers a range of joining/merging functions that are more intuitive to use. These functions provide a **SQL framework** that is easier to read and more efficient.
 - `left_join()`
@@ -606,6 +662,8 @@ class:newsection
 When joining data, you must have a **unique** identifier on the dimension you're matching on.
 
 ---
+
+![:space 10]
 
 Consider the following two example datasets...
 ```{r,echo=F}
@@ -633,6 +691,7 @@ data_B
 
 .center[<img src="Figures/left_join.png", height=100px>]
 
+![:space 10]
 ```{r}
 left_join(data_A,data_B,by="country")
 ```
@@ -652,6 +711,8 @@ left_join(data_A,data_B,by="country")
 
 .center[<img src="Figures/right_join.png", height=100px>]
 
+![:space 10]
+
 ```{r}
 right_join(data_A,data_B,by="country")
 ```
@@ -669,6 +730,8 @@ right_join(data_A,data_B,by="country")
 ## `inner_join()`
 
 .center[<img src="Figures/inner_join.png", height=100px>]
+
+![:space 10]
 
 ```{r}
 inner_join(data_A,data_B,by="country")
@@ -690,6 +753,8 @@ inner_join(data_A,data_B,by="country")
 
 <center> <img src="Figures/full_join.png", height=100px> </center>
 
+![:space 10]
+
 ```{r}
 full_join(data_A,data_B,by="country")
 ```
@@ -708,6 +773,8 @@ full_join(data_A,data_B,by="country")
 
 .center[<img src="Figures/anti_join_left.png", height=100px>]
 
+![:space 10]
+
 ```{r}
 anti_join(data_A,data_B,by="country")
 ```
@@ -717,6 +784,8 @@ anti_join(data_A,data_B,by="country")
 ## `bind_rows()`
 
 <center> <img src="Figures/rbind.png"> </center>
+
+![:space 5]
 ```{r}
 bind_rows(data_A,data_B)
 ```
@@ -726,6 +795,8 @@ bind_rows(data_A,data_B)
 ## `bind_cols()`
 
 <center> <img src="Figures/cbind.png"> </center>
+
+![:space 5]
 ```{r}
 bind_cols(data_A,data_B)
 ```
@@ -734,11 +805,16 @@ bind_cols(data_A,data_B)
 
 ## Disparate column names
 
+
+![:space 10]
+
 Sometimes the naming conventions of two datasets don't perfectly align. When this happens, we can specify how data merges onto one another more explicitly using the `by=` argument.
 
 Moreover, we can merge on **_more_ than one dimension** by specifying all relevant column names.
 
 ---
+
+![:space 10]
 
 Once again, consider the following example data..
 ```{r,echo=F}
@@ -756,55 +832,27 @@ data_B
 
 ---
 
+![:space 20]
+
 ```{r}
 full_join(data_A,data_B,
           by=c('country'='country_name',
                'year'))
 ```
 
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-
-.center[<img src="Figures/intersect.gif", height=400px>]
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-
-.center[<img src="Figures/setdiff.gif", height=400px>]
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-<br><br><br>
-.center[<img src="Figures/union.gif", height=400px>]
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-<br><br><br><br>
-.center[<img src="Figures/union-all.gif", height=400px>]
-
 ---
 
 class:newsection
 
-# Reshaping
+# Reshaping Data
 
 ---
 
+![:space 10]
+
 Often, we need to alter the structure of a `data.frame` from a **wide format**...
-<br><br>
+
+![:space 10]
 
 .center[
 ```{r,echo=F,fig.align="center"}
@@ -837,7 +885,15 @@ D %>% arrange(country) %>%
 
 ---
 
-## `tidyr`
+
+![:space 20]
+
+.pull-left[
+ ![:center_img 85](Figures/tidyr_logo.png)
+]
+
+.pull-right[
+
 
 `tidyr` is a tidyverse package built to help reshape data. The package contains an array of functions that are all useful cleaning a data construct. 
 
@@ -847,36 +903,27 @@ D %>% arrange(country) %>%
 - filling missing values
 - separating a column into two variables or uniting two columns into one
 
-We'll focus on two important functions designed to reshape data: **`gather()`** and **`spread()`**
-
----
-
-<br>
-.center[<img src="Figures/tidyr-spread-gather.gif">]
+]
 
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-.center[<img src ="Figures/gather.png">]
+![:space 15]
+
+![:center_img 100](Figures/gather.png)
 
 ---
 
 ```{r,echo=F}
-dat <- 
-  D %>% 
-  rename(X=var) %>% 
-  mutate(Y = rpois(n = n(),1.5))
+dat <- D %>% spread(year,var) 
 ```
 
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+![:space 10]
 
 ```{r}
 dat
@@ -884,107 +931,118 @@ dat
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+Specify the columns you want to expand
 
 ```{r}
-dat %>% gather(key,value)
+dat %>% pivot_longer(cols="1992":"1994")
 ```
 
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+Rename the expanded columns
 
 ```{r}
-dat %>% gather(var_names,var_values) # Any naming convention works
+dat %>% pivot_longer(cols="1992":"1994",
+                     names_to = "year",
+                     values_to = "ln_gdppc")
 ```
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+![:space 10]
+Be selective about which columns are expanded and which are not. 
 
 ```{r}
 # variables can be excluded from the reshape
-dat %>% gather(var_names,var_values,-country,-year) 
+dat %>% pivot_longer(cols="1992",
+                     names_to = "year",
+                     values_to = "ln_gdppc") 
 ```
 
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
+
+![:space 10]
 
 .center[<img src ="Figures/spread.png">]
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
 
-Two arguments:
+```{r,echo=F}
+dat <- D %>% rename(ln_gdppc=var)
+dat=dat[-2,]
+dat=dat[-6,]
+```
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
 
+![:space 10]
 ```{r}
 dat 
 ```
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
 
-Two arguments:
+Main arguments:
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
+- `names_from`: name of the variable that will be spread out into columns. 
+- `values_from`: values that will populate the cells of each column
+
+![:space 3]
 
 ```{r}
-dat %>% spread(key = country, value = X)
+
+dat %>% pivot_wider(names_from = year,
+                    values_from = ln_gdppc)
 ```
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
 
-Two arguments:
+Main arguments:
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
+- `names_from`: name of the variable that will be spread out into columns. 
+- `values_from`: values that will populate the cells of each column.
+- `values_fill`: specify what value a missing value should take on.
 
 ```{r}
-dat %>% spread(key = country, value = X, fill = 0) 
+dat %>% pivot_wider(names_from = year,
+                    values_from = ln_gdppc,
+                    values_fill = list(ln_gdppc = -99))
 ```
 
 ---
 
-## `spread()`: from long-to-wide
+## Legacy code
 
-Two arguments:
+![:space 5]
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
+Note that `pivot_wider()` and `pivot_longer()` are relatively new wrappers for the older `gather()` and `spread()` functions. 
 
-```{r}
-dat %>% spread(key = year, value = Y, fill = 0) 
-```
+![:space 5]
+
+What does this mean for you?
+
+- Answers online and in the reading on how to reshape data may differ depending on the preference of the source. 
+
+- Use whatever versions of the function that work best for you.
+
+- Many find that  `pivot_wider()` and `pivot_longer()` are easier to use than the older `gather()` and `spread()` functions.
+
+
 
 
 ---

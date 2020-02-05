@@ -38,6 +38,8 @@ class: outline
 
 # Outline for Today 
 
+![:space 5]
+
 90% of data science is **data wrangling**, which involves...
 
 - **manipulating** 
@@ -120,7 +122,9 @@ Specifically, the `tidyverse` is a housing package that holds the following pack
 
 ---
 
-## `tidyverse` approach 
+## `tidyverse` advantage 
+
+![:space 15]
 
 Most of everything we will do will require in data manipulation just **one** package
 
@@ -142,7 +146,9 @@ class:newsection
 ---
 
 The same data can be represented in many different ways...
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+![:space 15]
+
 .center[
 &lt;table&gt;
  &lt;thead&gt;
@@ -471,7 +477,11 @@ There are three interrelated rules which make a dataset **tidy**:
 
 ## `tibble()` data frames
 
-&gt; "Tibbles _are_ data frames, but they tweak some older behaviours to make life a little easier."
+![:space 5]
+
+&gt; "Tibbles _are_ data frames, but they tweak some older behaviours to make life a little easier." - Hadley Wickham
+
+![:space 5]
 
 Differences between `tibbles` and `data.frames`
 
@@ -483,19 +493,35 @@ Differences between `tibbles` and `data.frames`
 
 class: newsection
 
-# Manipulating
+# Manipulating Data&lt;br&gt;
+
 
 ---
 
-&lt;br&gt;&lt;br&gt;
-The `dplyr` package (part of the `tidyverse`) offers an intuitive **verb based** approach to data management in `R`. The goal of the `dplyr` logic is to provide an easy, intuitive naming convention for ubiquitous to data management tasks.
+![:space 20]
 
-&lt;br&gt;&lt;br&gt;
-&gt; Note that the tidyverse moves to a `tibble` data.frame, which is a special kind of data.frame class that keeps the best parts of `data.frame` but drops the unnecessary bits, such as printing the entire data object.
+.pull-left[
+ ![:center_img 85](Figures/dplyr_logo.png)
+]
+
+.pull-right[
+
+- The `dplyr` package (part of the `tidyverse`) offers an intuitive **_verb based_** approach to data management in `R`. 
+
+- The goal of the `dplyr` logic is to provide an easy, intuitive naming convention for ubiquitous to data management tasks.
+
+]
+
+![:space 60]
+
+&lt;!-- &gt; Note that the tidyverse moves to a `tibble` data.frame, which is a special kind of data.frame class that keeps the best parts of `data.frame` but drops the unnecessary bits, such as printing the entire data object. --&gt;
+
 
 ---
 
 ## 6 main `dplyr` verbs
+
+![:space 3]
 
 - **`select()`**: Pick variables by their names.
 
@@ -560,6 +586,8 @@ head(dat)
 .center[&lt;img src="Figures/select.png"&gt;]
 
 ---
+
+![:space 10]
 
 
 ```r
@@ -694,9 +722,13 @@ select(dat,-start)
 
 ## `filter()`
 
+![:space 3]
+
 .center[&lt;img src="Figures/filter.png"&gt;]
 
 ---
+
+![:space 10]
 
 
 ```r
@@ -719,8 +751,12 @@ filter(dat,party == "Republican")
 
 ## `arrange()`
 
+![:space 3]
+
 .center[&lt;img src="Figures/arrange.png"&gt;]
 ---
+
+![:space 10]
 
 
 ```r
@@ -773,10 +809,13 @@ arrange(dat,desc(start))
 
 ## `mutate()`
 
+![:space 3]
+
 .center[&lt;img src="Figures/mutate.png"&gt;]
 
 ---
 
+![:space 10]
 
 ```r
 mutate(dat,
@@ -859,9 +898,10 @@ transmute(dat,CW = start &lt;= '1990-03-11')
 
 ## `summarize()`
 
+![:space 15]
 
 ```r
-summarize(presidential,
+summarize(dat,
           days_in_office = mean(end-start),
           max = max(end-start),
           min = min(end-start))
@@ -876,11 +916,15 @@ summarize(presidential,
 
 ---
 
+![:space 10]
+
 There are a number of internal functions that can be used with `mutate()`, `transmute()`,
 and `summarize()`.
 
-- `n()` ::: counts the number of observations
-- `n_distinct()` ::: counts the number of distinct entries
+- `n()` counts the number of observations
+- `n_distinct()` counts the number of distinct entries
+
+![:space 10]
 
 
 ```r
@@ -898,15 +942,19 @@ summarize(dat,N=n(),N_party=n_distinct(party))
 
 ## `group_by()`
 
+![:space 3]
+
 .center[&lt;img src="Figures/group_by.png"&gt;]
 
 ---
+
+![:space 10]
 
 When used in conjunction with some of the other functions, `group_by()` becomes a powerful **clustering function**.
 
 ```r
 # group by party
-x &lt;- group_by(presidential,party)
+x &lt;- group_by(dat,party)
 summarize(x,min_in_office = min(end-start))
 ```
 
@@ -924,6 +972,8 @@ summarize(x,min_in_office = min(end-start))
 ### Other functions in the tidyverse...
 
 `tally()` or `count()` offers quick counts of a variable which can be quite useful when used alongside some of the other functions.
+
+![:space 5]
 
 Here we are seeing how many observations we have _by group_.
 
@@ -972,6 +1022,8 @@ mutate(dat,party = recode(party,'Republican'=1,'Democratic'=0))
 ---
 
 ### And much more...
+
+![:space 5]
 
 We've only covered a few functions here. Here are some more...
 - `sample_n()` - Grab an N random sample of your data
@@ -1043,7 +1095,7 @@ arrange(
 
 --
 
-&gt; The issue with **nesting functions** is that it is &lt;font color = 'red'&gt; difficult to (a) read and (b) detect a mistake!&lt;/font&gt;
+The issue with **nesting functions** is that it is **![:text_color darkred](difficult to [1] read and [2] detect a mistake!)**
 
 ---
 
@@ -1091,6 +1143,8 @@ presidential %&gt;%
 
 ### Two things to keep in mind when piping...
 
+![:space 15]
+
 1. Functions **_must_** be linked with `%&gt;%`
 
 2. When functions have **multiple arguments**, point to where the data should go with a period (`.`)
@@ -1108,24 +1162,26 @@ data %&gt;% function(arg1= ., arg2=TRUE)
 
 Please **_download and complete_** the following practice on your own:
 
-.center[ **[Download the Data Wrangling Practice Set](practice/week04-practice-01_Data-Wrangling.Rmd)** (`.Rmd`)]
+.center[ **[Download the Data Wrangling Practice Set](practice/week04-practice-01_Data-Wrangling.Rmd.zip)** (`.Rmd`)]
 
 ![:space 5]
 
 Then **_compare your answers_** to the answers in the **_answer key_**:
 
-.center[ **[Download Answer Key](practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd)** (`.Rmd`)]
+.center[ **[Download Answer Key](practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip)** (`.Rmd`)]
 
 ---
 
 class:newsection
 
-# Joining
+# Joining Data
 
 
 ---
 
 ## `_join` functions (dplyr)
+
+![:space 5]
 
 `dplyr` offers a range of joining/merging functions that are more intuitive to use. These functions provide a **SQL framework** that is easier to read and more efficient.
 - `left_join()`
@@ -1137,6 +1193,8 @@ class:newsection
 When joining data, you must have a **unique** identifier on the dimension you're matching on.
 
 ---
+
+![:space 10]
 
 Consider the following two example datasets...
 
@@ -1177,6 +1235,7 @@ data_B
 
 .center[&lt;img src="Figures/left_join.png", height=100px&gt;]
 
+![:space 10]
 
 ```r
 left_join(data_A,data_B,by="country")
@@ -1204,6 +1263,8 @@ left_join(data_A,data_B,by="country")
 
 .center[&lt;img src="Figures/right_join.png", height=100px&gt;]
 
+![:space 10]
+
 
 ```r
 right_join(data_A,data_B,by="country")
@@ -1229,6 +1290,8 @@ right_join(data_A,data_B,by="country")
 ## `inner_join()`
 
 .center[&lt;img src="Figures/inner_join.png", height=100px&gt;]
+
+![:space 10]
 
 
 ```r
@@ -1257,6 +1320,8 @@ inner_join(data_A,data_B,by="country")
 
 &lt;center&gt; &lt;img src="Figures/full_join.png", height=100px&gt; &lt;/center&gt;
 
+![:space 10]
+
 
 ```r
 full_join(data_A,data_B,by="country")
@@ -1284,6 +1349,8 @@ full_join(data_A,data_B,by="country")
 
 .center[&lt;img src="Figures/anti_join_left.png", height=100px&gt;]
 
+![:space 10]
+
 
 ```r
 anti_join(data_A,data_B,by="country")
@@ -1299,6 +1366,8 @@ anti_join(data_A,data_B,by="country")
 ## `bind_rows()`
 
 &lt;center&gt; &lt;img src="Figures/rbind.png"&gt; &lt;/center&gt;
+
+![:space 5]
 
 ```r
 bind_rows(data_A,data_B)
@@ -1320,6 +1389,8 @@ bind_rows(data_A,data_B)
 
 &lt;center&gt; &lt;img src="Figures/cbind.png"&gt; &lt;/center&gt;
 
+![:space 5]
+
 ```r
 bind_cols(data_A,data_B)
 ```
@@ -1335,11 +1406,16 @@ bind_cols(data_A,data_B)
 
 ## Disparate column names
 
+
+![:space 10]
+
 Sometimes the naming conventions of two datasets don't perfectly align. When this happens, we can specify how data merges onto one another more explicitly using the `by=` argument.
 
 Moreover, we can merge on **_more_ than one dimension** by specifying all relevant column names.
 
 ---
+
+![:space 10]
 
 Once again, consider the following example data..
 
@@ -1368,6 +1444,8 @@ data_B
 
 ---
 
+![:space 20]
+
 
 ```r
 full_join(data_A,data_B,
@@ -1384,49 +1462,19 @@ full_join(data_A,data_B,
 ## 5      Botswana 2003   NA Medium
 ```
 
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-
-.center[&lt;img src="Figures/intersect.gif", height=400px&gt;]
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-
-.center[&lt;img src="Figures/setdiff.gif", height=400px&gt;]
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-.center[&lt;img src="Figures/union.gif", height=400px&gt;]
-
----
-
-## Merging as a subsetting strategy 
-
-Using set operations to subset and join data...
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-.center[&lt;img src="Figures/union-all.gif", height=400px&gt;]
-
 ---
 
 class:newsection
 
-# Reshaping
+# Reshaping Data
 
 ---
 
+![:space 10]
+
 Often, we need to alter the structure of a `data.frame` from a **wide format**...
-&lt;br&gt;&lt;br&gt;
+
+![:space 10]
 
 .center[
 &lt;table&gt;
@@ -1548,7 +1596,15 @@ Often, we need to alter the structure of a `data.frame` from a **wide format**..
 
 ---
 
-## `tidyr`
+
+![:space 20]
+
+.pull-left[
+ ![:center_img 85](Figures/tidyr_logo.png)
+]
+
+.pull-right[
+
 
 `tidyr` is a tidyverse package built to help reshape data. The package contains an array of functions that are all useful cleaning a data construct. 
 
@@ -1558,31 +1614,25 @@ Often, we need to alter the structure of a `data.frame` from a **wide format**..
 - filling missing values
 - separating a column into two variables or uniting two columns into one
 
-We'll focus on two important functions designed to reshape data: **`gather()`** and **`spread()`**
-
----
-
-&lt;br&gt;
-.center[&lt;img src="Figures/tidyr-spread-gather.gif"&gt;]
+]
 
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-.center[&lt;img src ="Figures/gather.png"&gt;]
+![:space 15]
+
+![:center_img 100](Figures/gather.png)
 
 ---
 
 
 
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+![:space 10]
 
 
 ```r
@@ -1590,321 +1640,208 @@ dat
 ```
 
 ```
-##      country year     X Y
-## 1    Nigeria 1992  9.72 2
-## 2       Iran 1992  9.88 2
-## 3   Cambodia 1992 10.78 1
-## 4  Australia 1992 10.04 2
-## 5    Nigeria 1993 10.06 1
-## 6       Iran 1993 10.86 0
-## 7   Cambodia 1993 10.23 4
-## 8  Australia 1993  9.37 3
-## 9    Nigeria 1994  9.66 2
-## 10      Iran 1994  9.78 2
-## 11  Cambodia 1994 10.61 0
-## 12 Australia 1994 10.18 1
+##     country  1992  1993  1994
+## 1   Nigeria  9.72 10.06  9.66
+## 2      Iran  9.88 10.86  9.78
+## 3  Cambodia 10.78 10.23 10.61
+## 4 Australia 10.04  9.37 10.18
 ```
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+Specify the columns you want to expand
 
 
 ```r
-dat %&gt;% gather(key,value)
+dat %&gt;% pivot_longer(cols="1992":"1994")
 ```
 
 ```
-##        key     value
-## 1  country   Nigeria
-## 2  country      Iran
-## 3  country  Cambodia
-## 4  country Australia
-## 5  country   Nigeria
-## 6  country      Iran
-## 7  country  Cambodia
-## 8  country Australia
-## 9  country   Nigeria
-## 10 country      Iran
-## 11 country  Cambodia
-## 12 country Australia
-## 13    year      1992
-## 14    year      1992
-## 15    year      1992
-## 16    year      1992
-## 17    year      1993
-## 18    year      1993
-## 19    year      1993
-## 20    year      1993
-## 21    year      1994
-## 22    year      1994
-## 23    year      1994
-## 24    year      1994
-## 25       X      9.72
-## 26       X      9.88
-## 27       X     10.78
-## 28       X     10.04
-## 29       X     10.06
-## 30       X     10.86
-## 31       X     10.23
-## 32       X      9.37
-## 33       X      9.66
-## 34       X      9.78
-## 35       X     10.61
-## 36       X     10.18
-## 37       Y         2
-## 38       Y         2
-## 39       Y         1
-## 40       Y         2
-## 41       Y         1
-## 42       Y         0
-## 43       Y         4
-## 44       Y         3
-## 45       Y         2
-## 46       Y         2
-## 47       Y         0
-## 48       Y         1
+## # A tibble: 12 x 3
+##    country   name  value
+##    &lt;fct&gt;     &lt;chr&gt; &lt;dbl&gt;
+##  1 Nigeria   1992   9.72
+##  2 Nigeria   1993  10.1 
+##  3 Nigeria   1994   9.66
+##  4 Iran      1992   9.88
+##  5 Iran      1993  10.9 
+##  6 Iran      1994   9.78
+##  7 Cambodia  1992  10.8 
+##  8 Cambodia  1993  10.2 
+##  9 Cambodia  1994  10.6 
+## 10 Australia 1992  10.0 
+## 11 Australia 1993   9.37
+## 12 Australia 1994  10.2
 ```
 
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+Rename the expanded columns
 
 
 ```r
-dat %&gt;% gather(var_names,var_values) # Any naming convention works
+dat %&gt;% pivot_longer(cols="1992":"1994",
+                     names_to = "year",
+                     values_to = "ln_gdppc")
 ```
 
 ```
-##    var_names var_values
-## 1    country    Nigeria
-## 2    country       Iran
-## 3    country   Cambodia
-## 4    country  Australia
-## 5    country    Nigeria
-## 6    country       Iran
-## 7    country   Cambodia
-## 8    country  Australia
-## 9    country    Nigeria
-## 10   country       Iran
-## 11   country   Cambodia
-## 12   country  Australia
-## 13      year       1992
-## 14      year       1992
-## 15      year       1992
-## 16      year       1992
-## 17      year       1993
-## 18      year       1993
-## 19      year       1993
-## 20      year       1993
-## 21      year       1994
-## 22      year       1994
-## 23      year       1994
-## 24      year       1994
-## 25         X       9.72
-## 26         X       9.88
-## 27         X      10.78
-## 28         X      10.04
-## 29         X      10.06
-## 30         X      10.86
-## 31         X      10.23
-## 32         X       9.37
-## 33         X       9.66
-## 34         X       9.78
-## 35         X      10.61
-## 36         X      10.18
-## 37         Y          2
-## 38         Y          2
-## 39         Y          1
-## 40         Y          2
-## 41         Y          1
-## 42         Y          0
-## 43         Y          4
-## 44         Y          3
-## 45         Y          2
-## 46         Y          2
-## 47         Y          0
-## 48         Y          1
+## # A tibble: 12 x 3
+##    country   year  ln_gdppc
+##    &lt;fct&gt;     &lt;chr&gt;    &lt;dbl&gt;
+##  1 Nigeria   1992      9.72
+##  2 Nigeria   1993     10.1 
+##  3 Nigeria   1994      9.66
+##  4 Iran      1992      9.88
+##  5 Iran      1993     10.9 
+##  6 Iran      1994      9.78
+##  7 Cambodia  1992     10.8 
+##  8 Cambodia  1993     10.2 
+##  9 Cambodia  1994     10.6 
+## 10 Australia 1992     10.0 
+## 11 Australia 1993      9.37
+## 12 Australia 1994     10.2
 ```
 
 ---
 
-## `gather()`: from wide-to-long
+### `pivot_longer()`: from wide-to-long
 
-Two arguments:
-
-- `key`: name of the variable that all the _variable **names**_ will be stored as. 
-- `value`: name of the variable that all the _variable **values**_ will be stored as.
+![:space 10]
+Be selective about which columns are expanded and which are not. 
 
 
 ```r
 # variables can be excluded from the reshape
-dat %&gt;% gather(var_names,var_values,-country,-year) 
+dat %&gt;% pivot_longer(cols="1992",
+                     names_to = "year",
+                     values_to = "ln_gdppc") 
 ```
 
 ```
-##      country year var_names var_values
-## 1    Nigeria 1992         X       9.72
-## 2       Iran 1992         X       9.88
-## 3   Cambodia 1992         X      10.78
-## 4  Australia 1992         X      10.04
-## 5    Nigeria 1993         X      10.06
-## 6       Iran 1993         X      10.86
-## 7   Cambodia 1993         X      10.23
-## 8  Australia 1993         X       9.37
-## 9    Nigeria 1994         X       9.66
-## 10      Iran 1994         X       9.78
-## 11  Cambodia 1994         X      10.61
-## 12 Australia 1994         X      10.18
-## 13   Nigeria 1992         Y       2.00
-## 14      Iran 1992         Y       2.00
-## 15  Cambodia 1992         Y       1.00
-## 16 Australia 1992         Y       2.00
-## 17   Nigeria 1993         Y       1.00
-## 18      Iran 1993         Y       0.00
-## 19  Cambodia 1993         Y       4.00
-## 20 Australia 1993         Y       3.00
-## 21   Nigeria 1994         Y       2.00
-## 22      Iran 1994         Y       2.00
-## 23  Cambodia 1994         Y       0.00
-## 24 Australia 1994         Y       1.00
+## # A tibble: 4 x 5
+##   country   `1993` `1994` year  ln_gdppc
+##   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+## 1 Nigeria    10.1    9.66 1992      9.72
+## 2 Iran       10.9    9.78 1992      9.88
+## 3 Cambodia   10.2   10.6  1992     10.8 
+## 4 Australia   9.37  10.2  1992     10.0
 ```
 
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
+
+![:space 10]
 
 .center[&lt;img src ="Figures/spread.png"&gt;]
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
 
-Two arguments:
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
 
+
+![:space 10]
 
 ```r
 dat 
 ```
 
 ```
-##      country year     X Y
-## 1    Nigeria 1992  9.72 2
-## 2       Iran 1992  9.88 2
-## 3   Cambodia 1992 10.78 1
-## 4  Australia 1992 10.04 2
-## 5    Nigeria 1993 10.06 1
-## 6       Iran 1993 10.86 0
-## 7   Cambodia 1993 10.23 4
-## 8  Australia 1993  9.37 3
-## 9    Nigeria 1994  9.66 2
-## 10      Iran 1994  9.78 2
-## 11  Cambodia 1994 10.61 0
-## 12 Australia 1994 10.18 1
+##      country year ln_gdppc
+## 1    Nigeria 1992     9.72
+## 3   Cambodia 1992    10.78
+## 4  Australia 1992    10.04
+## 5    Nigeria 1993    10.06
+## 6       Iran 1993    10.86
+## 8  Australia 1993     9.37
+## 9    Nigeria 1994     9.66
+## 10      Iran 1994     9.78
+## 11  Cambodia 1994    10.61
+## 12 Australia 1994    10.18
 ```
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
 
-Two arguments:
+Main arguments:
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
+- `names_from`: name of the variable that will be spread out into columns. 
+- `values_from`: values that will populate the cells of each column
+
+![:space 3]
 
 
 ```r
-dat %&gt;% spread(key = country, value = X)
+dat %&gt;% pivot_wider(names_from = year,
+                    values_from = ln_gdppc)
 ```
 
 ```
-##   year Y Nigeria  Iran Cambodia Australia
-## 1 1992 1      NA    NA    10.78        NA
-## 2 1992 2    9.72  9.88       NA     10.04
-## 3 1993 0      NA 10.86       NA        NA
-## 4 1993 1   10.06    NA       NA        NA
-## 5 1993 3      NA    NA       NA      9.37
-## 6 1993 4      NA    NA    10.23        NA
-## 7 1994 0      NA    NA    10.61        NA
-## 8 1994 1      NA    NA       NA     10.18
-## 9 1994 2    9.66  9.78       NA        NA
+## # A tibble: 4 x 4
+##   country   `1992` `1993` `1994`
+##   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nigeria     9.72  10.1    9.66
+## 2 Cambodia   10.8   NA     10.6 
+## 3 Australia  10.0    9.37  10.2 
+## 4 Iran       NA     10.9    9.78
 ```
 
 ---
 
-## `spread()`: from long-to-wide
+## `pivot_wider()`: from long-to-wide
 
-Two arguments:
+Main arguments:
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
+- `names_from`: name of the variable that will be spread out into columns. 
+- `values_from`: values that will populate the cells of each column.
+- `values_fill`: specify what value a missing value should take on.
 
 
 ```r
-dat %&gt;% spread(key = country, value = X, fill = 0) 
+dat %&gt;% pivot_wider(names_from = year,
+                    values_from = ln_gdppc,
+                    values_fill = list(ln_gdppc = -99))
 ```
 
 ```
-##   year Y Nigeria  Iran Cambodia Australia
-## 1 1992 1    0.00  0.00    10.78      0.00
-## 2 1992 2    9.72  9.88     0.00     10.04
-## 3 1993 0    0.00 10.86     0.00      0.00
-## 4 1993 1   10.06  0.00     0.00      0.00
-## 5 1993 3    0.00  0.00     0.00      9.37
-## 6 1993 4    0.00  0.00    10.23      0.00
-## 7 1994 0    0.00  0.00    10.61      0.00
-## 8 1994 1    0.00  0.00     0.00     10.18
-## 9 1994 2    9.66  9.78     0.00      0.00
+## # A tibble: 4 x 4
+##   country   `1992` `1993` `1994`
+##   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nigeria     9.72  10.1    9.66
+## 2 Cambodia   10.8  -99     10.6 
+## 3 Australia  10.0    9.37  10.2 
+## 4 Iran      -99     10.9    9.78
 ```
 
 ---
 
-## `spread()`: from long-to-wide
+## Legacy code
 
-Two arguments:
+![:space 5]
 
-- `key`: name of the variable that will be spread out into columns. 
-- `value`: variable that will be spread out along the key variable.
-- `fill`: what values should fill missing cells? (`NA` by default)
+Note that `pivot_wider()` and `pivot_longer()` are relatively new wrappers for the older `gather()` and `spread()` functions. 
+
+![:space 5]
+
+What does this mean for you?
+
+- Answers online and in the reading on how to reshape data may differ depending on the preference of the source. 
+
+- Use whatever versions of the function that work best for you.
+
+- Many find that  `pivot_wider()` and `pivot_longer()` are easier to use than the older `gather()` and `spread()` functions.
 
 
-```r
-dat %&gt;% spread(key = year, value = Y, fill = 0) 
-```
-
-```
-##      country     X 1992 1993 1994
-## 1    Nigeria  9.66    0    0    2
-## 2    Nigeria  9.72    2    0    0
-## 3    Nigeria 10.06    0    1    0
-## 4       Iran  9.78    0    0    2
-## 5       Iran  9.88    2    0    0
-## 6       Iran 10.86    0    0    0
-## 7   Cambodia 10.23    0    4    0
-## 8   Cambodia 10.61    0    0    0
-## 9   Cambodia 10.78    1    0    0
-## 10 Australia  9.37    0    3    0
-## 11 Australia 10.04    2    0    0
-## 12 Australia 10.18    0    0    1
-```
 
 
 ---
