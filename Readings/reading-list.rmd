@@ -116,7 +116,6 @@ The following table is a compilation of all the main online resources referenced
     + [Ch. 12: Tidy Data](https://r4ds.had.co.nz/tidy-data.html) - `r4ds`
     + [Ch. 13: Relational Data](https://r4ds.had.co.nz/relational-data.html) - `r4ds`
     + [Ch. 18: Pipes](https://r4ds.had.co.nz/pipes.html) - `r4ds`
-    + [Ch. 15: Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) - `r4ds`
 
 - <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
     + [Ch. 10: Tibbles](https://r4ds.had.co.nz/tibbles.html) - `r4ds`
@@ -137,6 +136,7 @@ The following table is a compilation of all the main online resources referenced
         - [Ch. 10: Visualizing Proportions](https://serialmentor.com/dataviz/visualizing-proportions.html) - `datviz`
         - [Ch. 12: Visualizing Associations](https://serialmentor.com/dataviz/visualizing-associations.html) - `datviz`
     + [Image File Formats](https://serialmentor.com/dataviz/image-file-formats.html) - `datviz`
+    + [Ch. 15: Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) - `r4ds`
   
   
 ### Week 6: Web Scrapping and APIs

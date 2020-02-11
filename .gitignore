@@ -12,3 +12,5 @@ Students/
 Supplementary-Resources/
 .Rproj.user
 *.Rhistory
+Lectures/week_04/lecture-week-04_data-wrangling_cache/html/*
+*cache*

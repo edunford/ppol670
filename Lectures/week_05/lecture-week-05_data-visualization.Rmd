@@ -87,9 +87,9 @@ tibble(y,x) %>%
   theme_fivethirtyeight() +
   scale_color_manual(values=c("grey30","steelblue")) +
   labs(color="",pch="",x="X",y="Y",
-       title="Simulated Discontinuity",
-       subtitle="Data is completely fake and shouldn't be confused with reality.",
-       caption = "Discontinuity occurs at x = 0") +
+       title="Regression Discontinuity",
+       subtitle="Simulation of a regression discontinuity with discontinuity set to occur at x = 0",
+       caption = "\nSource: Simulated Data") +
   theme(legend.position = "bottom",
         plot.title = element_text(size=20,family='serif'),
         text = element_text(size=20,family='serif'),
