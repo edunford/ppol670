@@ -262,6 +262,7 @@ Video walkthroughs:
   + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd.zip" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a>
   + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd.zip" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a>
 
+<br>
 
 ### _Week 5_: [Data Visualization](Lectures/week_05/lecture-week-05_data-visualization.html)
 
