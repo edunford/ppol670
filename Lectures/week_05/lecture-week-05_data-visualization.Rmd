@@ -781,7 +781,8 @@ pol %>%
        y="Log GDP per capita",
        fill="",
        title="Regime type on Economic Development",
-       subtitle="Data on polity and GDP per capita from 1990 - 2016"
+       subtitle="Data on polity and GDP per capita from 1990 - 2016",
+       caption = "Source: World Bank and Systemic Peace"
        ) +
   theme(legend.position = "bottom")
 ```
@@ -811,7 +812,8 @@ pol %>%
        y="Log GDP per capita",
        fill="",
        title="Regime type on Economic Development",
-       subtitle="Data on polity and GDP per capita from 1990 - 2016"
+       subtitle="Data on polity and GDP per capita from 1990 - 2016",
+       caption = "Source: World Bank and Systemic Peace"
        ) +
   theme(legend.position = "bottom",
         plot.title = element_text(hjust=.5),
@@ -844,7 +846,8 @@ pol %>%
        y="Log GDP per capita",
        fill="",
        title="Regime type on Economic Development",
-       subtitle="Data on polity and GDP per capita from 1990 - 2016"
+       subtitle="Data on polity and GDP per capita from 1990 - 2016",
+       caption = "Source: World Bank and Systemic Peace"
        ) +
   theme(legend.position = "bottom",
         plot.title = element_text(hjust=.5),
@@ -874,7 +877,8 @@ pol %>%
        y="Log GDP per capita",
        fill="",
        title="Regime type on Economic Development",
-       subtitle="Data on polity and GDP per capita from 1990 - 2016") +
+       subtitle="Data on polity and GDP per capita from 1990 - 2016",
+       caption = "Source: World Bank and Systemic Peace") +
   theme(legend.position = "bottom",
         plot.title = element_text(hjust=.5,size=20),
         text = element_text(size=18),
@@ -899,23 +903,19 @@ This time let's examine the **process of democratization** in South America from
 
 ### The data
 
+Same data as was used in Example 1; however, I've subsetted the data to only retain South American countries (with complete data) from 1850 to 2016.
 
-```{r,echo=F}
-pol2 = read_csv(here::here("Lectures/week_05/R-code/dem-gdp-data.csv")) %>%
+```{r}
+pol2 <-
+  read_csv(here::here("Lectures/week_05/R-code/dem-gdp-data.csv")) %>%
   filter(country %in% c("Chile","Argentina","Ecuador",
-                        "Brazil","Venezuela","Paraguay",#"Guyana","Suriname",
+                        "Brazil","Venezuela","Paraguay",
                         "Columbia","Peru","Bolivia")) %>%
   filter(year>=1850)
 ```
 
-Same data as was used in Example 1; however, I've subsetted the data to only retain South American countries (with complete data) from 1850 to 2016.
-
 ```{r}
 summary(pol2)
-```
-
-```{r}
-unique(pol2$country)
 ```
 
 ---
@@ -1053,7 +1053,8 @@ pol2 %>%
        x="Year",
        title="The Path to Democracy",
        subtitle = "Democratization and democratic backsliding in South America* from 1850 to 2016",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
+       caption = paste0("* Only South American countries with complete data from 1850 to 2016 are shown",
+                        "\nSource: World Bank and Systemic Peace")
        ) 
 ```
 ]
@@ -1079,7 +1080,8 @@ pol2 %>%
        x="Year",
        title="The Path to Democracy",
        subtitle = "Democratization and democratic backsliding in South America* from 1850 to 2016",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
+       caption = paste0("* Only South American countries with complete data from 1850 to 2016 are shown",
+                        "\nSource: World Bank and Systemic Peace")
        )  +
   theme(axis.title = element_text(),
         plot.caption = element_text(hjust=0))
@@ -1104,7 +1106,8 @@ pol2 %>%
        x="Year",
        title="The Path to Democracy",
        subtitle = "Democratization and democratic backsliding in South America* from 1850 to 2016",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
+       caption = paste0("* Only South American countries with complete data from 1850 to 2016 are shown",
+                        "\nSource: World Bank and Systemic Peace")
        )  +
   theme(axis.title = element_text(),
         plot.caption = element_text(hjust=0))
@@ -1115,270 +1118,21 @@ pol2 %>%
 class:outline
 
 # Example 3
-<br>
-<br>
-<br>
 
-Again let's examine the **process of democratization** in South America from 1850 to present. But this time where we can get a better sense of the transitions occurring across the board in South America. Can we visualize the "**democratic wave**"?
+![:space 10]
 
----
+Let's now work through a live example using the [gapminder](https://www.gapminder.org/data/) data.
 
-<br><br><br>
+![:space 5]
 
-.pull-left[
-```{r sa_wave1, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile()
+```{r,eval=F}
+install.packages("gapminder")
+require(gapminder)
 ```
-]
 
-.pull-right[
-```{r, ref.label="sa_wave1", echo=FALSE,dpi=600}
-```
-]
+![:space 5]
 
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave2, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity))
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave2", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave3, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip()
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave3", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave4, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue", #<<
-                      high="white")  #<<
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave4", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave5, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white")
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave5", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave6, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-  ggthemes::theme_tufte() #<<
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave6", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave7, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-  ggthemes::theme_tufte() +
-  labs(fill="Regime Type",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown")
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave7", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave8, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-  ggthemes::theme_tufte() +
-  labs(fill="Regime Type",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-      ) +
-  theme(text=element_text(size=14),
-        plot.caption = element_text(hjust=0))
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave8", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave9, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-  ggthemes::theme_tufte() +
-  labs(fill="Regime Type",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-      ) +
-  theme(text=element_text(size=18),
-        plot.caption = element_text(hjust=0),
-        axis.text= element_text(size=20,
-                                face="bold"))
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave9", echo=FALSE,dpi=600}
-```
-]
-
----
-
-<br><br><br>
-
-.pull-left[
-```{r sa_wave10, eval=FALSE,highlight=T}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(
-    low="steelblue",
-    high="white",
-    breaks = c(10,-9), #<<
-    labels=c("Democracy", "Autocracy") #<<
-  ) +
-  ggthemes::theme_tufte() +
-  labs(fill="",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-      ) +
-  theme(text=element_text(size=18),
-        plot.caption = element_text(hjust=0),
-        axis.text= element_text(size=20,
-                                face="bold"))
-```
-]
-
-.pull-right[
-```{r, ref.label="sa_wave10", echo=FALSE,dpi=600}
-```
-]
-
----
-
-```{r,echo=F,fig.align="center",fig.width=10,fig.height=8,dpi=600}
-pol2 %>%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(
-    low="steelblue",
-    high="white",
-    breaks = c(10,-9), 
-    labels=c("Democracy", "Autocracy")) +
-  ggthemes::theme_tufte() +
-  labs(fill="",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-      ) +
-  theme(text=element_text(size=18),
-        plot.caption = element_text(hjust=0),
-        axis.text= element_text(size=20,face="bold"))
-```
+Let's build up a plot together, I'll then post the code on Slack.
 
 ---
 
@@ -1651,4 +1405,4 @@ dhours(2.5)
 
 <br>
 
-- See reading from last week, check out the [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) chapter from the reading. 
+- See reading [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) chapter from the reading this week. 

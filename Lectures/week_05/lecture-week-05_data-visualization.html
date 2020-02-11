@@ -493,7 +493,7 @@ glimpse(pol)
 ## Observations: 4,281
 ## Variables: 7
 ## $ country &lt;chr&gt; "Afghanistan", "Afghanistan", "Afghanistan", "Afghanista…
-## $ ccode   &lt;int&gt; 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 7…
+## $ ccode   &lt;dbl&gt; 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 7…
 ## $ year    &lt;dbl&gt; 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 19…
 ## $ polity  &lt;dbl&gt; -8, -8, 0, 0, 0, 0, -7, -7, -7, -7, -7, -6, -6, -6, -6, …
 ## $ lngdppc &lt;dbl&gt; 5.353169, 5.353169, 5.353169, 5.353169, 5.353169, 5.3531…
@@ -764,7 +764,8 @@ pol %&gt;%
        y="Log GDP per capita",
        fill="",
        title="Regime type on Economic Development",
-       subtitle="Data on polity and GDP per capita from 1990 - 2016"
+       subtitle="Data on polity and GDP per capita from 1990 - 2016",
+       caption = "Source: World Bank and Systemic Peace"
        ) +
   theme(legend.position = "bottom")
 ```
@@ -794,7 +795,8 @@ pol %&gt;%
        y="Log GDP per capita",
        fill="",
        title="Regime type on Economic Development",
-       subtitle="Data on polity and GDP per capita from 1990 - 2016"
+       subtitle="Data on polity and GDP per capita from 1990 - 2016",
+       caption = "Source: World Bank and Systemic Peace"
        ) +
   theme(legend.position = "bottom",
         plot.title = element_text(hjust=.5),
@@ -827,7 +829,8 @@ pol %&gt;%
        y="Log GDP per capita",
        fill="",
        title="Regime type on Economic Development",
-       subtitle="Data on polity and GDP per capita from 1990 - 2016"
+       subtitle="Data on polity and GDP per capita from 1990 - 2016",
+       caption = "Source: World Bank and Systemic Peace"
        ) +
   theme(legend.position = "bottom",
         plot.title = element_text(hjust=.5),
@@ -862,10 +865,17 @@ This time let's examine the **process of democratization** in South America from
 
 ### The data
 
-
-
-
 Same data as was used in Example 1; however, I've subsetted the data to only retain South American countries (with complete data) from 1850 to 2016.
+
+
+```r
+pol2 &lt;-
+  read_csv(here::here("Lectures/week_05/R-code/dem-gdp-data.csv")) %&gt;%
+  filter(country %in% c("Chile","Argentina","Ecuador",
+                        "Brazil","Venezuela","Paraguay",
+                        "Columbia","Peru","Bolivia")) %&gt;%
+  filter(year&gt;=1850)
+```
 
 
 ```r
@@ -889,16 +899,6 @@ summary(pol2)
 ##  Max.   :9.677   Max.   :19.15
 ```
 
-
-```r
-unique(pol2$country)
-```
-
-```
-## [1] "Argentina" "Bolivia"   "Brazil"    "Chile"     "Ecuador"   "Paraguay" 
-## [7] "Peru"      "Venezuela"
-```
-
 ---
 
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
@@ -913,7 +913,7 @@ pol2 %&gt;%
 ]
 
 .pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -931,7 +931,7 @@ pol2 %&gt;%
 ]
 
 .pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -951,7 +951,7 @@ pol2 %&gt;%
 ]
 
 .pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -970,7 +970,7 @@ pol2 %&gt;%
 ]
 
 .pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -990,7 +990,7 @@ pol2 %&gt;%
 ]
 
 .pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -1014,7 +1014,7 @@ pol2 %&gt;%
 ]
 
 .pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
+![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -1035,8 +1035,38 @@ pol2 %&gt;%
        x="Year",
        title="The Path to Democracy",
        subtitle = "Democratization and democratic backsliding in South America* from 1850 to 2016",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
+       caption = paste0("* Only South American countries with complete data from 1850 to 2016 are shown",
+                        "\nSource: World Bank and Systemic Peace")
        ) 
+```
+]
+
+.pull-right[
+![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
+]
+
+---
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+.pull-left[
+
+```r
+pol2 %&gt;%
+  ggplot(aes(x=year,y=polity,
+             group=country)) +
+  geom_line(color="grey20",size=.75) +
+  facet_wrap(~country,ncol=2) +
+  ggthemes::theme_fivethirtyeight() +
+  labs(y="Polity",
+       x="Year",
+       title="The Path to Democracy",
+       subtitle = "Democratization and democratic backsliding in South America* from 1850 to 2016",
+       caption = paste0("* Only South American countries with complete data from 1850 to 2016 are shown",
+                        "\nSource: World Bank and Systemic Peace")
+       )  +
+  theme(axis.title = element_text(),
+        plot.caption = element_text(hjust=0))
 ```
 ]
 
@@ -1046,285 +1076,29 @@ pol2 %&gt;%
 
 ---
 
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(x=year,y=polity,
-             group=country)) +
-  geom_line(color="grey20",size=.75) +
-  facet_wrap(~country,ncol=2) +
-  ggthemes::theme_fivethirtyeight() +
-  labs(y="Polity",
-       x="Year",
-       title="The Path to Democracy",
-       subtitle = "Democratization and democratic backsliding in South America* from 1850 to 2016",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-       )  +
-  theme(axis.title = element_text(),
-        plot.caption = element_text(hjust=0))
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;img src="lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 class:outline
 
 # Example 3
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
 
-Again let's examine the **process of democratization** in South America from 1850 to present. But this time where we can get a better sense of the transitions occurring across the board in South America. Can we visualize the "**democratic wave**"?
+![:space 10]
 
----
+Let's now work through a live example using the [gapminder](https://www.gapminder.org/data/) data.
 
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
+![:space 5]
 
-.pull-left[
 
 ```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile()
+install.packages("gapminder")
+require(gapminder)
 ```
-]
 
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
-]
+![:space 5]
 
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity))
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip()
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-46-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-* scale_fill_gradient(low="steelblue",
-*                     high="white")
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-47-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white")
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-48-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-* ggthemes::theme_tufte()
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-49-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-  ggthemes::theme_tufte() +
-  labs(fill="Regime Type",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown")
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-  ggthemes::theme_tufte() +
-  labs(fill="Regime Type",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-      ) +
-  theme(text=element_text(size=14),
-        plot.caption = element_text(hjust=0))
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-51-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(low="steelblue",
-                      high="white") +
-  ggthemes::theme_tufte() +
-  labs(fill="Regime Type",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-      ) +
-  theme(text=element_text(size=18),
-        plot.caption = element_text(hjust=0),
-        axis.text= element_text(size=20,
-                                face="bold"))
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-52-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.pull-left[
-
-```r
-pol2 %&gt;%
-  ggplot(aes(country,year)) +
-  geom_tile(aes(fill=polity)) +
-  coord_flip() +
-  scale_fill_gradient(
-    low="steelblue",
-    high="white",
-*   breaks = c(10,-9),
-*   labels=c("Democracy", "Autocracy")
-  ) +
-  ggthemes::theme_tufte() +
-  labs(fill="",
-       x="",y="",
-       title = "The Democratic Wave",
-       subtitle = "Regime transitions over time in South America*",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown"
-      ) +
-  theme(text=element_text(size=18),
-        plot.caption = element_text(hjust=0),
-        axis.text= element_text(size=20,
-                                face="bold"))
-```
-]
-
-.pull-right[
-![](lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-53-1.png)&lt;!-- --&gt;
-]
-
----
-
-&lt;img src="lecture-week-05_data-visualization_files/figure-html/unnamed-chunk-54-1.png" style="display: block; margin: auto;" /&gt;
+Let's build up a plot together, I'll then post the code on Slack.
 
 ---
 
@@ -1793,7 +1567,7 @@ dhours(2.5)
 
 &lt;br&gt;
 
-- See reading from last week, check out the [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) chapter from the reading.
+- See reading [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) chapter from the reading this week.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

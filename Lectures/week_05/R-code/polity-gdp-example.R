@@ -184,25 +184,3 @@ pol2 %>%
   theme_tufte() +
   labs(fill="Regime Type",y="Country",x="Year")
 
-
-
-# Example 3 (Alternative way of showing the same thing) -------------------
-
-pol2 %>%
-  ggplot(aes(year,polity,group=country)) +
-  geom_line(color="grey20",size=.75) +
-  facet_wrap(~country,ncol=2) +
-  theme_fivethirtyeight() +
-  labs(title="The Path to Democracy",
-       subtitle = "Democratization and democratic backsliding in South America* from 1850 to 2016",
-       caption = "* Only South American countries with complete data from 1850 to 2016 are shown",
-       y="Polity",x="Year") +
-  theme(axis.title = element_text(),
-        plot.caption = element_text(hjust=0))
-
-
-
-
-
-
-
