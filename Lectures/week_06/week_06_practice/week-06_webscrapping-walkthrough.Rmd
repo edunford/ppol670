@@ -1,0 +1,187 @@
+---
+title: "PPOL670 | Webscraping Walkthrough"
+subtitle: Building a dataset on bilateral investment treaties from the web
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=T,echo=T,message=FALSE,comment = FALSE,error = FALSE,warning = FALSE}
+# knitr::opts_chunk$set(cache=T,echo=T,message=FALSE,comment = FALSE,error = FALSE,warning = FALSE)
+
+# Load packages
+require(tidyverse)
+require(rvest)
+```
+
+# Overview
+
+The following walks you through building an original dataset using material downloaded from the web. Specifically, we'll construct a data set that tracks all bilateral investment treaties (trade agreement made between two states), or "BITs", over time. 
+
+The aim of this walkthrough is to:
+
+1. Show you how to collect and collate links when the data you want to access is spread across different locations on a website (i.e. across different URLS);
+2. Practice easily downloading tables off the web using `html_tables()`;
+3. Using what we've learned of loops to iteratively build a dataset from the web, row-by-row
+
+
+# Target
+
+The following `url` contains data regarding all bilateral investment treaties made between two states. The data is maintained by the United Nations and reflects trade networks both cross nationally and over time. 
+
+```{r}
+url <- "http://investmentpolicyhub.unctad.org/IIA/IiasByCountry#iiaInnerMenu"
+```
+
+# Task 1
+
+Let's scrape the data from the html table at the provided url. In addition, we'll make sure the data is formatted correctly, ie. we'll clean the data up so that it is tidy.
+
+
+First, as always, let's download the website.
+```{r}
+raw <- read_html(url)
+```
+
+
+Next, let's extract the data. Note that I'm using a new function `html_table`: this function parses an html table into a data frame. Note that there are often _multiple tables_ on a single webpage, so all the tables are read in as a list. We want to access the first item in the list object.
+
+```{r}
+dat_table_list <- raw %>% 
+  
+  #x-path to the datas location
+  html_nodes(xpath='//*[@id="main-container"]/div/div/div[2]/div[3]/table') %>% 
+  
+  # table function that downloads all html tables as a list
+  html_table()  
+
+# Access the first item as a list. Recall for lists we have to use double
+# brackets to index data in the object.
+dat <- dat_table_list[[1]]
+
+# View the data object. 
+head(dat)
+```
+
+Note that the column names on the downloaded table are funky (data off the web can be really dirty, so we want to clean these elements up)
+
+```{r}
+# View the column names. We can see they follow some odd naming conventions. 
+colnames(dat)
+```
+
+Finally, let's clean data --- drop unnessary columns and rename the variables --- so that we have a data frame that is tidy and easy to access the variable columns. 
+
+```{r}
+dat_clean <-
+  
+  dat %>% 
+  
+  # Drop the Number column
+  select(-`No.`) %>% 
+  
+  # Rename the variables
+  rename(country=Name,
+         total_bits = "*\r\n            \r\n                TOTAL BITs",
+         total_tips = "*\r\n            \r\n                TOTAL TIPs") 
+
+# View the data
+head(dat_clean)
+```
+
+# Task 2 
+
+Examine the webpage at the provided [url](https://investmentpolicy.unctad.org/international-investment-agreements/by-economy#iiaInnerMenu). You'll note that if you click on country names there is a link to the specific trade agreement that the country enters into and with whom. This data is valuable if one wanted to build a network of international investment treaties. 
+
+Let's collect all the urls we'd need to scrape together these data. You'll note that if you look closely at the `xpath` on this website that the index on the `tr[1]` in `/table/tbody/tr[1]/td[1]/a` changes for each country. Thus, Afghanistan is 1, Albania is 2, and so forth. There are 233 countries in total represented in the data. We can loop through all 223 of these, and gather the link to these specific locations on the website using `html_attr("href")`, which essentially grab the links from a webpage. 
+
+Once we have this information, we'll paste together the link with the url to make full url link. 
+
+The following code for the above looks something like this.
+
+```{r}
+# Following code extracts all the country links for you. 
+n_countries <- 233 # 233 countries
+
+# Create an empty container
+country_links <- rep(NA,233)
+
+# Loop through each country hyperlin
+for(i in 1:n_countries){ 
+  
+  # Collect the link for that country
+  link <- 
+    raw %>% 
+    html_nodes(.,xpath=paste0('//*[@id="main-container"]/div/div/div[2]/div[3]/table/tbody/tr[',i,']/td[1]/a')) %>%
+    html_attr("href")
+  
+  # Store the link for that country. 
+  country_links[i] <- paste0("https://investmentpolicy.unctad.org/",link)
+}
+```
+
+
+Let's start small with just the first five links to make sure we're doing what we want to do.
+
+```{r}
+country_links[1:5]
+```
+
+
+It looks like we've pieced together the links we were aiming to piece together. Let's now download the data from one of the links and see what it looks like. Remember that `html_tables()` downloads the data as a list. Thus, we need to index the first item (table) on the list to get the bits data. 
+
+```{r}
+# Download the bits data for that Afghanistan
+tmp_dat_list <- 
+  read_html(country_links[1])  %>% 
+  html_table() 
+
+# Grab the first item from the list
+tmp_dat <- tmp_dat_list[[1]]
+
+# View data 
+tmp_dat
+```
+
+This is great! But we need to know who the country that we clicked on the link to is as we build the dataset. Luckily we already have this information! We just grabbed it in the last task!
+
+```{r}
+# Add the country name
+tmp_dat$Country <- dat_clean$country[1] 
+
+# Re-arrange the columns. Drop the `No. ` column.
+tmp_dat <- tmp_dat %>% select(Country,Parties,everything(),-`No.`) 
+tmp_dat
+```
+ 
+Perfect! Now let's do this for _every_ country. Note this last chunk takes some time to run, so I set eval equals false for knitting purposes. We wouldn't want to accidentally download these same data over and over again. If you set `eval = T` in the chunk preamble, then the whole code chunk will run at once. 
+ 
+```{r,eval=F}
+bits_data <- c() # create a containers
+for (i in 1:233){
+  
+  # put the scraper to sleep randomly.
+  Sys.sleep(runif(1,1,3)) 
+  
+  # Download the website
+  raw2 <- read_html(country_links[i]) # Index each link
+  
+  bits_data <- 
+    raw2 %>% 
+    
+    html_table() %>% # Read in the data table
+    
+    .[[1]] %>%  #access the position on the list (note my use of the pointer here in the pipe to tell the data where to flow)
+    
+    mutate(Country = dat_clean$country[i]) %>%  # store country name
+    
+    select(Country,Parties,everything(),-`No.`) %>%  # re-arrange data
+    
+    bind_rows(bits_data,.) # Bind output to the master data frame
+}
+```
+ 
+Takes a little bit of time to run. Why? Because we're pinging the site a number of times. To reduce our presense on the site, I also but the scraper to sleep randomly. 
+
+Let's finally save our scraped dataset and then, from there we could clean it so that we could (a) visualize it as a network, (b) design measures from the data for statistical analysis, or (c) generate some other visualization tracking BITs agreements overtime. 
+ 

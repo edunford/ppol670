@@ -346,7 +346,7 @@ Here let's aim to extract three pieces of information from the BBC story:
 ```r
 require(rvest) 
 
-url = "http://www.bbc.com/news/world-middle-east-36156865"
+url = "https://www.bbc.com/news/world-us-canada-51545383"
 site = read_html(url)
 site
 ```
@@ -402,7 +402,7 @@ headline
 ```
 
 ```
-## [1] "Syria conflict: UN envoy calls on US and Russia to save talks"
+## [1] "Bloomberg to join Democratic debate amid poll surge"
 ```
 
 ![:space 5]
@@ -470,7 +470,7 @@ date
 ```
 
 ```
-## [1] "2016-04-28"
+## [1] "2020-02-18"
 ```
 
 ---
@@ -491,7 +491,7 @@ site %&gt;%
 ```
 
 ```
-## [1] "The UN envoy to Syria has urged the US and Russia to intervene \"at the highest level\" to save struggling peace talks."
+## [1] "Democratic presidential candidate Michael Bloomberg will take part in a nomination debate for the first time on Wednesday, his campaign confirmed. "
 ```
 
 This will only give us a piece of the story – **p[1]**
@@ -514,27 +514,21 @@ body
 ```
 
 ```
-##  [1] "The UN envoy to Syria has urged the US and Russia to intervene \"at the highest level\" to save struggling peace talks."                                                                                                                     
-##  [2] "Speaking after briefing the Security Council on the peace process, Staffan de Mistura said a partial truce agreed in February was \"barely alive\"."                                                                                         
-##  [3] "Violence in Syria has intensified in recent days, despite the ceasefire."                                                                                                                                                                    
-##  [4] "At least 20 civilians were reportedly killed on Wednesday in government strikes on a hospital and nearby residential building in eastern Aleppo."                                                                                            
-##  [5] "The dead included children, a dentist and the only paediatrician left in rebel-held areas of the city, civil defence volunteers told AFP news agency."                                                                                       
-##  [6] "Over the past week, more than 100 civilians have been killed in renewed bombardment by both rebel and government forces in Syria's largest city, according to the UK-based Syrian Observatory for Human Rights monitoring group."            
-##  [7] "The upsurge in violence comes amid reports that the Syrian army, backed by Russian air power, is gearing up for a major offensive in Aleppo."                                                                                                
-##  [8] "The escalation has threatened to derail the UN-brokered peace talks, which resumed last month."                                                                                                                                              
-##  [9] "The Western-backed opposition delegation, the High Negotiations Committee (HNC), last week suspended its role to protest against alleged ceasefire violations by the government and a fall in humanitarian aid deliveries to besieged areas."
-## [10] "Russia's continuing war"                                                                                                                                                                                                                     
-## [11] "Has opportunity for peace been lost?"                                                                                                                                                                                                        
-## [12] "What is left of Syria?"                                                                                                                                                                                                                      
-## [13] "Assad's growing confidence"                                                                                                                                                                                                                  
-## [14] "Speaking on Wednesday after a third round of talks in Geneva, Mr de Mistura said the fragile \"cessation of hostilities\" \"could collapse any time\"."                                                                                      
-## [15] "He said that over the past 48 hours an average of one Syrian had been killed every 25 minutes and one wounded every 13 minutes."                                                                                                             
-## [16] "For the peace talks to succeed, Mr de Mistura said, hostilities would need to be reduced to the levels seen immediately following the February agreement."                                                                                   
-## [17] "Calling on the US and Russia to co-operate, he said the legacies of both President Barack Obama and President Vladimir Putin were linked to the success of the peace process in Syria."                                                      
-## [18] "There will be one or two more rounds of talks before July, Mr de Mistura said. He added: \"There are still major differences on the major issues, but there is movement on certain areas where there was not before.\" "                     
-## [19] "Mr de Mistura also said that equal rights and equal representation in major institutions for women was essential to the transition to a new Syria."                                                                                          
-## [20] "The peace talks do not involve the al-Qaeda-linked al-Nusra front and the so-called Islamic State, which have been fighting government forces and other rebels across Syria."                                                                
-## [21] "More than 270,000 people have been killed since Syria's bitter civil war conflict erupted in 2011 and millions have been forced to flee."
+##  [1] "Democratic presidential candidate Michael Bloomberg will take part in a nomination debate for the first time on Wednesday, his campaign confirmed. "                                                                                                                       
+##  [2] "In order to take part in the Nevada debate, he had to poll above double digits in four national polls recognised by the Democratic Party. "                                                                                                                                
+##  [3] "On Tuesday, a NPR/PBS NewsHour/Marist poll found he had support from 19% of those surveyed. "                                                                                                                                                                              
+##  [4] "The ex-New York Mayor is not competing in the first four nomination contests. "                                                                                                                                                                                            
+##  [5] "Mr Bloomberg, 78, has instead chosen to enter the race on 3 March, known as Super Tuesday, when 14 states will vote. "                                                                                                                                                     
+##  [6] "He came in second place in the NPR/PBS NewsHour/Marist poll. Bernie Sanders came in first with 31% support nationally and Joe Biden was in third place with 15%. "                                                                                                         
+##  [7] "\"Mike is looking forward to joining the other Democratic candidates on stage and making the case for why he's the best candidate to defeat Donald Trump and unite the country,\" Mr Bloomberg's campaign manager Kevin Sheekey said in a statement."                      
+##  [8] "Billionaire businessman Mr Bloomberg has spent hundreds of millions of dollars on television, radio and digital advertising for his campaign. "                                                                                                                            
+##  [9] "According to CNN, he has a campaign operation involving more than 2,000 aides in New York and across the country. "                                                                                                                                                        
+## [10] "Mr Bloomberg has been accused by rival candidates Elizabeth Warren and Bernie Sanders of trying to buy the election. He denies the claims and has offered to fund the Democratic effort to beat Republican President Donald Trump even if he does not win the nomination. "
+## [11] "During a Democratic dinner in Nevada on Saturday, Mr Sanders said: \"I got news for Mr Bloomberg, and that is the American people are sick and tired of billionaires buying elections.\""                                                                                  
+## [12] "During the debate Mr Bloomberg is expected to face tough questions over some of his policies as mayor. "                                                                                                                                                                   
+## [13] "He was criticised over his support for the \"stop and frisk\" policy that saw a disproportionate number of black or Latino people questioned and searched by police officers. "                                                                                            
+## [14] "He has issued apologies, however Joe Biden has vowed to challenge him on the policy. "                                                                                                                                                                                     
+## [15] "Democratic candidate Amy Klobuchar said she thought Mr Bloomberg should be on the debate stage. She told NBC's Meet the Press: \"He can't hide behind the airwaves. He has to answer questions.\""
 ```
 
 ---
@@ -554,9 +548,9 @@ output
 
 ```
 ## # A tibble: 1 x 3
-##   headline                       date       body                           
-##   &lt;chr&gt;                          &lt;date&gt;     &lt;chr&gt;                          
-## 1 Syria conflict: UN envoy call… 2016-04-28 "The UN envoy to Syria has urg…
+##   headline                    date       body                              
+##   &lt;chr&gt;                       &lt;date&gt;     &lt;chr&gt;                             
+## 1 Bloomberg to join Democrat… 2020-02-18 "Democratic presidential candidat…
 ```
 
 
@@ -566,25 +560,35 @@ nchar(output$body)
 ```
 
 ```
-## [1] 2723
+## [1] 2244
 ```
 
 ---
 
 ### Sidenote on `html_table`s
 
+![:space 10]
+
 Sometimes data is conveniently organized as **_tables_** in the html code, i.e. there is a table tag in the `&lt;table&gt;`.
 
 For example, let's look at this [Wikipedia post on English Towns and Cities](https://en.wikipedia.org/wiki/List_of_towns_in_England)... should look familiar ;).
 
-Extracting the table in the post is a breeze thanks to the `html_table()` function.
+Extracting the **_table in the post_** is a breeze thanks to the `html_table()` function.
+
+_Note that there can be many tables on a page, `html_table()` downloads them all and then stores the content as a list._
+
+---
+
+### Sidenote on `html_table`s
 
 
 ```r
 url &lt;- 'https://en.wikipedia.org/wiki/List_of_towns_in_England'
+
 d &lt;- read_html(url) %&gt;% 
   html_table(fill = TRUE)
-d[[1]]
+
+*d[[1]] # Data returned as a list
 ```
 
 ```
@@ -1137,7 +1141,8 @@ homicide_data_clean %&gt;%
   theme_minimal() +
   labs(y="Age Range",x="Year",
        title="Total Number of Deaths by Homicide by Age in the U.S. (1995 to 2018)",
-       subtitle="Data drawn from FBI database ")
+       subtitle="Data drawn from FBI database ",
+       caption = "Source: Data.Gov")
 ```
 
 &lt;img src="lecture-week-06_webscraping-and-apis_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /&gt;
