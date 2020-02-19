@@ -276,7 +276,7 @@ class:newsection
 
 ### ABCs of Webscraping 
 
-Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/world-middle-east-36156865).
+Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/world-us-canada-51545383).
 
 --
 
