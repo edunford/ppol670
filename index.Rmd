@@ -266,6 +266,12 @@ Video walkthroughs:
 
 ### _Week 5_: [Data Visualization](Lectures/week_05/lecture-week-05_data-visualization.html)
 
+
+- **Table of Contents**
+  + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#4)
+  + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#17)
+  + [Dates](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#66)
+
 - **Practice**:
   - <a href="Lectures/week_05/R-code/dem-gdp-data.csv" download>Here</a> is a link to the data used in the visualizations in the lecture slides.
   - Practice materials for visualizing data can be downloaded <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05.Rmd.zip" download>here</a>. Work through the questions then compare your results to the <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05_ANSWERS.Rmd.zip" download> answer key</a>
@@ -273,6 +279,13 @@ Video walkthroughs:
 <br>
 
 ### _Week 6_: [Web Scrapping and APIs](Lectures/week_06/lecture-week-06_webscraping-and-apis.html)
+
+- **Table of Contents**
+  + [Loops and Functions (Refresher)](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#3)
+  + [Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#10)
+  + [Scraping Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#19)
+  + [Building a Webscraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#33)
+  + [APIs](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#45)
 
 - **Practice**:
   - The following [walkthrough](Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.html) covers building a dataset of all bilaterial investment treaties from scratch using the techniques covered in lecture (<a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.Rmd.zip" download> Download .Rmd</a>).
