@@ -21,7 +21,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F)
+knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F,cache = T)
 require(tidyverse)
 require(tidytext)
 ```
@@ -449,7 +449,7 @@ stop_words %>% sample_n(10)
 ```{r,highlight=TRUE}
 text_data %>% 
   unnest_tokens(word,text) %>%  
-  anti_join(stop_words) %>% ## <
+  anti_join(stop_words) %>% #<<
   count(word,sort = T)
 ```
 
@@ -476,7 +476,7 @@ Stemming allows use to reduce a word down to it's fundamental root. ( _Note: Nee
 txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
 tibble(text = txt) %>% 
   unnest_tokens(word,text) %>% 
-  mutate(word = SnowballC::wordStem(word)) %>% ## <
+  mutate(word = SnowballC::wordStem(word)) %>% #<<
   count(word)
 ```
 
@@ -488,7 +488,7 @@ tibble(text = txt) %>%
 text_data %>% 
   unnest_tokens(word,text) %>%  
   anti_join(stop_words) %>% 
-  mutate(word = SnowballC::wordStem(word)) %>% ## <
+  mutate(word = SnowballC::wordStem(word)) %>% #<<
   count(word,sort = T)
 ```
 
@@ -552,7 +552,8 @@ glimpse(news_data)
 text_data <- 
   news_data %>% 
   group_by(story_id) %>% 
-  unnest_tokens(word,story) ##<
+  unnest_tokens(word,story) %>% #<<
+  ungroup()
 text_data
 ```
 
@@ -564,7 +565,7 @@ text_data
 
 text_data %>% 
   group_by(story_id) %>% 
-  count(word,sort=T)
+  count(word,sort=T) 
 ```
 
 ---
@@ -574,11 +575,11 @@ text_data %>%
 
 text_data <-
   text_data %>% 
-  anti_join(stop_words) ## <
+  anti_join(stop_words) #<<
 
 text_data %>% 
   group_by(story_id) %>% 
-  count(word,sort = T)
+  count(word,sort = T) 
 ```
 
 ---
@@ -679,7 +680,7 @@ text_data_cnts2 %>%
 
 ### Visualize!
 
-```{r,echo=F,fig.align="center",fig.width=12,fig.height=8}
+```{r,echo=F,fig.align="center",fig.width=12,fig.height=8,dpi=200}
 text_data_cnts2 %>%
   group_by(story_id) %>% 
   top_n(5, tf_idf) %>% 
@@ -710,10 +711,15 @@ class: newsection
 
 ### Sentiment Dictionaries
 
-```{r}
-sentiments %>% 
-  group_by(lexicon) %>% 
-  count(sort=T)
+![:space 15]
+
+```{r,eval=F,echo=F}
+tibble(
+  nrc = get_sentiments('nrc') %>% nrow,
+  afinn = get_sentiments('afinn') %>% nrow,
+  bing = get_sentiments('bing') %>% nrow,
+  loughran = get_sentiments('loughran') %>% nrow,
+)
 ```
 --
 .center[
@@ -747,27 +753,32 @@ get_sentiments("bing")
 
 ```{r}
 sent_dict <- get_sentiments("afinn")
-sent_text <- text_data %>% inner_join(sent_dict) 
+sent_text <- text_data %>% inner_join(sent_dict) %>% ungroup()
 sent_text
 ```
 
 ---
 
-```{r,fig.align="center",fig.width=9,fig.height=6}
-sent_text %>% 
-ggplot(aes(word, score)) +
-  geom_col(show.legend = FALSE,fill="steelblue") +
+```{r,fig.align="center",fig.width=12,fig.height=7,dpi=200,highlight=T}
+sent_text %>% distinct(word,value) %>% 
+  mutate(word = fct_reorder(word,value)) %>% #<<
+  ggplot(aes(word, value)) +
+  geom_col(show.legend = FALSE,aes(fill=value)) +
+  scale_fill_viridis_c() +
   coord_flip() + theme(text=element_text(size=20))
 ```
 
 ---
 
-```{r,fig.align="center",fig.width=9,fig.height=6}
-text_data %>% 
-  inner_join(get_sentiments("bing")) %>% 
-  ggplot(aes(word, sentiment,color=sentiment)) +
-  geom_point(size=5,show.legend = FALSE) +
-  coord_flip() + theme(text=element_text(size=20))
+```{r,fig.align="center",fig.width=10,fig.height=4.75,dpi=200,highlight=T}
+text_data %>% ungroup %>% 
+  inner_join(get_sentiments("bing"),by = "word") %>% 
+  distinct(word,sentiment) %>%
+  mutate(word = fct_reorder(word,sentiment=="positive")) %>% 
+  ggplot(aes(word, sentiment,label=word,color=sentiment)) +
+  geom_text(size=3,show.legend = FALSE) +
+  coord_flip() + scale_color_manual(values=c("darkred","steelblue")) +
+  theme_minimal() + theme(text=element_text(size=20),axis.text.y = element_blank()) 
 ```
 
 
@@ -812,9 +823,9 @@ obama_txt
 
 ### Example: Inaugural Speeches
 
-```{r,fig.align="center",fig.width=9,fig.height=5,cache=T}
+```{r,fig.align="center",fig.width=10,fig.height=4.75,cache=T,dpi=200}
 obama_txt %>% 
-  ggplot(aes(index,score,fill=address)) +
+  ggplot(aes(index,value,fill=address)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~address,ncol = 1, scales = "free_y") +
   theme_minimal() +theme(text = element_text(size=20))
@@ -822,12 +833,29 @@ obama_txt %>%
 
 ---
 
+
 ### Example: Inaugural Speeches
 
-```{r,fig.align="center",fig.width=9,fig.height=3.5,cache=T,highlight=T}
+![:space 15]
+
+```{r}
+obama_txt %>% 
+  group_by(address) %>% 
+  summarize(proportion_words_positive = sum(value>0)/n())
+```
+
+
+
+---
+
+### Example: Inaugural Speeches
+
+![:space 10]
+
+```{r,eval=F,fig.align="center",fig.width=10,fig.height=10,cache=F,highlight=T,dpi=200}
 obama_txt %>% 
   group_by(word,address) %>% 
-  summarize(n = n(),score=max(score)) %>% 
+  summarize(n = n(),score=max(value)) %>% 
   filter(n>1) %>% 
   ggplot(aes(label=word,size=n,color=score)) +
   ggwordcloud::geom_text_wordcloud_area() + #<<
@@ -837,6 +865,22 @@ obama_txt %>%
   theme(text = element_text(size=20))
 ```
 
+---
+
+### Example: Inaugural Speeches
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=7,cache=T,highlight=T,dpi=200}
+obama_txt %>% 
+  group_by(word,address) %>% 
+  summarize(n = n(),score=max(value)) %>% 
+  filter(n>1) %>% 
+  ggplot(aes(label=word,size=n,color=score)) +
+  ggwordcloud::geom_text_wordcloud_area() + #<<
+  scale_color_gradient(low="darkred",high="steelblue") +
+  scale_size_area(max_size = 15) +
+  facet_wrap(~address,scales="free") +
+  theme(text = element_text(size=20))
+```
 
 ---
 
@@ -942,7 +986,7 @@ ap_top_terms
 
 ### Deciphering the Topics
 
-```{r,fig.align="center",fig.width=8,fig.height=4.5,cache=T}
+```{r,fig.align="center",fig.width=9.5,fig.height=4,cache=T,dpi=200}
 ap_top_terms %>%
   mutate(term = reorder(term, beta)) %>%
   ggplot(aes(term, beta, fill = factor(topic))) +

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title> PPOL670 | Introduction to Data Science for Public Policy   Week 7       Text as Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
-    <script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
     <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
     <script src="libs/str_view-binding-1.4.0/str_view.js"></script>
     <link rel="stylesheet" href="gu-theme.css" type="text/css" />
@@ -129,8 +129,8 @@ text
 str_view(text,"cats")
 ```
 
-<div id="htmlwidget-27014254dde9c5dde585" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-27014254dde9c5dde585">{"x":{"html":"<ul>\n  <li>There were 5 <span class='match'>cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-006e0e6c70b7d9828be5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-006e0e6c70b7d9828be5">{"x":{"html":"<ul>\n  <li>There were 5 <span class='match'>cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 
 ---
@@ -167,8 +167,8 @@ str_view(text,"cats")
 str_view(string = text, pattern = "\\d")
 ```
 
-<div id="htmlwidget-1ac0ff84b3adac87d0ed" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1ac0ff84b3adac87d0ed">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5<\/span> cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4ac9e345ae2fa529ada3" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4ac9e345ae2fa529ada3">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5<\/span> cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -179,8 +179,8 @@ str_view(string = text, pattern = "\\d")
 str_view_all(string = text, pattern = "\\s")
 ```
 
-<div id="htmlwidget-fa1b20a9d08c51c53a02" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fa1b20a9d08c51c53a02">{"x":{"html":"<ul>\n  <li>There<span class='match'> <\/span>were<span class='match'> <\/span>5<span class='match'> <\/span>cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f80932ab7a4806063307" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f80932ab7a4806063307">{"x":{"html":"<ul>\n  <li>There<span class='match'> <\/span>were<span class='match'> <\/span>5<span class='match'> <\/span>cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -191,8 +191,8 @@ str_view_all(string = text, pattern = "\\s")
 str_view_all(string = text, pattern = "\\d+\\s+\\w+")
 ```
 
-<div id="htmlwidget-465680e62233988d058e" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-465680e62233988d058e">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5 cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dfd9379f562d08f4a5fd" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dfd9379f562d08f4a5fd">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5 cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -460,9 +460,9 @@ text_data
 
 ```
 ## # A tibble: 1 x 1
-##   text                                                                     
-##   &lt;chr&gt;                                                                    
-## 1 US opposition politicians and aid agencies have questioned a decision by…
+##   text                                                              
+##   &lt;chr&gt;                                                             
+## 1 US opposition politicians and aid agencies have questioned a deci…
 ```
 
 ---
@@ -675,7 +675,7 @@ stop_words %&gt;% sample_n(10)
 ```r
 text_data %&gt;% 
   unnest_tokens(word,text) %&gt;%  
-  anti_join(stop_words) %&gt;% ## &lt;
+* anti_join(stop_words) %&gt;%
   count(word,sort = T)
 ```
 
@@ -738,7 +738,7 @@ Stemming allows use to reduce a word down to it's fundamental root. ( _Note: Nee
 txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
 tibble(text = txt) %&gt;% 
   unnest_tokens(word,text) %&gt;% 
-  mutate(word = SnowballC::wordStem(word)) %&gt;% ## &lt;
+* mutate(word = SnowballC::wordStem(word)) %&gt;%
   count(word)
 ```
 
@@ -762,7 +762,7 @@ tibble(text = txt) %&gt;%
 text_data %&gt;% 
   unnest_tokens(word,text) %&gt;%  
   anti_join(stop_words) %&gt;% 
-  mutate(word = SnowballC::wordStem(word)) %&gt;% ## &lt;
+* mutate(word = SnowballC::wordStem(word)) %&gt;%
   count(word,sort = T)
 ```
 
@@ -825,9 +825,9 @@ glimpse(news_data)
 ```
 ## Observations: 3
 ## Variables: 4
-## $ headline &lt;chr&gt; "Dismay after Trump moves to cut aid to Central America…
+## $ headline &lt;chr&gt; "Dismay after Trump moves to cut aid to Central …
 ## $ date     &lt;date&gt; 2019-03-31, 2019-10-16, 2019-10-16
-## $ story    &lt;chr&gt; "US opposition politicians and aid agencies have questi…
+## $ story    &lt;chr&gt; "US opposition politicians and aid agencies have…
 ## $ story_id &lt;int&gt; 1, 2, 3
 ```
 
@@ -838,25 +838,25 @@ glimpse(news_data)
 text_data &lt;- 
   news_data %&gt;% 
   group_by(story_id) %&gt;% 
-  unnest_tokens(word,story) ##&lt;
+* unnest_tokens(word,story) %&gt;%
+  ungroup()
 text_data
 ```
 
 ```
 ## # A tibble: 2,471 x 4
-## # Groups:   story_id [3]
-##    headline                                   date       story_id word     
-##    &lt;chr&gt;                                      &lt;date&gt;        &lt;int&gt; &lt;chr&gt;    
-##  1 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 us       
-##  2 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 oppositi…
-##  3 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 politici…
-##  4 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 and      
-##  5 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 aid      
-##  6 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 agencies 
-##  7 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 have     
-##  8 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 question…
-##  9 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 a        
-## 10 Dismay after Trump moves to cut aid to Ce… 2019-03-31        1 decision 
+##    headline                                        date       story_id word     
+##    &lt;chr&gt;                                           &lt;date&gt;        &lt;int&gt; &lt;chr&gt;    
+##  1 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 us       
+##  2 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 oppositi…
+##  3 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 politici…
+##  4 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 and      
+##  5 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 aid      
+##  6 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 agencies 
+##  7 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 have     
+##  8 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 question…
+##  9 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 a        
+## 10 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 decision 
 ## # … with 2,461 more rows
 ```
 
@@ -869,7 +869,7 @@ text_data
 
 text_data %&gt;% 
   group_by(story_id) %&gt;% 
-  count(word,sort=T)
+  count(word,sort=T) 
 ```
 
 ```
@@ -898,11 +898,11 @@ text_data %&gt;%
 
 text_data &lt;-
   text_data %&gt;% 
-  anti_join(stop_words) ## &lt;
+* anti_join(stop_words)
 
 text_data %&gt;% 
   group_by(story_id) %&gt;% 
-  count(word,sort = T)
+  count(word,sort = T) 
 ```
 
 ```
@@ -1015,18 +1015,18 @@ text_data_cnts
 
 ```
 ## # A tibble: 640 x 4
-##    story_id headline                                           word       n
-##       &lt;int&gt; &lt;chr&gt;                                              &lt;chr&gt;  &lt;int&gt;
-##  1        3 Why won't Democrats vote to authorise impeachment? impea…    24
-##  2        3 Why won't Democrats vote to authorise impeachment? hous      20
-##  3        3 Why won't Democrats vote to authorise impeachment? vote      18
-##  4        2 Turkey-Syria offensive: Not our border, says Dona… presid    10
-##  5        2 Turkey-Syria offensive: Not our border, says Dona… trump     10
-##  6        3 Why won't Democrats vote to authorise impeachment? pelosi    10
-##  7        2 Turkey-Syria offensive: Not our border, says Dona… border     9
-##  8        2 Turkey-Syria offensive: Not our border, says Dona… forc       9
-##  9        2 Turkey-Syria offensive: Not our border, says Dona… syria      9
-## 10        2 Turkey-Syria offensive: Not our border, says Dona… syrian     9
+##    story_id headline                                                word       n
+##       &lt;int&gt; &lt;chr&gt;                                                   &lt;chr&gt;  &lt;int&gt;
+##  1        3 Why won't Democrats vote to authorise impeachment?      impea…    24
+##  2        3 Why won't Democrats vote to authorise impeachment?      hous      20
+##  3        3 Why won't Democrats vote to authorise impeachment?      vote      18
+##  4        2 Turkey-Syria offensive: Not our border, says Donald Tr… presid    10
+##  5        2 Turkey-Syria offensive: Not our border, says Donald Tr… trump     10
+##  6        3 Why won't Democrats vote to authorise impeachment?      pelosi    10
+##  7        2 Turkey-Syria offensive: Not our border, says Donald Tr… border     9
+##  8        2 Turkey-Syria offensive: Not our border, says Donald Tr… forc       9
+##  9        2 Turkey-Syria offensive: Not our border, says Donald Tr… syria      9
+## 10        2 Turkey-Syria offensive: Not our border, says Donald Tr… syrian     9
 ## # … with 630 more rows
 ```
 
@@ -1123,23 +1123,9 @@ class: newsection
 
 ### Sentiment Dictionaries
 
+![:space 15]
 
-```r
-sentiments %&gt;% 
-  group_by(lexicon) %&gt;% 
-  count(sort=T)
-```
 
-```
-## # A tibble: 4 x 2
-## # Groups:   lexicon [4]
-##   lexicon      n
-##   &lt;chr&gt;    &lt;int&gt;
-## 1 nrc      13901
-## 2 bing      6788
-## 3 loughran  4149
-## 4 AFINN     2476
-```
 --
 .center[
 |Dictionary Name | Source 
@@ -1161,9 +1147,9 @@ get_sentiments("afinn")
 ```
 
 ```
-## # A tibble: 2,476 x 2
-##    word       score
-##    &lt;chr&gt;      &lt;int&gt;
+## # A tibble: 2,477 x 2
+##    word       value
+##    &lt;chr&gt;      &lt;dbl&gt;
 ##  1 abandon       -2
 ##  2 abandoned     -2
 ##  3 abandons      -2
@@ -1174,7 +1160,7 @@ get_sentiments("afinn")
 ##  8 abhorred      -3
 ##  9 abhorrent     -3
 ## 10 abhors        -3
-## # … with 2,466 more rows
+## # … with 2,467 more rows
 ```
 ]
 
@@ -1185,20 +1171,20 @@ get_sentiments("bing")
 ```
 
 ```
-## # A tibble: 6,788 x 2
+## # A tibble: 6,786 x 2
 ##    word        sentiment
 ##    &lt;chr&gt;       &lt;chr&gt;    
-##  1 2-faced     negative 
-##  2 2-faces     negative 
-##  3 a+          positive 
-##  4 abnormal    negative 
-##  5 abolish     negative 
-##  6 abominable  negative 
-##  7 abominably  negative 
-##  8 abominate   negative 
-##  9 abomination negative 
-## 10 abort       negative 
-## # … with 6,778 more rows
+##  1 2-faces     negative 
+##  2 abnormal    negative 
+##  3 abolish     negative 
+##  4 abominable  negative 
+##  5 abominably  negative 
+##  6 abominate   negative 
+##  7 abomination negative 
+##  8 abort       negative 
+##  9 aborted     negative 
+## 10 aborts      negative 
+## # … with 6,776 more rows
 ```
 ]
 
@@ -1209,25 +1195,24 @@ get_sentiments("bing")
 
 ```r
 sent_dict &lt;- get_sentiments("afinn")
-sent_text &lt;- text_data %&gt;% inner_join(sent_dict) 
+sent_text &lt;- text_data %&gt;% inner_join(sent_dict) %&gt;% ungroup()
 sent_text
 ```
 
 ```
 ## # A tibble: 66 x 5
-## # Groups:   story_id [3]
-##    headline                                 date       story_id word  score
-##    &lt;chr&gt;                                    &lt;date&gt;        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-##  1 Dismay after Trump moves to cut aid to … 2019-03-31        1 cut      -1
-##  2 Dismay after Trump moves to cut aid to … 2019-03-31        1 stop     -1
-##  3 Dismay after Trump moves to cut aid to … 2019-03-31        1 crit…    -2
-##  4 Dismay after Trump moves to cut aid to … 2019-03-31        1 hurt     -2
-##  5 Dismay after Trump moves to cut aid to … 2019-03-31        1 stop     -1
-##  6 Dismay after Trump moves to cut aid to … 2019-03-31        1 huge      1
-##  7 Dismay after Trump moves to cut aid to … 2019-03-31        1 stop     -1
-##  8 Dismay after Trump moves to cut aid to … 2019-03-31        1 boost     1
-##  9 Dismay after Trump moves to cut aid to … 2019-03-31        1 cut      -1
-## 10 Dismay after Trump moves to cut aid to … 2019-03-31        1 shoot    -1
+##    headline                                      date       story_id word  value
+##    &lt;chr&gt;                                         &lt;date&gt;        &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 cut      -1
+##  2 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
+##  3 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 crit…    -2
+##  4 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 hurt     -2
+##  5 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
+##  6 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 huge      1
+##  7 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
+##  8 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 boost     1
+##  9 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 cut      -1
+## 10 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 shoot    -1
 ## # … with 56 more rows
 ```
 
@@ -1235,9 +1220,11 @@ sent_text
 
 
 ```r
-sent_text %&gt;% 
-ggplot(aes(word, score)) +
-  geom_col(show.legend = FALSE,fill="steelblue") +
+sent_text %&gt;% distinct(word,value) %&gt;% 
+* mutate(word = fct_reorder(word,value)) %&gt;%
+  ggplot(aes(word, value)) +
+  geom_col(show.legend = FALSE,aes(fill=value)) +
+  scale_fill_viridis_c() +
   coord_flip() + theme(text=element_text(size=20))
 ```
 
@@ -1247,11 +1234,14 @@ ggplot(aes(word, score)) +
 
 
 ```r
-text_data %&gt;% 
-  inner_join(get_sentiments("bing")) %&gt;% 
-  ggplot(aes(word, sentiment,color=sentiment)) +
-  geom_point(size=5,show.legend = FALSE) +
-  coord_flip() + theme(text=element_text(size=20))
+text_data %&gt;% ungroup %&gt;% 
+  inner_join(get_sentiments("bing"),by = "word") %&gt;% 
+  distinct(word,sentiment) %&gt;%
+  mutate(word = fct_reorder(word,sentiment=="positive")) %&gt;% 
+  ggplot(aes(word, sentiment,label=word,color=sentiment)) +
+  geom_text(size=3,show.legend = FALSE) +
+  coord_flip() + scale_color_manual(values=c("darkred","steelblue")) +
+  theme_minimal() + theme(text=element_text(size=20),axis.text.y = element_blank()) 
 ```
 
 &lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-56-1.png" style="display: block; margin: auto;" /&gt;
@@ -1269,18 +1259,18 @@ inaug_dat
 
 ```
 ## # A tibble: 58 x 5
-##       X1 Name      `Inaugural Address` Date       text                     
-##    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;               &lt;chr&gt;      &lt;chr&gt;                    
-##  1     4 George W… First Inaugural Ad… Thursday,… "Fellow-Citizens of the …
-##  2     5 George W… Second Inaugural A… Monday, M… "Fellow Citizens:  \xa0\…
-##  3     6 John Ada… Inaugural Address   Saturday,… "\xa0\xa0WHEN it was fir…
-##  4     7 Thomas J… First Inaugural Ad… Wednesday… "Friends and Fellow-Citi…
-##  5     8 Thomas J… Second Inaugural A… Monday, M… "\xa0\xa0PROCEEDING, fel…
-##  6     9 James Ma… First Inaugural Ad… Saturday,… "\xa0\xa0UNWILLING to de…
-##  7    10 James Ma… Second Inaugural A… Thursday,… "\xa0\xa0ABOUT to add th…
-##  8    11 James Mo… First Inaugural Ad… Tuesday, … "\xa0\xa0I SHOULD be des…
-##  9    12 James Mo… Second Inaugural A… Monday, M… "Fellow-Citizens:  \xa0\…
-## 10    13 John Qui… Inaugural Address   Friday, M… "\xa0\xa0IN compliance w…
+##       X1 Name      `Inaugural Address` Date        text                         
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;               &lt;chr&gt;       &lt;chr&gt;                        
+##  1     4 George W… First Inaugural Ad… Thursday, … "Fellow-Citizens of the Sena…
+##  2     5 George W… Second Inaugural A… Monday, Ma… "Fellow Citizens:  \xa0\xa0I…
+##  3     6 John Ada… Inaugural Address   Saturday, … "\xa0\xa0WHEN it was first p…
+##  4     7 Thomas J… First Inaugural Ad… Wednesday,… "Friends and Fellow-Citizens…
+##  5     8 Thomas J… Second Inaugural A… Monday, Ma… "\xa0\xa0PROCEEDING, fellow-…
+##  6     9 James Ma… First Inaugural Ad… Saturday, … "\xa0\xa0UNWILLING to depart…
+##  7    10 James Ma… Second Inaugural A… Thursday, … "\xa0\xa0ABOUT to add the so…
+##  8    11 James Mo… First Inaugural Ad… Tuesday, M… "\xa0\xa0I SHOULD be destitu…
+##  9    12 James Mo… Second Inaugural A… Monday, Ma… "Fellow-Citizens:  \xa0\xa0I…
+## 10    13 John Qui… Inaugural Address   Friday, Ma… "\xa0\xa0IN compliance with …
 ## # … with 48 more rows
 ```
 
@@ -1299,10 +1289,10 @@ obama
 
 ```
 ## # A tibble: 2 x 2
-##   address             text                                                 
-##   &lt;chr&gt;               &lt;chr&gt;                                                
-## 1 First Inaugural Ad… "My fellow citizens:    \xa0\xa0I stand here today h…
-## 2 Second Inaugural A… "Vice President Biden, Mr. Chief Justice, Members of…
+##   address              text                                                     
+##   &lt;chr&gt;                &lt;chr&gt;                                                    
+## 1 First Inaugural Add… "My fellow citizens:    \xa0\xa0I stand here today humbl…
+## 2 Second Inaugural Ad… "Vice President Biden, Mr. Chief Justice, Members of the…
 ```
 
 ---
@@ -1324,8 +1314,8 @@ obama_txt
 
 ```
 ## # A tibble: 300 x 4
-##    address                 word     score index
-##    &lt;chr&gt;                   &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+##    address                 word     value index
+##    &lt;chr&gt;                   &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;
 ##  1 First Inaugural Address grateful     3     1
 ##  2 First Inaugural Address trust        1     2
 ##  3 First Inaugural Address peace        2     3
@@ -1346,7 +1336,7 @@ obama_txt
 
 ```r
 obama_txt %&gt;% 
-  ggplot(aes(index,score,fill=address)) +
+  ggplot(aes(index,value,fill=address)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~address,ncol = 1, scales = "free_y") +
   theme_minimal() +theme(text = element_text(size=20))
@@ -1356,13 +1346,39 @@ obama_txt %&gt;%
 
 ---
 
+
 ### Example: Inaugural Speeches
+
+![:space 15]
+
+
+```r
+obama_txt %&gt;% 
+  group_by(address) %&gt;% 
+  summarize(proportion_words_positive = sum(value&gt;0)/n())
+```
+
+```
+## # A tibble: 2 x 2
+##   address                  proportion_words_positive
+##   &lt;chr&gt;                                        &lt;dbl&gt;
+## 1 First Inaugural Address                      0.589
+## 2 Second Inaugural Address                     0.657
+```
+
+
+
+---
+
+### Example: Inaugural Speeches
+
+![:space 10]
 
 
 ```r
 obama_txt %&gt;% 
   group_by(word,address) %&gt;% 
-  summarize(n = n(),score=max(score)) %&gt;% 
+  summarize(n = n(),score=max(value)) %&gt;% 
   filter(n&gt;1) %&gt;% 
   ggplot(aes(label=word,size=n,color=score)) +
 * ggwordcloud::geom_text_wordcloud_area() +
@@ -1372,8 +1388,11 @@ obama_txt %&gt;%
   theme(text = element_text(size=20))
 ```
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-61-1.png" style="display: block; margin: auto;" /&gt;
+---
 
+### Example: Inaugural Speeches
+
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1567,7 +1586,7 @@ ap_top_terms %&gt;%
   theme(text=element_text(size=16))
 ```
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-67-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-69-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1685,7 +1704,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

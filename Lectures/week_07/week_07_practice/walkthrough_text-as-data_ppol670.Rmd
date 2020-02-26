@@ -103,7 +103,7 @@ dirty_text
 
 
 
-# Text as Data: Exploring Inaugural Presidential Speaches 
+# Text as Data: Exploring Inaugural Presidential Speeches 
 
 Read data in and clean.
 ```{r}
@@ -235,7 +235,7 @@ On Average, which president was "most postive"?
 ```{r}
 text_dat_sent %>% 
   group_by(president,year,address) %>% 
-  summarize(ave_score = mean(score)) %>% 
+  summarize(ave_score = mean(value)) %>% 
   ungroup %>% 
   filter(ave_score == max(ave_score))
 ```
@@ -245,12 +245,12 @@ The most negative?
 ```{r}
 text_dat_sent %>% 
   group_by(president,year,address) %>% 
-  summarize(ave_score = mean(score)) %>% 
+  summarize(ave_score = mean(value)) %>% 
   ungroup %>% 
   filter(ave_score == min(ave_score))
 ```
 
-Let's examin the sentiment of the most recent Republican presidents. 
+Let's examine the sentiment of the most recent Republican presidents. 
 
 ```{r,fig.align="center",fig.width=7,fig.height=8}
 text_dat_sent %>% 
@@ -259,10 +259,10 @@ text_dat_sent %>%
   mutate(index = row_number()) %>% 
   ungroup %>% 
   mutate(id = str_glue("{president} ({address})"),
-         classify = ifelse(score>0,"steelblue","orangered")) %>% 
+         classify = ifelse(value>0,"steelblue","orangered")) %>% 
   
   # Now plot
-  ggplot(aes(index,score,fill=classify)) +
+  ggplot(aes(index,value,fill=classify)) +
   geom_col(show.legend = F) +
   facet_wrap(~id,scales = "free_x",ncol=1) +
   scale_fill_identity() +
@@ -329,7 +329,7 @@ Let's explore the topic output.
 
 What are the top ten words most associated with each topic?
 
-```{r,fig.width=7,fig.height=4}
+```{r,fig.width=9,fig.height=9}
 # Extract the term to topic associations
 inaug_lda %>% 
   tidy(metric="beta") %>% 
@@ -355,7 +355,7 @@ inaug_lda %>%
 Can we associate meaning to these topics?
 
 
-Let's associate presidents speeches to specific topic entries. We can easily reassociate our topic allocations with the words used to find which presidents were most associated with the two topics. 
+Let's associate presidents speeches to specific topic entries. We can easily re-associate our topic allocations with the words used to find which presidents were most associated with the two topics. 
 
 
 ```{r}

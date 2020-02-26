@@ -290,12 +290,19 @@ Video walkthroughs:
 - **Practice**:
   - The following [walkthrough](Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.html) covers building a dataset of all bilaterial investment treaties from scratch using the techniques covered in lecture (<a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.Rmd.zip" download> Download .Rmd</a>).
 
+<br>
 
-<!-- ### _Week 7_: Text as Data -->
+### _Week 7_: [Text as Data](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html)
 
-<!-- - [**Lecture**](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html) -->
-<!-- - **Practice**:  -->
-<!--   - The following provides a walkthrough of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`. -->
+- **Table of Contents**
+  + [Strings](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#3)
+  + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#20)
+  + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#49)
+  + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#64)
+
+
+- **Practice**:
+  - The following provides a [walkthrough](Lectures/week_07/week_07_practice/walkthrough_text-as-data_ppol670.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`.
 
 <!-- ### _Week 8_: Introduction to Statistical Learning -->
 
