@@ -189,8 +189,10 @@ The following table is a compilation of all the main online resources referenced
 ### Week 10: Using Spatial Data
 
 - **_Required Readings_**:
-  - TBA
-
+  - [Geocomputation with R](https://geocompr.robinlovelace.net/), chapters 1-7
+  - [Fundamentals of Data viz](https://serialmentor.com/dataviz/geospatial-data.html) , chapter 15
+  
+  
 ### Week 11: Applications in Supervised Statistical Learning (Classification)
 
 - **_Required Readings_**:

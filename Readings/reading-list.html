@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -1451,6 +1450,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -1479,6 +1479,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -1837,7 +1843,8 @@ div.tocify {
 <ul>
 <li><strong><em>Required Readings</em></strong>:
 <ul>
-<li>TBA</li>
+<li><a href="https://geocompr.robinlovelace.net/">Geocomputation with R</a>, chapters 1-7</li>
+<li><a href="https://serialmentor.com/dataviz/geospatial-data.html">Fundamentals of Data viz</a> , chapter 15</li>
 </ul></li>
 </ul>
 </div>
