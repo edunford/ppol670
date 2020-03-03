@@ -1,7 +1,7 @@
 ---
 title: \textbf{Project Overview}
-author: \Large PPOL670 - 02 -- Introduction to Data Science
-date: 'Spring 2019'
+author: \Large PPOL670 -- Introduction to Data Science
+date: 'Spring 2020'
 toc: TRUE
 fontsize: 12pt
 output: 
@@ -26,7 +26,6 @@ The project is composed of three distinct parts: a proposal, a presentation, and
 
 While completing your project, you will be responsible for creating and maintaining a public repository on `Github`, tracking all progress made on your project using the version control implementations discussed at the start of the semester. All work product should be reflected on the repository. The proposal, presentation materials, and the report should be generated using [RMarkdown](https://rmarkdown.rstudio.com/authoring_quick_tour.html) and should follow all reproducibility practices discussed in class. 
 
-> _Note_: that a rubric for the presentation will be circulated one week before the in-class presentations; and rubric for the final project will be circulated on the final day of class. The rubric will not deviate from the components outlined below but will be more specific about point allocations.
 
 # Project Proposal
 
@@ -40,7 +39,7 @@ The project proposal asks that you sketch out a general 2 page (single-spaced; 1
 2. The data source(s) you intend to use;
     - The data you choose to utilize should take some effort to compose (it shouldn't be entirely "off-the-shelf data", i.e. data easily downloaded online). 
     - If using API's or other easily downloadable data sources (such as World Bank data) to collect your data, try joining other data to the downloaded data, change the unit of analysis, etc. 
-    - In general, one should not rely on using data that requires no wrangling. 
+    - In general, one should have some wrangling component to get their data in order. 
 3. Your plan to obtain that data; 
 4. The methods (learned in class) that you aim to employ; and 
     - The project must contain:
@@ -79,7 +78,7 @@ Keep in mind that 7 minutes passes quickly. The time will be _strictly_ enforced
 
 Note again that the presentation should be rendered using a `.rmd` file and the slides should be rendered as either a `.html`, `.pdf`, or power point file. Students must submit both their slides _and_ the `.rmd` file used to render the slides to CANVAS. 
 
-Order of the speakers will be randomly assigned and circulated on CANVAS a week prior to the in-class presentations.
+**_Order of the speakers will be randomly assigned and circulated on CANVAS a week prior to the in-class presentations._**
 
 # Project Report
 
@@ -87,7 +86,7 @@ Order of the speakers will be randomly assigned and circulated on CANVAS a week 
 |---- | ---- | ----|
 May 7 | 30% | 12 pages (double-spaced; 12pt font)
 
-The report is a complete description of the project's analysis and results. The report should be 12 pages in length (double-spaced; 12 pt font) and cover the below bullet points. As with the proposals, no written material will be considered beyond page 12 when reviewing the report (a work cited can span onto a 13th page). Below I've outlined points that one should aim to discuss in each section. Note that report should read as a cohesively report, so do not respond to these bullet points verbatim. 
+The report is a complete description of the project's analysis and results. The report should be 12 pages in length (double-spaced; 12 pt font) and cover the below bullet points. As with the proposals, no written material will be considered beyond page 12 when reviewing the report (a work cited can span onto a 13th page). Below I've outlined points that one should aim to discuss in each section. Note that paper should read as a cohesive report, so do not respond to these bullet points verbatim. 
 
 
 - **Introduction**

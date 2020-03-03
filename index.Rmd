@@ -93,15 +93,30 @@ List of [**all required and suggested readings**](Readings/reading-list.html)
 
 Data science is an applied field and therefore, it is important that you understand how to conduct a complete analysis from collecting data, to cleaning and analyzing it, to presenting your findings. Toward this end, students are required to complete an independent data science project, _applying concepts learned throughout the course_. The project is composed of three parts: a 2 page project proposal, an in-class presentation, and a 12-page project report.
 
-More information regarding the final project will be circulated during class on Week 8. 
+<!-- More information regarding the final project will be circulated during class on Week 8.  -->
 
-<!-- <br> -->
 
-<!-- <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center> -->
 
-<!-- <center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center> -->
+<br>
 
-<!-- <center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center> -->
+**Overview**
+
+<center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center>
+
+<br>
+
+**Rubrics**
+
+<center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center>
+
+<center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center>
+
+<br>
+
+**Examples of Successful Projects**
+
+- [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Costa_Kristina_Example_Final_Report.pdf)
+- [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Wang_Liping_Example_Final_Report.pdf)
 
 
 
@@ -304,9 +319,16 @@ Video walkthroughs:
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_07/week_07_practice/walkthrough_text-as-data_ppol670.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`.
 
-<!-- ### _Week 8_: Introduction to Statistical Learning -->
+<br>
 
-<!-- - [**Lecture**](Lectures/week_08/week-08-lecture-supervised-learning.html) -->
+### _Week 8_: [Introduction to Statistical Learning](Lectures/week_08/week-08-lecture-supervised-learning.html)
+- **Table of Contents**
+  + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#3)
+  + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#13)
+  + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#32)
+  + [Caret](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#56)
+  + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64)
+  
 
 <!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
 

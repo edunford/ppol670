@@ -1,7 +1,6 @@
 ---
 title: \textbf{Project Presentation Assessment Sheet}
 author: \Large PPOL670 -- Introduction to Data Science
-date: 'Fall 2019'
 fontsize: 11pt
 output: 
   pdf_document: default
@@ -48,8 +47,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Student was ready with presentation materials (i.e. there was no delay in getting started)? (_score_:___)
 - Student was clear, well-paced, and easy to follow when speaking. (_score_:___)
-- Student used the entire allotted time (i.e. the presentation was precisely 8 minutes). (_score_:___)
+- Student used the entire allotted time (i.e. the presentation was precisely 7 minutes). (_score_:___)
     
 **Feedback**
 
 - Student offered feedback/suggestions to other students via the Google Doc or in-class questions (_score_:___)
+
+**Notes**
