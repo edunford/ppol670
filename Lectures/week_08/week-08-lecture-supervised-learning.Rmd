@@ -62,7 +62,7 @@ class: outline
 
 <br>
 
-> This week covers the basics/theory, new week we'll apply what we learned.
+> This week covers the basics/theory, next time we meet we'll apply what we learned.
 
 ---
 
