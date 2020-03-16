@@ -48,6 +48,95 @@ read_csv('Syllabus/spring-2020-timeline.csv') %>%
   column_spec(3,width = '4in') 
 ```
 
+---
+
+<br>
+<br>
+
+
+## Instructional Continuity
+
+<br>
+
+#### The Plan 
+
+Due to the COVID-19 outbreak, PPOL561 will meet virtually for the remainder of the semester. We will use a number of third-party tools to help coordinate questions, course materials, and virtual class meetings. The aim is to make the transition from in-person to virtual meetings as seamless as possible. I completely acknowledge that there will be bumps along the way. We'll do our best to work through them as a group. 
+
+I thank you in advance for your patience and understanding as we transition into an online space. Also, I would greatly appreciate feedback regarding what is and is not working so that we can work out the kinks together. I encourage you to reach out to me directly via [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) or email if you have any suggestions and/or are running into any issues. If you'd rather comment _anonymously_, I've created a space to do so via the following [**Google Form**](https://forms.gle/LLsBWxuvWCe68yfZ6).  
+
+Outlined below is the approach we'll take to continuing instruction online. Specifically, I outline the **tools** we'll be using and how we'll be using them for **_virtual lecture_**, **_office hours_**, and **_communication_**. Finally, I outline how student requirements for the course (**_homework_** and **_presentations_**) will operate. 
+
+<u>Please note that this plan is subject to change given feedback/experience</u>. Any and all changes to the plan will be posted on the course website and Slack via the `#general` channel, so please check both regularly for any updates.
+
+Finally, at your earliest convenience, please complete the [**"Transitioning to Online Instruction" survey**](https://forms.gle/xij1wGLCkhqVb2ji9). This survey will help me get a better sense of where everyone is at with respect to resources and personal situations.
+
+
+<br>
+
+#### Tools
+
+The following is a summary of the tools we'll be using. You'll note that some (most) we've already integrated into the course. Please make sure that you are able to utilize all these resources on your personal machine prior to the start of class on Wednesday, March 18. Note that many of these resources require a dedicated laptop/desktop with a web-camera and microphone, rather than a tablet or phone. In addition, it is important that you also have a reliable internet connection. Please let me know if you do not have access to a computer and/or reliable internet. 
+
+<br>
+
+- [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) - for coordinating communication between class, TA, and professor;
+- [**Zoom**](https://zoom.us/download) - web-conferencing platform for virtual lecture and office hours;
+- [**Google Calendar**](https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&ctz=America%2FNew_York) - for coordinating zoom links and meeting times; 
+- [**Canvas**](https://georgetown.instructure.com/courses/106244) - for course materials and lecture recordings.
+
+<br>
+
+#### Virtual Lecture
+We will use [**Zoom**](https://zoom.us/download) (a web-conferencing platform) to hold class each week. Class will meet at its regularly scheduled time each week (Wednesdays 3:30 - 6:00). If you do not have Zoom, you can download it [**here**](https://zoom.us/download) prior to the start of class. The **_link to the class zoom web-conference can be found on the [Google Calendar](https://calendar.google.com/calendar/embed?src=georgetown.edu_nm9l16pem9re7adpr066ccfkko%40group.calendar.google.com&ctz=America%2FNew_York)_**. If that link is broken, please refer to the `#general` channel on Slack for information regarding the new link.
+
+When entering lecture, please ensure:
+
+- Your microphone is muted, unless you're asking a question.
+- Your video is on (unless I direct you to turn it off due to streaming issues).
+- To ask questions via the chat feature or to use the "hands-up" icon.
+
+**_All lectures will be recorded and posted to Canvas for students that are unable to join during the scheduled meeting time._** If you're unable to join in the lecture in person due to discrepancies in time zone or persistent computer issues, please let me know. Attendance will be taken directly from the attendees of the scheduled zoom session.  
+
+<br>
+
+#### Office Hours
+I will use [**Zoom**](https://zoom.us/download) to hold office hours each week. Office hours will be conducted in a common space. Students can feel free to jump on or off the call at their own leisure. I will managed the entry of students into the space using the "Waiting Room" feature in Zoom. If you log on and you're kept in the waiting room, please be patient as I finish up with another student (this is the digital equivalent of sitting on the couch outside my office). The **_Zoom web-conference link can be found on the class [Google Calendar](https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&ctz=America%2FNew_York)_**, else please refer to the `#general` channel on Slack for information regarding the new link.
+
+If students wish to coordinate a one-on-one meeting with the Professor or the TA, please reach out via Slack. We'll find a time that mutually works and schedule a call via a Google Calendar meeting. Please accept that meeting request to confirm the appointment.
+
+<br>
+
+#### Communication 
+We will continue to use [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) as our primary communication tool. Please check Slack regularly for updates and announcements. 
+
+I've created a new `#lecture` channel that we'll use to handle all lecture related questions. Specifically, for questions that occur to you after lecture or if you're watching the lecture asynchronously, please use the `#lecture` channel for your questions. If you're watching the lecture live via Zoom, we'll use the chat feature in Zoom. If there are sufficient questions on, I may opt to make a supplementary video answering those
+
+In addition, we have the `#general`, `#codingissues`, and `#random` channels for posting questions/solutions for the group. Slack is a powerful tool designed exactly for the circumstances we find ourselves in, so I encourage everyone to utilize it. 
+
+<br>
+
+#### Calendar
+
+All students enrolled in the course will receive an invitation to a class calendar hosted via [**Google Calendar**](https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&ctz=America%2FNew_York). Each scheduled meeting contains the [**Zoom**](https://zoom.us/download) link to the class' virtual meeting space. If the class link breaks for some reason, please check the `#general` channel on [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) for an updated link.
+
+<br>
+
+<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=Z2VvcmdldG93bi5lZHVfZTNxdDRndXNlaTRnOXYxNDE5ajJoamNmaTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%2333B679&amp;showTitle=0&amp;showNav=1&amp;showDate=1&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
+<br>
+
+#### Homework
+
+Assignments will continue to be distributed and collected on Canvas. Please continue to render `.Rmd` output as a `.pdf` to make it easier for the Teaching Assistant to download and grade the assignments. Grades and comments will be posted on Canvas.
+
+<br>
+
+#### Project Presentations
+
+As part of their final projects, students are required to give a 7-minute presentation the final day of class (April 22nd). This presentation aims to walk the class through the progress they have made on their project up to that point. This presentation is an opportunity for the class to provide constructive feedback and is important to completing the final project (e.g. students often discover new ways of overcoming issues or exploring their data from the class feedback). 
+
+These 7-minute presentations will continue as planned. Much like the virtual lectures, we'll meet as a class via Zoom. Each student will then take turns presenting. When presenting, students will share thier screens with their slides on them (all others should mute their microphones). We'll then provide feedback via a Google Document (I'll circulate this the day of) or (time permitting) ask questions via Zoom. The aim is to emulate an in-person presentation as much as possible. 
+
 <br>
 <br>
 
