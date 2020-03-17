@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title> PPOL670 | Introduction to Data Science for Public Policy   Week 9      Applications in Supervised Learning  Regression</title>
     <meta charset="utf-8" />
@@ -29,7 +29,7 @@ Week 9 &lt;!-- Week of the Footer Here --&gt;
 
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
 
-Supervised Learning &lt;!-- Title of the lecture here --&gt;
+Regression &lt;!-- Title of the lecture here --&gt;
 
 &lt;/span&gt;&lt;/div&gt; 
 
@@ -539,8 +539,8 @@ Say we have two groups (people on a bus) and we want to know that their average 
 
 
 ```r
-bus1 &lt;- tibble(age=c(55,34,21,14,57,43,26))
-bus2 &lt;- tibble(age=c(23,24,37,51,8,30,48))
+bus1 &lt;- tibble(age=c(5,20,21,14,17,23,26))
+bus2 &lt;- tibble(age=c(23,28,37,51,18,30,48))
 ```
 
 --
@@ -553,7 +553,7 @@ mean(bus1$age)-mean(bus2$age)
 ```
 
 ```
-## [1] 4.142857
+## [1] -15.57143
 ```
 
 
@@ -566,13 +566,13 @@ t.test(bus1$age,bus2$age)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  bus1$age and bus2$age
-## t = 0.48783, df = 11.885, p-value = 0.6345
+## t = -2.9014, df = 9.416, p-value = 0.01677
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -14.38054  22.66625
+##  -27.630735  -3.512122
 ## sample estimates:
 ## mean of x mean of y 
-##  35.71429  31.57143
+##  18.00000  33.57143
 ```
 
 
@@ -582,8 +582,8 @@ Say we have two groups (people on a bus) and we want to know that their average 
 
 
 ```r
-bus1 &lt;- tibble(age=c(55,34,21,14,57,43,26))
-bus2 &lt;- tibble(age=c(23,24,37,51,8,30,48))
+bus1 &lt;- tibble(age=c(5,20,21,14,17,23,26))
+bus2 &lt;- tibble(age=c(23,28,37,51,18,30,48))
 ```
 
 Or we could bootstrap. The key is sampling _with replacement_.
@@ -592,34 +592,34 @@ Or we could bootstrap. The key is sampling _with replacement_.
 
 ```r
 bus1 %&gt;% 
-  sample_n(4,replace = 5)
+  sample_n(4,replace = T)
 ```
 
 ```
 ## # A tibble: 4 x 1
 ##     age
 ##   &lt;dbl&gt;
-## 1    34
-## 2    34
-## 3    14
-## 4    14
+## 1    21
+## 2    17
+## 3    20
+## 4    20
 ```
 ]
 .pull-right[
 
 ```r
 bus2 %&gt;% 
-  sample_n(4,replace = 5)
+  sample_n(4,replace = T)
 ```
 
 ```
 ## # A tibble: 4 x 1
 ##     age
 ##   &lt;dbl&gt;
-## 1     8
-## 2    51
-## 3    23
-## 4    23
+## 1    18
+## 2    18
+## 3    37
+## 4    37
 ```
 ]
 
@@ -631,8 +631,8 @@ Do this many times...
 ```r
 boot_samples = rep(0,100)
 for(i in 1:100){
-  boot_samp1 = bus1 %&gt;% sample_n(4,replace = 5)
-  boot_samp2 = bus2 %&gt;% sample_n(4,replace = 5)
+  boot_samp1 = bus1 %&gt;% sample_n(4,replace = T)
+  boot_samp2 = bus2 %&gt;% sample_n(4,replace = T)
   mu1 &lt;- mean(boot_samp1$age)
   mu2 &lt;- mean(boot_samp2$age)
   boot_samples[i] &lt;- mu1 - mu2
@@ -640,7 +640,7 @@ for(i in 1:100){
 tibble(means = boot_samples) %&gt;% 
 ggplot(aes(x=means)) + 
   geom_density(fill="steelblue",color="white",alpha=.5) + 
-* geom_vline(xintercept = 4.14,color="red",size=1) # actual mean
+* geom_vline(xintercept = -15.57143,color="red",size=1) # actual mean
 ```
 
 &lt;img src="lecture-week-09-applications-supervised-ml-regression-ppol670_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
@@ -727,7 +727,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

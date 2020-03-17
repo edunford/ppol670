@@ -727,8 +727,8 @@ The idea:
 Say we have two groups (people on a bus) and we want to know that their average age is statistically different. 
 
 ```{r}
-bus1 <- tibble(age=c(55,34,21,14,57,43,26))
-bus2 <- tibble(age=c(23,24,37,51,8,30,48))
+bus1 <- tibble(age=c(5,20,21,14,17,23,26))
+bus2 <- tibble(age=c(23,28,37,51,18,30,48))
 ```
 
 --
@@ -749,8 +749,8 @@ t.test(bus1$age,bus2$age)
 Say we have two groups (people on a bus) and we want to know that their average age is statistically different. 
 
 ```{r}
-bus1 <- tibble(age=c(55,34,21,14,57,43,26))
-bus2 <- tibble(age=c(23,24,37,51,8,30,48))
+bus1 <- tibble(age=c(5,20,21,14,17,23,26))
+bus2 <- tibble(age=c(23,28,37,51,18,30,48))
 ```
 
 Or we could bootstrap. The key is sampling _with replacement_.
@@ -758,13 +758,13 @@ Or we could bootstrap. The key is sampling _with replacement_.
 .pull-left[
 ```{r,seed=123}
 bus1 %>% 
-  sample_n(4,replace = 5)
+  sample_n(4,replace = T)
 ```
 ]
 .pull-right[
 ```{r,seed=123}
 bus2 %>% 
-  sample_n(4,replace = 5)
+  sample_n(4,replace = T)
 ```
 ]
 
@@ -775,8 +775,8 @@ Do this many times...
 ```{r,fig.align="center",fig.width=8,fig.height=3,highlight=T}
 boot_samples = rep(0,100)
 for(i in 1:100){
-  boot_samp1 = bus1 %>% sample_n(4,replace = 5)
-  boot_samp2 = bus2 %>% sample_n(4,replace = 5)
+  boot_samp1 = bus1 %>% sample_n(4,replace = T)
+  boot_samp2 = bus2 %>% sample_n(4,replace = T)
   mu1 <- mean(boot_samp1$age)
   mu2 <- mean(boot_samp2$age)
   boot_samples[i] <- mu1 - mu2
@@ -784,7 +784,7 @@ for(i in 1:100){
 tibble(means = boot_samples) %>% 
 ggplot(aes(x=means)) + 
   geom_density(fill="steelblue",color="white",alpha=.5) + 
-  geom_vline(xintercept = 4.14,color="red",size=1) # actual mean#<< 
+  geom_vline(xintercept = -15.57143,color="red",size=1) # actual mean#<< 
 ```
 
 

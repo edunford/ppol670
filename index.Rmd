@@ -419,11 +419,11 @@ Video walkthroughs:
   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64)
   
 
-<!-- ### _Week 9_: Applications in Supervised Learning (Regression) -->
+### _Week 9_: Applications in Supervised Learning (Regression)
 
-<!-- - [**Lecture**](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html) -->
-<!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`.  -->
+- [**Lecture**](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html)
+- **Practice**:
+  - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`.
 
 <!-- ### _Week 10_: Using Spatial Data-->
 
