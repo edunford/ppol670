@@ -417,11 +417,15 @@ Video walkthroughs:
   + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#32)
   + [Caret](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#56)
   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64)
+
+<br>
+
+### _Week 9_: [Applications in Supervised Learning (Regression)](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html)
+- **Table of Contents**
+  + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#3)
+  + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#33)
+  + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#48)
   
-
-### _Week 9_: Applications in Supervised Learning (Regression)
-
-- [**Lecture**](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html)
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`.
 
