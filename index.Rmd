@@ -429,24 +429,34 @@ Video walkthroughs:
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`.
 
-<!-- ### _Week 10_: Using Spatial Data-->
+<br>
 
-<!-- ### _Week 11_: Applications in Supervised Learning (Classification) -->
+### _Week 10_: [Applications in Supervised Learning (Classification)](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html)
 
-<!-- - [**Lecture**](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html) -->
-<!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week_10-practice.zip) as a `.zip`.  -->
+- **Table of Contents**:
+  + [Classification](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#3)
+  + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#15)
+  + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#36)
+  + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#49)
+  + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#54)
+  
+
+- **Practice**:
+  - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week_10-practice.zip) as a `.zip`.
 
 
-<!-- ### _Week 12_: Applications in Unsupervised Learning -->
+<!-- ### _Week 11_: Applications in Unsupervised Learning -->
 
 <!-- - [**Lecture**](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html) -->
 <!-- - **Practice**: -->
 <!--   - The following provides a [walkthrough](Lectures/week_11/week_11-practice/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-practice.zip) as a `.zip`.  -->
 
-<!-- ### _Week 13_: Exploratory Data Analysis -->
+<!-- ### _Week 12_: Exploratory Data Analysis -->
 
 <!-- - [**Lecture**](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html) -->
+
+
+<!-- ### _Week 13_: Work Week -->
 
 <!-- <br>  -->
 
