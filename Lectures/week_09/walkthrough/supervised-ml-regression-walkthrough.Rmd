@@ -47,6 +47,7 @@ dim(test_data)
 ```
 
 
+
 # Examine the Data
 
 ```{r}
@@ -68,7 +69,7 @@ First, let's look at the numerical variables.
 ```{r,fig.height=10,fig.width=8}
 train_data %>% 
   select_if(is.numeric) %>% 
-  gather(var,val) %>% 
+  gather(var,val) %>% # equivalent to pivot_longer
   ggplot(aes(val,group=var)) +
   geom_histogram(bins = 30) +
   facet_wrap(~var,scales="free",ncol=2)
@@ -80,7 +81,7 @@ Also, note that the weather code data is a bit of an enigma. There isn't clear i
 
 It doesn't appear that there is any missing data, so there is no need to impute any data. 
 ```{r}
-sum(is.na(train_data))
+sum(is.na(train_data)) # any missingness??
 ```
 
 
@@ -96,21 +97,30 @@ What do we need to do?
 - No need to impute missing values. All the data is there.
 
 
+
 ```{r}
 # First, turn the season variable into a categorical variable
-gen_cats = . %>% mutate(season = as.factor(season)) %>% select(-timestamp,-weather_code)
+clean_steps = function(.data){
+  .data %>% 
+  mutate(season = as.factor(season)) %>% 
+  select(-timestamp,-weather_code)
+} 
 
 # Generate our recipe to preprocess the data 
 rcp <- 
-  recipe(cnt~.,train_data %>% gen_cats) %>% 
-  step_dummy(all_nominal(),-all_outcomes()) %>% 
-  step_range(all_numeric()) %>%  # Normalize scale
+  recipe(cnt~.,data = train_data %>% clean_steps) %>% 
+  step_dummy(all_nominal(),-cnt) %>% 
+  
+  # log the dependent variable so it's more normal, offset the count by 1 for instances when cnt==0
+  step_log(cnt,offset=1) %>% 
+  
+  step_range(all_numeric(),-cnt) %>%  # Normalize scale
   prep()
 
 
 # Apply the recipe to the training and test data
-train_data2 <- bake(rcp,train_data %>% gen_cats)
-test_data2 <- bake(rcp,test_data%>% gen_cats) # Need to transform the seasons data here as well. 
+train_data2 <- bake(rcp,train_data %>% clean_steps)
+test_data2 <- bake(rcp,test_data%>% clean_steps) # Need to transform the seasons data here as well. 
 ```
 
 Let's examine the post-processed data.
@@ -357,8 +367,20 @@ Of the models we ran, it looks like the Random Forest model did the best. Let's 
 
 ```{r}
 pred <- predict(mod_rf,newdata = test_data2)
-mse = sum(test_data2$cnt-pred^2)/nrow(test_data2)
+mse = sum((test_data2$cnt-pred)^2)/nrow(test_data2)
 mse 
 ``` 
+
+
+We can also use the metrics package to calculate performance metrics.
+```{r}
+# If the package isn't installed on your machine
+# install.packages("Metrics")
+
+pred <- predict(mod_rf,newdata = test_data2)
+
+# Mean squared error
+Metrics::mse(actual=test_data2$cnt,predicted = pred)
+```
 
 
