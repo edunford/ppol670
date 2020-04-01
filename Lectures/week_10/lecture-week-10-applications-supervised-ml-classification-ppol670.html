@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title> PPOL670 | Introduction to Data Science for Public Policy   Week 10      Applications in Supervised Learning  Classification</title>
     <meta charset="utf-8" />
@@ -71,46 +71,7 @@ class: newsection
 
 ---
 
-### Conditional Probability 
-
-Given `\(y \in 0,1\)` (two classes)
-
-`$$pr(y_i = 1 | X = \vec{x_i})$$`
-
---
-
-&lt;br&gt;
-
-
-`$$\hat{f}(\vec{x_i}) \in [0,1]$$` 
-
-where `\(\hat{f}(\cdot)\)` is an approximation for the true data generating process `\(f(\cdot)\)` and `\(\vec{x_i}\)` is a vector of variables for observation `\(i\)`.
-
---
-
-&lt;br&gt; 
-
-`$$\hat{y_i} =\begin{cases} 1~~\text{if}~~\hat{f}(\vec{x_i})  &gt; .5 \\ 0~~\text{if}~~\hat{f}(\vec{x_i})  \le .5 \end{cases}$$`
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-`$$\hat{y_i} =\begin{cases} 1~~\text{if}~~\hat{f}(\vec{x_i})  &gt; .5 \\ 0~~\text{if}~~\hat{f}(\vec{x_i})  \le .5 \end{cases}$$`
-
-&lt;br&gt;
-
-.center[.5 is an arbitrary threshold ( `\(\tau\)` ) that we can adjust. 
-
-larger `\(\tau\)` means more false negatives
-
-smaller `\(\tau\)` means more false positives
- ]
-
-
----
-
-### Accuracy 
+### Classification Accuracy 
 
 
 `$$\hat{y}^{test}_i = \hat{f}(x^{test}_i)$$`
@@ -118,23 +79,20 @@ smaller `\(\tau\)` means more false positives
 .center[
 | | `\(y^{test}_i\)` |  `\(\hat{y}^{test}_i\)` |  
 |----|:------------:|:-------------------:|
-| **True Positive** | 1 |  1 |  
-| **False Positive** | 0 |  1 | 
-| **False Negative** | 1 |  0 |  
-| **True Negative** | 0 |  0 |  
+| **_True Positive_** (TP) | 1 |  1 |  
+| **_False Positive_** (FP) | 0 |  1 | 
+| **_False Negative_** (FN) | 1 |  0 |  
+| **_True Negative_** (TN) | 0 |  0 |  
 ]
 
 --
 
-&lt;br&gt;
+![:space 2]
 
-$$ \text{average test error} = \frac{\sum^N_{i=1} I(y^{test}_i \ne \hat{y}^{test}_i)}{N}$$
-
----
-
-### Accuracy
 
 .center[
+**_Confusion Matrix_**
+
 |                       |  `\(actual~(+)\)` |  `\(actual~(-)\)` |
 |-----------------------|----------|----------|
 | `\(Predicted~(+)\)`  |   True Positive (TP)       | False Positive (FP)          |
@@ -142,9 +100,135 @@ $$ \text{average test error} = \frac{\sum^N_{i=1} I(y^{test}_i \ne \hat{y}^{test
 
 ]
 
+
+---
+
+### Conditional Probability 
+
+Given `\(y \in 0,1\)` (two classes)
+
+`$$pr(y_i = 1 | X_i)$$`
+
 --
 
-&lt;br&gt;
+
+```r
+prediction &lt;- machine_learning_model(training_data)
+```
+
+
+--
+
+
+```r
+prediction
+```
+
+```
+##  [1] 0.288 0.788 0.409 0.883 0.940 0.046 0.528 0.892 0.551 0.457
+```
+
+--
+
+![:space 5]
+
+
+```r
+threshold &lt;- .5
+1*(prediction &gt;= threshold)
+```
+
+```
+##  [1] 0 1 0 1 1 0 1 1 1 0
+```
+
+
+---
+
+### Conditional Probability 
+
+Given `\(y \in 0,1\)` (two classes)
+
+`$$pr(y_i = 1 | X_i)$$`
+
+
+
+```r
+prediction &lt;- machine_learning_model(training_data)
+```
+
+
+
+
+```r
+prediction
+```
+
+```
+##  [1] 0.288 0.788 0.409 0.883 0.940 0.046 0.528 0.892 0.551 0.457
+```
+
+![:space 5]
+
+
+```r
+*threshold &lt;- .9 # Higher threshold, more false negatives
+1*(prediction &gt;= threshold)
+```
+
+```
+##  [1] 0 0 0 0 1 0 0 0 0 0
+```
+
+---
+
+### Conditional Probability 
+
+Given `\(y \in 0,1\)` (two classes)
+
+`$$pr(y_i = 1 | X_i)$$`
+
+
+
+```r
+prediction &lt;- machine_learning_model(training_data)
+```
+
+
+
+
+```r
+prediction
+```
+
+```
+##  [1] 0.288 0.788 0.409 0.883 0.940 0.046 0.528 0.892 0.551 0.457
+```
+
+![:space 5]
+
+
+```r
+*threshold &lt;- .1 # lower threshold, more false positives
+1*(prediction &gt;= threshold)
+```
+
+```
+##  [1] 1 1 1 1 1 0 1 1 1 1
+```
+
+
+---
+
+### ROC and AUC
+
+.center[&lt;img src = "Figures/roc-plot.png", width = 600&gt;]
+
+---
+
+### Other Classification Metrics 
+
+![:space 15]
 
 | Metric | Calculation |  Description |
 |:---:|:-----:| -----|
@@ -152,12 +236,6 @@ $$ \text{average test error} = \frac{\sum^N_{i=1} I(y^{test}_i \ne \hat{y}^{test
 | Precision | `\(\frac{TP}{TP+FP}\)` | Of the true positives classified, how many are actually positive | 
 | Specificity | `\(\frac{ TN }{ TN + FP }\)` | Of the actual true negatives, how many were correctly classified | 
 | Recall/Sensitivity | `\(\frac{TP}{ TP + FN}\)` | Of the actual true positives, how many were correctly classified |
-
----
-
-### ROC and AUC
-
-.center[&lt;img src = "Figures/roc-plot.png", width = 600&gt;]
 
 ---
 
@@ -171,161 +249,20 @@ class: newsection
 
 ## The problem with linear regression 
 
-When we have a binary outcome (0/1), we can use OLS to estimate the relationship. This is known as a **linear probability model** (LPM).  
 
---
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
-We start with the usual equation: 
+---
 
-`$$y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$`
-Here `\(y \in [0,1]\)`
-   
-- The probability of "success": `\(pr(y_i = 1) = p_i\)`
-- The probability of "failure": `\(pr(y_i = 0) = 1 - p_i\)` 
+## Logistic Regression
 
---
 
-`\(y\)` follows a **Bernoulli** distribution
-
-$$ E(y_i) = 0 \times (1-p_i) + 1 \times p_i = p_i$$
-$$ E(y_i | x_i) = \beta_0 + \beta_1 x_i = p_i $$
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-## The problem with linear regression 
-
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
-
---
-
-.center[
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.690 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.034 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20.222 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; x &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.328 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.037 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8.756 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-]
-
----
-
-## The problem with linear regression 
-
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
-
-
-
-.center[
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; estimate &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 69% &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.034 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20.222 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; x &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 32.8% &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.037 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8.756 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-]
-
----
-
-## The problem with linear regression 
-
-- OLS may produce **non-sense predictions** (recall that OLS assumes continuous interval level data)
-
---
-
-  + But we can **recode**
-  
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
-
-
----
-
-## The problem with linear regression 
-
-- OLS may produce **non-sense predictions** (recall that OLS assumes continuous interval level data)
-
-- Disturbances are &lt;u&gt;_not_&lt;/u&gt; normally distributed, they follow the Bernoulli distribution.
-
---
-
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
-
-
-
----
-
-## The problem with linear regression 
-
-- OLS may produce **non-sense predictions** (recall that OLS assumes continuous interval level data)
-
-- Disturbances are &lt;u&gt;_not_&lt;/u&gt; normally distributed, they follow the Bernoulli distribution.
-
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
-
-
----
-
-
-### Generalized Linear Model
-
-- Let's specify a relationship between `\(x\)` and the probability of an event such that `\(pr(y_i = 1 | x)\)` is a function that ranges from `\(-\infty\)` to `\(\infty\)`. 
-
-
-- First, we transform the outcome into the **odds**
-
-`$$\frac{pr(y_i = 1 | x)}{pr(y_i = 0 | x)} = \frac{pr(y_i = 1 | x)}{1 - pr(y_i = 1 | x)}$$`
-
-- **Odds** indicate how often something happens relative to how often it doesn't happen. 
-
-- The **log of the odds** which ranges from `\(-\infty\)` to `\(\infty\)`.
-
-`$$ln\begin{bmatrix}\frac{pr(y_i = 1 | x)}{1 - pr(y_i = 1 | x)}\end{bmatrix}  = X \beta$$`
-
----
-
-We need a function `\(F(\cdot)\)` (which is known as a **link function**) that maps our linear combination of independent variables ( `\(X\beta\)` ) onto a probability space (ranging from 0 to 1).
+We need a function `\(F(\cdot)\)` (which is known as a **_link function_**) that maps our linear combination of independent variables ( `\(X\beta\)` ) onto a probability space (ranging from 0 to 1).
 
 $$ F(X\beta) \mapsto [0,1]$$
 
@@ -333,44 +270,7 @@ $$ F(X\beta) \mapsto [0,1]$$
 
 ---
 
-![:space 10]
-
-The **logistic (logit)** and **Normal (probit)** distributions are used frequently. 
-
-![:space 10]
-
-.center[
-| Model | Distribution  | CDF | PDF  |
-|---|---|-----|---|---|
-| **_Probit_** | _Normal_ | `\(\Phi(\epsilon) = \int^\epsilon_{-\infty} \frac{1}{(\sqrt{2 \pi})} e^{-\frac{t^2}{2}} dt~~\)` | `\(\phi(\epsilon) = \frac{1}{(\sqrt{2 \pi})} e^{-\frac{\epsilon^2}{2}}\)` |
-| **_Logit_** | _Logistic_ | `\(\Lambda(\epsilon) = \frac{e^\epsilon}{1 + e^\epsilon}\)` | `\(\lambda(\epsilon) = \frac{e^\epsilon}{(1 + e^\epsilon)^2}\)` |
-]
-
----
-
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
-
-
----
-
-
-
-The outcome `\(y_i\)` follows a **Bernoulli distribution**.
-
-`$$y_i \sim bernoulli(p_i)$$`
-`$$y_i \sim p_i^{y_i}(1-p_i)^{1-y_i}$$`
-
---
-
-&lt;br&gt;
-
-We can plug in our linear combination of predictors into this probability distribution. All we need to make sure is that our predictors map to a probablity space (this is our "probability model") 
-
-$$ \pi_i =logit(\beta_0 + \beta_1 x_i)  $$
-&lt;br&gt;
-`$$y_i \sim bernoulli(\pi_i)$$`
-
-`$$y_i \sim \pi_i^{y_i}(1-\pi_i)^{1-y_i}$$`
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -396,7 +296,7 @@ head(training_data,3)
 pairs(training_data,col="steelblue")
 ```
 
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -404,31 +304,24 @@ pairs(training_data,col="steelblue")
 
 
 ```r
-mod = glm(y~x1 + x2,data=training_data,family=binomial(link = "probit"))
-broom::tidy(mod)
+#We can easily estimate these models in base R
+mod = glm(y ~ x1 + x2, data=training_data,
+          family=binomial(link = "logit"))
 ```
 
-```
-## # A tibble: 3 x 5
-##   term        estimate std.error statistic      p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-## 1 (Intercept)  -0.0311    0.0579    -0.538 0.591       
-## 2 x1            0.347     0.0619     5.60  0.0000000215
-## 3 x2            0.235     0.0572     4.10  0.0000407
-```
-
+![:space 5]
 
 ### Predict
 
 
 ```r
-preds = predict(mod,test_data,type = "response")
+preds = predict(mod, test_data,type = "response")
 head(preds)
 ```
 
 ```
 ##         1         2         3         4         5         6 
-## 0.5409051 0.4902012 0.4256561 0.5417080 0.4602316 0.3027579
+## 0.5421829 0.4922359 0.4269535 0.5422376 0.4594173 0.3040995
 ```
 
 ---
@@ -437,25 +330,18 @@ head(preds)
 
 
 ```r
-mod = glm(y~x1 + x2,data=training_data,family=binomial(link = "probit"))
-broom::tidy(mod)
+#We can easily estimate these models in base R
+mod = glm(y ~ x1 + x2, data=training_data,
+          family=binomial(link = "logit"))
 ```
 
-```
-## # A tibble: 3 x 5
-##   term        estimate std.error statistic      p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-## 1 (Intercept)  -0.0311    0.0579    -0.538 0.591       
-## 2 x1            0.347     0.0619     5.60  0.0000000215
-## 3 x2            0.235     0.0572     4.10  0.0000407
-```
-
+![:space 5]
 
 ### Predict
 
 ```r
-preds = predict(mod,test_data,type = "response")
-table(preds&gt;.5,test_data$y)
+preds = predict(mod, test_data,type = "response")
+table(preds &gt; .5, test_data$y)
 ```
 
 ```
@@ -476,25 +362,25 @@ class: newsection
 ---
 
 
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -615,7 +501,7 @@ class: newsection
 
 ### Let's Build a Wall
 
-&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-10-applications-supervised-ml-classification-ppol670_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -747,7 +633,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

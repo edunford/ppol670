@@ -1,0 +1,55 @@
+---
+name: Jihee AHN
+title: | 
+    | PPOL670 | Project Proposal
+    | How well does the Human Development Index predict the countries' economic growth and happiness?
+    | Jihee AHN 
+output: pdf_document
+fontsize: 12pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = F,error=F,comment = F)
+require(tidyverse)
+require(tidytext)
+library(rvest)
+```
+
+# 1. Background 
+
+The Human Development Index(HDI) was created to assess the development of a country annually, not only in terms of economic performance but also in more diverse aspects of human well being. The index is composed of three dimensions: life expectancy, education, and Gross national income(GNI). 
+
+
+<center> 
+![an image caption Source: UNDP HDI 2019.](hdi_2019.jpg)
+</center>
+* source: UNDP website 
+
+
+On the other hand, the United Nations Sustainable Development Solutions Network in partnership with the Ernesto Illy Foundation produces the World Happiness Report(WHR) every year to measure how happy the people of each country, 156 countries as of 2019, perceive themselves to be, since 2012. 
+
+Economic development might be not all and end purpose for human well-being, but it should place the higher priorities in measuring the wholesome development of a country. As a development worker, I have always had such a doubt that my work, mainly focusing on their socio-economic development, would improve the living standards and finally the happiness of the people in the recipient countries. 
+
+I would like to use the HDI as the proxy measurement of the public efforts, including the countries' governments and external assistance like official and unofficial development programs, and to see how well the HDI can predict the countries' economic growth and the well-being or happiness of the peoples.  
+
+
+# 2. Data Sources 
+
+I will use the Human Development Index data from the UNDP, the World Happiness Report data from the UN, and the GDP growth rate from the World Bank.  
+
+
+# 3. Plan for obtaining Data
+
+I will obtain the three data sets from the respective and relevant sites of the agencies: the HDI data from the website of the UNDP(http://hdr.undp.org/en/data#), the WHR data from the website of the UN center for sustainable development (https://worldhappiness.report/), and the GDP growth rate data from the data bank site of the WB (https://databank.worldbank.org/reports.aspx?source=2&series=NY.GDP.MKTP.KD.ZG&country=#). In the case of the WHR data, I can obtain the annual data by accessing the separate annual reports. So, if necessary, I am considering obtaining API for the raw data. 
+
+
+# 4. Methods for data analysis
+
+I will combine the three datasets into one framework and do wrangling jobs to match the countries' data into one row. Then I will conduct the machine learning processes of supervised regression to see how well the HDI predicts the economic growth and the happiness level of the countries in general and which indicators of the HDI could better predict them. 
+
+I will compare the methods of parametric and non-parametric regression to see which one fits the data better while using bagging or random forests.
+
+
+# 5. Definition of the project success
+
+I would define my success as reaching the end of the analysis even though it lacks some precision in analytical results. I would have to deeply understand the concepts, composition, calculation algorithms of each data set if I want to make an accurate and precise comparison and analysis of the correlation of the data. Since I have limited time to perform such deep understanding and analysis of the data, I would rather focus on learning how the machine learning goes along the process, identifying what challenges and limitations would appear on the course, and how I should prepare myself in similar works in the future. 
