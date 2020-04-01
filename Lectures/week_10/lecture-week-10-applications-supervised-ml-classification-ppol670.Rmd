@@ -515,7 +515,7 @@ $$Pr(y_{ik} = j~|~X = x_{ik}) = \frac{\sum^K_{k=1} I(y_{ik} =j )}{K}$$
 
 --
 
-- Poor performance well in high dimensions
+- Poor performance in high dimensions
 
 
 ---
