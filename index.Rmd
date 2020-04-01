@@ -435,14 +435,14 @@ Video walkthroughs:
 
 - **Table of Contents**:
   + [Classification](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#3)
-  + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#15)
-  + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#36)
-  + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#49)
-  + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#54)
+  + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#16)
+  + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#24)
+  + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#37)
+  + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#42)
   
 
 - **Practice**:
-  - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week_10-practice.zip) as a `.zip`.
+  - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week-10-walkthrough.zip) as a `.zip`.
 
 
 <!-- ### _Week 11_: Applications in Unsupervised Learning -->
