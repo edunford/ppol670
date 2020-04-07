@@ -12,3 +12,6 @@ recipes
 rsample
 lattice
 caret
+vip
+pdp
+rpart

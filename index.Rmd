@@ -444,17 +444,25 @@ Video walkthroughs:
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week-10-walkthrough.zip) as a `.zip`.
 
+<br>
 
-<!-- ### _Week 11_: Applications in Unsupervised Learning -->
+### _Week 11_: Applications in Unsupervised Learning
+[Moved to Week 13]
 
 <!-- - [**Lecture**](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html) -->
 <!-- - **Practice**: -->
 <!--   - The following provides a [walkthrough](Lectures/week_11/week_11-practice/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-practice.zip) as a `.zip`.  -->
 
-<!-- ### _Week 12_: Exploratory Data Analysis -->
+<br>
 
-<!-- - [**Lecture**](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html) -->
+### _Week 12_: [Exploratory Data Analysis](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html)
 
+- **Table of Contents**:
+  + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#3)
+  + [Data Exploration in the Social Sciences](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#37)
+
+- **Practice**:
+  - The following provides a [walkthrough](Lectures/week_12/walkthrough/interpretable-ml-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_12/week-12-walkthrough.zip) as a `.zip`.
 
 <!-- ### _Week 13_: Work Week -->
 

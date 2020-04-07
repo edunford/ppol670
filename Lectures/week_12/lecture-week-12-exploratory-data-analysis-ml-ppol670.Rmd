@@ -49,19 +49,519 @@ class: outline
 
 # Outline for Today 
 
-![:space 10]
+**Approaches to**
 
-- **_Exploring data when you have limited priors_**
+- **_Interpretable Machine Learning_**
 
-- Outline the **_"layers"_** of data exploration.
+  + _Variable Importance_
+  + _Partial Dependencies_
+  + _Individual Conditional Expectations_
+  + _Global Surrogate Models_
 
-- Walk through an **_applied example_** looking at the relationship between protest and internet search activity. 
+- **_Data Exploration in the Social Sciences_**
   
+  + Exploring data when you have _**limited priors**_
+  +  Outline some **_steps_** to follow when exploring data. 
+
+
+---
+
+class: newsection
+  
+# Interpretable Machine Learning
+
+---
+
+## Model Interpretation
+
+- Knowing a model is predictive is _necessary_ but rarely _sufficient_ to draw **_substantive insights_**. 
+
+--
+
+- In the social sciences, we are interested in understanding **_why_** certain features matter in an effort to detect potential **_interventions_**: if we change $X$ will we get a different outcome?
+
+--
+
+- Interpretability offers insights into the features the model **_relies on to make its prediction_**. 
+
+--
+
+- In addition, interpretability is a useful debugging tool for **_detecting bias_** in machine learning models. 
+
+--
+
+- Model needs to be a fairly **_good approximation of the data generating process_** (i.e. high predictive accuracy) for interpretation to matter
+
+
+
+---
+
+## Variable Importance
+
+![:space 2]
+
+- Variable/Feature importance is concerned with how much a given model **_relies on a set of variables/features to make accurate predictions_**. 
+
+- If those variables/features were removed, the model should **_perform worse_** (i.e. diminished predictive capacity).
+
+- Determining variable importance helps with **_variable selection_**.
+
+  - What variables could we drop from the model (not contributing much information)? 
+  
+  - What variables should we make sure to always measure and use in the model?
+
+---
+
+## Variable Importance
+
+Consider output from a simple multivariate variable OLS regression, what variables seem to matter most?
+
+![:space 3]
+
+```{r,echo=F}
+set.seed(123)
+N = 1000
+x1 <- rnorm(N)
+x2 <- rnorm(N)
+x3 <- rnorm(N)
+y <- 2*x1 + rnorm(N)
+mod = lm(y ~ x1 + x2 + x3)
+broom::tidy(mod)
+```
+
+--
+
+![:space 3]
+
+- `x1` is clearly both substantively and statistically significant. We should keep it in the model.
+
+---
+
+
+## Variable Importance
+
+![:space 2]
+
+- Some models offer a natural way of determining importance:
+
+  - _Regression_: coefficient and test statistic size
+  
+  - _Trees_: split importance
+  
+![:space 2]
+
+- But other models are more complicated (e.g. support vector machines, KNN, Neural Networks). We call these **_black box_** models because it's difficult to "peer inside" the model to understand how it works. 
+
+![:space 2]
+
+- We need ways of determining predictive performance that are **_model agnostic_** (i.e. doesn't depend on the type of model you use).
+
+---
+
+### Permutation Importance
+
+- Permutation Importance offers a model agnostic way to determine variable importance.
+
+- The idea: **_scramble the data_** one variable at a time and see if the predictive performance of the model _decreases_. 
+
+--
+
+- How it works:
+
+  + **_Train_** a model
+  
+  + **_Permute_** (i.e. scramble the order) a single variable/feature in the training data.
+  
+  + Use the model to **_predict_** on the data with the permuted variable
+  
+  + See if there is a **_drop in predictive performance_**
+  
+  + **_Repeat_**
+  
+
+---
+
+### The logic of permuting
+
+Let's walk through the logic of why this would work using simulated data. 
+
+```{r}
+# Simulate some data 
+set.seed(123)
+N = 1000 # Number of observations
+x1 <- rnorm(N) # independent variable 
+x2 <- rnorm(N) # independent variable 
+error <- rnorm(N) #  error
+y <-  1 + 2*x1 + -2*x2 + error # dependent variable
+D <- tibble(y,x1,x2) # Gather as data frame
+
+head(D)
+```
+
+
+---
+
+### The logic of permuting
+
+```{r}
+# Run Model
+model <- lm(y ~ x1 + x2, data = D)
+
+broom::tidy(model) %>% 
+  mutate_if(is.numeric,function(x)  round(x,2))
+```
+
+---
+
+### The logic of permuting
+
+
+```{r,highlight=T}
+# Randomly scamble the order of X1 and estimate OLS model
+model <- 
+  D %>% 
+  mutate(x1 = sample(x1)) %>% #<<
+  lm(y ~ x1 + x2, data = .)
+
+broom::tidy(model) %>% 
+  mutate_if(is.numeric,function(x)  round(x,2))
+```
+
+---
+
+### The logic of permuting
+
+![:space 5]
+
+- Permuting a variable effectively **_breaks the statistical relationship_** between outcome and predictor.
+
+- If a **_variable doesn't matter, then permuting it won't change the performance_** (as the model already doesn't rely on this variable )
+
+- We must permute each variable **_multiple times_** as permuting is a random process 
+  
+  + We want to ensure a specific importance ordering isn't a results of a single permutation.
+
+---
+
+### Example
+
+What features in the data best predict whether someone will vote or not?
+
+```{r,echo=F}
+set.seed(1234)
+N = 1000
+age <- round(runif(N,18,75))/100
+political_therm <- round(runif(N,0,1),2)
+visited_europe <- rbinom(N,1,.3)
+eat_bread <- rbinom(N,1,.7)
+z = -2+ 2*political_therm + 1.5*age + -.1*age^2 + 3*political_therm*age + -.01*visited_europe  
+# z = -1+ 2*political_therm + 1.5*age + -.1*age^2 + .5*political_therm*age + -.5*visited_europe  
+pr <- pnorm(z)
+voted <- c("Yes","No")[rbinom(N,1,pr)+1]
+vote_data <- tibble(voted,age,political_therm,visited_europe,eat_bread)
+```
+
+```{r}
+vote_data
+```
+
+---
+
+### Example
+
+Run Machine Learning Model.
+
+```{r}
+# Cross fold validation
+set.seed(1988)
+folds <- createFolds(vote_data$voted, k = 5)
+control_conditions <- 
+  trainControl(method='cv',
+               summaryFunction = twoClassSummary,
+               classProbs = TRUE,
+               index = folds )
+
+# Random Forest Model 
+rf_model <-train(voted ~ ., data=vote_data,
+                 method = "ranger", metric = "ROC",
+                 trControl = control_conditions)
+
+# Predictive accuracy
+pred <- predict(rf_model,vote_data)
+Metrics::accuracy(vote_data$voted,pred)
+```
+
+---
+
+### Example
+
+Feature importance.
+```{r}
+require(vip)
+vi_permute(rf_model, # Machine learning model
+           train = vote_data, # Training data 
+           nsim = 10, # Number of times to permute each variable
+           target = "voted", # outcome
+           reference_class = "yes", # what class are you predicting
+           metric = "accuracy", # metric 
+           pred_wrapper = predict) # prediction function
+```
+
+---
+
+### Example
+
+Use `vip` to auto generate a feature importance plot
+```{r,fig.align="center",fig.height=3,fig.width=7,dpi=300}
+vip(rf_model,train = vote_data,
+    nsim = 10,method="permute",
+    geom = "boxplot",target = "voted",
+    reference_class = "yes",metric = "accuracy",
+    pred_wrapper = predict)
+```
+
+---
+
+### Example 
+
+We can use feature importance to **_select_** relevant variables, refining our models. 
+```{r}
+# Random Forest Model 
+rf_model2 <-train(voted ~ age + political_therm, data=vote_data,
+                 method = "ranger", metric = "ROC",
+                 trControl = control_conditions)
+
+# Predictive accuracy
+pred <- predict(rf_model2,vote_data)
+Metrics::accuracy(vote_data$voted,pred)
+```
+
+
+
+---
+
+## Partial Dependence Plots (PDP)
+
+![:space 5]
+
+- Variable importance cannot tell us how variables **_relate_** to the outcome.
+
+- Partial dependency plots show the **_marginal effect_** one or two features have on the predicted outcome of the model.
+
+- A partial dependence plot can show whether the **_relationship_** between the target and a feature is linear, monotonic or more complex.
+
+- The partial dependence plot is a **_global method_**: The method considers all instances and gives a statement about the global relationship of a feature with the predicted outcome.
+
+
+---
+
+## Partial Dependence Plots (PDP)
+
+![:space 5]
+
+- The steps:
+  
+  + Train a model
+  
+  + Identify the features that matter most (feature importance)
+  
+  + Manipulate the values of those features (one at a time) and take the average prediction, holding all other features at their observed values. 
+  
+  + Plot the values and interpret the curve. 
+
+
+---
+
+## Partial Dependence Plots (PDP)
+
+Recall our model from before. Let's explore the marginal effect of age on the likelihood of voting. 
+
+```{r,fig.align="center",fig.width=7,fig.height=3,dpi=300}
+require(pdp)
+partial(rf_model, pred.var = "age", plot = TRUE,
+        plot.engine = "ggplot2")
+```
+
+---
+
+## Partial Dependence Plots (PDP)
+
+Let's explore the marginal effect of age and political thermometer measure on the likelihood of voting. Useful for exploring **_interactions_** between data. 
+
+```{r,eval=F,fig.align="center",fig.width=7,fig.height=3,dpi=300,highlight=T}
+# Provide a grid of values to speed up computation time.
+# more values, the longer the wait (like tuning)
+grid_values <- #<<
+  expand.grid(age = seq(.18,.75,by=.1), #<<
+              political_therm = seq(.18,.75,by=.05)) #<<
+
+partial(rf_model, 
+        # Choose two predictive values
+        pred.var = c("age", "political_therm"), #<<
+        plot = TRUE, 
+        #provide values to calc preds
+        pred.grid = grid_values,  #<<
+        # Plotting engine and color scheme
+        plot.engine = "ggplot2",
+        palette = "magma")
+```
+
+---
+
+## Partial Dependence Plots (PDP)
+
+Let's explore the marginal effect of age and political thermometer measure on the likelihood of voting. Useful for exploring **_interactions_** between data. 
+
+```{r,echo=F,fig.align="center",fig.width=7,fig.height=3.5,dpi=300,highlight=T}
+partial(rf_model, 
+        # Choose two predicive values
+        pred.var = c("age", "political_therm"), 
+        plot = TRUE, 
+        
+        # Provide a grid of values to speed up computation time.
+        pred.grid = expand.grid(age = seq(.18,.75,by=.1), #<<
+                                political_therm = seq(.18,.75,by=.05)), #<<
+        
+        # Plotting engine and color scheme
+        plot.engine = "ggplot2",
+        palette = "magma")
+```
+
+---
+
+##  Individual Conditional Expectation Plots (ICE)
+
+- Partial dependency offers a plot of the **_average marginal effect_**; however, can obscure a heterogeneous relationship created by **_interactions_**. 
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=4.75,dpi=300}
+set.seed(123)
+N = 500
+noise = .1
+x1 <- rnorm(500)
+y1 <- x1 + rnorm(N,0,noise)
+y2 <- -1*x1 + rnorm(N,0,noise)
+bind_rows(data.frame(y=y1,x=x1),data.frame(y=y2,x=x1)) %>% 
+  ggplot(aes(x,y)) +
+  geom_point(alpha=.5) +
+  geom_smooth(se=F) +
+  ggthemes::theme_fivethirtyeight() +
+  theme(axis.title = element_text())
+```
+
+---
+
+##  Individual Conditional Expectation Plots (ICE)
+
+- Partial dependency offers a plot of the **_average marginal effect_**; however, can obscure a heterogeneous relationship created by **_interactions_**.
+
+![:space 3]
+
+- ICE plots plots show the **_marginal effect for each observation_** in the data. 
+
+- We can observe if there are **_divergence_** or **_convergence_** in the predicted effect cross observations. 
+
+- The PDP is just the average taken across the different ICE curves. 
+
+---
+
+##  Individual Conditional Expectation Plots (ICE)
+
+
+```{r,fig.align="center",fig.width=7,fig.height=3,dpi=300,highlight=T}
+partial(rf_model, 
+        ice=T,alpha=.05, #<<
+        pred.var = "age", plot = TRUE,
+        plot.engine = "ggplot2")
+```
+
+---
+
+##  Individual Conditional Expectation Plots (ICE)
+
+
+```{r,fig.align="center",fig.width=7,fig.height=3,dpi=300,highlight=T}
+partial(rf_model, 
+        ice=T,alpha=.05, center=T, #<<
+        pred.var = "age", plot = TRUE,
+        plot.engine = "ggplot2")
+```
+
+
+---
+
+## Global Surrogate Models
+
+- Black box models (e.g. Random Forest) often do a better job at fitting the data but at the expense of interpretability. 
+
+- A global surrogate model is an interpretable model (e.g. decision tree, linear model) trained to **_approximate the predictions of a black box model_**. 
+
+- Steps:
+  
+  + Train a model
+  
+  + Get the predictions from that model.
+  
+  + Train an interpretable model (e.g. cart, lm) on those predictions, using the original training data or a subset of that data.
+  
+  + Examine the fit. If good (low-ish error), interpret the output. 
+
+---
+
+## Global Surrogate Models
+
+```{r,fig.align="center",fig.width=9,fig.height=2.5,dpi=300,highlight=T}
+# Extract the predictions from the black box model
+y_probs <- predict(rf_model,vote_data,type = "prob")$Yes
+
+# Generate a new data frame
+vote_data2 <- vote_data %>% 
+  mutate(y_probs=y_probs) %>% 
+  select(-voted)
+
+# Plot the predictions (just to see what these probabilities look like)
+vote_data2 %>%
+  ggplot(aes(y_probs)) +
+  geom_histogram()
+```
+
+---
+
+## Global Surrogate Models
+
+```{r,fig.align="center",fig.width=9,fig.height=4,dpi=300,highlight=T}
+# Train a Decision Tree surrogate model
+require(rpart) # Let's use the model package directly (rather than in caret)
+cart_surrogate <-rpart(y_probs ~ .,data = vote_data2,
+                       control = rpart.control(maxdepth = 3))
+rattle::fancyRpartPlot(cart_surrogate,sub = "",type = 1) # plot the tree
+```
+
+
+---
+
+## Global Surrogate Models
+
+- If the surrogate doesn't do a good job fitting the black box, then it's not useful for interpretation.
+
+- Using R-squared, we can easily measure how good the surrogate model is in approximating the black box predictions.
+
+```{r}
+# Calculate the R squared
+y_hat <- predict(cart_surrogate)
+y <- vote_data2$y_probs
+TSS = sum((y-mean(y))^2) # Total Sum of Squares
+MSS = sum((y_hat-mean(y))^2) # Model Sum of Squares
+R2 = MSS/TSS # R-Squared (variance explained)
+round(R2,2)
+```
+
+- Ultimately, surrogate models are intuitive, model-agnostic ways of extracting substantive insights from a black box model. 
+
 ---
 
 class: newsection
 
-# Exploratory Data Analysis
+# Data Exploration in the Social Sciences
 
 ---
 
@@ -99,13 +599,13 @@ Often we are need to elicit answers from data where we know little about the **_
 
 ---
 
-###  "Layers" of Exploration 
+###  Data Exploration Steps 
 
 Given new data, how best should one draw novel insights?
 
 --
 
-- **_![:text_color darkorange](Layer 0)_**: **_Train/Test Split_**
+- **_![:text_color darkorange](Step 0)_**: **_Train/Test Split_**
   
   - Always the first step. 
   - Split the data and never look at, learn from, or examine the test data.
@@ -113,12 +613,12 @@ Given new data, how best should one draw novel insights?
 
 ---
 
-###  "Layers" of Exploration 
+###  Data Exploration Steps 
 
 Given new data, how best should one draw novel insights?
 
-- **_![:text_color darkorange](Layer 0)_**: **_Train/Test Split_**
-- **_![:text_color darkorange](Layer 1)_**: **_Understanding what data you have_**
+- **_![:text_color darkorange](Step 0)_**: **_Train/Test Split_**
+- **_![:text_color darkorange](Step 1)_**: **_Understanding what data you have_**
   
   - <u>_Data Properties_</u>
       - What is the unit of analysis?
@@ -134,12 +634,12 @@ Given new data, how best should one draw novel insights?
     
 ---
 
-###  "Layers" of Exploration 
+###  Data Exploration Steps 
 
 Given new data, how best should one draw novel insights?
 
-- **_![:text_color darkorange](Layer 0)_**: **_Train/Test Split_**
-- **_![:text_color darkorange](Layer 1)_**: **_Understanding what data you have_**
+- **_![:text_color darkorange](Step 0)_**: **_Train/Test Split_**
+- **_![:text_color darkorange](Step 1)_**: **_Understanding what data you have_**
   
   - <u>_Data Properties_</u>
   - <u>_Data Generation_</u> (questions to ask yourself)
@@ -156,13 +656,13 @@ Given new data, how best should one draw novel insights?
     
 ---
 
-###  "Layers" of Exploration 
+###  Data Exploration Steps 
 
 Given new data, how best should one draw novel insights?
 
-- **_![:text_color darkorange](Layer 0)_**: **_Train/Test Split_**
-- **_![:text_color darkorange](Layer 1)_**: **_Understanding what data you have_**
-- **_![:text_color darkorange](Layer 2)_**: **_Analyzing the relationships_**
+- **_![:text_color darkorange](Step 0)_**: **_Train/Test Split_**
+- **_![:text_color darkorange](Step 1)_**: **_Understanding what data you have_**
+- **_![:text_color darkorange](Step 2)_**: **_Analyzing the relationships_**
 
   - What variables are highly correlated?
   - What is the relationship between the variables?
@@ -173,14 +673,14 @@ Given new data, how best should one draw novel insights?
   
 ---
 
-###  "Layers" of Exploration 
+###  Data Exploration Steps 
 
 Given new data, how best should one draw novel insights?
 
-- **_![:text_color darkorange](Layer 0)_**: **_Train/Test Split_**
-- **_![:text_color darkorange](Layer 1)_**: **_Understanding what data you have_**
-- **_![:text_color darkorange](Layer 2)_**: **_Analyzing the relationships_**
-- **_![:text_color darkorange](Layer 3)_**: **_Unpacking the outcome_**
+- **_![:text_color darkorange](Step 0)_**: **_Train/Test Split_**
+- **_![:text_color darkorange](Step 1)_**: **_Understanding what data you have_**
+- **_![:text_color darkorange](Step 2)_**: **_Analyzing the relationships_**
+- **_![:text_color darkorange](Step 3)_**: **_Unpacking the outcome_**
 
   - What outcome variable do you care about (or seems important) in the data? 
   - Build a model that best predicts this outcome.
@@ -191,15 +691,15 @@ Given new data, how best should one draw novel insights?
 
 ---
 
-###  "Layers" of Exploration 
+###  Data Exploration Steps 
 
 Given new data, how best should one draw novel insights?
 
-- **_![:text_color darkorange](Layer 0)_**: **_Train/Test Split_**
-- **_![:text_color darkorange](Layer 1)_**: **_Understanding what data you have_**
-- **_![:text_color darkorange](Layer 2)_**: **_Analyzing the relationships_**
-- **_![:text_color darkorange](Layer 3)_**: **_Unpacking the outcome_**
-- **_![:text_color darkorange](Layer 4)_**: **_Theorize_**
+- **_![:text_color darkorange](Step 0)_**: **_Train/Test Split_**
+- **_![:text_color darkorange](Step 1)_**: **_Understanding what data you have_**
+- **_![:text_color darkorange](Step 2)_**: **_Analyzing the relationships_**
+- **_![:text_color darkorange](Step 3)_**: **_Unpacking the outcome_**
+- **_![:text_color darkorange](Step 4)_**: **_Theorize_**
 
   - What are some hypotheses that we might be able to generate from the data?
   - What confounders might be lurking generating spurious correlations?
@@ -209,686 +709,16 @@ Given new data, how best should one draw novel insights?
 		
 ---
 
-###  "Layers" of Exploration 
+###  Data Exploration Steps 
 
 Given new data, how best should one draw novel insights?
 
-- **_![:text_color darkorange](Layer 0)_**: **_Train/Test Split_**
-- **_![:text_color darkorange](Layer 1)_**: **_Understanding what data you have_**
-- **_![:text_color darkorange](Layer 2)_**: **_Analyzing the relationships_**
-- **_![:text_color darkorange](Layer 3)_**: **_Unpacking the outcome_**
-- **_![:text_color darkorange](Layer 4)_**: **_Theorize_**
+- **_![:text_color darkorange](Step 0)_**: **_Train/Test Split_**
+- **_![:text_color darkorange](Step 1)_**: **_Understanding what data you have_**
+- **_![:text_color darkorange](Step 2)_**: **_Analyzing the relationships_**
+- **_![:text_color darkorange](Step 3)_**: **_Unpacking the outcome_**
+- **_![:text_color darkorange](Step 4)_**: **_Theorize_**
 
 
-- **_![:text_color darkorange](Layer 5)_**: **_Repeat 1 - 4_**
-
----
-
-class: newsection
-
-# Applied Example
-
----
-
-## Protest & Internet Searches
-
-![:center_img 70](Figures/country-1.png)
-
----
-
-![:space 10]
-![:center_img 75](Figures/conflict_occurrence.gif)
-
----
-
-![:center_img 80](Figures/country-2.png)
-
----
-
-![:center_img 80](Figures/country-3.png)
-
----
-
-![:space 5]
-
-![:center_img 100](Figures/keywords-wordcloud-esque-plot.png)
-
----
-
-### Layer 0: Split the Data
-
-```{r}
-dat = read_csv("Data/search_protest_data.csv")
-range(dat$date)
-```
-
-
-```{r}
-train_dat = dat %>% filter(date < as.Date("2017-06-01"))
-test_dat = dat %>% filter(date >= as.Date("2017-06-01"))
-
-# Proporation in the training data 
-round(nrow(train_dat)/nrow(dat),3)
-  
-# Proporation in the test data
-round(nrow(test_dat)/nrow(dat),3)
-```
-
----
-
-### Layer 1: Understanding the Data
-
-**Unit of Analysis**
-
-```{r}
-train_dat %>% glimpse()
-```
-
----
-
-### Layer 1: Understanding the Data
-
-**Unit of Analysis**: Country-Month
-
-```{r}
-train_dat %>% summarize(n_countries = n_distinct(country))
-```
-
-
-```{r}
-# Number of observations
-train_dat %>% nrow()
-```
-
----
-
-### Layer 1: Understanding the Data
-
-**Coverage**: Data appears complete across the available months, except for South Sudan.
-
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-train_dat %>% 
-  ggplot(aes(date,country)) +
-  geom_point(show.legend = F) 
-```
-
-
----
-
-### Layer 1: Understanding the _Outcome_
-
-```{r,fig.align="center",fig.width=7,fig.height=5,fig.height=3,dpi=600}
-train_dat %>% 
-  ggplot(aes(protest_event) ) +
-  geom_bar()
-```
-
-
----
-
-### Layer 1: Understanding the _Outcome_
-
-![:space 3]
-
-- Outcome data drawn from the [Armed Conflict Location & Event Data Project (ACLED)](https://www.acleddata.com/) data project.
-
-- Protests are captured through a mixture of media, NGO, and first hand accounts. 
-
-- Event level data that has been aggregated to the country-month (the unit of analysis)
-
-- `protest_event` takes on the value of "yes" if there was a protest in the respective country-month, "no" otherwise. In other words, we're classifying country-months as "protests", "not protests".
-
-- Any issues you can think of with this data? Any sources of potential bias? 
-
----
-
-### Layer 1: Understanding the _Features_
-
-![:space 5]
-
-- [Google Trends](https://trends.google.com/trends/?geo=US) data downloaded using the Google API.
-
-- Search history is returned as a _normalized score_ ranging from 0 (not searched at all) to 100 (period the term was searched for the most within the available time period).
-
-- Each search term was extracted independently of other search term (scores aren't relative) for each country (search term captures the "within country" usage).
-
-- All keywords have been _lagged_ by one period (to prevent anachronistic associations).
-
-- Any issues you can think of with this data? Any sources of potential bias?
-
----
-
-### Layer 1: Understanding the _Features_
-
-Number of features to learn on: 154... i.e. a lot.
-```{r}
-train_dat %>% select(abuse:stress) %>% ncol
-```
-
-Missing information?
-```{r}
-train_dat %>% select(abuse:stress) %>% 
-  summarize_all(function(x) sum(is.na(x))) %>% 
-  gather(kw,missing) %>% filter(missing>0)
-```
-
----
-
-### Layer 1: Understanding the _Features_
-
-Variation?
-```{r,fig.align="center",fig.width=7,fig.height=3,dpi=600}
-train_dat %>% select(abuse:stress) %>% 
-  summarize_all(sd) %>% gather(var,sd) %>% 
-  ggplot(aes(sd)) + geom_histogram() +
-  geom_vline(xintercept = 0,color="red")
-```
-
----
-
-### Layer 1: Understanding the _Features_
-
-Variation by country?
-
-```{r,fig.align="center",fig.width=7,fig.height=3,dpi=600}
-train_dat %>% select(country,abuse:stress) %>% 
-  group_by(country) %>% summarize_all(sd) %>% gather(kw,sd,-country) %>% 
-  ggplot(aes(sd,group=country)) + geom_density(show.legend = F) +
-  geom_vline(xintercept = 0,color="red")
-```
-
----
-
-### Layer 1: Understanding the _Features_
-
-Number of keywords that don't vary by country (i.e. never searched for)?
-```{r,fig.align="center",fig.width=10,fig.height=4,dpi=600}
-train_dat %>% select(country,abuse:stress) %>% 
-  group_by(country) %>% summarize_all(sd) %>% gather(kw,sd,-country) %>%
-  filter(sd==0) %>% group_by(country) %>% count() %>% 
-  ggplot(aes(country,n,fill=n)) + geom_col(show.legend = F) + 
-  coord_flip() +labs(y="Number of keywords with no variation") 
-```
-
----
-
-### Layer 1: Understanding the _Features_
-
-Which keywords have the highest coverage?
-
-```{r}
-train_dat %>% select(country,abuse:stress) %>% 
- group_by(country) %>% summarize_all(sd) %>% gather(kw,sd,-country) %>%
-  filter(sd>0) %>% group_by(kw) %>% count() %>% 
-  arrange(desc(n)) %>% head(.,10)
-```
-
----
-
-### Layer 2: Analyzing the relationships
-
-![:space 5]
-
-- Many features means p(p-1)/2 (11,781) possible plots. We likely don't want to spend the next couple of months plotting relationships.
-
-- For the outcome, let's look at the prevalence of protest over time and space.
-
-- For the features, let's look at the:
-
-  - correlations between the indicators,
-  
-  - whether the data clusters in interesting ways,
-  
-  - decompose the data to see if there are any interesting substructures. 
-
----
-
-### Layer 2: _outcome over time/space_
-
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-train_dat %>% 
-  mutate(year=lubridate::year(date)) %>% group_by(country,year) %>%
-  summarize(prop_protest_months = sum(protest_event=="yes")/n()) %>% 
-  ggplot(aes(year,country,fill=prop_protest_months)) + geom_tile() +
-  scale_fill_gradient(low="white",high="darkred") 
-```
-
----
-
-### Layer 2: _relationship between features_
-
-Correlation between the features.
-```{r,fig.align="center",fig.width=10,fig.height=5,dpi=600}
-sigma = train_dat %>% select(abuse:stress) %>% cor()
-ggcorrplot::ggcorrplot(sigma,hc.order = TRUE,outline.col = "white",tl.cex = 5)
-```
-
-
----
-
-### Layer 2: _relationship between features_
-
-How do the features cluster?
-```{r,fig.align="center",fig.width=10,fig.height=5,dpi=600}
-D = train_dat %>% select(abuse:stress) 
-clusters = hclust(dist(D),method="complete")
-plot(clusters)
-```
-
----
-
-### Layer 2: _relationship between features_
-
-How do the features cluster?
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-train_dat$cluster = cutree(clusters, h = 500) 
-train_dat %>% arrange(cluster) %>% mutate(country=fct_inorder(country)) %>% 
-  ggplot(aes(date,country,color=factor(cluster))) +
-  geom_point() 
-```
-
----
-
-### Layer 2: _relationship between features_
-
-Hidden structures in the features?
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-pca_D <- FactoMineR::PCA(D,graph=F,scale.unit = T)
-factoextra::fviz_eig(pca_D,addlabels = T,) 
-```
-
----
-
-### Layer 2: _relationship between features_
-
-Hidden structures in the features?
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-factoextra::fviz_pca_var(pca_D,axes = 1:2)
-```
-
-
----
-
-### Layer 2: _relationship between features_
-
-Hidden structures in the features?
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-factoextra::fviz_pca_var(pca_D,axes = 2:3)
-```
-
-
----
-
-### Layer 2: _relationship between features_
-
-Hidden structures in the features?
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-scores = as_tibble(factoextra::get_pca_ind(pca_D)$coord)
-ggplot(scores,aes(Dim.1,Dim.2)) + geom_point()
-```
-
----
-
-### Layer 2: _relationship between features_
-
-Hidden structures in the features?
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-ggplot(scores,aes(Dim.1,Dim.3)) + geom_point()
-```
-
----
-
-### Layer 2: _relationship between features_
-
-Hidden structures in the features?
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-ggplot(scores,aes(Dim.2,Dim.3)) + geom_point()
-```
-
----
-
-### Layer 3: _Unpacking the outcome_
-
-Build a predictive model: as always, we need to **_pre-process the data_**.
-```{r}
-# Drop clusters variable
-train_dat2 = train_dat %>% select(-cluster,-date,-country) 
-
-# Cleaning function
-rcp = recipe(protest_event ~ . , data = train_dat2) %>% 
-  step_range(all_predictors()) %>% 
-  prep()
-
-# Apply the changes 
-train_dat2 = bake(rcp,train_dat2)
-test_dat2 = bake(rcp,test_dat %>% select(-date,-country) )
-```
-
----
-
-### Layer 3: _Unpacking the outcome_
-
-Build a predictive model: set up our **_cross-validation_**. 
-```{r}
-# Note: caret package is loaded
-set.seed(1988) # set a seed for replication purposes 
-
-folds <- createFolds(train_dat2$protest_event, k = 5) # Partition the data into 10 equal folds
-
-sapply(folds,length)
-```
-
-```{r}
-control_conditions <- 
-  trainControl(method='cv', # K-fold cross validation
-               summaryFunction = twoClassSummary, # Need this b/c it's a classification problem
-               classProbs = TRUE, # Need this b/c it's a classification problem
-               index = folds # The indices for our folds (so they are always the same)
-  )
-```
-
----
-
-### Layer 3: _Unpacking the outcome_
-
-Build a _few_ predictive models. 
-```{r}
-# Logit
-mod_logit <-
-  train(protest_event ~ ., 
-        data=train_dat2, 
-        method = "glm",
-        metric = "ROC", 
-        trControl = control_conditions
-  )
-```
-
-
----
-
-### Layer 3: _Unpacking the outcome_
-
-Build a _few_ predictive models. 
-```{r}
-# K Nearest Neighbors
-mod_knn <-
-  train(protest_event ~ ., 
-        data=train_dat2, 
-        method = "knn", 
-        metric = "ROC", 
-        trControl = control_conditions
-  )
-```
-
----
-
-### Layer 3: _Unpacking the outcome_
-
-Build a _few_ predictive models. 
-```{r}
-# Random Forest
-mod_rf <-
-  train(protest_event ~ ., 
-        data=train_dat2, 
-        method = "ranger", 
-        metric = "ROC",
-        importance = 'impurity',
-        trControl = control_conditions
-  )
-```
-
----
-
-### Layer 3: _Unpacking the outcome_
-
-Choose the most predictive model... Random Forest for the win!
-
-```{r,fig.align="center",fig.width=7,fig.height=3,dpi=600}
-mod_list <- list(logit = mod_logit,knn = mod_knn,rf = mod_rf)
-
-# Generate Plot to compare output. 
-dotplot(resamples(mod_list),metric = 'ROC')
-```
-
----
-
-### Layer 3: _Unpacking the outcome_: <br> Variable Importance
-
-- Now that we've located a predictive model, our aim is to isolate the variables/features that mattered most in the prediction task. 
-
-- One straight-forward way of measuring variable importance for a random forest is to employ a **_"permutation" approach_**.
-
-- Another way (if dealing with a linear model) is to look at the size of the t or z statistic.
-
-- Finally, if using a random forest, we can use metrics like the Gini Coefficient to calculate which features most increase or decrease node impurity. 
-
-- Here we'll randomly permute the values of each feature and record the drop in training performance.
-
----
-
-### Layer 3: _Unpacking the outcome_: <br> Variable Importance
-
-Variable Importance (using permutations)
-
-```{r,fig.align="center",fig.width=10,fig.height=4.5,dpi=600}
-# install.packages("vip") # Install the package
-pred_wrapper <- function(object, newdata) {
-  # wrapper function so vip knows how to calculate a prediction
-  predict(object, data=newdata,type="response")$predictions[,"yes"]
-}
-
-# Generate a variable importance plot
-permute_imp_plot <- 
-  vip::vip(mod_rf$finalModel,
-           data = train_dat2,
-           target=train_dat2$protest_event,
-           train = train_dat2 %>% select(-protest_event),
-           reference_class = "yes",
-           method="permute",
-           pred_wrapper = pred_wrapper)
-```
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Variable Importance
-
-Variable Importance (using permutations)
-
-```{r,fig.align="center",fig.width=10,fig.height=5,dpi=600}
-permute_imp_plot 
-```
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Variable Importance
-
-Variable Importance (using impurity -- which comes with `Caret`)
-
-```{r,fig.align="center",fig.width=10,fig.height=5,dpi=600}
-plot(varImp(mod_rf,scale=T),top = 10)
-```
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Partial Dependency
-
-
-Examine the marginal effect of a given feature: "wife"
-
-```{r}
-# install.packages('pdp') Download the partial dependency plot
-pdp_dat = pdp::partial(mod_rf, 
-                        pred.var = c("wife"), 
-                        ice = F, 
-                        center = F, 
-                        prob = T,
-                        type= "classification",
-                        train = train_dat2) 
-pdp_dat
-```
-
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Partial Dependency
-
-Examine the marginal effect of a given feature: "wife"
-```{r,fig.align="center",fig.width=10,fig.height=4,dpi=600}
-pdp_dat %>% 
-  ggplot(aes(wife,yhat)) + geom_line() +
-  labs(y="Pr(Protest == 1)")
-```
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Partial Dependency
-
-Examine the marginal effect of a given feature: "gay"
-
-```{r,fig.align="center",fig.width=10,fig.height=4,dpi=600}
-pdp_dat2 = pdp::partial(mod_rf, pred.var = c("gay"), 
-                        ice = F, center = F, 
-                        prob = T,type= "classification", 
-                        train = train_dat2) 
-pdp_dat2
-```
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Partial Dependency
-
-Examine the marginal effect of a given feature: "gay"
-
-```{r,fig.align="center",fig.width=10,fig.height=4,dpi=600}
-pdp_dat2 %>% 
-  ggplot(aes(gay,yhat)) + 
-  geom_line() +labs(y="Pr(Protest == 1)")
-```
-
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Individual Conditional Expectation (ICE) 
-
-Examine if there is any heterogeneity in the prediction.
-
-```{r}
-ice_dat = pdp::partial(mod_rf, pred.var = c("wife"), 
-                        ice = T, center = F, 
-                        prob = T,type= "classification", 
-                        train = train_dat2) 
-ice_dat
-```
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Individual Conditional Expectation (ICE) 
-
-Examine if there is any heterogeneity in the prediction.
-
-```{r,fig.align="center",fig.width=10,fig.height=4}
- ggplot(data=ice_dat) + 
-  geom_line(aes(wife,yhat,group=yhat.id),alpha=.05) +
-  geom_line(data=pdp_dat,aes(wife,yhat),color="orange",size=1.5) + 
-  labs(y="Pr(Protest == 1)")
-```
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Individual Conditional Expectation (ICE) 
-
-Examine if there is any heterogeneity in the prediction (centering the predictions around the partial dependency)
-
-```{r}
-ice_dat2 = pdp::partial(mod_rf, pred.var = c("wife"), 
-                        ice = T, center = T, 
-                        prob = T,type= "classification", 
-                        train = train_dat2) 
-ice_dat2
-```
-
-
----
-
-### Layer 3: _Unpacking the outcome_:  <br> Individual Conditional Expectation (ICE)
-
-```{r,fig.align="center",fig.width=10,fig.height=5}
- ggplot(data=ice_dat2) + 
-  geom_line(aes(wife,yhat,group=yhat.id),alpha=.05) +
-  labs(y="Pr(Protest == 1)")
-```
-
----
-
-### Layer 4: Theorize
-
-- What features appear most associated with the protest outcome?
-
-- What is the relationship between those features and the probability of observing the outcome?
-
-  - What does this tell us about search activity around those keywords and perceptions on the ground?
-
-- What might be a potential confounder(s)? 
-
-- What are some hypotheses we might generate from these data?
-
-- How might we test those hypotheses? Are there any interventions we could design?
-
----
-
-### Repeat
-
-This is just the starting point:
-
-- Back to **_![:text_color darkorange](Layer 1)_**:
-
-  - Can we engineer new features from the existing data? 
-  - Are there ways to incorporate additional information? (e.g. country and month dummies?)
-  
----
-
-### Repeat
-
-This is just the starting point:
-
-- Back to **_![:text_color darkorange](Layer 1)_**:
-
-- Back to **_![:text_color darkorange](Layer 2)_**: 
-
-  - Can we systematically reduced dimensions in the data (along theoretical categories) to reduce the dimensionality?
-  - Can we use clustering along with dimension reduction to better understand how the data is partitioning into two classes?
-  
----
-
-### Repeat
-
-This is just the starting point:
-
-- Back to **_![:text_color darkorange](Layer 1)_**:
-
-- Back to **_![:text_color darkorange](Layer 2)_**: 
-  
-- Back to **_![:text_color darkorange](Layer 3)_**:
-
-  - Are there other models we could run? 
-  - Are there other features we should explore the marginal effects of?
-  
----
-
-### Repeat
-
-This is just the starting point:
-
-- Back to **_![:text_color darkorange](Layer 1)_**:
-
-- Back to **_![:text_color darkorange](Layer 2)_**: 
-  
-- Back to **_![:text_color darkorange](Layer 3)_**:
-
-- Back to **_![:text_color darkorange](Layer 4)_**:
-
-  - How do these changes alter our beliefs/original hypotheses?
-  - Do these changes result in new questions/hypotheses? 
-  - Are we able to solidify a theory regarding what is going on?
-
-
+- **_![:text_color darkorange](Step 5)_**: **_Repeat 1 - 4_**
 

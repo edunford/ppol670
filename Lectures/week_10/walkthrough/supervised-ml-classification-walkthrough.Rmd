@@ -32,6 +32,7 @@ doMC::registerDoMC()
 
 The following data contains information regarding whether or not someone has health coverage. The outcome of interest is whether of not an individual has healthcare coverage or not. The available predictive features capture socio-economic and descriptive factors. 
 
+
 ```{r}
 set.seed(123)
 
@@ -47,6 +48,7 @@ head(dat) # Peek at the data just to make sure everything was read in correctly.
 Before event looking at the data, let's split the sample up into a training and test dataset. We'll completely hold off on viewing the test data, so as not to bias our development of the learning model. 
 
 ```{r}
+set.seed(123)
 index = createDataPartition(dat$coverage,p=.8,list=F) 
 train_data = dat[index,] # Use 80% of the data as training data 
 test_data = dat[-index,] # holdout 20% as test data 
@@ -54,6 +56,18 @@ test_data = dat[-index,] # holdout 20% as test data
 dim(train_data)
 dim(test_data) 
 ```
+
+
+Here is an alternative way of splitting the data.
+
+```{r,eval=F}
+# install.packages("rsample")
+# require(rsample)
+split <- rsample::initial_split(dat,prop = .8)
+train_data <- rsample::training(split) 
+test_data  <- rsample::testing(split) 
+```
+
 
 # Examine the data 
 
@@ -128,6 +142,7 @@ Things to note:
 
 Let's peek more closely at the distribution of wealth in the sample. 
 
+
 ```{r,fig.height=5,fig.width=10}
 train_data %>% 
   mutate(wealth_bins = case_when(
@@ -137,7 +152,7 @@ train_data %>%
     wage > 75000 & wage<= 200000 ~ "High",
     wage > 200000 ~ "Jeez...!",
   )) %>% 
-  mutate(wealth_bins = fct_infreq(wealth_bins)) %>% 
+  mutate(wealth_bins = fct_infreq(wealth_bins)) %>%
   ggplot(aes(wealth_bins)) +
   geom_bar()
 ```
@@ -201,7 +216,8 @@ When comparing different machine learning models, we want to make sure we're mak
 ```{r}
 set.seed(1988) # set a seed for replication purposes 
 
-folds <- createFolds(train_data2$coverage, k = 5) # Partition the data into 10 equal folds
+# Partition the data into 5 equal folds
+folds <- createFolds(train_data2$coverage, k = 5) 
 
 sapply(folds,length)
 ```
@@ -368,7 +384,7 @@ mod_svm_linear <-
   train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
           educ_Less.than.HS + educ_Undergraduate.Degree,
         data=train_data2, # Training data 
-         method = "svmLinear", # SVM with a polynomial Kernel
+        method = "svmLinear", # SVM with a polynomial Kernel
         metric = "ROC", # area under the curve
         tuneGrid = expand.grid(C = c(.5,1)), # Add two tuning parameters
         trControl = control_conditions
@@ -425,6 +441,7 @@ How did the different methods perform? Which one did the best?
 # Organize all model imputs as a list.
 mod_list <-
   list(
+    glm=mod_logit,
     knn1 = mod_knn,
     knn2 = mod_knn2,
     cart = mod_cart,
@@ -435,7 +452,7 @@ mod_list <-
   )
 
 # Generate Plot to compare output. 
-dotplot(resamples(mod_list))
+dotplot(resamples(mod_list),metric = "ROC")
 ```
 
 
@@ -444,7 +461,7 @@ dotplot(resamples(mod_list))
 Examine the predictive performance of the best performing model. 
 
 ```{r}
-pred <- predict(mod_rf,newdata = test_data2)
+pred <- predict(mod_rf, newdata = test_data2)
 confusionMatrix(table(pred,test_data2$coverage))
 ``` 
 
@@ -457,6 +474,6 @@ pred_probability <- predict(mod_rf,newdata = test_data2,type="prob")
 # install.packages("Metrics") # if Metrics is not installed
 
 # Note that we need to convert the outcome in the data to a 1/0.
-Metrics::auc(1*(test_data2$coverage=="Coverage"), pred_probability$Coverage)
+Metrics::auc(as.numeric(test_data2$coverage=="Coverage"), pred_probability$Coverage)
 ```
 
