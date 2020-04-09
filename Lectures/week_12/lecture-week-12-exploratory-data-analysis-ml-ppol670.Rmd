@@ -421,7 +421,7 @@ partial(rf_model,
         
         # Provide a grid of values to speed up computation time.
         pred.grid = expand.grid(age = seq(.18,.75,by=.1), #<<
-                                political_therm = seq(.18,.75,by=.05)), #<<
+                                political_therm = seq(0,1,by=.05)), #<<
         
         # Plotting engine and color scheme
         plot.engine = "ggplot2",
