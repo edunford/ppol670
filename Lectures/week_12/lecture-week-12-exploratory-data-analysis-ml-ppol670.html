@@ -336,7 +336,7 @@ vi_permute(rf_model, # Machine learning model
            train = vote_data, # Training data 
            nsim = 10, # Number of times to permute each variable
            target = "voted", # outcome
-           reference_class = "yes", # what class are you predicting
+           reference_class = "Yes", # what class are you predicting
            metric = "accuracy", # metric 
            pred_wrapper = predict) # prediction function
 ```
@@ -345,10 +345,10 @@ vi_permute(rf_model, # Machine learning model
 ## # A tibble: 4 x 3
 ##   Variable        Importance   StDev
 ##   &lt;chr&gt;                &lt;dbl&gt;   &lt;dbl&gt;
-## 1 age                 0.191  0.00704
-## 2 political_therm     0.364  0.00848
-## 3 visited_europe      0.0807 0.00729
-## 4 eat_bread           0.078  0.00611
+## 1 age                -0.191  0.00704
+## 2 political_therm    -0.364  0.00848
+## 3 visited_europe     -0.0807 0.00729
+## 4 eat_bread          -0.078  0.00611
 ```
 
 ---
@@ -361,7 +361,7 @@ Use `vip` to auto generate a feature importance plot
 vip(rf_model,train = vote_data,
     nsim = 10,method="permute",
     geom = "boxplot",target = "voted",
-    reference_class = "yes",metric = "accuracy",
+    reference_class = "Yes",metric = "accuracy",
     pred_wrapper = predict)
 ```
 
@@ -437,7 +437,7 @@ Recall our model from before. Let's explore the marginal effect of age on the li
 
 ```r
 require(pdp)
-partial(rf_model, pred.var = "age", plot = TRUE,
+partial(rf_model, pred.var = "age", plot = TRUE,prob=T,
         plot.engine = "ggplot2")
 ```
 
@@ -455,12 +455,12 @@ Let's explore the marginal effect of age and political thermometer measure on th
 # more values, the longer the wait (like tuning)
 *grid_values &lt;-
 * expand.grid(age = seq(.18,.75,by=.1),
-*             political_therm = seq(.18,.75,by=.05))
+*             political_therm = seq(0,1,by=.05))
 
 partial(rf_model, 
         # Choose two predictive values
 *       pred.var = c("age", "political_therm"),
-        plot = TRUE, 
+        plot = TRUE, prob=T,
         #provide values to calc preds
 *       pred.grid = grid_values,
         # Plotting engine and color scheme
@@ -507,7 +507,7 @@ Let's explore the marginal effect of age and political thermometer measure on th
 ```r
 partial(rf_model, 
 *       ice=T,alpha=.05,
-        pred.var = "age", plot = TRUE,
+        pred.var = "age", plot = TRUE,prob=T,
         plot.engine = "ggplot2")
 ```
 
@@ -522,7 +522,7 @@ partial(rf_model,
 ```r
 partial(rf_model, 
 *       ice=T,alpha=.05, center=T,
-        pred.var = "age", plot = TRUE,
+        pred.var = "age", plot = TRUE,prob=T,
         plot.engine = "ggplot2")
 ```
 

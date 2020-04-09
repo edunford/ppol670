@@ -27,7 +27,7 @@ require(pdp) # pdp and ice plots
 
 # For parallelization (to run the models across many cores) -- speeds up computation!
 # install.packages("doMC")
-# doMC::registerDoMC()
+doMC::registerDoMC()
 ```
 
 
@@ -216,25 +216,25 @@ It's useful to know that `age` and `wage` are important to the model, but how do
 
 ```{r,fig.align="center",fig.height=10,fig.width=10}
 # PDP for age
-age_pdp <- partial(mod_rf_selected, pred.var = "age", plot = TRUE,
+age_pdp <- partial(mod_rf_selected, pred.var = "age", plot = TRUE,prob=T,
                    grid.resolution = 20, # choosing less points makes it run quicker
                    plot.engine = "ggplot2")
 
 # PDP for wage
-wage_pdp <- partial(mod_rf_selected, pred.var = "wage", plot = TRUE,
+wage_pdp <- partial(mod_rf_selected, pred.var = "wage", plot = TRUE,prob=T,
                     grid.resolution = 20, # choosing less points makes it run quicker
                    plot.engine = "ggplot2")
 
 # PDP for Married (note that this is a dummy var, so only can take on one of two values)
-mar_pdp <- partial(mod_rf_selected, pred.var = "mar_Married", plot = TRUE,
+mar_pdp <- partial(mod_rf_selected, pred.var = "mar_Married", plot = TRUE,prob=T,
                    plot.engine = "ggplot2")
 
 # PDP for Not a citizen (note that this is a dummy var, so only can take on one of two values)
-cit_pdp <- partial(mod_rf_selected, pred.var = "cit_Non.citizen", plot = TRUE,
+cit_pdp <- partial(mod_rf_selected, pred.var = "cit_Non.citizen", plot = TRUE,prob=T,
                    plot.engine = "ggplot2")
 
 # PDP for No high school degree (note that this is a dummy var, so only can take on one of two values)
-nohs_pdp <- partial(mod_rf_selected, pred.var = "educ_Less.than.HS", plot = TRUE,
+nohs_pdp <- partial(mod_rf_selected, pred.var = "educ_Less.than.HS", plot = TRUE,prob=T,
                    plot.engine = "ggplot2")
 
 # GridExtra allows us to stack two ggplot objects into a single plot
@@ -257,29 +257,29 @@ One additional question we might want to ask is whether there is are important _
 
 ```{r,fig.align="center",fig.height=10,fig.width=10}
 # PDP for age
-age_ice <- partial(mod_rf_selected, pred.var = "age", plot = TRUE,
+age_ice <- partial(mod_rf_selected, pred.var = "age", plot = TRUE,prob=T,
                    ice=T,center=T,alpha=.05,
                    grid.resolution = 20, # choosing less points makes it run quicker
                    plot.engine = "ggplot2")
 
 # PDP for wage
-wage_ice <- partial(mod_rf_selected, pred.var = "wage", plot = TRUE,
+wage_ice <- partial(mod_rf_selected, pred.var = "wage", plot = TRUE,prob=T,
                     ice=T,center=T,alpha=.05,
                     grid.resolution = 20, # choosing less points makes it run quicker
                    plot.engine = "ggplot2")
 
 # PDP for Married (note that this is a dummy var, so only can take on one of two values)
-mar_ice <- partial(mod_rf_selected, pred.var = "mar_Married", plot = TRUE,
+mar_ice <- partial(mod_rf_selected, pred.var = "mar_Married", plot = TRUE,prob=T,
                    ice=T,center=T,alpha=.05,
                    plot.engine = "ggplot2")
 
 # PDP for Not a citizen (note that this is a dummy var, so only can take on one of two values)
-cit_ice <- partial(mod_rf_selected, pred.var = "cit_Non.citizen", plot = TRUE,
+cit_ice <- partial(mod_rf_selected, pred.var = "cit_Non.citizen", plot = TRUE,prob=T,
                    ice=T,center=T,alpha=.05,
                    plot.engine = "ggplot2")
 
 # PDP for No high school degree (note that this is a dummy var, so only can take on one of two values)
-nohs_ice <- partial(mod_rf_selected, pred.var = "educ_Less.than.HS", plot = TRUE,
+nohs_ice <- partial(mod_rf_selected, pred.var = "educ_Less.than.HS", plot = TRUE,prob=T,
                     ice=T,center=T,alpha=.05,
                    plot.engine = "ggplot2")
 
@@ -306,7 +306,7 @@ grid_values <- expand.grid(age = seq(0,1,by=.1),
                            wage = seq(0,1,by=.1))
 
 age_wage_pdp <- partial(mod_rf_selected, pred.var = c("age","wage"), 
-                        plot = TRUE,
+                        plot = TRUE,prob=T,
                         pred.grid = grid_values,
                         plot.engine = "ggplot2",
                         palette = "magma")
@@ -409,7 +409,8 @@ Let's now build our theoretical model using a standard linear model (actually, a
 theortical_model <- 
   train_data2 %>% 
   mutate(coverage_dummy = 1*(coverage == "Coverage")) %>% 
-  glm(coverage_dummy ~ age*wage + 
+  glm(coverage_dummy ~ 
+        age*wage + 
         mar_Married*wage + 
         cit_Non.citizen*wage + 
         cit_Non.citizen*age + 
