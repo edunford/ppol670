@@ -1,0 +1,522 @@
+---
+title: "Working with spatial data in R"
+subtitle: "PPOL670"
+author: "Trey Billing"
+date: "`r format(Sys.Date(), '%b-%d-%y')`"
+output: 
+  html_document:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, cache = T)
+```
+
+# A working example
+
+__Disclaimer:__ I am not an epidemiologist or an infectious disease expert. Assuming you are not either, remember that we're using this data as a tool to learn about spatial data in R. Please leave actual analysis and inference regarding COVID-19 to trained experts. 
+
+Johns Hopkins CSSE has been tracking COVID-19 cases around the world and publishing the data on an online [dashboard](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6). They are also making this data available on their [Github](https://github.com/CSSEGISandData/COVID-19). Using this data, I'm going to walkthrough a hypothetical spatial analysis workflow, touching on many common functions and problems that will likely come up in your own work. 
+
+
+To start, let's download the data from Johns Hopkins CSSE. You should be able to pull the data directly from the url through `read_csv()` as in the chunk below. Here, I load the `tidyverse`, download the data, and print out a bit to get a feel of what's going on.
+
+```{r}
+library(tidyverse)
+
+df <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv")
+
+# Indexed so the many date columns don't print below the table
+df[,1:10] %>% 
+  head()
+```
+
+The data is organized by `Province/State`-`Country/Region`-`Lat-Long`, with many dates as columns. This isn't very tidy-friendly, so let's `pivot_longer()`. Remember, we have to tell `pivot_longer()` what columns we want to pivot; in this case, we want to pivot the many dates into a new `date` column. Instead of manually typing the dates, we can use colnames() and indexing to tell `pivot_longer()` what columns we want. That way, when Johns Hopkins updates the data with more recent dates, the code will still work.
+
+```{r, echo = TRUE}
+# First figure out where our first and last date are
+colnames(df)
+colnames(df)[12] # first date
+colnames(df)[length(colnames(df))] # last date; length() tells us how "long" an object is so it will point to the last value
+```
+
+With this info, we can specify the range `colnames(df)[5]:colnames(df)[length(colnames(df))]` in `pivot_longer()`, will spans from the first date to the last date. We'll also coerce the date column to a date type so R knows we're talking time:
+
+```{r, echo = TRUE}
+df <- df %>% 
+  pivot_longer(colnames(df)[12]:colnames(df)[length(colnames(df))], 
+               names_to = "date", 
+               values_to = "cases") %>% 
+  mutate(date = as.Date(date, "%m/%d/%y")) %>% 
+  arrange(Province_State)
+head(df)
+```
+
+To make things a bit more manageable, let's filter the data such that we're only in the continental United States for observations with at least 1 case:
+```{r, echo = TRUE}
+
+# The %in% operator allows us to filter by a vector of strings
+# We can remove many territories at once without using many | ("or") statements
+# Putting ! in front of `Province/State` makes it take the negation of the operator
+# So it reads like "keep those Province/States %not in% this vector
+
+df <- df %>% 
+  filter(!Province_State %in% c("Guam", 
+                                "Hawaii", 
+                                "Virgin Islands, U.S.",
+                                "Virgin Islands",
+                                "Alaska", 
+                                "Grand Princess",
+                                "Diamond Princess", 
+                                "Northern Mariana Islands",
+                                "Puerto Rico",
+                                "American Samoa")) %>% 
+  # Also drop some filled in coordinates
+  filter(Lat != 0)
+head(df)
+```
+
+Let's also rename `Long_` to `Long` because that's just annoying:
+```{r}
+df <- df %>% rename(Long = Long_)
+```
+
+
+# Convert `data` to `spatial data`
+
+Thus far, out data does not differ from the data that you are used to. Yes, there are columns for latitude and longitude, but these are just numbers. We could even plot the lat-long info as if they were normal numeric variables:
+
+```{r}
+ggplot(df) +
+  geom_point(aes(x = Long, y = Lat)) +
+  theme_light() +
+  labs(x = "X", y = "Y")
+```
+
+But these aren't just numbers! They are numbers that tell us something about where the observations are located on the globe.^[More generally, the locations could be on earth, in outerspace, or in some imaginary universe as long as the location of observations are referenced to a common system.] We're going to use the `sf` package to convert this normal data to spatial data.
+
+To do so, install the `sf` package if you do not already have it installed and load it. Then, pipe the `df` to the `sf` function `st_as_sf()`, which takes a non-sf class object and converts it to an `sf` object. We also have to tell the function which columns in our data correspond to coordinates:
+
+```{r}
+# install.packages("sf")
+library(sf)
+df_spatial <- df %>% 
+  st_as_sf(., coords = c("Long", "Lat"))
+```
+
+Now we have a new object called df_spatial. Let's print some rows to see what it looks like:
+```{r}
+df_spatial %>% head()
+```
+
+This looks familiar, right? Print the original data for reference:
+```{r}
+df %>% head()
+```
+
+In `df_spatial`, we have exactly the same data as before, but one extract column called `geometry`. This column encodes the spatial information the data into a single `feature`. This is a very important beneift of the `sf` package, which stands for "simple features." Everything you know about cleaning and analyzing data with `dplyr`, `tidyr`, `ggplot`, etc. still works! We've just added an addition, special column. 
+
+## Sidebar: the `sf` package
+
+The `sf` package is the workhorse much of contemporary spatial analysis in R. More specifically, `sf` will be your main tool when working with __vector__ spatial data. You've heard the jargon "vector" several times in this course -- for spatial data, it means something specific. Namely, vector data types include points, lines, and polygons. Points, like in our working example, are observations at specific locations. Lines include objects like roads and river, while polygons often correspond to geographic boundaries like states and territories. Here's a little graphic that summarizes these main vector types:
+
+```{r, echo = F, fig.cap = "Figure from https://datacarpentry.org/organization-geospatial/02-intro-vector-data/", fig.align="center"}
+knitr::include_graphics("pnt_line_poly.png")
+```
+
+By using the `class()` function on the `geometry` column of an `sf` object, you can see what type of vector you're working with.
+```{r}
+class(df_spatial$geometry)
+```
+
+We have a bunch of data and R knows that they are spatial points. Let's try to plot them. Another useful feature of the `sf` package is that it's integrated with `ggplot` via the a special geom called `geom_sf()`. As you normally would, let's pass the spatial data through ggplot and call `geom_sf`:
+
+```{r}
+ggplot(df_spatial) +
+  geom_sf() +
+  theme_light()
+```
+
+Unlike when we plotted with `geom_point()` above, `geom_sf()` auto-adjusts the plot such that it is spaced appropriately for a map (more specifically, it adjusts the coordinate reference system -- more on this later). But this is a bit bland with points alone.
+
+# Working with polygons
+
+Let's add a layer of US states to our map. To do so, we're going to load a __shapefile__, which is a very common filetype for vector data. The `sf` function `st_read()` reads in shapefiles. Like before, we're going to filter to the continental United States (using STATEFP, which are fips codes; trust me on the filtering scheme).
+
+```{r}
+states <- st_read(here::here("shapefiles", "cb_2018_us_state_5m.shp"))
+states <- states %>% 
+  filter(!NAME %in% c("Alaska", "Hawaii", "American Samoa", 
+                      "Guam", "Commonwealth of the Northern Mariana Islands",
+                      "Puerto Rico", "United States Virgin Islands"))
+
+head(states)
+```
+
+We have a new spatial dataframe called `states`, with the name variable `NAME` corresponding to unique states and a `geometry` column. In this case, what type of vector is the geometry column?
+
+```{r}
+class(states$geometry)
+```
+
+It's a multipolyon, which is just a fancy polygon as in the graphic from before. The only difference is that it may combine multiple polygons into one observation. Think Michigan with the Upper Peninsula -- most of the state is one continguous polygon, but the Upper Peninsula is separated by Lake Michigan to the South. But the entire state of Michigan may be though of a one big polygon, a combination of the Upper Peninsula and the Lower Peninsula. 
+
+Let's see what happens if we try to plot the counties:
+```{r}
+ggplot(states) +
+  geom_sf() +
+  theme_light()
+```
+
+The `geom_sf()` function automatically knew that we were dealing with polygons this time and made a pretty good plot. Now let's try to plot the points along with the polygons. But first, let's talk about coordinate reference systems and projections.
+
+
+# (Re-)Projecting spatial data
+
+Projections tell the data how to translate from a globe to a flat, 2-dimensional surface. All projections are _wrong_ because it's impossible to perfectly move from a globe to a 2d surface. There is no "correct" projection, only tradeoffs depending on your goals. For example, if you need a projection that will work for the entire world, the [WGS84](https://epsg.io/4326) is a common choice. But if you are looking at a smaller area, there are other options that minimize distortion. It is up to you to find the best choice for a given application. 
+
+__Key point:__ When working with multiple spatial data sources (i.e. matching data, plotting multiple sources, extracting data, etc.), you need to make sure the projections across all objects match. See Lovelace, Chapter 2 for more details. 
+
+Let's take a look at some projections:
+
+```{r, echo = F, fig.cap="WGS 84 (EPSG:4326)"}
+
+london_lonlat = st_point(c(-0.1, 51.5)) %>%
+  st_sfc() %>%
+  st_sf(crs = 4326, geometry = .)
+london_osgb = st_transform(london_lonlat, 27700)
+origin_osgb = st_point(c(0, 0)) %>% 
+  st_sfc() %>% 
+  st_sf(crs = 27700, geometry = .)
+london_orign = rbind(london_osgb, origin_osgb)
+
+globe::globeearth(eye = c(0, 0))
+gratmat = st_coordinates(st_graticule())[, 1:2]
+globe::globelines(loc = gratmat, col = "grey", lty = 3)
+globe::globelines(loc = matrix(c(-90, 90, 0, 0), ncol = 2))
+globe::globelines(loc = matrix(c(0, 0, -90, 90), ncol = 2))
+globe::globepoints(loc = c(-0.1, 51.5), pch = 4, cex = 2, lwd = 3, col = "red")
+globe::globepoints(loc = c(0, 0), pch = 1, cex = 2, lwd = 3, col = "blue")
+```
+
+
+```{r, echo = F, fig.cap="British National Grid (EPSG:27700)"}
+uk = rnaturalearth::ne_countries(scale = 50) %>% 
+  st_as_sf() %>% 
+  filter(grepl(pattern = "United Kingdom|Ire", x = name_long)) %>% 
+  st_transform(27700)
+plot(uk$geometry)
+plot(london_orign$geometry[1], add = TRUE, pch = 4, cex = 2, lwd = 3, col = "red")
+plot(london_orign$geometry[2], add = TRUE, pch = 1, cex = 2, lwd = 3, col = "blue")
+abline(h = seq(0, 9e5, length.out = 10), col = "grey", lty = 3)
+abline(v = seq(0, 9e5, length.out = 10), col = "grey", lty = 3)
+```
+
+
+
+```{r, echo = F}
+# Pull in a world polygons object from the spData package
+# install.packages("spData")
+library(spData)
+
+world %>% 
+  ggplot() +
+  geom_sf(color = "white", fill = "gray35") +
+  theme_bw() +
+  labs(title = paste0("Projection | WGS 84: " ,st_crs(world)),
+       subtitle = "Centered at longitude = 0, latitude = 0")
+```
+
+
+```{r, echo = F}
+world %>% 
+  st_transform(., crs = "+proj=moll") %>% 
+  ggplot() +
+  geom_sf(color = "white", fill = "gray35") +
+  theme_bw() +
+  labs(title = "Projection | Mollweide",
+       subtitle = "Centered at longitude = 0, latitude = 0")
+```
+
+
+Spatial data will often have a CRS encoded when downloaded. We can check a spatial object's CRS by using the `st_crs()` function:
+
+```{r}
+st_crs(states)
+```
+
+The stock CRS for the states data is NAD83, __EPSG 4269__. This is a projection system for the North America. Let's reproject as a __US Albers__ projection for practice using the `st_transform` function from `sf`.
+
+```{r}
+states <- states %>% 
+  st_transform(., crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs") 
+ggplot(states) + 
+  geom_sf() +
+  theme_light()
+```
+
+
+
+What about the points data? Let's check its CRS:
+```{r}
+st_crs(df_spatial)
+```
+
+Since we converted this data to a spatial `sf` object, there is no pre-embedded CRS. No worry, because we can specify the CRS to match the state polygons using:
+```{r}
+my_crs <- st_crs(states)
+df_spatial <- df_spatial %>% 
+  st_set_crs(4326) %>% 
+  st_transform(., crs = "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs")
+```
+
+
+Let's plot the states and the points using `geom_sf`. Note that we leave `ggplot()` empty and then tell the `geom_sf()` functions which data to use; it will automatically pick the right type of spatial plot for you. 
+```{r}
+(p_states_points <- 
+  ggplot() +
+  geom_sf(data = states,
+          fill = "gray30", 
+          color = "white") +
+  geom_sf(data = df_spatial, 
+          shape = 21,
+          color = "white",
+          fill = "darkred",
+          alpha = 0.35) +
+  theme_light())
+```
+
+
+# Aggregating points to polygon units
+
+It's a bit tough to see what's going on in the previous plot -- there are just too many points. What if we instead __aggregated__ the points to the state level. To do so, we're going to use the point coordinates to locate which state each point falls within. Matching based upon spatial features like this is referred to as a __spatial join__, which is implemented using the `st_join()` function.
+
+```{r}
+df_spatial_join <- 
+  df_spatial %>% 
+  st_join(., states)
+
+df_spatial_join %>% 
+  dplyr::select(Province_State, NAME, cases, geometry) %>% 
+  head()
+```
+
+
+Now we have a `states` object with `NAME` idenfying each state and `df_spatial_join` object that also have a `NAME` column identiying states. Let's sum up the cases by state using the points file and then join it to the `states` object so for easy plotting.
+
+```{r}
+# Note st_drop_geometry()
+# Note st_as_sf()
+
+df_spatial_join_agg <- 
+  df_spatial_join %>% 
+  group_by(NAME) %>% 
+  summarize(total_cases = sum(cases)) %>% 
+  st_drop_geometry() %>% 
+  full_join(., states, by = "NAME") %>% 
+  filter(!is.na(NAME)) %>% # remove NA row
+  st_as_sf()
+
+head(df_spatial_join_agg)
+```
+
+
+We can use this to plot a `choropleth`, which is just a fancy way to say "fill in the polygons with some colors that represent values or categories." Luckily, everything works as it does with other `ggplot()` functions -- just fill in by your variable of interest, which is `total_cases` in this example.
+
+```{r}
+ggplot() +
+  geom_sf(data = df_spatial_join_agg,
+          aes(fill = total_cases),
+          color = "white",
+          size = 0.75) +
+  scale_fill_viridis_c(option = "magma", na.value = "gray90",
+                       begin = 0.9, end = 0.1,
+                       guide = guide_colorbar(title = "Total cases (log10)"),
+                       trans = "log10") +
+  theme_light() +
+  theme(legend.position = "bottom") +
+  labs(title = "COVID-19 cases",
+       subtitle = paste("As of", max(df_spatial$date)))
+```
+
+
+# Raster data
+
+Raster data is a special type of spatial data that has two defining features:
+
+1. Made of equally-sized grid cells;
+2. No defined boundaries between features. 
+
+Point (1) is easy to see with an example:
+```{r}
+# install.packages("raster")
+library(raster)
+r <- raster(resolution = 100)
+r[] <- rnorm(length(r), mean = 10)
+
+plot(r)
+```
+
+
+Point (2) is a bit more confusing, but an example still helps. Let's create a raster with resolution 1 (decimal degrees) and give each cell a random value drawn from a normal distribution with a mean of 0. Then, aggregate the raster, which makes the grid cells larger. What do you notice about the distribution of color?
+```{r}
+r1 <- raster(resolution = 1)
+r1[] <- rnorm(length(r1), mean = 0)
+
+par(mfrow = c(2,2))
+plot(r1, col = viridis::viridis(10), breaks = seq(-5, 5, 1), main = "res = 1")
+plot(aggregate(r1, 10, fun = mean), 
+     col = viridis::viridis(10), breaks = seq(-5, 5, 1), main = "res = 10")
+plot(aggregate(r1, 20, fun = mean), 
+     col = viridis::viridis(10), breaks = seq(-5, 5, 1), main = "res = 20")
+plot(aggregate(r1, 50, fun = mean), 
+     col = viridis::viridis(10), breaks = seq(-5, 5, 1), main = "res = 50")
+invisible(dev.off())
+```
+
+Unlike our filled states, for example, the grid-cell boundaries in this raster are arbitrary. Larger grids just mean coarser resolution. Technically, rasters are just __images__. You can think of raster grid-cells as just like pixels on a computer screen or a photograph -- the more you have, the clearer the image is. 
+
+Rasters are commonly used to store images from satellites like climate/weather patterns. To make things more concrete, let's pull in some example rasters from the `raster` package, which is the workhorse package for rasters in `R`. The `temperature` object holds a raster for mean temperature each of the 12 months, but I'm going to pull out just the layer for April. Note that temperature is stored as Celsius * 10, so I divided by 10 to rescale.
+
+```{r}
+temperature <- raster::getData('worldclim', var='tmean', res=5)
+temperature <- temperature$tmean4
+plot(temperature / 10, col = viridis::viridis(20, option = "inferno"))
+```
+
+Even though the temperature is a raster and our states are vectors (polygons), we can perform operations to make them work together. One important function is `extract`, which allows us to aggregate a raster to polygons. In this case, we're taking the mean temperature value (i.e. the average grid cell value in the raster) within each state. We can run this through a piped `mutate` function to keep things `tidy`:
+
+```{r}
+
+df_spatial_join_agg <-
+  df_spatial_join_agg %>% 
+  mutate(temperature = extract(temperature, ., fun = mean, na.rm = T, df = T)$tmean4)
+
+head(df_spatial_join_agg)
+```
+
+Now let's throw it through a `ggplot` function to make a choropleth:
+```{r}
+ggplot(df_spatial_join_agg) +
+  geom_sf(aes(fill = temperature / 10), color = "white",
+          size = 0.75) +
+  scale_fill_gradient(low = "gray90", high = "darkred",
+                      guide = guide_colorbar(title = "Temperature (C)")) +
+  theme_light() +
+  theme(legend.position = "bottom")
+```
+
+
+
+# Putting it all together
+
+Now we have `total_cases`, which we can use as an outcome to predict, and `temperature` which we can use as a feature. Let's fit a basic linear model to see if it's predictive:
+
+```{r}
+# Divide temperature by 10 to scale like normal humans
+df_spatial_join_agg$temperature <- df_spatial_join_agg$temperature / 10
+
+# Fit linear model
+lm1 <- lm(log(total_cases) ~ temperature, data = df_spatial_join_agg)
+summary(lm1)
+
+# Generate predictions
+df_spatial_join_agg <- 
+  df_spatial_join_agg %>% 
+  mutate(.pred = exp(predict(lm1)),
+         residual = .pred - total_cases)
+```
+
+
+Let's build a `cowplot` summarizing the results:
+
+```{r}
+# install.packages("cowplot")
+library(cowplot)
+
+p_cases <- 
+  ggplot() +
+  geom_sf(data = df_spatial_join_agg,
+          aes(fill = total_cases / 1000),
+          color = "white",
+          size = 0.75) +
+  scale_fill_viridis_c(option = "magma", na.value = "gray90",
+                       begin = 0.9, end = 0.1,
+                       guide = F,
+                       trans = "log10", 
+                       limits = c(1, max(df_spatial_join_agg$total_cases) / 1000),
+                       labels = scales::comma) +
+  theme_light() +
+  theme(legend.position = c(0.2,0.1),
+        legend.direction = "horizontal",
+        legend.background = element_rect(fill = "transparent"),
+        axis.text = element_blank()) +
+  labs(title = "Observed COVID-19 cases",
+       subtitle = paste("As of", max(df_spatial$date)))
+
+
+p_preds <- 
+  ggplot() +
+  geom_sf(data = df_spatial_join_agg,
+          aes(fill = .pred / 1000),
+          color = "white",
+          size = 0.75) +
+  scale_fill_viridis_c(option = "magma", na.value = "gray90",
+                       begin = 0.9, end = 0.1,
+                       trans = "log10",
+                       limits = c(1, max(df_spatial_join_agg$total_cases) / 1000),
+                       guide = F) +
+  theme_light() +
+  theme(legend.position = c(0.2,0.1),
+        legend.direction = "vertical",
+        legend.background = element_rect(fill = "transparent"),
+        axis.text = element_blank()) +
+  labs(title = "Predicted COVID-19 cases",
+       subtitle = paste("As of", max(df_spatial$date)))
+
+
+p_preds_leg <- 
+  ggplot() +
+  geom_sf(data = df_spatial_join_agg,
+          aes(fill = .pred / 1000),
+          color = "white",
+          size = 0.75) +
+  scale_fill_viridis_c(option = "magma", na.value = "gray90",
+                       begin = 0.9, end = 0.1,
+                       trans = "log10",
+                       limits = c(1, max(df_spatial_join_agg$total_cases) / 1000),
+                       guide = guide_colorbar(title = "Total cases\n(thousands, log10)")) +
+  theme_light() +
+  theme(legend.direction = "vertical",
+        legend.background = element_rect(fill = "transparent"),
+        axis.text = element_blank()) +
+  labs(title = "Predicted COVID-19 cases",
+       subtitle = paste("As of", max(df_spatial$date)))
+
+
+map_leg <- get_legend(p_preds_leg)
+
+
+
+p_scatter <- ggplot(data = df_spatial_join_agg) +
+  geom_text(aes(x = temperature, y = log10(total_cases / 1000), label = NAME),
+            size = 3, check_overlap = T) +
+  geom_smooth(aes(x = temperature, y = log10(total_cases / 1000)),
+              se = F, method = "lm") +
+  theme_minimal() +
+  labs(x = "Temperature (C)", y = "Total cases (thousands, log10)")
+
+
+plot_grid(
+  plot_grid(p_cases, p_preds, ncol = 2, rel_widths = c(2, 2)), # the maps
+  plot_grid(p_scatter, NULL, map_leg, NULL, ncol = 4, # the scatter plot plus some spacers
+            rel_widths = c(5, 1, 1, 1)), 
+  ncol = 1, align = "v"
+  )
+
+```
+
+
+

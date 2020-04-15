@@ -466,7 +466,14 @@ Video walkthroughs:
 - **Practice**:
   - The following provides a [walkthrough](Lectures/week_12/walkthrough/interpretable-ml-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_12/week-12-walkthrough.zip) as a `.zip`.
 
-<!-- ### _Week 13_: Work Week -->
+<br>
+
+### _Week 13_: Spatial + Catch-up
+
+- **Working with Spatial Data in `R`** 
+  - The following are materials provided by Trey Billing. He'll walk us through how to utilize spatial data in `R` and some common concepts we need to know when dealing with spatial data. 
+    + [Spatial Walkthrough](Lectures/Week_13/spatial_walkthrough/walkthrough.html)
+    + [Walkthrough Materials](Lectures/Week_13/spatial_walkthrough.zip) (`.zip`)
 
 <!-- <br>  -->
 
