@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title> PPOL670 | Introduction to Data Science for Public Policy   Week 11       Applications in Unsupervised Learning</title>
     <meta charset="utf-8" />
@@ -41,10 +41,6 @@ class: outline
 &lt;br&gt;
 
 - **Refresh on the supervised and unsupervised distinction**
-
-&lt;br&gt;
-
-- **Principal Components**
 
 &lt;br&gt;
 
@@ -110,368 +106,13 @@ class: newsection
 
 class: newsection
 
-&lt;br&gt; 
-
-# Principal Components 
-
----
-
-### Principal component analysis (PCA)
-
-&lt;br&gt;
-
-When faced with a large set of _correlated_ variables, **principal components** allow us to summarize dataset with a large number of variables with a smaller number of representative variables that collectively explain most of the variability in the original set. 
-
--  Directions in feature space along which the original data are **_highly variable_**.
-
-- These directions also define lines and subspaces that are as **_close as possible_**.
-
-- PCA is a form of **data reduction**
-
----
-
-### Principal component analysis (PCA)
-
-- Say we have a data set ( `\(D\)` ) containing `\(p\)` features.
-
---
-
-- We want to explore this data visually, but if `\(p\)` is large, that would require many plots!
-  
-  - e.g. `\(p = 10\)` means `\(45 plots\)`! (i.e. `\(\frac{p(p-1)}{2}\)` )
-  
-  - Not every feature is adding information
-  
---
-
-- Need to reduce the number of features.
-
-- PCA offers a way of finding a **_low-dimensional representation_** of the data that captures as much of the information (variation) as possible. 
-
-
----
-
-### Lower Dimensional Representation
-
-
-
-
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
-
-
----
-
-### Lower Dimensional Representation
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-### Lower Dimensional Representation
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-### Lower Dimensional Representation
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-### Principal component analysis (PCA)
-
-The Principal components define a direction in feature space along which the **_data vary most_**. 
-
---
-
-&lt;br&gt;
-
-Assuming `\(X\)` has `\(p\)` features, the first principal component is a linear combination of the factor loadings (eigenvectors)
-
-&lt;br&gt;
-
-`$$PC_{i1} = \phi_{11} x_{i1} + \phi_{21} x_{i2} + \dots + \phi_{p1}x_{ip}$$`
-
-
-where we place the constraint
-
-`$$\sum^p_{j=1} \phi^2_{ji} = 1$$`
-
----
-
-### Principal component analysis (PCA)
-
-&lt;br&gt;&lt;br&gt;
-
-We refer to `\(PC_{11}, PC_{21}, \dots , PC_{n1}\)` as the _scores_ of the first principal component. 
-
---
-
-We can easily find the **_linear combination that maximize the sample variance_** by taking a eigendecomposition of the variance-covariance matrix (but that is a beyond the scope of this course).
-
---
-
-The subsequent principal components we find are by definition _uncorrelated_ with the first component (we do this by making the second component _orthogonal_ to the first.)
-
----
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
-
-
----
-
-### Principal component analysis (PCA)
-
-
-Once we have computed the principal components, we can plot them against each other in order to produce low-dimensional views of the data.
-
-Geometrically, this amounts to projecting the original data down onto the subspace spanned by our eigenvectors.
-
-.center[&lt;img src = "Figures/pca-dim-reduction.png"&gt;]
-
----
-
-### Example: Crime in America
-
-&lt;br&gt;
-
-
-```r
-dat &lt;- USArrests 
-skimr::skim_to_wide(dat) %&gt;% 
-  select(type:missing,n:sd,hist)
-```
-
-```
-## # A tibble: 4 x 7
-##   type    variable missing n     mean     sd    hist    
-##   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   
-## 1 integer Assault  0       50    170.76   83.34 ▇▇▅▇▂▇▅▂
-## 2 integer UrbanPop 0       50    " 65.54" 14.47 ▂▃▆▅▇▆▇▃
-## 3 numeric Murder   0       50    " 7.79"  4.36  ▇▇▇▇▃▇▁▃
-## 4 numeric Rape     0       50    21.23    9.37  ▆▇▇▆▃▂▂▂
-```
-
----
-
-### Example: Crime in America
-
-First, be sure to scale the variables.
-
-
-```r
-dat &lt;- scale(dat) %&gt;% as.data.frame()
-skimr::skim_to_wide(dat) %&gt;% 
-  select(type:missing,n:sd,hist)
-```
-
-```
-## # A tibble: 4 x 7
-##   type    variable missing n     mean       sd    hist    
-##   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;   
-## 1 numeric Assault  0       50    " 1.1e-16" 1     ▇▇▅▇▂▇▅▂
-## 2 numeric Murder   0       50    -7.7e-17   1     ▇▇▇▇▃▇▁▃
-## 3 numeric Rape     0       50    " 8.9e-17" 1     ▆▇▇▆▃▂▂▂
-## 4 numeric UrbanPop 0       50    -4.3e-16   1     ▂▃▆▅▇▆▇▃
-```
-
-
-```r
-row.names(dat) &lt;- row.names(USArrests)
-```
-
-
----
-
-### Example: Crime in America
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-There are many packages that perform PCA; some are even hard coded into base R. (e.g. `princomp()` and `prcomp()`). 
-
-We'll use two recent packages for PCA rather than the base `R` versions as these packages provide cleaner summaries and plotting functions.  
-
-
-```r
-require(FactoMineR)
-require(factoextra)
-```
-
----
-
-### Example: Crime in America
-
-
-```r
-dat_pca &lt;- PCA(dat,graph=F)
-dat_pca
-```
-
-```
-## **Results for the Principal Component Analysis (PCA)**
-## The analysis was performed on 50 individuals, described by 4 variables
-## *The results are available in the following objects:
-## 
-##    name               description                          
-## 1  "$eig"             "eigenvalues"                        
-## 2  "$var"             "results for the variables"          
-## 3  "$var$coord"       "coord. for the variables"           
-## 4  "$var$cor"         "correlations variables - dimensions"
-## 5  "$var$cos2"        "cos2 for the variables"             
-## 6  "$var$contrib"     "contributions of the variables"     
-## 7  "$ind"             "results for the individuals"        
-## 8  "$ind$coord"       "coord. for the individuals"         
-## 9  "$ind$cos2"        "cos2 for the individuals"           
-## 10 "$ind$contrib"     "contributions of the individuals"   
-## 11 "$call"            "summary statistics"                 
-## 12 "$call$centre"     "mean of the variables"              
-## 13 "$call$ecart.type" "standard error of the variables"    
-## 14 "$call$row.w"      "weights for the individuals"        
-## 15 "$call$col.w"      "weights for the variables"
-```
-
----
-
-### Example: Crime in America
-
-
-```r
-fviz_pca_biplot(dat_pca,col.var = "darkred")
-```
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-### Proportion of Variance Explained 
-
-&lt;br&gt;
-
-How much of the information in a given data set is lost by projecting the observations onto the first few principal components? 
-
-How many principal components should we keep around?
-
---
-
-&lt;br&gt;
-
-To answer these questions: we need to know the **_proportion of variance explained_** (PVE) by each principal component. 
-
-
-- Aim is to keep the **smallest number of components** that explain the **_most_ variation**. 
-
----
-
-### Scree plot
-
-
-```r
-fviz_eig(dat_pca, addlabels = TRUE)
-```
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-```r
-get_eigenvalue(dat_pca)
-```
-
-```
-##       eigenvalue variance.percent cumulative.variance.percent
-## Dim.1  2.4802416        62.006039                    62.00604
-## Dim.2  0.9897652        24.744129                    86.75017
-## Dim.3  0.3565632         8.914080                    95.66425
-## Dim.4  0.1734301         4.335752                   100.00000
-```
-
----
-
-### Exploring Principal Components
-
-&lt;br&gt;&lt;br&gt;
-- Look at the first few principal components in order to find _interesting patterns in the data_. 
-
-- If no interesting patterns are found in the first few principal components, then further principal components are unlikely to be of interest. 
-
-- Conversely, if the first few principal components are interesting, then continue to look at subsequent principal components until no further interesting patterns are found. 
-
----
-
-### Exploring Principal Components
-
-
-```r
-fviz_pca_biplot(dat_pca,axes = 1:2,col.ind = "grey60")
-```
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-### Exploring Principal Components
-
-
-```r
-fviz_pca_biplot(dat_pca,axes = 2:3,col.ind = "grey60")
-```
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-### Exploring Principal Components
-
-
-```r
-fviz_pca_biplot(dat_pca,axes = 3:4,col.ind = "grey60")
-```
-
-&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-### How Many Principal Components to Use?
-
-
-- Choose the smallest number of principal components that are required in order to explain a sizable amount of the variation in the data.
-
-  - Look for the "elbow" in the scree plot.
-
-&lt;br&gt;
-
-- The aim is for **data reduction**. 
-
-&lt;br&gt;
-
-- Can treat the number of principal components selected as a **tuning parameter** (if using the components in a supervised machine learning task).
-
-
-
----
-
-class: newsection
-
 ### K-Means Clustering
 
 ---
 
 ### Clustering Methods
+
+![:space 5]
 
 - **Clustering** refers to techniques for finding _subgroups_ in a data set. 
 
@@ -481,13 +122,7 @@ class: newsection
   
   - while observations in different groups are **_different_** from each other.
 
---
-
-- **PCA vs. Clustering**
-
-  - PCA looks to find a low-dimensional representation of the observations that explain a good fraction of the variance;
-  
-  - Clustering looks to find homogeneous subgroups among the observations.
+- Clustering looks to find homogeneous subgroups among the observations.
 
 
 ---
@@ -741,7 +376,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

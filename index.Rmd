@@ -446,12 +446,14 @@ Video walkthroughs:
 
 <br>
 
-### _Week 11_: Applications in Unsupervised Learning
-[Moved to Week 13]
+### _Week 11_: [Applications in Unsupervised Learning](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html)
+- **Table of Contents**:
+  + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#3)
+  + [K Means Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#7)
+  + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#19)
 
-<!-- - [**Lecture**](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html) -->
-<!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_11/week_11-practice/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-practice.zip) as a `.zip`.  -->
+- **Practice**:
+  - The following provides a [walkthrough](Lectures/week_11/walkthrough/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-walkthrough.zip) as a `.zip`.
 
 <br>
 
