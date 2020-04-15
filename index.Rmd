@@ -472,8 +472,8 @@ Video walkthroughs:
 
 - **Working with Spatial Data in `R`** 
   - The following are materials provided by Trey Billing. He'll walk us through how to utilize spatial data in `R` and some common concepts we need to know when dealing with spatial data. 
-    + [Spatial Walkthrough](Lectures/Week_13/spatial_walkthrough/walkthrough.html)
-    + [Walkthrough Materials](Lectures/Week_13/spatial_walkthrough.zip) (`.zip`)
+    + [Spatial Walkthrough](Lectures/week_13/spatial_walkthrough/walkthrough.html)
+    + [Walkthrough Materials](Lectures/week_13/spatial_walkthrough.zip) (`.zip`)
 
 <!-- <br>  -->
 
