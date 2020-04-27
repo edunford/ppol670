@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Project Name**: ________________________________________
 
-**Total Score**: ____ / 48
+**Total Score**: ____ / 45
 
 
 ### Project Materials
@@ -23,10 +23,6 @@ knitr::opts_chunk$set(echo = TRUE)
 - Report was posted on Canvas on time? (1 point)
   - `.Rmd` file and all figures were included with the submission?
 - Report was generated using `R`? (1 point)
-- student's entire project was version controlled on Github:
-  - Does the `git` record extend back to when (at least) the proposal was due? (1 point)
-  - Is all code for the project contained within? (1 point)
-  - Were the materials organized as an `R` Project? (1 point)
 - Student provided access to the data (1 point)
   - Via Dropbox link (if greater than a Gigabyte)
   - Via Canvas (if less than a Gigabyte)

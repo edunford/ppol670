@@ -15,8 +15,19 @@ output:
 # Packages for reading in the tables
 require(tidyverse)
 require(kableExtra)
-```
 
+# FUTURE UPDATES
+# Add an additional data wrangling day (or extend the current line up) to include:
+# - case_when()
+# - janitor
+
+# Add gghighlight() to data viz day. 
+# Add interactive graphics
+
+# No PDFs on assignments. 
+
+# More in-class coding. Slow down so there can be more of this. 
+```
 
 
 <center><h1>Introduction to Data Science</h1></center>
