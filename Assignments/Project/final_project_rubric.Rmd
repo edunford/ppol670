@@ -20,9 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Project Materials
 
-- Report was posted on Canvas on time? (1 point)
-  - `.Rmd` file and all figures were included with the submission?
-- Report was generated using `R`? (1 point)
+- Report was posted on Canvas? (1 point)
+  - `.pdf` rendered using RMarkdown. (1 point)
+  - `.Rmd` file containing all the code used to generate the analytics in the report. (1 point)
 - Student provided access to the data (1 point)
   - Via Dropbox link (if greater than a Gigabyte)
   - Via Canvas (if less than a Gigabyte)
