@@ -1,5 +1,5 @@
 ---
-title: "PPOL670"
+pagetitle: PPOL670 - Introduction to Data Science
 output: 
   html_document:
     css: style.css
@@ -29,9 +29,9 @@ require(kableExtra)
 # More in-class coding. Slow down so there can be more of this. 
 ```
 
-
 <center><h1>Introduction to Data Science</h1></center>
-<center>**Spring 2020**</center>
+<center><h2>PPOL670-01</h2></center>
+<center>**Fall 2020**</center>
 <center>**Georgetown University**</center>
 
 <br>
@@ -47,15 +47,15 @@ require(kableExtra)
 
 
 ```{r,echo=F,message=F,results='asis'}
-read_csv('Syllabus/spring-2020-timeline.csv') %>%
-  filter(Topic != "No Class") %>% 
+read_csv('Syllabus/fall-2020-timeline.csv') %>%
+  # filter(Topic != "No Class") %>% 
   {.[is.na(.)]="";.} %>% 
   kable(., "html", booktabs = T,align = c('c','l','l')) %>%
   kable_styling(latex_options = c("striped", 
                                   "scale_down","repeat_header"),
-                full_width = T,font_size = 24) %>% 
+                full_width = T,font_size = 20) %>% 
   column_spec(1,width = '.5in') %>% 
-  column_spec(2,width = '1in') %>% 
+  column_spec(2,width = '2in') %>% 
   column_spec(3,width = '4in') 
 ```
 
@@ -64,106 +64,35 @@ read_csv('Syllabus/spring-2020-timeline.csv') %>%
 <br>
 <br>
 
+## Virtual Classroom
 
-## Instructional Continuity
 
+<br> 
+
+
+#### [Link to Virtual Zoom Classroom](https://georgetown.zoom.us/meeting/91598655229)
+  
+<br>
+  
+#### [Virtual Office Hours](https://georgetown.zoom.us/j/96444963432) (Tuesdays 9am - 11am)
+
+  
 <br>
 
-#### The Plan 
-
-Due to the COVID-19 outbreak, PPOL561 will meet virtually for the remainder of the semester. We will use a number of third-party tools to help coordinate questions, course materials, and virtual class meetings. The aim is to make the transition from in-person to virtual meetings as seamless as possible. I completely acknowledge that there will be bumps along the way. We'll do our best to work through them as a group. 
-
-I thank you in advance for your patience and understanding as we transition into an online space. Also, I would greatly appreciate feedback regarding what is and is not working so that we can work out the kinks together. I encourage you to reach out to me directly via [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) or email if you have any suggestions and/or are running into any issues. If you'd rather comment _anonymously_, I've created a space to do so via the following [**Google Form**](https://forms.gle/LLsBWxuvWCe68yfZ6).  
-
-Outlined below is the approach we'll take to continuing instruction online. Specifically, I outline the **tools** we'll be using and how we'll be using them for **_virtual lecture_**, **_office hours_**, and **_communication_**. Finally, I outline how student requirements for the course (**_homework_** and **_presentations_**) will operate. 
-
-<u>Please note that this plan is subject to change given feedback/experience</u>. Any and all changes to the plan will be posted on the course website and Slack via the `#general` channel, so please check both regularly for any updates.
-
-Finally, at your earliest convenience, please complete the [**"Transitioning to Online Instruction" survey**](https://forms.gle/xij1wGLCkhqVb2ji9). This survey will help me get a better sense of where everyone is at with respect to resources and personal situations.
-
-
-<br>
-
-#### Tools
-
-The following is a summary of the tools we'll be using. You'll note that some (most) we've already integrated into the course. Please make sure that you are able to utilize all these resources on your personal machine prior to the start of class on Wednesday, March 18. Note that many of these resources require a dedicated laptop/desktop with a web-camera and microphone, rather than a tablet or phone. In addition, it is important that you also have a reliable internet connection. Please let me know if you do not have access to a computer and/or reliable internet. 
-
-<br>
-
-- [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) - for coordinating communication between class, TA, and professor;
-- [**Zoom**](https://zoom.us/download) - web-conferencing platform for virtual lecture and office hours;
-- [**Google Calendar**](https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&ctz=America%2FNew_York) - for coordinating zoom links and meeting times; 
-- [**Canvas**](https://georgetown.instructure.com/courses/106244) - for course materials and lecture recordings.
-
-<br>
-
-#### Virtual Lecture
-We will use [**Zoom**](https://zoom.us/download) (a web-conferencing platform) to hold class each week. Class will meet at its regularly scheduled time each week (Wednesdays 3:30 - 6:00). If you do not have Zoom, you can download it [**here**](https://zoom.us/download) prior to the start of class. The **_link to the class zoom web-conference can be found on the [Google Calendar](https://calendar.google.com/calendar/embed?src=georgetown.edu_nm9l16pem9re7adpr066ccfkko%40group.calendar.google.com&ctz=America%2FNew_York)_**. If that link is broken, please refer to the `#general` channel on Slack for information regarding the new link.
-
-When entering lecture, please ensure:
-
-- Your microphone is muted, unless you're asking a question.
-- Your video is on (unless I direct you to turn it off due to streaming issues).
-- To ask questions via the chat feature or to use the "hands-up" icon.
-
-**_All lectures will be recorded and posted to Canvas for students that are unable to join during the scheduled meeting time._** If you're unable to join in the lecture in person due to discrepancies in time zone or persistent computer issues, please let me know. Attendance will be taken directly from the attendees of the scheduled zoom session.  
-
-<br>
-
-#### Office Hours
-I will use [**Zoom**](https://zoom.us/download) to hold office hours each week. Office hours will be conducted in a common space. Students can feel free to jump on or off the call at their own leisure. I will managed the entry of students into the space using the "Waiting Room" feature in Zoom. If you log on and you're kept in the waiting room, please be patient as I finish up with another student (this is the digital equivalent of sitting on the couch outside my office). The **_Zoom web-conference link can be found on the class [Google Calendar](https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&ctz=America%2FNew_York)_**, else please refer to the `#general` channel on Slack for information regarding the new link.
-
-If students wish to coordinate a one-on-one meeting with the Professor or the TA, please reach out via Slack. We'll find a time that mutually works and schedule a call via a Google Calendar meeting. Please accept that meeting request to confirm the appointment.
-
-<br>
-
-#### Communication 
-We will continue to use [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) as our primary communication tool. Please check Slack regularly for updates and announcements. 
-
-I've created a new `#lecture` channel that we'll use to handle all lecture related questions. Specifically, for questions that occur to you after lecture or if you're watching the lecture asynchronously, please use the `#lecture` channel for your questions. If you're watching the lecture live via Zoom, we'll use the chat feature in Zoom. If there are sufficient questions on, I may opt to make a supplementary video answering those
-
-In addition, we have the `#general`, `#codingissues`, and `#random` channels for posting questions/solutions for the group. Slack is a powerful tool designed exactly for the circumstances we find ourselves in, so I encourage everyone to utilize it. 
-
-<br>
-
-#### Calendar
-
-All students enrolled in the course will receive an invitation to a class calendar hosted via [**Google Calendar**](https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&ctz=America%2FNew_York). Each scheduled meeting contains the [**Zoom**](https://zoom.us/download) link to the class' virtual meeting space. If the class link breaks for some reason, please check the `#general` channel on [**Slack**](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members) for an updated link.
-
-<br>
-
-<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=Z2VvcmdldG93bi5lZHVfZTNxdDRndXNlaTRnOXYxNDE5ajJoamNmaTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%2333B679&amp;showTitle=0&amp;showNav=1&amp;showDate=1&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-
-<br>
-
-#### Homework
-
-Assignments will continue to be distributed and collected on Canvas. Please continue to render `.Rmd` output as a `.pdf` to make it easier for the Teaching Assistant to download and grade the assignments. Grades and comments will be posted on Canvas.
-
-<br>
-
-#### Project Presentations
-
-As part of their final projects, students are required to give a 7-minute presentation the final day of class (April 22nd). This presentation aims to walk the class through the progress they have made on their project up to that point. This presentation is an opportunity for the class to provide constructive feedback and is important to completing the final project (e.g. students often discover new ways of overcoming issues or exploring their data from the class feedback). 
-
-These 7-minute presentations will continue as planned. Much like the virtual lectures, we'll meet as a class via Zoom. Each student will then take turns presenting. When presenting, students will share thier screens with their slides on them (all others should mute their microphones). We'll then provide feedback via a Google Document (I'll circulate this the day of) or (time permitting) ask questions via Zoom. The aim is to emulate an in-person presentation as much as possible. 
+Recurrent Zoom link can also be found on Canvas. Please contact the professor/TA through Slack if any of the Zoom links break. 
 
 <br>
 <br>
-
----
-
 <br>
+<hr>
 <br>
-
 
 ## Syllabus
 
 <br>
 <br>
 
-- Access an [**Online Version**](Syllabus/PPOL670-Introduction-to-DS_Syllabus.html)
-- [**Download**](Syllabus/PPOL670-Introduction-to-DS_Syllabus.pdf) a `.pdf` version locally. 
+#### Access an [**online version**](Syllabus/PPOL670-Introduction-to-DS_Syllabus.html)/[**`.pdf` version**](Syllabus/PPOL670-Introduction-to-DS_Syllabus.pdf).
 
 <br>
 <br>
@@ -177,7 +106,7 @@ These 7-minute presentations will continue as planned. Much like the virtual lec
 
 <br>
 
-List of [**all required and suggested readings**](Readings/reading-list.html)
+#### List of [**all required and suggested readings**](Readings/reading-list.html)
 
 <br>
 <br>
@@ -187,36 +116,37 @@ List of [**all required and suggested readings**](Readings/reading-list.html)
 <br>
 <br>
 
+
 ## Project
 
 <br>
 
 Data science is an applied field and therefore, it is important that you understand how to conduct a complete analysis from collecting data, to cleaning and analyzing it, to presenting your findings. Toward this end, students are required to complete an independent data science project, _applying concepts learned throughout the course_. The project is composed of three parts: a 2 page project proposal, an in-class presentation, and a 12-page project report.
 
-<!-- More information regarding the final project will be circulated during class on Week 8.  -->
+**_More information regarding the final project will be circulated during class on Week 8_**
 
 
 
-<br>
+<!-- <br> -->
 
-**Overview**
+<!-- **Overview** -->
 
-<center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center>
+<!-- <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center> -->
 
-<br>
+<!-- <br> -->
 
-**Rubrics**
+<!-- **Rubrics** -->
 
-<center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center>
+<!-- <center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center> -->
 
-<center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center>
+<!-- <center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center> -->
 
-<br>
+<!-- <br> -->
 
-**Examples of Successful Projects**
+<!-- **Examples of Successful Projects** -->
 
-- [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Costa_Kristina_Example_Final_Report.pdf)
-- [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Wang_Liping_Example_Final_Report.pdf)
+<!-- - [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Costa_Kristina_Example_Final_Report.pdf) -->
+<!-- - [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Wang_Liping_Example_Final_Report.pdf) -->
 
 
 
@@ -234,7 +164,7 @@ Data science is an applied field and therefore, it is important that you underst
 <br>
 <br>
 
-The following are installation instructions for `R`, `RStudio`, and `Git`.
+The following are installation instructions for `R` and `RStudio`.
 
 <br>
 <br>
@@ -257,17 +187,17 @@ Video walkthroughs:
   - [Install `R`](https://player.vimeo.com/video/203516510)
   - [Install `RStudio`](https://player.vimeo.com/video/203516968)
 
-<br>
-<br>
+<!-- <br> -->
+<!-- <br> -->
 
-**Git** 
+<!-- **Git**  -->
 
-- Windows/Mac: https://git-scm.com/downloads (Links to an external site.)
-    + Note that git comes pre-installed on the macOS operating system. 
+<!-- - Windows/Mac: https://git-scm.com/downloads (Links to an external site.) -->
+<!--     + Note that git comes pre-installed on the macOS operating system.  -->
 
-Video walkthroughs:
- 
- - [TA Video Walkthrough: Using Git with RStudio](https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0) - [_Put together by former TA (Nathan Lovin)_]
+<!-- Video walkthroughs: -->
+
+<!--  - [TA Video Walkthrough: Using Git with RStudio](https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0) - [_Put together by former TA (Nathan Lovin)_] -->
 
 
 <br>
@@ -285,22 +215,22 @@ Video walkthroughs:
 
 #### [Eric Dunford](http://ericdunford.com/) (Professor)
 
-- **Office**: 404 Old North
-- **Office Hours**: Tuesdays 1pm to 3pm
+- **Office**: Bedroom (formerly 404 Old North)
+- **Office Hours**: Tuesdays 9:00am to 11:00am (EST) or by appointment
 - **Email**: [eric.dunford@georgetown.edu](mailto:eric.dunford@georgetown.edu)
 
 <br>
 
-#### [Trey Billing](https://www.treybilling.com/) (Teaching Assistant)
+#### [Maddie Pickens](http://maddieclairepickens.com/) (Teaching Assistant)
 
-- **Office Hours**: by appointment -- [book Trey via calendly](https://calendly.com/billingtt/ppol670)
-- **Email**: [tb990@georgetown.edu](mailto:tb990@georgetown.edu)
+- **Office Hours**: by appointment
+- **Email**: [mp1595@georgetown.edu](mailto:mp1595@georgetown.edu)
 
 <br>
 
 #### Class
 
-- **Slack**: class communications will primarily take place through [Slack](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members). Please follow the [**_invite link_**](https://join.slack.com/t/ppol670introt-vcq1395/shared_invite/enQtODgyMDYyNDQ4ODgyLTFjMTJiZmJlNGQzMTkyNDMwNmUyYjZjZWQxOGIwMmIzZTFmYTAyZWEzOWE5ZDNlNjk4MWZjZTE2OTA3Y2ZhOWQ) to be added to the class Slack channel.
+- **Slack**: class communications will primarily take place through [Slack](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members). Please follow the [**_invite link_**](https://join.slack.com/t/ppol670-fall-2020/shared_invite/zt-gnbnemyd-9GSNAaEfXtSUgzsnH3KHKA) to be added to the class Slack channel.
 
 <br>
 <br>
@@ -311,181 +241,202 @@ Video walkthroughs:
 <br>
 
 
-
-
 # Lecture Materials
+_Asynchronous lecture materials will go live approximately one week prior to the scheduled synchronous meeting date._
 
 <br>
 <br>
 
-### _Week 1_: [Reproducibility and Version Control](Lectures/week_01/lecture-week-01.html)
+### _Week 1_: **Work Flow and Reproducibility**
 
-- **Table of Contents**
-  + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#11)
-  + [Version Control](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#25)
+<!-- ### _Week 1_: [Work Flow and Reproducibility](Lectures/week_01/lecture-week-01.html) -->
 
-- **Tutorial**
-  + [**Using Git with Rstudio**](Lectures/week_01/tutorial-git-with-rstudio.html)
-
-<br>
-
-### _Week 2_: [Introduction to Programming in `R`](Lectures/week_02/lecture-week-02_intro-to-R.html)
-
-- **Table of Contents**
-  + [Interacting with `R`](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
-  + [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20)
-  + [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#37)
-  + [Accessing Relational Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#45)
-  + [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70)
-  + [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#84)
-  + [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#90)
-  + [Importing/Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#99)
-  + [Directories](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#114)
-
-- **Practice**
-  + [An interactive practice set covering objects, data structures, and operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/)
-  + <a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> An overview of objects and operators (download `.R`)</a>
-  + <a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice importing data</a>
+<!-- - **Table of Contents** -->
+<!--   + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#11) -->
+<!--   + [](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#25) -->
 
 <br>
 
-### _Week 3_: [Reproducibility in Practice](Lectures/week_03/lecture-week03-reproducibility-in-practice.html)
 
-- **Table of Contents**
-  + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3)
-  + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22)
-  + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26)
-  + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50)
+### _Week 2_: **Introduction to Programming in `R`**
 
-- **Practice**:
-  + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a>
-  + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a>
+<!-- ### _Week 2_: [Introduction to Programming in `R`](Lectures/week_02/lecture-week-02_intro-to-R.html) -->
 
-<br>
+<!-- - **Table of Contents** -->
+<!--   + [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20) -->
+<!--   + [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#37) -->
+<!--   + [Accessing Relational Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#45) -->
+<!--   + [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70) -->
+<!--   + [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#84) -->
+<!--   + [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#90) -->
+<!--   + [Importing/Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#99) -->
+<!--   + [Directories](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#114) -->
 
-### _Week 4_: [Data Wrangling in R](Lectures/week_04/lecture-week-04_data-wrangling.html)
-
-- **Table of Contents**
-  + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3)
-  + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9)
-  + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17)
-  + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#44)
-  + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#52)
-  + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#70)
- 
-- **Practice**:
-  + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd.zip" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a>
-  + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd.zip" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a>
+<!-- - **Practice** -->
+<!--   + [An interactive practice set covering objects, data structures, and operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/) -->
+<!--   + <a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> An overview of objects and operators (download `.R`)</a> -->
+<!--   + <a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice importing data</a> -->
 
 <br>
 
-### _Week 5_: [Data Visualization](Lectures/week_05/lecture-week-05_data-visualization.html)
+### _Week 3_: **Reproducibility in Practice**
 
+<!-- ### _Week 3_: [Reproducibility in Practice](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
 
-- **Table of Contents**
-  + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#4)
-  + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#17)
-  + [Dates](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#66)
+<!-- - **Table of Contents** -->
+<!--   + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3) -->
+<!--   + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22) -->
+<!--   + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26) -->
+<!--   + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50) -->
 
-- **Practice**:
-  - <a href="Lectures/week_05/R-code/dem-gdp-data.csv" download>Here</a> is a link to the data used in the visualizations in the lecture slides.
-  - Practice materials for visualizing data can be downloaded <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05.Rmd.zip" download>here</a>. Work through the questions then compare your results to the <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05_ANSWERS.Rmd.zip" download> answer key</a>
-
-<br>
-
-### _Week 6_: [Web Scrapping and APIs](Lectures/week_06/lecture-week-06_webscraping-and-apis.html)
-
-- **Table of Contents**
-  + [Loops and Functions (Refresher)](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#3)
-  + [Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#10)
-  + [Scraping Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#19)
-  + [Building a Webscraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#33)
-  + [APIs](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#45)
-
-- **Practice**:
-  - The following [walkthrough](Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.html) covers building a dataset of all bilaterial investment treaties from scratch using the techniques covered in lecture (<a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.Rmd.zip" download> Download .Rmd</a>).
+<!-- - **Practice**: -->
+<!--   + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a> -->
+<!--   + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a> -->
 
 <br>
 
-### _Week 7_: [Text as Data](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html)
+### _Week 4_: **Data Wrangling in R**
 
-- **Table of Contents**
-  + [Strings](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#3)
-  + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#20)
-  + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#49)
-  + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#64)
+<!-- ### _Week 4_: [Data Wrangling in R](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
 
+<!-- - **Table of Contents** -->
+<!--   + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3) -->
+<!--   + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9) -->
+<!--   + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17) -->
+<!--   + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#44) -->
+<!--   + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#52) -->
+<!--   + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#70) -->
 
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_07/week_07_practice/walkthrough_text-as-data_ppol670.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`.
-
-<br>
-
-### _Week 8_: [Introduction to Statistical Learning](Lectures/week_08/week-08-lecture-supervised-learning.html)
-- **Table of Contents**
-  + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#3)
-  + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#13)
-  + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#32)
-  + [Caret](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#56)
-  + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64)
+<!-- - **Practice**: -->
+<!--   + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd.zip" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a> -->
+<!--   + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd.zip" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a> -->
 
 <br>
 
-### _Week 9_: [Applications in Supervised Learning (Regression)](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html)
-- **Table of Contents**
-  + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#3)
-  + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#33)
-  + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#48)
-  
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`.
+### _Week 5_: **Data Visualization**
+
+<!-- ### _Week 5_: [Data Visualization](Lectures/week_05/lecture-week-05_data-visualization.html) -->
+
+
+<!-- - **Table of Contents** -->
+<!--   + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#4) -->
+<!--   + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#17) -->
+<!--   + [Dates](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#66) -->
+
+<!-- - **Practice**: -->
+<!--   - <a href="Lectures/week_05/R-code/dem-gdp-data.csv" download>Here</a> is a link to the data used in the visualizations in the lecture slides. -->
+<!--   - Practice materials for visualizing data can be downloaded <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05.Rmd.zip" download>here</a>. Work through the questions then compare your results to the <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05_ANSWERS.Rmd.zip" download> answer key</a> -->
 
 <br>
 
-### _Week 10_: [Applications in Supervised Learning (Classification)](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html)
+### _Week 6_: **Web Scrapping and APIs**
 
-- **Table of Contents**:
-  + [Classification](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#3)
-  + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#16)
-  + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#24)
-  + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#37)
-  + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#42)
-  
+<!-- ### _Week 6_: [Web Scrapping and APIs](Lectures/week_06/lecture-week-06_webscraping-and-apis.html) -->
 
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week-10-walkthrough.zip) as a `.zip`.
+<!-- - **Table of Contents** -->
+<!--   + [Loops and Functions (Refresher)](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#3) -->
+<!--   + [Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#10) -->
+<!--   + [Scraping Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#19) -->
+<!--   + [Building a Webscraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#33) -->
+<!--   + [APIs](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#45) -->
 
-<br>
-
-### _Week 11_: [Applications in Unsupervised Learning](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html)
-- **Table of Contents**:
-  + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#3)
-  + [K Means Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#7)
-  + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#19)
-
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_11/walkthrough/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-walkthrough.zip) as a `.zip`.
+<!-- - **Practice**: -->
+<!--   - The following [walkthrough](Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.html) covers building a dataset of all bilaterial investment treaties from scratch using the techniques covered in lecture (<a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.Rmd.zip" download> Download .Rmd</a>). -->
 
 <br>
 
-### _Week 12_: [Exploratory Data Analysis](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html)
+### _Week 7_: **Geospatial Data**
 
-- **Table of Contents**:
-  + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#3)
-  + [Data Exploration in the Social Sciences](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#37)
-
-- **Practice**:
-  - The following provides a [walkthrough](Lectures/week_12/walkthrough/interpretable-ml-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_12/week-12-walkthrough.zip) as a `.zip`.
+<!-- - **Working with Spatial Data in `R`**  -->
+<!--   - The following are materials provided by Trey Billing. He'll walk us through how to utilize spatial data in `R` and some common concepts we need to know when dealing with spatial data.  -->
+<!--     + [Spatial Walkthrough](Lectures/week_13/spatial_walkthrough/walkthrough.html) -->
+<!--     + [Walkthrough Materials](Lectures/week_13/spatial_walkthrough.zip) (`.zip`) -->
 
 <br>
 
-### _Week 13_: Spatial + Catch-up
+### _Week 8_: **Text as Data**
 
-- **Working with Spatial Data in `R`** 
-  - The following are materials provided by Trey Billing. He'll walk us through how to utilize spatial data in `R` and some common concepts we need to know when dealing with spatial data. 
-    + [Spatial Walkthrough](Lectures/week_13/spatial_walkthrough/walkthrough.html)
-    + [Walkthrough Materials](Lectures/week_13/spatial_walkthrough.zip) (`.zip`)
+<!-- ### _Week 7_: [Text as Data](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html) -->
 
-<!-- <br>  -->
+<!-- - **Table of Contents** -->
+<!--   + [Strings](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#3) -->
+<!--   + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#20) -->
+<!--   + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#49) -->
+<!--   + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#64) -->
+
+
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_07/week_07_practice/walkthrough_text-as-data_ppol670.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`. -->
+
+<br>
+
+### _Week 9_: **Introduction to Statistical Learning**
+
+<!-- ### _Week 8_: [Introduction to Statistical Learning](Lectures/week_08/week-08-lecture-supervised-learning.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#3) -->
+<!--   + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#13) -->
+<!--   + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#32) -->
+<!--   + [Caret](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#56) -->
+<!--   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64) -->
+
+<br>
+
+### _Week 10_: **Applications in Supervised Learning (Regression)**
+
+<!-- ### _Week 9_: [Applications in Supervised Learning (Regression)](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#3) -->
+<!--   + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#33) -->
+<!--   + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#48) -->
+
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`. -->
+
+<br>
+
+### _Week 11_: **Applications in Supervised Learning (Classification)**
+
+<!-- ### _Week 10_: [Applications in Supervised Learning (Classification)](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html) -->
+
+<!-- - **Table of Contents**: -->
+<!--   + [Classification](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#3) -->
+<!--   + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#16) -->
+<!--   + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#24) -->
+<!--   + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#37) -->
+<!--   + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#42) -->
+
+
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week-10-walkthrough.zip) as a `.zip`. -->
+
+<br>
+
+### _Week 12_: **Interpretable Machine Learning**
+
+<!-- ### _Week 12_: [Exploratory Data Analysis](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html) -->
+
+<!-- - **Table of Contents**: -->
+<!--   + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#3) -->
+<!--   + [Data Exploration in the Social Sciences](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#37) -->
+
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_12/walkthrough/interpretable-ml-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_12/week-12-walkthrough.zip) as a `.zip`. -->
+
+<br>
+
+### _Week 13_: **Applications in Unsupervised Learning**
+
+<!-- ### _Week 11_: [Applications in Unsupervised Learning](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html) -->
+<!-- - **Table of Contents**: -->
+<!--   + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#3) -->
+<!--   + [K Means Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#7) -->
+<!--   + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#19) -->
+
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_11/walkthrough/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-walkthrough.zip) as a `.zip`. -->
+
+<br>
+
 
 

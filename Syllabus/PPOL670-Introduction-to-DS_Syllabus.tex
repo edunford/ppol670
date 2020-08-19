@@ -1,0 +1,823 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\begin{center}
+ 
+
+\huge \textit{PPOL 670-01}\\
+\huge\textbf{Introduction to Data Science}\\
+
+\Large Fall 2020
+\end{center}
+
+\hypertarget{instructor}{%
+\section{Instructor}\label{instructor}}
+
+\textbf{Professor}: Eric Dunford, Ph.D.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Office}: Bedroom (formerly 404 Old North)
+\item
+  \textbf{Office Hours}: Tuesdays 9am to 11am (EST)
+\item
+  \textbf{Email}:
+  \href{mailto:eric.dunford@georgetown.edu}{\nolinkurl{eric.dunford@georgetown.edu}}
+\item
+  \textbf{Pronouns}: he/him
+\end{itemize}
+
+\textbf{Teaching Assistant}: Madeline (Maddie) Pickens
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Office Hours}: by appointment online
+\item
+  \textbf{Email}:
+  \href{mailto:mp1595@georgetown.edu}{\nolinkurl{mp1595@georgetown.edu}}
+\item
+  \textbf{Pronouns}: she/her
+\end{itemize}
+
+\textbf{Class Website}: \url{www.ericdunford.com/ppol670}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{course-description}{%
+\section{Course Description}\label{course-description}}
+
+This course teaches students how to synthesize disparate, possibly
+unstructured data in order to draw meaningful insights from data. Topics
+covered include fundamentals of functional programming in R, literate
+programming, data wrangling, data visualization, data extraction (via
+web scraping and APIs), text analysis, and machine learning methods. The
+course aims to offer students a practical toolkit for data exploration.
+The objective of the course is to equip students with the skills to
+incorporate data into their decision-making and analysis. No prior
+programming experience is assumed, but prior statistics training is
+required.
+
+\hypertarget{time-and-location}{%
+\section{Time and location}\label{time-and-location}}
+
+Classes will be held \textbf{\emph{virtually}} on \textbf{Wednesdays}
+from \textbf{\emph{6:30 pm to 9:00pm}}:
+
+\begin{itemize}
+\tightlist
+\item
+  August 26
+\item
+  September 2, 9, 16, 23, 30
+\item
+  October 7, 14, 21, 28
+\item
+  November 4, 11, 18
+\item
+  December 2
+\end{itemize}
+
+Holidays/Breaks/Away (No class):
+
+\begin{itemize}
+\tightlist
+\item
+  November 25 (Thanksgiving Recess)
+\end{itemize}
+
+\hypertarget{asynchronous-synchronous-lectures}{%
+\subsection{Asynchronous \& Synchronous
+Lectures}\label{asynchronous-synchronous-lectures}}
+
+The lecture will be broken up into \emph{synchronous} and
+\emph{asynchronous} components.
+
+\begin{itemize}
+\tightlist
+\item
+  The \textbf{\emph{asynchronous components}} will cover the main
+  concepts of the lecture. These materials will take the form of
+  embedded videos in class lecture notes on the course website. Students
+  are required to review this content along with the lecture notes and
+  readings prior to the start of class. \textbf{\emph{Asynchronous
+  materials will be made available a \textbf{week prior} to the
+  scheduled lecture date}.}
+\item
+  The \textbf{\emph{synchronous component}} will take place at the
+  scheduled class time and will involve active coding walkthrough,
+  breakout group sessions, and questions. The aim of the synchronous
+  class time is to reinforce the concepts covered in the asynchronous
+  lecture materials. Thus, it is imperative that students complete the
+  asynchronous material \emph{prior to the start of the synchronous
+  lecture}.
+\end{itemize}
+
+Note that this class is scheduled to meet weekly for 2.5 hours. I will
+do my best to ensure that the asynchronous and synchronous material in
+combination does not exceed 2.5 hours weekly. Put differently, students
+will not be required to commit more than 2.5 hours to lecture. This does
+not include readings, homework and/or coding discussions; rather,
+bifurcating lecture materials into synchronous and asynchronous
+components is necessary when learning virtually. Zoom fatigue is real,
+and lectures that exceed an 1.5 hours are not effective. When we do meet
+in-person, five minute breaks will be taken approximately every 40
+minutes.
+
+\textbf{All synchronous lecture material will be recorded and stored on
+the class Canvas site.} Students who are unable to attend the
+synchronous lecture will be able to review the materials covered in
+class at a future date.
+
+\textbf{For students attending class from afar} (i.e.~in time zones more
+than 4 hours off Eastern standard time), participating in the
+synchronous lecture component may not be a viable option. Please let the
+professor know if you're planning on attending the course from afar.
+These students will not be required to attend synchronous components of
+the lecture. \emph{It is the students responsibility to review all
+lecture materials and to keep pace with the course.}
+
+\hypertarget{virtual-classroom}{%
+\subsection{Virtual Classroom}\label{virtual-classroom}}
+
+We will use \href{https://zoom.us/download}{\textbf{Zoom}} (a
+web-conferencing platform) to hold class each week. Class will meet at
+its regularly scheduled time each week for synchronous lectures. If you
+do not have Zoom, you can download it
+\href{https://zoom.us/download}{\textbf{here}} prior to the start of
+class.
+
+A link for the synchronous component of the weekly lecture along with a
+link for virtual office hours is posted on the course website and
+Canvas. Students will use this link to access the live Zoom call for
+lecture.
+
+\textbf{\emph{If the link breaks or does not function properly, please
+check the \texttt{\#general} channel on Slack for information regarding
+the new link. If there is no message regarding a new link, please
+contact the professor and/or TA via Slack.}} All synchronous lecture
+material will be recorded.
+
+\hypertarget{course-objectives}{%
+\section{Course Objectives}\label{course-objectives}}
+
+This course focuses on providing students with an applied knowledge of
+the \texttt{R} programming environment while placing emphasis on
+developing a practical data science toolkit that students can implement
+quickly and efficiently. To this end, the course takes a `Tidyverse'
+approach to \texttt{R} programming, which provides users an intuitive
+grammar for data manipulation and visualization. The goal is to
+establish a practical toolkit for analysis in \texttt{R} without getting
+too bogged down in the nuts and bolts of functional programming.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Understand the basics of programming in \texttt{R} with emphasis on
+  the ``tidy'' ecosystem of packages.
+\item
+  Learn how to wrangle (prepare and clean) different types of data.
+\item
+  Learn to identify and visualize important trends and findings.
+\item
+  Learn to extract and process data from unstructured sources, such as
+  the web and/or text.
+\item
+  Learn to use statistical learning approaches to effectively explore
+  and ask questions from data.
+\end{enumerate}
+
+\hypertarget{pre-requisites}{%
+\section{Pre-Requisites}\label{pre-requisites}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\emph{Required}}: PPOL501/531 - Statistical Methods for Policy
+  Analysis (or an equivalent course)
+\item
+  \textbf{\emph{Preferred}}: PPOL502/532 - Regression Methods for Policy
+  Analysis (or an equivalent course)
+\end{itemize}
+
+\hypertarget{required-materials}{%
+\section{Required Materials}\label{required-materials}}
+
+\textbf{Readings}: We will rely primarily on the following texts for
+this course.
+
+\begin{itemize}
+\item
+  \textbf{Wickham, H., \& Grolemund, G. (2016). ``R for data science:
+  import, tidy, transform, visualize, and model data''. \emph{O'Reilly
+  Media, Inc.}}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In an effort to keep costs as low as possible, we'll resort to the
+    \href{https://r4ds.had.co.nz/}{online presentation} of these
+    materials. That said, many students find it useful to have a hard
+    copy of the book materials. I strongly encourage students to
+    purchase this book. It will serve as a valuable reference both
+    during the semester and into the future.
+  \end{itemize}
+\item
+  \textbf{James, G., Witten, D., Hastie, T., \& Tibshirani, R. (2013).
+  ``An Introduction to Statistical Learning: with Applications in R''.
+  \emph{New York: springer}.}
+\item
+  \textbf{\emph{Additional readings will be posted for each class and
+  can be found on the course website}}. Most reading material is open
+  source and available via a link on the reading list, otherwise it can
+  be found on Canvas.
+\end{itemize}
+
+\textbf{Class Website}: A class website (www.ericdunford.com/ppol670)
+will be used throughout the course and should be checked on a regular
+basis for lecture materials and required readings.
+
+\textbf{Class Slack Channel}: The class also has a dedicated slack
+channel (PPOL670-Fall-2020). The channel serves as an open forum to
+discuss, collaborate, pose problems/questions, and offer solutions.
+Students are encouraged to pose any questions they have there as this
+will provide the professor and TA the means of answering the question so
+that all can see the response. If you're unfamiliar with Slack, please
+consult the following start-up tutorial
+(\url{https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members}).
+Please follow the
+\href{https://join.slack.com/t/ppol670-fall-2020/shared_invite/zt-gnbnemyd-9GSNAaEfXtSUgzsnH3KHKA}{\textbf{\emph{invite
+link}}} to be added to the Slack channel.
+
+\textbf{Canvas}: A Canvas site
+(\textbf{\url{http://canvas.georgetown.edu}}) will be used periodically
+throughout the course and should be checked on a regular basis. All
+assignments will be posted on Canvas; they will not be distributed in
+class or by e-mail. Support for Canvas is available at (202) 687-4949
+
+\textbf{Computing}: Programming task for in-class activities and
+assignments will be conducted using \texttt{R}. Students are strongly
+encouraged to utilize
+\href{https://www.rstudio.com/products/rstudio/download/}{Rstudio},
+which offers an accessible and widely-utilized graphical user interface
+for programming in \texttt{R}.
+
+\textbf{NOTE: In-class activities will include programming in
+\texttt{R}. If you do not have access to a laptop on which you can
+install \texttt{R} and \texttt{Rstudio}, please contact the professor
+and/or TA for assistance.}
+
+\hypertarget{course-requirements}{%
+\section{Course Requirements}\label{course-requirements}}
+
+\begin{longtable}[]{@{}lc@{}}
+\toprule
+\textbf{Assignment} & \textbf{Percentage of Grade}\tabularnewline
+\midrule
+\endhead
+Participation & 10\%\tabularnewline
+Problem sets & 45\%\tabularnewline
+Final Project & 45\%\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{quote}
+\emph{Note that the grades on Canvas are not weighted, and thus, may not
+accurately reflect a student's final grade.}
+\end{quote}
+
+\textbf{Preparation and Participation} (10\%): It is imperative that
+students keep up with the asynchronous materials and attend synchronous
+lectures on time. See the ``Participation'' section in the Course
+Policies section for more details.
+
+\textbf{Problem Sets} (45\%): Students will be assigned five problem
+sets. While you are encouraged to discuss the problem sets with your
+peers and/or consult online resources, \textbf{the finished product must
+be your own work}. Problem sets are due on the date and time posted on
+Canvas and must be submitted on Canvas. Late assignments will be
+penalized a letter grade for every day they are overdue.
+
+All problem sets must be submitted as \texttt{.html} files with clean,
+readable code chunks using \texttt{RMarkdown}. Along with the
+\texttt{.html}, student's must submit a \texttt{.zip} file containing
+the \texttt{.rmd} file they used to knit the \texttt{.html} and the data
+used to complete the assignment. The \texttt{.rmd} file should be
+completely reproducible and contain no machine specific information
+(e.g.~a file path). All assignment submissions must adhere to the
+following guidelines:
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\roman{enumi})}
+  \tightlist
+  \item
+    all code must run;
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\roman{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    solutions should be readable
+  \end{enumerate}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Code should be thoroughly commented (the Professor/TA should be able
+    to understand the code's purpose by reading the comment),
+  \item
+    Coding solutions should be broken up into individual code chunks,
+    not clumped together into one large code chunk (See examples in
+    class or reach out to the TA/Professor if this is unclear),
+  \end{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\roman{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Non-coding responses should all be written in Markdown and should
+    contain no grammatical or spelling errors;
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\roman{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    All programming solutions should employ concepts learned during the
+    course. Specifically, students must use \texttt{tidyverse} solutions
+    learned in class, over base \texttt{R} solutions pulled from the
+    internet.
+  \end{enumerate}
+\end{itemize}
+
+The follow schedule lays out when each assignment will be assigned and
+due.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Assignment & Date Assigned & Date Due\tabularnewline
+\midrule
+\endhead
+No.~1 & September 16 & September 23\tabularnewline
+No.~2 & September 30 & October 7\tabularnewline
+No.~3 & October 14 & October 21\tabularnewline
+No.~4 & October 28 & November 4\tabularnewline
+No.~5 & November 11 & November 18\tabularnewline
+\bottomrule
+\end{longtable}
+
+\textbf{Final Project}: Data science is an applied field and therefore,
+it is important that you understand how to conduct a complete analysis
+from collecting data, to cleaning and analyzing it, to presenting your
+findings. Toward the end of the semester, you will complete an
+independent data science project, \emph{applying concepts learned
+throughout the course}. The project is composed of three parts: a 2 page
+project proposal, an in-class presentation, and a 12-page project
+report. Due dates and breakdowns for the project are as follows:
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+\textbf{Requirement} & \textbf{Due} & \textbf{Length} &
+\textbf{Percentage}\tabularnewline
+\midrule
+\endhead
+Project Proposal & October 28 & 2 pages & 5\%\tabularnewline
+Presentation & December 2 & 7 minutes & 10\%\tabularnewline
+Project Report & December 11 & 12 pages & 30\%\tabularnewline
+\bottomrule
+\end{longtable}
+
+Details regarding each aspect of the project will be posted on the
+course website leading up to the first due date (i.e.~the Project
+Proposal). Until then, we will not discuss the project in class. The
+reason for this is that students need to reach a basic level of data
+competency before thinking through a project idea. Thus, discussion of
+the final project and the development of a project proposal will align
+with the final portion of the class; once we've broadly covered most of
+the fundamental data topics covered in this course.
+
+\hypertarget{grading}{%
+\section{Grading}\label{grading}}
+
+Course grades will be determined according to the following scale:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Letter & Range\tabularnewline
+\midrule
+\endhead
+A & 95\% -- 100\%\tabularnewline
+A- & 91\% -- 94\%\tabularnewline
+B+ & 87\% -- 90\%\tabularnewline
+B & 84\% -- 86\%\tabularnewline
+B- & 80\% -- 83\%\tabularnewline
+C & 70\% -- 79\%\tabularnewline
+F & \textless{} 70\%\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{managing-the-workload-how-to-succeed-in-this-course}{%
+\section{Managing the Workload: How to Succeed in this
+Course}\label{managing-the-workload-how-to-succeed-in-this-course}}
+
+\begin{itemize}
+\item
+  \textbf{Come Prepared.}
+
+  \begin{itemize}
+  \item
+    Do the readings. Think about the readings on their own terms, but
+    also in terms of how the concepts apply to things you're interested
+    in.
+  \item
+    As this class is quite hands-on, it is expected that students bring
+    their computers to class to partake in computational activities.
+    Moreover, students should have all relevant software up and running
+    on their machines.
+  \end{itemize}
+\item
+  \textbf{Ask Questions.}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Formulating a question helps you engage with the material much more
+    deeply. If you have a question, it's almost certain that others do
+    too; asking a question will not only help yourself, but you will
+    help others. Most importantly, asking questions helps keep the class
+    on track. If there are lots of questions, we'll slow down and get
+    things figured out. If there are few questions, we'll charge ahead.
+  \end{itemize}
+\item
+  \textbf{Collaborate.}
+
+  \begin{itemize}
+  \item
+    Work in groups, but do so wisely. Collaboration is the greatest
+    source of creativity and innovation. Better yet, working with
+    classmates is a great way to learn from each other. Often,
+    classmates will have some way of explaining things that clicks for
+    you, and, more often than not, the act of explaining something to
+    someone else will make things click for you. This only works,
+    though, if you prepare by yourself first. If you show up and wait
+    for classmates to do the work, you can probably muddle through the
+    homeworks, but you'll have trouble participating in classes and may
+    fall behind as the material we cover cumulates and needs to be
+    understood at each step.
+  \item
+    collaboration should not result in verbatim submissions (e.g.~no
+    copy cats). As everyone writes code following their own unique
+    logic, the chance of identical submissions is unlikely and easily
+    detectable. Non-unique code will be penalized.
+  \item
+    Finally, utilize \textbf{the class Slack channel} to post any
+    questions, insights, coding problems and concerns. The channel will
+    offer an open forum to communicate, collaborate, and collectively
+    problem solve.
+  \end{itemize}
+\item
+  \textbf{Start homeworks early.}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Sometimes the data doesn't cooperate, or there is an error in your
+    code that will take you awhile to figure out and debug. You don't
+    want to find this out at 11pm the night before the homework is due.
+    Also, the more you are doing homeworks, the more you will be able to
+    follow the lectures.
+  \end{itemize}
+\item
+  \textbf{Try doing it the hard way.}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    A core factor in the success of a data scientist is being able to
+    explain how an algorithm or analysis was constructed, not just use
+    software. In this class, where possible, build from scratch rather
+    than an overly convenient library. This will allow you to become
+    more creative down the line.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{course-policies}{%
+\section{Course Policies}\label{course-policies}}
+
+\hypertarget{participation}{%
+\subsubsection{Participation}\label{participation}}
+
+Participation is required in this course. I define participation as:
+
+\begin{itemize}
+\tightlist
+\item
+  Attending synchronous lecture components over Zoom.
+\item
+  Completing the readings and asynchronous materials prior to the
+  synchronous lecture.
+\item
+  Asking questions and participating in class.
+\item
+  During synchronous lectures, cameras are active at all times.
+\item
+  Paying attention to the professor during lecture
+\item
+  Engage in break-out group discussions when assigned.
+\item
+  Responding to questions asked during synchronous sessions.
+\end{itemize}
+
+I reserve the right to deduct participation points from students who are
+not participating as expected.
+
+\hypertarget{communication}{%
+\subsubsection{Communication}\label{communication}}
+
+\begin{itemize}
+\item
+  For private questions concerning the class, email is the preferred
+  method of communication. All email messages must originate from your
+  Georgetown University email account(s). Please use a professional
+  salutation, proper spelling and grammar, and patience in waiting for a
+  response. The professor reserves the right to not respond to emails
+  that are drafted inappropriately. \textbf{\emph{Please email the
+  professor and the TA directly rather than through the Canvas messaging
+  system.}} Emails sent through Canvas will be ignored.
+\item
+  For general, class-relevant questions, \texttt{Slack} is the preferred
+  method of communication. Please use the general or the relevant
+  channel for these questions.
+\item
+  I will respond to all emails/slack questions within 24 hours of being
+  sent during a weekday. I will not respond to emails/slack sent late
+  Friday (after 5PM) or during the weekend until Monday (9AM). Please
+  plan accordingly if you have questions regarding current or upcoming
+  assignments. Please address the professor and TA by their last name
+  unless stated otherwise.
+\end{itemize}
+
+\hypertarget{electronic-devices}{%
+\subsubsection{Electronic Devices}\label{electronic-devices}}
+
+The use of laptops, tablets, or other mobile devices is permitted
+\emph{only for class-related work}. Audio and video recording is not
+allowed unless prior approval is given by the professor. Please mute all
+electronic devices during class.
+
+\hypertarget{assignments-and-late-work}{%
+\subsubsection{Assignments and Late
+Work}\label{assignments-and-late-work}}
+
+Assignments should be clear, legible, and submitted in the required
+format. Writing assignments will be graded on the basis of content,
+logic, analysis, mechanics, organization, and research. Due dates for
+all assignments will be posted on Canvas and are non-negotiable.
+Exceptions to this policy will be made only under extremely unusual
+circumstances and will require valid documentation from the student.
+\textbf{\emph{Late problem sets will be penalized a letter grade per
+day.}}
+
+\hypertarget{proof-of-diligent-debugging}{%
+\subsubsection{Proof of Diligent
+Debugging}\label{proof-of-diligent-debugging}}
+
+When reaching out to the professor or teaching assistant regarding a
+technical question, error, or issue you \textbf{\emph{must}} demonstrate
+that you made a good faith effort to debugging/isolate your problem
+prior to reaching out. In as concise a way as possible, send a record of
+what you tried to do along with a reproducible example emulating the
+error. (See the materials for Week 3 on how to generate a reproducible
+example using \texttt{reprex} and \texttt{datapasta}). As software is
+continually being refined in data science and new approaches continually
+emerge and changing, learning how to frame your question and find a
+similar solution online is a key tool for success in this domain. If you
+make a diligent effort beforehand to solve your problem, we will do the
+same in trying to help you figure out a solution. Note that the
+\textbf{\emph{professor/TA is a resource of last resort}}: only come to
+them after you've exhausted all other options.
+
+\hypertarget{use-of-class-materials}{%
+\subsubsection{Use of Class Materials}\label{use-of-class-materials}}
+
+Increasingly, with the proliferation of certain websites, questions
+about the ownership of course materials have arisen (and Georgetown is
+actively working on policies to address these concerns). I consider my
+syllabus, lectures, handouts, problem sets, and problem set answers to
+be my intellectual property. I respectfully request that you refrain
+from sharing my materials in any electronic (or paper) format. You are
+welcome to save my lectures for your own use, but they should not be
+posted anywhere. Sharing notes, on an occasional basis, with others in
+the class is fine as long as they are not posted elsewhere online.
+Students found in breach of this policy will fail the course.
+
+\hypertarget{academic-resource-centerdisability-support}{%
+\subsubsection{Academic Resource Center/Disability
+Support}\label{academic-resource-centerdisability-support}}
+
+If you believe you have a disability, then you should contact the
+Academic Resource Center (\url{arc@georgetown.edu}) for further
+information. The Center is located in the Leavey Center, Suite 335
+(202-687-8354). The Academic Resource Center is the campus office
+responsible for reviewing documentation provided by students with
+disabilities and for determining reasonable accommodations in accordance
+with the Americans with Disabilities Act (ASA) and University policies.
+For more information, go to
+\url{http://academicsupport.georgetown.edu/disability/}.
+
+\hypertarget{important-academic-policies-and-academic-integrity}{%
+\subsubsection{Important Academic Policies and Academic
+Integrity}\label{important-academic-policies-and-academic-integrity}}
+
+McCourt School students are expected to uphold the academic policies set
+forth by Georgetown University and the Graduate School of Arts and
+Sciences. Students should therefore familiarize themselves with all the
+rules, regulations, and procedures relevant to their pursuit of a
+Graduate School degree. The policies are located
+at:'\url{http://grad.georgetown.edu/academics/policies/}
+
+\hypertarget{provosts-policy-accommodating-students-religious-observances}{%
+\subsubsection{Provosts Policy Accommodating Students Religious
+Observances}\label{provosts-policy-accommodating-students-religious-observances}}
+
+Georgetown University promotes respect for all religions. Any student
+who is unable to attend classes or to participate in any examination,
+presentation, or assignment on a given day because of the observance of
+a major religious holiday (see below) or related travel shall be excused
+and provided with the opportunity to make up, without unreasonable
+burden, any work that has been missed for this reason and shall not in
+any other way be penalized for the absence or rescheduled work. Students
+will remain responsible for all assigned work. Students should notify
+professors in writing at the beginning of the semester of religious
+observances that conflict with their classes. The Office of the Provost,
+in consultation with Campus Ministry and the Registrar, will publish,
+before classes begin for a given term, a list of major religious
+holidays likely to affect Georgetown students. The Provost and the Main
+Campus Executive Faculty encourage faculty to accommodate students whose
+bona fide religious observances in other ways impede normal
+participation in a course. Students who cannot be accommodated should
+discuss the matter with an advising dean.
+
+\hypertarget{statement-on-sexual-misconduct}{%
+\subsubsection{Statement on Sexual
+Misconduct}\label{statement-on-sexual-misconduct}}
+
+Please know that as a faculty member I am committed to supporting
+survivors of sexual misconduct, including relationship violence, sexual
+harassment and sexual assault. However, university policy also requires
+me to report any disclosures about sexual misconduct to the Title IX
+Coordinator, whose role is to coordinate the University's response to
+sexual misconduct.
+
+Georgetown has a number of fully confidential professional resources who
+can provide support and assistance to survivors of sexual assault and
+other forms of sexual misconduct. These resources include:
+
+\begin{verbatim}
+Associate Director
+Jen Schweer, MA, LPC
+Health Education Services for Sexual Assault Response and Prevention 
+(202) 687-0323
+jls242@georgetown.edu
+\end{verbatim}
+
+\begin{verbatim}
+Erica Shirley
+Trauma Specialist
+Counseling and Psychiatric Services (CAPS) 
+(202) 687-6985
+els54@georgetown.edu
+\end{verbatim}
+
+More information about campus resources and reporting sexual misconduct
+can be found at \url{http://sexualassault.georgetown.edu}.
+
+\hypertarget{course-calendar}{%
+\section{Course Calendar}\label{course-calendar}}
+
+\begingroup\fontsize{12}{14}\selectfont
+
+\resizebox{\linewidth}{!}{
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{.5in}>{\raggedright\arraybackslash}p{1in}>{\raggedright\arraybackslash}p{3in}>{\raggedright}X}
+\toprule
+Week & Date & Topic & Assignment\\
+\midrule
+\rowcolor{gray!6}  1 & August 26 & Work Flow and Reproducibility & \\
+2 & September 2 & Introduction to Programming in R & \\
+\rowcolor{gray!6}  3 & September 9 & Reproducibility in Practice & \\
+4 & September 16 & Data Wrangling in R & Problem Set 1 Assigned\\
+\rowcolor{gray!6}  5 & September 23 & Data Visualization & Problem Set 1 Due\\
+\addlinespace
+6 & September 30 & Web Scrapping and APIs & Problem Set 2 Assigned\\
+\rowcolor{gray!6}  7 & October 7 & Geospatial Data & Problem Set 2 Due\\
+8 & October 14 & Text as Data & Problem Set 3 Assigned\\
+\rowcolor{gray!6}  9 & October 21 & Introduction to Statistical Learning & Problem Set 3 Due\\
+10 & October 28 & Applications in Supervised Learning (Regression) & Project Proposal Due; Problem Set 4 Assigned\\
+\addlinespace
+\rowcolor{gray!6}  11 & November 4 & Applications in Supervised Learning (Classification) & Problem Set 4 Due\\
+12 & November 11 & Interpretable Machine Learning & Problem Set 5 Assigned\\
+\rowcolor{gray!6}  13 & November 18 & Applications in Unsupervised Learning & Problem Set 5 Due\\
+14 & December 2 & Project Presentations & \\
+\rowcolor{gray!6}  Final & December 11 & Final Project Due (9:00 PM) & \\
+\bottomrule
+\end{tabu}}
+\endgroup{}
+
+\textbf{IMPORTANT: This syllabus is subject to change and may be amended
+throughout the course to reflect any changes deemed necessary by the
+professor. Any changes will be announced in-class or on Slack.}
+
+\end{document}

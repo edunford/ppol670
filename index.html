@@ -11,7 +11,7 @@
 
 
 
-<title>PPOL670</title>
+<title>PPOL670 - Introduction to Data Science</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b="length"in a&&a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ha(),z=ha(),A=ha(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,aa=/[+~]/,ba=/'|\\/g,ca=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),da=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},ea=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fa){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function ga(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(ba,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+ra(o[l]);w=aa.test(a)&&pa(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function ha(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ia(a){return a[u]=!0,a}function ja(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ka(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function la(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ia(function(b){return b=+b,ia(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=ga.support={},f=ga.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=ga.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",ea,!1):e.attachEvent&&e.attachEvent("onunload",ea)),p=!f(g),c.attributes=ja(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ja(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=ja(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(ja(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ja(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ja(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return la(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?la(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},ga.matches=function(a,b){return ga(a,null,null,b)},ga.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return ga(b,n,null,[a]).length>0},ga.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},ga.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},ga.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ga.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=ga.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=ga.selectors={cacheLength:50,createPseudo:ia,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[3]||a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ga.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ga.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ga.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||ga.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ia(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ia(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ia(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ia(function(a){return function(b){return ga(a,b).length>0}}),contains:ia(function(a){return a=a.replace(ca,da),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ia(function(a){return W.test(a||"")||ga.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[0>c?c+b:c]}),even:oa(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=ma(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=na(b);function qa(){}qa.prototype=d.filters=d.pseudos,d.setFilters=new qa,g=ga.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ga.error(a):z(a,i).slice(0)};function ra(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sa(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function ta(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ua(a,b,c){for(var d=0,e=b.length;e>d;d++)ga(a,b[d],c);return c}function va(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wa(a,b,c,d,e,f){return d&&!d[u]&&(d=wa(d)),e&&!e[u]&&(e=wa(e,f)),ia(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ua(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:va(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=va(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=va(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sa(function(a){return a===b},h,!0),l=sa(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sa(ta(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wa(i>1&&ta(m),i>1&&ra(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xa(a.slice(i,e)),f>e&&xa(a=a.slice(e)),f>e&&ra(a))}m.push(c)}return ta(m)}function ya(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=va(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&ga.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ia(f):f}return h=ga.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,ya(e,d)),f.selector=a}return f},i=ga.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ca,da),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ca,da),aa.test(j[0].type)&&pa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&ra(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,aa.test(a)&&pa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ja(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ja(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ka("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ja(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ka("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ja(function(a){return null==a.getAttribute("disabled")})||ka(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),ga}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;
@@ -1564,7 +1564,6 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">PPOL670</h1>
 
 </div>
 
@@ -1575,7 +1574,12 @@ Introduction to Data Science
 </h1>
 </center>
 <center>
-<strong>Spring 2020</strong>
+<h2>
+PPOL670-01
+</h2>
+</center>
+<center>
+<strong>Fall 2020</strong>
 </center>
 <center>
 <strong>Georgetown University</strong>
@@ -1586,7 +1590,7 @@ Introduction to Data Science
 <div id="course-schedule" class="section level2">
 <h2>Course Schedule</h2>
 <p><br> <br></p>
-<table class="table" style="font-size: 24px; margin-left: auto; margin-right: auto;">
+<table class="table" style="font-size: 20px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:center;">
@@ -1608,11 +1612,11 @@ Assignment
 <td style="text-align:center;width: .5in; ">
 1
 </td>
-<td style="text-align:left;width: 1in; ">
-15-Jan
+<td style="text-align:left;width: 2in; ">
+August 26
 </td>
 <td style="text-align:left;width: 4in; ">
-Reproducibility and Version Control
+Work Flow and Reproducibility
 </td>
 <td style="text-align:center;">
 </td>
@@ -1621,8 +1625,8 @@ Reproducibility and Version Control
 <td style="text-align:center;width: .5in; ">
 2
 </td>
-<td style="text-align:left;width: 1in; ">
-22-Jan
+<td style="text-align:left;width: 2in; ">
+September 2
 </td>
 <td style="text-align:left;width: 4in; ">
 Introduction to Programming in R
@@ -1634,8 +1638,8 @@ Introduction to Programming in R
 <td style="text-align:center;width: .5in; ">
 3
 </td>
-<td style="text-align:left;width: 1in; ">
-29-Jan
+<td style="text-align:left;width: 2in; ">
+September 9
 </td>
 <td style="text-align:left;width: 4in; ">
 Reproducibility in Practice
@@ -1647,21 +1651,22 @@ Reproducibility in Practice
 <td style="text-align:center;width: .5in; ">
 4
 </td>
-<td style="text-align:left;width: 1in; ">
-5-Feb
+<td style="text-align:left;width: 2in; ">
+September 16
 </td>
 <td style="text-align:left;width: 4in; ">
 Data Wrangling in R
 </td>
 <td style="text-align:center;">
+Problem Set 1 Assigned
 </td>
 </tr>
 <tr>
 <td style="text-align:center;width: .5in; ">
 5
 </td>
-<td style="text-align:left;width: 1in; ">
-12-Feb
+<td style="text-align:left;width: 2in; ">
+September 23
 </td>
 <td style="text-align:left;width: 4in; ">
 Data Visualization
@@ -1674,24 +1679,25 @@ Problem Set 1 Due
 <td style="text-align:center;width: .5in; ">
 6
 </td>
-<td style="text-align:left;width: 1in; ">
-19-Feb
+<td style="text-align:left;width: 2in; ">
+September 30
 </td>
 <td style="text-align:left;width: 4in; ">
 Web Scrapping and APIs
 </td>
 <td style="text-align:center;">
+Problem Set 2 Assigned
 </td>
 </tr>
 <tr>
 <td style="text-align:center;width: .5in; ">
 7
 </td>
-<td style="text-align:left;width: 1in; ">
-26-Feb
+<td style="text-align:left;width: 2in; ">
+October 7
 </td>
 <td style="text-align:left;width: 4in; ">
-Text as Data
+Geospatial Data
 </td>
 <td style="text-align:center;">
 Problem Set 2 Due
@@ -1701,24 +1707,25 @@ Problem Set 2 Due
 <td style="text-align:center;width: .5in; ">
 8
 </td>
-<td style="text-align:left;width: 1in; ">
-4-Mar
+<td style="text-align:left;width: 2in; ">
+October 14
 </td>
 <td style="text-align:left;width: 4in; ">
-Introduction to Statistical Learning
+Text as Data
 </td>
 <td style="text-align:center;">
+Problem Set 3 Assigned
 </td>
 </tr>
 <tr>
 <td style="text-align:center;width: .5in; ">
-<ul>
-<li></td>
-<td style="text-align:left;width: 1in; ">
-11-Mar
+9
+</td>
+<td style="text-align:left;width: 2in; ">
+October 21
 </td>
 <td style="text-align:left;width: 4in; ">
-Spring Break
+Introduction to Statistical Learning
 </td>
 <td style="text-align:center;">
 Problem Set 3 Due
@@ -1726,40 +1733,27 @@ Problem Set 3 Due
 </tr>
 <tr>
 <td style="text-align:center;width: .5in; ">
-9
+10
 </td>
-<td style="text-align:left;width: 1in; ">
-18-Mar
+<td style="text-align:left;width: 2in; ">
+October 28
 </td>
 <td style="text-align:left;width: 4in; ">
 Applications in Supervised Learning (Regression)
 </td>
 <td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:center;width: .5in; ">
-10
-</td>
-<td style="text-align:left;width: 1in; ">
-25-Mar
-</td>
-<td style="text-align:left;width: 4in; ">
-Applications in Supervised Learning (Classification)
-</td>
-<td style="text-align:center;">
-Project Proposal Due
+Project Proposal Due; Problem Set 4 Assigned
 </td>
 </tr>
 <tr>
 <td style="text-align:center;width: .5in; ">
 11
 </td>
-<td style="text-align:left;width: 1in; ">
-1-Apr
+<td style="text-align:left;width: 2in; ">
+November 4
 </td>
 <td style="text-align:left;width: 4in; ">
-Applications in Unsupervised Learning
+Applications in Supervised Learning (Classification)
 </td>
 <td style="text-align:center;">
 Problem Set 4 Due
@@ -1769,24 +1763,25 @@ Problem Set 4 Due
 <td style="text-align:center;width: .5in; ">
 12
 </td>
-<td style="text-align:left;width: 1in; ">
-8-Apr
+<td style="text-align:left;width: 2in; ">
+November 11
 </td>
 <td style="text-align:left;width: 4in; ">
-Exploratory Data Analysis
+Interpretable Machine Learning
 </td>
 <td style="text-align:center;">
+Problem Set 5 Assigned
 </td>
 </tr>
 <tr>
 <td style="text-align:center;width: .5in; ">
 13
 </td>
-<td style="text-align:left;width: 1in; ">
-15-Apr
+<td style="text-align:left;width: 2in; ">
+November 18
 </td>
 <td style="text-align:left;width: 4in; ">
-Work Day + Using Spatial Data
+Applications in Unsupervised Learning
 </td>
 <td style="text-align:center;">
 Problem Set 5 Due
@@ -1796,8 +1791,8 @@ Problem Set 5 Due
 <td style="text-align:center;width: .5in; ">
 14
 </td>
-<td style="text-align:left;width: 1in; ">
-22-Apr
+<td style="text-align:left;width: 2in; ">
+December 2
 </td>
 <td style="text-align:left;width: 4in; ">
 Project Presentations
@@ -1809,135 +1804,72 @@ Project Presentations
 <td style="text-align:center;width: .5in; ">
 Final
 </td>
-<td style="text-align:left;width: 1in; ">
-7-May
+<td style="text-align:left;width: 2in; ">
+December 11
 </td>
 <td style="text-align:left;width: 4in; ">
-Final Project Due (6:00 PM)
+Final Project Due (9:00 PM)
 </td>
 <td style="text-align:center;">
 </td>
 </tr>
 </tbody>
-</table></li>
-</ul>
+</table>
 <hr />
 <p><br> <br></p>
 </div>
-<div id="instructional-continuity" class="section level2">
-<h2>Instructional Continuity</h2>
+<div id="virtual-classroom" class="section level2">
+<h2>Virtual Classroom</h2>
 <p><br></p>
-<div id="the-plan" class="section level4">
-<h4>The Plan</h4>
-<p>Due to the COVID-19 outbreak, PPOL561 will meet virtually for the remainder of the semester. We will use a number of third-party tools to help coordinate questions, course materials, and virtual class meetings. The aim is to make the transition from in-person to virtual meetings as seamless as possible. I completely acknowledge that there will be bumps along the way. We’ll do our best to work through them as a group.</p>
-<p>I thank you in advance for your patience and understanding as we transition into an online space. Also, I would greatly appreciate feedback regarding what is and is not working so that we can work out the kinks together. I encourage you to reach out to me directly via <a href="https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members"><strong>Slack</strong></a> or email if you have any suggestions and/or are running into any issues. If you’d rather comment <em>anonymously</em>, I’ve created a space to do so via the following <a href="https://forms.gle/LLsBWxuvWCe68yfZ6"><strong>Google Form</strong></a>.</p>
-<p>Outlined below is the approach we’ll take to continuing instruction online. Specifically, I outline the <strong>tools</strong> we’ll be using and how we’ll be using them for <strong><em>virtual lecture</em></strong>, <strong><em>office hours</em></strong>, and <strong><em>communication</em></strong>. Finally, I outline how student requirements for the course (<strong><em>homework</em></strong> and <strong><em>presentations</em></strong>) will operate.</p>
-<p><u>Please note that this plan is subject to change given feedback/experience</u>. Any and all changes to the plan will be posted on the course website and Slack via the <code>#general</code> channel, so please check both regularly for any updates.</p>
-<p>Finally, at your earliest convenience, please complete the <a href="https://forms.gle/xij1wGLCkhqVb2ji9"><strong>“Transitioning to Online Instruction” survey</strong></a>. This survey will help me get a better sense of where everyone is at with respect to resources and personal situations.</p>
+<div id="link-to-virtual-zoom-classroom" class="section level4">
+<h4><a href="https://georgetown.zoom.us/meeting/91598655229">Link to Virtual Zoom Classroom</a></h4>
 <p><br></p>
 </div>
-<div id="tools" class="section level4">
-<h4>Tools</h4>
-<p>The following is a summary of the tools we’ll be using. You’ll note that some (most) we’ve already integrated into the course. Please make sure that you are able to utilize all these resources on your personal machine prior to the start of class on Wednesday, March 18. Note that many of these resources require a dedicated laptop/desktop with a web-camera and microphone, rather than a tablet or phone. In addition, it is important that you also have a reliable internet connection. Please let me know if you do not have access to a computer and/or reliable internet.</p>
+<div id="virtual-office-hours-tuesdays-9am---11am" class="section level4">
+<h4><a href="https://georgetown.zoom.us/j/96444963432">Virtual Office Hours</a> (Tuesdays 9am - 11am)</h4>
 <p><br></p>
-<ul>
-<li><a href="https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members"><strong>Slack</strong></a> - for coordinating communication between class, TA, and professor;</li>
-<li><a href="https://zoom.us/download"><strong>Zoom</strong></a> - web-conferencing platform for virtual lecture and office hours;</li>
-<li><a href="https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&amp;ctz=America%2FNew_York"><strong>Google Calendar</strong></a> - for coordinating zoom links and meeting times;</li>
-<li><a href="https://georgetown.instructure.com/courses/106244"><strong>Canvas</strong></a> - for course materials and lecture recordings.</li>
-</ul>
+<p>Recurrent Zoom link can also be found on Canvas. Please contact the professor/TA through Slack if any of the Zoom links break.</p>
+<br> <br> <br>
+<hr>
 <p><br></p>
-</div>
-<div id="virtual-lecture" class="section level4">
-<h4>Virtual Lecture</h4>
-<p>We will use <a href="https://zoom.us/download"><strong>Zoom</strong></a> (a web-conferencing platform) to hold class each week. Class will meet at its regularly scheduled time each week (Wednesdays 3:30 - 6:00). If you do not have Zoom, you can download it <a href="https://zoom.us/download"><strong>here</strong></a> prior to the start of class. The <strong><em>link to the class zoom web-conference can be found on the <a href="https://calendar.google.com/calendar/embed?src=georgetown.edu_nm9l16pem9re7adpr066ccfkko%40group.calendar.google.com&amp;ctz=America%2FNew_York">Google Calendar</a></em></strong>. If that link is broken, please refer to the <code>#general</code> channel on Slack for information regarding the new link.</p>
-<p>When entering lecture, please ensure:</p>
-<ul>
-<li>Your microphone is muted, unless you’re asking a question.</li>
-<li>Your video is on (unless I direct you to turn it off due to streaming issues).</li>
-<li>To ask questions via the chat feature or to use the “hands-up” icon.</li>
-</ul>
-<p><strong><em>All lectures will be recorded and posted to Canvas for students that are unable to join during the scheduled meeting time.</em></strong> If you’re unable to join in the lecture in person due to discrepancies in time zone or persistent computer issues, please let me know. Attendance will be taken directly from the attendees of the scheduled zoom session.</p>
-<p><br></p>
-</div>
-<div id="office-hours" class="section level4">
-<h4>Office Hours</h4>
-<p>I will use <a href="https://zoom.us/download"><strong>Zoom</strong></a> to hold office hours each week. Office hours will be conducted in a common space. Students can feel free to jump on or off the call at their own leisure. I will managed the entry of students into the space using the “Waiting Room” feature in Zoom. If you log on and you’re kept in the waiting room, please be patient as I finish up with another student (this is the digital equivalent of sitting on the couch outside my office). The <strong><em>Zoom web-conference link can be found on the class <a href="https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&amp;ctz=America%2FNew_York">Google Calendar</a></em></strong>, else please refer to the <code>#general</code> channel on Slack for information regarding the new link.</p>
-<p>If students wish to coordinate a one-on-one meeting with the Professor or the TA, please reach out via Slack. We’ll find a time that mutually works and schedule a call via a Google Calendar meeting. Please accept that meeting request to confirm the appointment.</p>
-<p><br></p>
-</div>
-<div id="communication" class="section level4">
-<h4>Communication</h4>
-<p>We will continue to use <a href="https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members"><strong>Slack</strong></a> as our primary communication tool. Please check Slack regularly for updates and announcements.</p>
-<p>I’ve created a new <code>#lecture</code> channel that we’ll use to handle all lecture related questions. Specifically, for questions that occur to you after lecture or if you’re watching the lecture asynchronously, please use the <code>#lecture</code> channel for your questions. If you’re watching the lecture live via Zoom, we’ll use the chat feature in Zoom. If there are sufficient questions on, I may opt to make a supplementary video answering those</p>
-<p>In addition, we have the <code>#general</code>, <code>#codingissues</code>, and <code>#random</code> channels for posting questions/solutions for the group. Slack is a powerful tool designed exactly for the circumstances we find ourselves in, so I encourage everyone to utilize it.</p>
-<p><br></p>
-</div>
-<div id="calendar" class="section level4">
-<h4>Calendar</h4>
-<p>All students enrolled in the course will receive an invitation to a class calendar hosted via <a href="https://calendar.google.com/calendar/embed?src=georgetown.edu_e3qt4gusei4g9v1419j2hjcfi0%40group.calendar.google.com&amp;ctz=America%2FNew_York"><strong>Google Calendar</strong></a>. Each scheduled meeting contains the <a href="https://zoom.us/download"><strong>Zoom</strong></a> link to the class’ virtual meeting space. If the class link breaks for some reason, please check the <code>#general</code> channel on <a href="https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members"><strong>Slack</strong></a> for an updated link.</p>
-<p><br></p>
-<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=Z2VvcmdldG93bi5lZHVfZTNxdDRndXNlaTRnOXYxNDE5ajJoamNmaTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%2333B679&amp;showTitle=0&amp;showNav=1&amp;showDate=1&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no">
-</iframe>
-<p><br></p>
-</div>
-<div id="homework" class="section level4">
-<h4>Homework</h4>
-<p>Assignments will continue to be distributed and collected on Canvas. Please continue to render <code>.Rmd</code> output as a <code>.pdf</code> to make it easier for the Teaching Assistant to download and grade the assignments. Grades and comments will be posted on Canvas.</p>
-<p><br></p>
-</div>
-<div id="project-presentations" class="section level4">
-<h4>Project Presentations</h4>
-<p>As part of their final projects, students are required to give a 7-minute presentation the final day of class (April 22nd). This presentation aims to walk the class through the progress they have made on their project up to that point. This presentation is an opportunity for the class to provide constructive feedback and is important to completing the final project (e.g. students often discover new ways of overcoming issues or exploring their data from the class feedback).</p>
-<p>These 7-minute presentations will continue as planned. Much like the virtual lectures, we’ll meet as a class via Zoom. Each student will then take turns presenting. When presenting, students will share thier screens with their slides on them (all others should mute their microphones). We’ll then provide feedback via a Google Document (I’ll circulate this the day of) or (time permitting) ask questions via Zoom. The aim is to emulate an in-person presentation as much as possible.</p>
-<p><br> <br></p>
-<hr />
-<p><br> <br></p>
 </div>
 </div>
 <div id="syllabus" class="section level2">
 <h2>Syllabus</h2>
 <p><br> <br></p>
-<ul>
-<li>Access an <a href="Syllabus/PPOL670-Introduction-to-DS_Syllabus.html"><strong>Online Version</strong></a></li>
-<li><a href="Syllabus/PPOL670-Introduction-to-DS_Syllabus.pdf"><strong>Download</strong></a> a <code>.pdf</code> version locally.</li>
-</ul>
+<div id="access-an-online-version.pdf-version." class="section level4">
+<h4>Access an <a href="Syllabus/PPOL670-Introduction-to-DS_Syllabus.html"><strong>online version</strong></a>/<a href="Syllabus/PPOL670-Introduction-to-DS_Syllabus.pdf"><strong><code>.pdf</code> version</strong></a>.</h4>
 <p><br> <br></p>
 <hr />
 <p><br> <br></p>
 </div>
+</div>
 <div id="readings" class="section level2">
 <h2>Readings</h2>
 <p><br></p>
-<p>List of <a href="Readings/reading-list.html"><strong>all required and suggested readings</strong></a></p>
+<div id="list-of-all-required-and-suggested-readings" class="section level4">
+<h4>List of <a href="Readings/reading-list.html"><strong>all required and suggested readings</strong></a></h4>
 <p><br> <br></p>
 <hr />
 <p><br> <br></p>
+</div>
 </div>
 <div id="project" class="section level2">
 <h2>Project</h2>
 <p><br></p>
 <p>Data science is an applied field and therefore, it is important that you understand how to conduct a complete analysis from collecting data, to cleaning and analyzing it, to presenting your findings. Toward this end, students are required to complete an independent data science project, <em>applying concepts learned throughout the course</em>. The project is composed of three parts: a 2 page project proposal, an in-class presentation, and a 12-page project report.</p>
-<!-- More information regarding the final project will be circulated during class on Week 8.  -->
-<p><br></p>
-<p><strong>Overview</strong></p>
-<center>
-<a href="Assignments/Project/project_overview.pdf"><strong>Project Overview</strong></a>
-</center>
-<p><br></p>
-<p><strong>Rubrics</strong></p>
-<center>
-<a href="Assignments/Project/project_presentation_assessment_sheet.pdf"><strong>Presentation Assessment Sheet</strong></a>
-</center>
-<center>
-<a href="Assignments/Project/final_project_rubric.pdf"><strong>Final Project Rubric</strong></a>
-</center>
-<p><br></p>
-<p><strong>Examples of Successful Projects</strong></p>
-<ul>
-<li><a href="Assignments/Project/Costa_Kristina_Example_Final_Report.pdf">Kristina Costa - “Analyzing FEMA Pre-Disaster Mitigation Grants”</a></li>
-<li><a href="Assignments/Project/Wang_Liping_Example_Final_Report.pdf">Liping Wang - “Female Labor Force Participation”</a></li>
-</ul>
+<p><strong><em>More information regarding the final project will be circulated during class on Week 8</em></strong></p>
+<!-- <br> -->
+<!-- **Overview** -->
+<!-- <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center> -->
+<!-- <br> -->
+<!-- **Rubrics** -->
+<!-- <center>[**Presentation Assessment Sheet**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center> -->
+<!-- <center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center> -->
+<!-- <br> -->
+<!-- **Examples of Successful Projects** -->
+<!-- - [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Costa_Kristina_Example_Final_Report.pdf) -->
+<!-- - [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Wang_Liping_Example_Final_Report.pdf) -->
 <p><br> <br></p>
 <hr />
 <p><br> <br></p>
@@ -1945,7 +1877,7 @@ Final Project Due (6:00 PM)
 <div id="installation" class="section level2">
 <h2>Installation</h2>
 <p><br> <br></p>
-<p>The following are installation instructions for <code>R</code>, <code>RStudio</code>, and <code>Git</code>.</p>
+<p>The following are installation instructions for <code>R</code> and <code>RStudio</code>.</p>
 <p><br> <br></p>
 <p><strong><code>R</code> Software</strong></p>
 <p>To install <code>R</code>, download <code>R</code> from CRAN via the following:</p>
@@ -1966,18 +1898,13 @@ Final Project Due (6:00 PM)
 <li><a href="https://player.vimeo.com/video/203516968">Install <code>RStudio</code></a></li>
 </ul></li>
 </ul>
-<p><br> <br></p>
-<p><strong>Git</strong></p>
-<ul>
-<li>Windows/Mac: <a href="https://git-scm.com/downloads" class="uri">https://git-scm.com/downloads</a> (Links to an external site.)
-<ul>
-<li>Note that git comes pre-installed on the macOS operating system.</li>
-</ul></li>
-</ul>
-<p>Video walkthroughs:</p>
-<ul>
-<li><a href="https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0">TA Video Walkthrough: Using Git with RStudio</a> - [<em>Put together by former TA (Nathan Lovin)</em>]</li>
-</ul>
+<!-- <br> -->
+<!-- <br> -->
+<!-- **Git**  -->
+<!-- - Windows/Mac: https://git-scm.com/downloads (Links to an external site.) -->
+<!--     + Note that git comes pre-installed on the macOS operating system.  -->
+<!-- Video walkthroughs: -->
+<!--  - [TA Video Walkthrough: Using Git with RStudio](https://www.dropbox.com/s/qdw38hbvy0kj630/git.mp4?dl=0) - [_Put together by former TA (Nathan Lovin)_] -->
 <p><br> <br></p>
 <hr />
 <p><br> <br></p>
@@ -1988,24 +1915,24 @@ Final Project Due (6:00 PM)
 <div id="eric-dunford-professor" class="section level4">
 <h4><a href="http://ericdunford.com/">Eric Dunford</a> (Professor)</h4>
 <ul>
-<li><strong>Office</strong>: 404 Old North</li>
-<li><strong>Office Hours</strong>: Tuesdays 1pm to 3pm</li>
+<li><strong>Office</strong>: Bedroom (formerly 404 Old North)</li>
+<li><strong>Office Hours</strong>: Tuesdays 9:00am to 11:00am (EST) or by appointment</li>
 <li><strong>Email</strong>: <a href="mailto:eric.dunford@georgetown.edu">eric.dunford@georgetown.edu</a></li>
 </ul>
 <p><br></p>
 </div>
-<div id="trey-billing-teaching-assistant" class="section level4">
-<h4><a href="https://www.treybilling.com/">Trey Billing</a> (Teaching Assistant)</h4>
+<div id="maddie-pickens-teaching-assistant" class="section level4">
+<h4><a href="http://maddieclairepickens.com/">Maddie Pickens</a> (Teaching Assistant)</h4>
 <ul>
-<li><strong>Office Hours</strong>: by appointment – <a href="https://calendly.com/billingtt/ppol670">book Trey via calendly</a></li>
-<li><strong>Email</strong>: <a href="mailto:tb990@georgetown.edu">tb990@georgetown.edu</a></li>
+<li><strong>Office Hours</strong>: by appointment</li>
+<li><strong>Email</strong>: <a href="mailto:mp1595@georgetown.edu">mp1595@georgetown.edu</a></li>
 </ul>
 <p><br></p>
 </div>
 <div id="class" class="section level4">
 <h4>Class</h4>
 <ul>
-<li><strong>Slack</strong>: class communications will primarily take place through <a href="https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members">Slack</a>. Please follow the <a href="https://join.slack.com/t/ppol670introt-vcq1395/shared_invite/enQtODgyMDYyNDQ4ODgyLTFjMTJiZmJlNGQzMTkyNDMwNmUyYjZjZWQxOGIwMmIzZTFmYTAyZWEzOWE5ZDNlNjk4MWZjZTE2OTA3Y2ZhOWQ"><strong><em>invite link</em></strong></a> to be added to the class Slack channel.</li>
+<li><strong>Slack</strong>: class communications will primarily take place through <a href="https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members">Slack</a>. Please follow the <a href="https://join.slack.com/t/ppol670-fall-2020/shared_invite/zt-gnbnemyd-9GSNAaEfXtSUgzsnH3KHKA"><strong><em>invite link</em></strong></a> to be added to the class Slack channel.</li>
 </ul>
 <p><br> <br></p>
 <hr />
@@ -2015,228 +1942,162 @@ Final Project Due (6:00 PM)
 </div>
 <div id="lecture-materials" class="section level1">
 <h1>Lecture Materials</h1>
+<p><em>Asynchronous lecture materials will go live approximately one week prior to the scheduled synchronous meeting date.</em></p>
 <p><br> <br></p>
-<div id="week-1-reproducibility-and-version-control" class="section level3">
-<h3><em>Week 1</em>: <a href="Lectures/week_01/lecture-week-01.html">Reproducibility and Version Control</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#11">Reproducibility</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#25">Version Control</a></li>
-</ul></li>
-<li><strong>Tutorial</strong>
-<ul>
-<li><a href="Lectures/week_01/tutorial-git-with-rstudio.html"><strong>Using Git with Rstudio</strong></a></li>
-</ul></li>
-</ul>
+<div id="week-1-work-flow-and-reproducibility" class="section level3">
+<h3><em>Week 1</em>: <strong>Work Flow and Reproducibility</strong></h3>
+<!-- ### _Week 1_: [Work Flow and Reproducibility](Lectures/week_01/lecture-week-01.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#11) -->
+<!--   + [](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#25) -->
 <p><br></p>
 </div>
 <div id="week-2-introduction-to-programming-in-r" class="section level3">
-<h3><em>Week 2</em>: <a href="Lectures/week_02/lecture-week-02_intro-to-R.html">Introduction to Programming in <code>R</code></a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3">Interacting with <code>R</code></a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20">Objects</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#37">Data Structures</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#45">Accessing Relational Data</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70">Operators</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#84">Functions</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#90">Packages</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#99">Importing/Exporting Data</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#114">Directories</a></li>
-</ul></li>
-<li><strong>Practice</strong>
-<ul>
-<li><a href="https://dunforde.shinyapps.io/week02-interactive-practice-01/">An interactive practice set covering objects, data structures, and operators</a></li>
-<li><a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> An overview of objects and operators (download <code>.R</code>)</a></li>
-<li><a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice importing data</a></li>
-</ul></li>
-</ul>
+<h3><em>Week 2</em>: <strong>Introduction to Programming in <code>R</code></strong></h3>
+<!-- ### _Week 2_: [Introduction to Programming in `R`](Lectures/week_02/lecture-week-02_intro-to-R.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20) -->
+<!--   + [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#37) -->
+<!--   + [Accessing Relational Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#45) -->
+<!--   + [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70) -->
+<!--   + [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#84) -->
+<!--   + [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#90) -->
+<!--   + [Importing/Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#99) -->
+<!--   + [Directories](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#114) -->
+<!-- - **Practice** -->
+<!--   + [An interactive practice set covering objects, data structures, and operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/) -->
+<!--   + <a href="Lectures/week_02/Practice/week02_practice_objects-and-operators.R" download> An overview of objects and operators (download `.R`)</a> -->
+<!--   + <a href="Lectures/week_02/Practice/week-02_practice-importing-data.html" target="_blank">Practice importing data</a> -->
 <p><br></p>
 </div>
 <div id="week-3-reproducibility-in-practice" class="section level3">
-<h3><em>Week 3</em>: <a href="Lectures/week_03/lecture-week03-reproducibility-in-practice.html">Reproducibility in Practice</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3">Iteration</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22">Control Statements</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26"><code>R</code> Markdown</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50">Generating Reproducible Examples</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li><a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download <code>.R</code>) </a></li>
-<li><a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download <code>.Rmd</code>) </a></li>
-</ul></li>
-</ul>
+<h3><em>Week 3</em>: <strong>Reproducibility in Practice</strong></h3>
+<!-- ### _Week 3_: [Reproducibility in Practice](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3) -->
+<!--   + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22) -->
+<!--   + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26) -->
+<!--   + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50) -->
+<!-- - **Practice**: -->
+<!--   + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a> -->
+<!--   + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a> -->
 <p><br></p>
 </div>
 <div id="week-4-data-wrangling-in-r" class="section level3">
-<h3><em>Week 4</em>: <a href="Lectures/week_04/lecture-week-04_data-wrangling.html">Data Wrangling in R</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3">Data Wrangling</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9">Tidy Data</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17">Manipulating Data</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#44">Piping</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#52">Joining Data</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#70">Reshaping Data</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li>Practice <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd.zip" download> wrangling data (download <code>.Rmd</code>) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip" download> answer key (download <code>.Rmd</code>) </a></li>
-<li>Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd.zip" download> joining and reshaping data (download <code>.Rmd</code>) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd.zip" download> answer key (download <code>.Rmd</code>) </a></li>
-</ul></li>
-</ul>
+<h3><em>Week 4</em>: <strong>Data Wrangling in R</strong></h3>
+<!-- ### _Week 4_: [Data Wrangling in R](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3) -->
+<!--   + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9) -->
+<!--   + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17) -->
+<!--   + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#44) -->
+<!--   + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#52) -->
+<!--   + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#70) -->
+<!-- - **Practice**: -->
+<!--   + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd.zip" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a> -->
+<!--   + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd.zip" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a> -->
 <p><br></p>
 </div>
 <div id="week-5-data-visualization" class="section level3">
-<h3><em>Week 5</em>: <a href="Lectures/week_05/lecture-week-05_data-visualization.html">Data Visualization</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#4">The Components of Data Visualization</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#17">Grammar of Graphics</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#66">Dates</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li><a href="Lectures/week_05/R-code/dem-gdp-data.csv" download>Here</a> is a link to the data used in the visualizations in the lecture slides.</li>
-<li>Practice materials for visualizing data can be downloaded <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05.Rmd.zip" download>here</a>. Work through the questions then compare your results to the <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05_ANSWERS.Rmd.zip" download> answer key</a></li>
-</ul></li>
-</ul>
+<h3><em>Week 5</em>: <strong>Data Visualization</strong></h3>
+<!-- ### _Week 5_: [Data Visualization](Lectures/week_05/lecture-week-05_data-visualization.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#4) -->
+<!--   + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#17) -->
+<!--   + [Dates](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#66) -->
+<!-- - **Practice**: -->
+<!--   - <a href="Lectures/week_05/R-code/dem-gdp-data.csv" download>Here</a> is a link to the data used in the visualizations in the lecture slides. -->
+<!--   - Practice materials for visualizing data can be downloaded <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05.Rmd.zip" download>here</a>. Work through the questions then compare your results to the <a href="Lectures/week_05/Practice-Week-05-Visualization/practice_week-05_ANSWERS.Rmd.zip" download> answer key</a> -->
 <p><br></p>
 </div>
 <div id="week-6-web-scrapping-and-apis" class="section level3">
-<h3><em>Week 6</em>: <a href="Lectures/week_06/lecture-week-06_webscraping-and-apis.html">Web Scrapping and APIs</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#3">Loops and Functions (Refresher)</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#10">Web Content</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#19">Scraping Web Content</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#33">Building a Webscraper</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#45">APIs</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li>The following <a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.html">walkthrough</a> covers building a dataset of all bilaterial investment treaties from scratch using the techniques covered in lecture (<a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.Rmd.zip" download> Download .Rmd</a>).</li>
-</ul></li>
-</ul>
+<h3><em>Week 6</em>: <strong>Web Scrapping and APIs</strong></h3>
+<!-- ### _Week 6_: [Web Scrapping and APIs](Lectures/week_06/lecture-week-06_webscraping-and-apis.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Loops and Functions (Refresher)](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#3) -->
+<!--   + [Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#10) -->
+<!--   + [Scraping Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#19) -->
+<!--   + [Building a Webscraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#33) -->
+<!--   + [APIs](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#45) -->
+<!-- - **Practice**: -->
+<!--   - The following [walkthrough](Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.html) covers building a dataset of all bilaterial investment treaties from scratch using the techniques covered in lecture (<a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.Rmd.zip" download> Download .Rmd</a>). -->
 <p><br></p>
 </div>
-<div id="week-7-text-as-data" class="section level3">
-<h3><em>Week 7</em>: <a href="Lectures/week_07/lecture-week-07-text-as-data-ppol670.html">Text as Data</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#3">Strings</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#20">Tidy Text</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#49">Sentiment Analysis</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#64">Topic Models</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li>The following provides a <a href="Lectures/week_07/week_07_practice/walkthrough_text-as-data_ppol670.html">walkthrough</a> of the concepts covered in this lecture. The materials can be found <a href="Lectures/week_07/week_07_practice.zip">here</a> as a <code>.zip</code>.</li>
-</ul></li>
-</ul>
+<div id="week-7-geospatial-data" class="section level3">
+<h3><em>Week 7</em>: <strong>Geospatial Data</strong></h3>
+<!-- - **Working with Spatial Data in `R`**  -->
+<!--   - The following are materials provided by Trey Billing. He'll walk us through how to utilize spatial data in `R` and some common concepts we need to know when dealing with spatial data.  -->
+<!--     + [Spatial Walkthrough](Lectures/week_13/spatial_walkthrough/walkthrough.html) -->
+<!--     + [Walkthrough Materials](Lectures/week_13/spatial_walkthrough.zip) (`.zip`) -->
 <p><br></p>
 </div>
-<div id="week-8-introduction-to-statistical-learning" class="section level3">
-<h3><em>Week 8</em>: <a href="Lectures/week_08/week-08-lecture-supervised-learning.html">Introduction to Statistical Learning</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#3">Statistical Learning</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#13">Supervised Learning</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#32">Cross-Validation</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#56">Caret</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64">Pre-Processing Data</a></li>
-</ul></li>
-</ul>
+<div id="week-8-text-as-data" class="section level3">
+<h3><em>Week 8</em>: <strong>Text as Data</strong></h3>
+<!-- ### _Week 7_: [Text as Data](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Strings](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#3) -->
+<!--   + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#20) -->
+<!--   + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#49) -->
+<!--   + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#64) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_07/week_07_practice/walkthrough_text-as-data_ppol670.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`. -->
 <p><br></p>
 </div>
-<div id="week-9-applications-in-supervised-learning-regression" class="section level3">
-<h3><em>Week 9</em>: <a href="Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html">Applications in Supervised Learning (Regression)</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#3">Regression Methods</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#33">Regression Trees</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#48">Bagging and Random Forest</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li>The following provides a <a href="Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html">walkthrough</a> of the concepts covered in this lecture. The materials can be found <a href="Lectures/week_09/week_09-practice.zip">here</a> as a <code>.zip</code>.</li>
-</ul></li>
-</ul>
+<div id="week-9-introduction-to-statistical-learning" class="section level3">
+<h3><em>Week 9</em>: <strong>Introduction to Statistical Learning</strong></h3>
+<!-- ### _Week 8_: [Introduction to Statistical Learning](Lectures/week_08/week-08-lecture-supervised-learning.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#3) -->
+<!--   + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#13) -->
+<!--   + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#32) -->
+<!--   + [Caret](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#56) -->
+<!--   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64) -->
 <p><br></p>
 </div>
-<div id="week-10-applications-in-supervised-learning-classification" class="section level3">
-<h3><em>Week 10</em>: <a href="Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html">Applications in Supervised Learning (Classification)</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>:
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#3">Classification</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#16">Logistic Regression</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#24">K-Nearest Neighbors</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#37">Classification Trees</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#42">Support Vector Machines</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li>The following provides a <a href="Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html">walkthrough</a> of the concepts covered in this lecture. The materials can be found <a href="Lectures/week_10/week-10-walkthrough.zip">here</a> as a <code>.zip</code>.</li>
-</ul></li>
-</ul>
+<div id="week-10-applications-in-supervised-learning-regression" class="section level3">
+<h3><em>Week 10</em>: <strong>Applications in Supervised Learning (Regression)</strong></h3>
+<!-- ### _Week 9_: [Applications in Supervised Learning (Regression)](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html) -->
+<!-- - **Table of Contents** -->
+<!--   + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#3) -->
+<!--   + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#33) -->
+<!--   + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#48) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`. -->
 <p><br></p>
 </div>
-<div id="week-11-applications-in-unsupervised-learning" class="section level3">
-<h3><em>Week 11</em>: <a href="Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html">Applications in Unsupervised Learning</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>:
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#3">Unsupervised Learning</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#7">K Means Clustering</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#19">Hierarchical Clustering</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li>The following provides a <a href="Lectures/week_11/walkthrough/unsupervised-learning-walkthrough.nb.html">walkthrough</a> of the concepts covered in this lecture. The materials can be found <a href="Lectures/week_11/week_11-walkthrough.zip">here</a> as a <code>.zip</code>.</li>
-</ul></li>
-</ul>
+<div id="week-11-applications-in-supervised-learning-classification" class="section level3">
+<h3><em>Week 11</em>: <strong>Applications in Supervised Learning (Classification)</strong></h3>
+<!-- ### _Week 10_: [Applications in Supervised Learning (Classification)](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html) -->
+<!-- - **Table of Contents**: -->
+<!--   + [Classification](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#3) -->
+<!--   + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#16) -->
+<!--   + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#24) -->
+<!--   + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#37) -->
+<!--   + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#42) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week-10-walkthrough.zip) as a `.zip`. -->
 <p><br></p>
 </div>
-<div id="week-12-exploratory-data-analysis" class="section level3">
-<h3><em>Week 12</em>: <a href="Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html">Exploratory Data Analysis</a></h3>
-<ul>
-<li><strong>Table of Contents</strong>:
-<ul>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#3">Interpretable Machine Learning</a></li>
-<li><a href="http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#37">Data Exploration in the Social Sciences</a></li>
-</ul></li>
-<li><strong>Practice</strong>:
-<ul>
-<li>The following provides a <a href="Lectures/week_12/walkthrough/interpretable-ml-walkthrough.html">walkthrough</a> of the concepts covered in this lecture. The materials can be found <a href="Lectures/week_12/week-12-walkthrough.zip">here</a> as a <code>.zip</code>.</li>
-</ul></li>
-</ul>
+<div id="week-12-interpretable-machine-learning" class="section level3">
+<h3><em>Week 12</em>: <strong>Interpretable Machine Learning</strong></h3>
+<!-- ### _Week 12_: [Exploratory Data Analysis](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html) -->
+<!-- - **Table of Contents**: -->
+<!--   + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#3) -->
+<!--   + [Data Exploration in the Social Sciences](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#37) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_12/walkthrough/interpretable-ml-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_12/week-12-walkthrough.zip) as a `.zip`. -->
 <p><br></p>
 </div>
-<div id="week-13-spatial-catch-up" class="section level3">
-<h3><em>Week 13</em>: Spatial + Catch-up</h3>
-<ul>
-<li><strong>Working with Spatial Data in <code>R</code></strong>
-<ul>
-<li>The following are materials provided by Trey Billing. He’ll walk us through how to utilize spatial data in <code>R</code> and some common concepts we need to know when dealing with spatial data.
-<ul>
-<li><a href="Lectures/week_13/spatial_walkthrough/walkthrough.html">Spatial Walkthrough</a></li>
-<li><a href="Lectures/week_13/spatial_walkthrough.zip">Walkthrough Materials</a> (<code>.zip</code>)</li>
-</ul></li>
-</ul></li>
-</ul>
-<!-- <br>  -->
+<div id="week-13-applications-in-unsupervised-learning" class="section level3">
+<h3><em>Week 13</em>: <strong>Applications in Unsupervised Learning</strong></h3>
+<!-- ### _Week 11_: [Applications in Unsupervised Learning](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html) -->
+<!-- - **Table of Contents**: -->
+<!--   + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#3) -->
+<!--   + [K Means Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#7) -->
+<!--   + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#19) -->
+<!-- - **Practice**: -->
+<!--   - The following provides a [walkthrough](Lectures/week_11/walkthrough/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-walkthrough.zip) as a `.zip`. -->
+<p><br></p>
 </div>
 </div>
 
@@ -2290,7 +2151,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
