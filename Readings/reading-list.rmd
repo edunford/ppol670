@@ -214,6 +214,8 @@ I've broken the readings up into "Required" and "Additional Resources and Sugges
 
 ### Week 8: Text-as-Data
 
+<br>
+
 - **_Required Readings_**:
     + Refresh [Ch. 14: Strings](https://r4ds.had.co.nz/strings.html) - `r4ds`
     + [Ch. 1: The tidy text format](https://www.tidytextmining.com/tidytext.html) - `TT`
