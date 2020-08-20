@@ -70,6 +70,8 @@ class: newsection
 
 # What is data wrangling?
 
+![:space 5]
+
 - **raw &rarr; processed**: the process of transforming data from one format to another.
 
 - **converting the structure** to facilitate some analysis
@@ -85,10 +87,15 @@ class: newsection
 
 - **Data rarely works "out of the box"** 
 
-  + constructed for a different purpose
+  + Constructed for a different purpose than what you're using it for
   
-  + requires adding additional information (merging other data to it)
-  
+  + Requires adding additional information:
+      - merging other data into it
+      - creating new variables from old ones
+      - changing the unit of analysis
+      
+--
+
 - **Codebooks offer clues, but not the story**
 
   + If a codebook exists, it can outline the data generation process, variable names, issues with the data, etc. 
@@ -98,6 +105,8 @@ class: newsection
 ---
 
 ## Thinking about Data Generation
+ 
+ ![:space 5]
  
 - **Data Provenance**
 
@@ -121,7 +130,7 @@ Throughout this course, we are going to cover the basics of data manipulation an
 These packages were designed to ease the process of data manipulation and management so that it is more intuitive, efficient, and interpretable.
 
 Specifically, the `tidyverse` is a housing package that holds the following packages:
-- [readr](http://readr.tidyverse.org/) - for reading data in (_which we encountered last time_)
+- [readr](http://readr.tidyverse.org/) - for reading data in 
 - [tibble](https://tibble.tidyverse.org/) - for "tidy" data structures
 - [dplyr](http://dplyr.tidyverse.org/) - for data manipulation
 - [ggplot2](http://ggplot2.tidyverse.org/) - for data visualization
@@ -388,6 +397,83 @@ select(dat,-start)
 
 ---
 
+### Other useful `select()` behavior
+
+---
+
+### Other useful `select()` behavior
+
+- `contains()` - extract columns with a specific naming convention.
+
+```{r}
+select(dat,contains("a"))
+```
+
+---
+
+### Other useful `select()` behavior
+
+- `contains()` - extract columns with a specific naming convention.
+
+- `starts_with()` - extract columns that start with a specific naming convention.
+
+```{r}
+select(dat,starts_with("s"))
+```
+
+---
+
+### Other useful `select()` behavior
+
+- `contains()` - extract columns with a specific naming convention.
+
+- `starts_with()` - extract columns that start with a specific naming convention.
+
+- `ends_with()` - extract columns that end with a specific naming convention.
+
+```{r}
+select(dat,ends_with("d"))
+```
+
+
+
+---
+
+### Other useful `select()` behavior
+
+- `contains()` - extract columns with a specific naming convention.
+
+- `starts_with()` - extract columns that start with a specific naming convention.
+
+- `ends_with()` - extract columns that end with a specific naming convention.
+
+- `everything()` - extract every remaining column not yet stated in the selection. 
+
+```{r}
+select(dat,start,end,everything())
+```
+
+---
+
+### Other useful `select()` behavior
+
+- `contains()` - extract columns with a specific naming convention.
+
+- `starts_with()` - extract columns that start with a specific naming convention.
+
+- `ends_with()` - extract columns that end with a specific naming convention.
+
+- `everything()` - extract every remaining column not yet stated in the selection. 
+
+- `matches()` - extract columns using a regular expression.
+
+```{r}
+select(dat,matches("^s"))
+```
+
+
+---
+
 ## `filter()`
 
 ![:space 3]
@@ -499,7 +585,10 @@ summarize(dat,N=n(),N_party=n_distinct(party))
 
 ![:space 10]
 
-When used in conjunction with some of the other functions, `group_by()` becomes a powerful **clustering function**.
+When used in conjunction with some of the other functions, `group_by()` becomes a powerful to perform by cluster/unit/group operations.
+
+![:space 5]
+
 ```{r}
 # group by party
 x <- group_by(dat,party)
@@ -509,42 +598,204 @@ summarize(x,min_in_office = min(end-start))
 
 ---
 
-### Other functions in the tidyverse...
+### Other useful `tidyverse` functions 
 
-`tally()` or `count()` offers quick counts of a variable which can be quite useful when used alongside some of the other functions.
+- `count()`/`add_count()`
 
-![:space 5]
-
-Here we are seeing how many observations we have _by group_.
 ```{r}
-x <- group_by(dat,party)
-count(x)
+count(dat, party)
 ```
 
+```{r}
+add_count(dat, party)
+```
 
 ---
 
-### Other functions in the tidyverse...
+### Other useful `tidyverse` functions 
 
-`recode()` allows you to quickly **recode a variable** (though conditional statements prove to be the most efficient way to do this)
+- `count()`/`add_count()`
+
+- `recode()`
+
 ```{r}
 mutate(dat,party = recode(party,'Republican'=1,'Democratic'=0))
 ```
 
+
 ---
 
-### And much more...
+### Other useful `tidyverse` functions 
+
+- `count()`/`add_count()`
+
+- `recode()`
+
+- `pull()`
+
+```{r}
+pull(dat,party)
+```
+
+---
+
+### Other useful `tidyverse` functions 
+
+- `count()`/`add_count()`
+
+- `recode()`
+
+- `pull()`
+
+- `glimpse()`
+
+```{r}
+glimpse(dat)
+```
+
+---
+
+### Other useful `tidyverse` functions 
+
+- `count()`/`add_count()`
+
+- `recode()`
+
+- `pull()`
+
+- `glimpse()`
+
+- `slice()`
+
+```{r}
+slice(dat,2:3)
+```
+
+
+
+---
+
+### Other useful `tidyverse` functions 
+
+
+- `sample_n()`/`sample_frac()`
+
+```{r}
+sample_n(dat,2)
+```
+
+```{r}
+sample_frac(dat,.25)
+```
+
+---
+
+### Other useful `tidyverse` functions 
+
+
+- `sample_n()`/`sample_frac()`
+
+- `case_when()`
+
+```{r}
+mutate(dat, 
+       pres_type = case_when(
+         (end - start) == 1461 ~ "one-term pres.",
+         (end - start) == 2922 ~ "two-term pres.",
+         TRUE ~ "special case"
+       )
+)
+```
+
+---
+
+### Other useful `tidyverse` functions 
+
+
+- `sample_n()`/`sample_frac()`
+
+- `case_when()`
+
+- `lag()`/`lead()`
+
+```{r}
+mutate(dat,
+       predecessor = lag(name,n=1,order_by=start)
+)
+```
+
+---
+
+### Other useful `tidyverse` functions 
+
+
+- `sample_n()`/`sample_frac()`
+
+- `case_when()`
+
+- `lag()`/`lead()`
+
+- `row_number()`
+
+```{r}
+mutate(dat,id = row_number())
+```
+
+---
+
+### Other useful `tidyverse` functions 
+
+
+- `sample_n()`/`sample_frac()`
+
+- `case_when()`
+
+- `lag()`/`lead()`
+
+- `row_number()`
+
+- `rowname_to_column()`/`column_to_rownames()`
+
+```{r}
+rownames_to_column(dat,'id')
+```
+
+
+---
+
+### Other useful `tidyverse` functions 
+
+
+- `sample_n()`/`sample_frac()`
+
+- `case_when()`
+
+- `lag()`/`lead()`
+
+- `row_number()`
+
+- `rowname_to_column()`/`column_to_rownames()`
+
+```{r}
+column_to_rownames(head(dat,3),var="name")
+```
+
+---
+
+### Cheating is allowed
+
+![:space 10]
+
+[**Download a cheatsheet**](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) to  containing an entire list of the tidyverse `dplyr` verbs.
 
 ![:space 5]
 
-We've only covered a few functions here. Here are some more...
-- `sample_n()` - Grab an N random sample of your data
-- `sample_frac()` - Grab a random sample that is some fraction of your total data
-- `top_n()` - get the top N number of entries from a data frame
-- `slice()` - grab specific row ranges
-- `glimpse()` - quickly preview the data
+.center[OR]
+![:space 5]
 
-See [here](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) to download a cheatsheet containing an entire list of the tidyverse `dplyr` verbs.
+Access any cheatsheet for the RStudio ecosystem of packages directly from the IDE. 
+
+.center[`Help > Cheatsheets`]
 
 ---
 
@@ -621,23 +872,6 @@ presidential %>%
 ```{r,eval=F}
 data %>% function(arg1= ., arg2=TRUE)
 ```
-
-
----
-
-# PRACTICE: ![:text_color steelblue](_Wrangling Data_)
-
-![:space 5]
-
-Please **_download and complete_** the following practice on your own:
-
-.center[ **[Download the Data Wrangling Practice Set](practice/week04-practice-01_Data-Wrangling.Rmd.zip)** (`.Rmd`)]
-
-![:space 5]
-
-Then **_compare your answers_** to the answers in the **_answer key_**:
-
-.center[ **[Download Answer Key](practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip)** (`.Rmd`)]
 
 ---
 
@@ -1042,23 +1276,3 @@ What does this mean for you?
 
 - Many find that  `pivot_wider()` and `pivot_longer()` are easier to use than the older `gather()` and `spread()` functions.
 
-
-
-
----
-
-# PRACTICE: 
-## ![:text_color steelblue](_Joining and Reshaping Data_)
-
-![:space 2]
-
-
-Please **_download and complete_** the following practice on your own:
-
-.center[ **[Download the Joining & Reshaping Practice Set](practice/week04-practice-02_joining-reshaping.Rmd)** (`.Rmd`)]
-
-![:space 5]
-
-Then **_compare your answers_** to the answers in the **_answer key_**:
-
-.center[ **[Download Answer Key](practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd)** (`.Rmd`)]

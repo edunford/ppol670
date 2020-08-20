@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title> PPOL670 | Introduction to Data Science for Public Policy   Week 3       Reproducibility in Practice</title>
     <meta charset="utf-8" />
@@ -40,13 +40,15 @@ class: outline
 
 ![:space 3]
 
-- More on **_basic programming in `R`_**
+- More on **_programming in `R`_**
   
-  - **_![:text_color darkorange](indexing)_** and **_![:text_color darkorange](iteration)_**
+  - **_![:text_color darkred](indexing)_** and **_![:text_color darkred](iteration)_**
   
-  - **_![:text_color darkorange](control statements)_**
+  - **_![:text_color darkred](control statements)_**
+  
+  - **_![:text_color darkred](functions)_**
 
-- Using **_`R` Markdown_**
+- Using **_`R` Markdown_** to generate reproducible documents. 
 
 
 - Generating **_Reproducible Examples_**
@@ -180,9 +182,8 @@ mtcars[,1]
 ```
 
 ```
-##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
-## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
-## [29] 15.8 19.7 15.0 21.4
+##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2
+## [24] 13.3 19.2 27.3 26.0 30.4 15.8 19.7 15.0 21.4
 ```
 
 
@@ -367,8 +368,7 @@ letters
 ```
 
 ```
-##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q"
-## [18] "r" "s" "t" "u" "v" "w" "x" "y" "z"
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z"
 ```
 
 
@@ -532,7 +532,7 @@ toc()
 ```
 
 ```
-## 0.563 sec elapsed
+## 0.725 sec elapsed
 ```
 
 ---
@@ -555,7 +555,7 @@ toc()
 ```
 
 ```
-## 2.24 sec elapsed
+## 2.814 sec elapsed
 ```
 
 
@@ -657,12 +657,57 @@ ifelse(x&lt;5,"Hello","Goodbye")
 ```
 
 ```
-##  [1] "Hello"   "Hello"   "Hello"   "Hello"   "Goodbye" "Goodbye" "Goodbye"
-##  [8] "Goodbye" "Goodbye" "Goodbye"
+##  [1] "Hello"   "Hello"   "Hello"   "Hello"   "Goodbye" "Goodbye" "Goodbye" "Goodbye" "Goodbye" "Goodbye"
 ```
 
 ---
 
+class: newsection
+
+# Writing Functions
+
+---
+
+## Writing Functions
+
+![:space 5]
+
+
+```r
+# Basic Set Up
+
+my_function = function(x,y) # Arguments broken up by commas
+{ # Brackets that house the code 
+  
+  # Some code to execute 
+  z = x*y
+  
+  return(z) # Return a data value
+}
+
+my_function(5,6)
+```
+
+```
+## [1] 30
+```
+
+---
+
+## When to Write Functions
+
+![:space 5]
+### (1) Using the same code more than once
+
+&lt;br&gt;
+
+### (2) Complicated operation 
+
+&lt;br&gt;
+
+### (3) Vectorization 
+
+---
 
 class: newsection
 
@@ -1058,6 +1103,7 @@ When asking for help, you need to make the problem as transparent and easy to wo
 
 
 ```r
+# install.packages("reprex")
 require(reprex)
 ```
 
@@ -1145,25 +1191,59 @@ reprex(venue = "gh",si = T)
 ---
 
 
-### Generating a small toy example
+### Generating an example of the data
 
-`reprex` requires that all the code and data exist in the example. This is so that one can reproduce it by copying and pasting the example.
+`reprex` requires that **_all the code and data exist in the example_**. This is so that one can reproduce it by copying and pasting the example into their R console.
 
-Your issue might be due to something wrong with your data or your code, so often, it helps to give a little sample of the data you're using. 
+Your **_issue might be due to something wrong with your &lt;u&gt;data&lt;/u&gt;_**, so often, it helps to give a little sample of the data you're using. 
 
 --
+
+To reproduce the problem, we need some **data**:
+
+- Example code without data only gets us halfway.
+
+- Example code with **all the data** isn't practical and/or useful (try copying and pasting a gig of data)
+
+- Need a **_small, representative subset_** of data that is concise enough to copy and paste but capable of reproducing the error.
+
+---
+
+### Generating an example of the data
+
+![:space 5]
+
+
+```r
+# install.packages("datapasta")
+require(datapasta)
+```
+
+.center[&lt;img src="Figures/datapasta.png", width=300&gt;]
+
+---
+
+
+### Generating an example of the data
 
 Steps for **generating reproducible data** (for your reproducible example):
 
 1. Generate a **_small subset_** of data (when you're copying and pasting, size matters)
+
   - use `head()`, `tail()` or sample randomly (we'll learn this next time!)
-2. Break the data down into a **_raw structure_** using the base function `dput()`
+  
+2. Break the data down into a `tribble` or `data.frame` (copy/paste friendly version of the data) using:
+  - `df_format()` &amp;rarr; copies a data.frame structure to clipboard
+  - `tribble_format()` &amp;rarr; copies a tibble structure to clipboard
+
 3. **_Paste_** this raw data **_at the top of the code_** you're aiming to reproduce.
 
 ---
 
 
-### Generating a small toy example
+### Example: Generating a complete Reprex 
+
+**Original data**
 
 
 ```r
@@ -1210,7 +1290,9 @@ mtcars
 ---
 
 
-### Generating a small toy example
+### Example: Generating a complete Reprex 
+
+**Step 1: Generate a _small subset_ of data**
 
 
 ```r
@@ -1232,52 +1314,85 @@ small_mtcars
 ---
 
 
-### Generating a small toy example
+### Example: Generating a complete Reprex 
+
+
+**Step 2: use `datapasta`** to generate a version of the data that you can copy and paste
 
 
 ```r
-dput(small_mtcars)
+# Example as a data.frame
+df_format(small_mtcars)
 ```
 
 ```
-## structure(list(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1), cyl = c(6, 
-## 6, 4, 6, 8, 6), disp = c(160, 160, 108, 258, 360, 225), hp = c(110, 
-## 110, 93, 110, 175, 105), drat = c(3.9, 3.9, 3.85, 3.08, 3.15, 
-## 2.76), wt = c(2.62, 2.875, 2.32, 3.215, 3.44, 3.46), qsec = c(16.46, 
-## 17.02, 18.61, 19.44, 17.02, 20.22), vs = c(0, 0, 1, 1, 0, 1), 
-##     am = c(1, 1, 1, 0, 0, 0), gear = c(4, 4, 4, 3, 3, 3), carb = c(4, 
-##     4, 1, 1, 2, 1)), row.names = c("Mazda RX4", "Mazda RX4 Wag", 
-## "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout", "Valiant"
-## ), class = "data.frame")
+data.frame(
+   row.names = c("Mazda RX4","Mazda RX4 Wag","Datsun 710",
+                 "Hornet 4 Drive","Hornet Sportabout","Valiant"),
+         mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1),
+         cyl = c(6, 6, 4, 6, 8, 6),
+        disp = c(160, 160, 108, 258, 360, 225),
+          hp = c(110, 110, 93, 110, 175, 105),
+        drat = c(3.9, 3.9, 3.85, 3.08, 3.15, 2.76),
+          wt = c(2.62, 2.875, 2.32, 3.215, 3.44, 3.46),
+        qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22),
+          vs = c(0, 0, 1, 1, 0, 1),
+          am = c(1, 1, 1, 0, 0, 0),
+        gear = c(4, 4, 4, 3, 3, 3),
+        carb = c(4, 4, 1, 1, 2, 1)
+)
 ```
-
 
 ---
 
+### Example: Generating a complete Reprex 
 
-### Generating a small toy example
+
+**Step 2: use `datapasta`** to generate a version of the data that you can copy and paste
 
 
 ```r
-# (Mote I'm assigning the data structure to an object)
-dat &lt;- structure(list(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1), 
-                      cyl = c(6, 6, 4, 6, 8, 6), 
-                      disp = c(160, 160, 108, 258, 360, 225), 
-                      hp = c(110, 110, 93, 110, 175, 105), 
-                      drat = c(3.9, 3.9, 3.85, 3.08, 3.15, 2.76), 
-                      wt = c(2.62, 2.875, 2.32, 3.215, 3.44, 3.46), 
-                      qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22), 
-                      vs = c(0, 0, 1, 1, 0, 1), 
-                      am = c(1, 1, 1, 0, 0, 0), 
-                      gear = c(4, 4, 4, 3, 3, 3), 
-                      carb = c(4, 4, 1, 1, 2, 1)), 
-                 row.names = c("Mazda RX4", "Mazda RX4 Wag", "Datsun 710", 
-                               "Hornet 4 Drive", "Hornet Sportabout", "Valiant"), 
-                 class = "data.frame")
+# Example as a tribble/tibble
+tribble_format(small_mtcars)
+```
 
+
+```
+tibble::tribble(
+  ~mpg, ~cyl, ~disp, ~hp, ~drat,   ~wt, ~qsec, ~vs, ~am, ~gear, ~carb,
+    21,    6,   160, 110,   3.9,  2.62, 16.46,   0,   1,     4,     4,
+    21,    6,   160, 110,   3.9, 2.875, 17.02,   0,   1,     4,     4,
+  22.8,    4,   108,  93,  3.85,  2.32, 18.61,   1,   1,     4,     1,
+  21.4,    6,   258, 110,  3.08, 3.215, 19.44,   1,   0,     3,     1,
+  18.7,    8,   360, 175,  3.15,  3.44, 17.02,   0,   0,     3,     2,
+  18.1,    6,   225, 105,  2.76,  3.46, 20.22,   1,   0,     3,     1
+  )
+```
+
+---
+
+### Example: Generating a complete Reprex 
+
+**Step 3: _Paste_ this raw data _at the top of the code_ you're aiming to reproduce.**
+
+
+```r
+dat &lt;- tibble::tribble(
+  ~mpg, ~cyl, ~disp, ~hp, ~drat,   ~wt, ~qsec, ~vs, ~am, ~gear, ~carb,
+    21,    6,   160, 110,   3.9,  2.62, 16.46,   0,   1,     4,     4,
+    21,    6,   160, 110,   3.9, 2.875, 17.02,   0,   1,     4,     4,
+  22.8,    4,   108,  93,  3.85,  2.32, 18.61,   1,   1,     4,     1,
+  21.4,    6,   258, 110,  3.08, 3.215, 19.44,   1,   0,     3,     1,
+  18.7,    8,   360, 175,  3.15,  3.44, 17.02,   0,   0,     3,     2,
+  18.1,    6,   225, 105,  2.76,  3.46, 20.22,   1,   0,     3,     1
+)
 dat$mgq # Fake issue: mispelled the column name
+```
 
-# Copy the above and run
+Copy the above and run `reprex`, then paste your example on Slack.
+
+
+```r
 reprex(venue = "gh",si = T) 
 ```
     </textarea>
@@ -1327,7 +1442,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

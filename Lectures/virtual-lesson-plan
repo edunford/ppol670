@@ -1,0 +1,145 @@
+# Virtual Lesson Plans
+
+# Week 1
+
+### _Asynchronous_ Component
+
+- None
+
+### _Synchronous_ Component
+
+- How's everyone doing + Introductions
+
+- Layout of the course (slides)
+
+- Reproducibility (slides)
+
+- Using RStudio (walkthrough)
+
+
+---
+
+# Week 2
+
+### _Asynchronous_ Component
+
+- Objects lecture (5 - 10 mins)
+- Data Structure Lecture (5 - 10 mins)
+- Operators (5-10 mins)
+- Functions and Importing Packages (5 - 10 minuts)
+  + Very general introduction to functions
+
+
+(35 - 60 minutes of content)
+
+### _Synchronous_ Component
+
+- How's everyone doing
+- Quick recap (walkthrough)
+  + Object
+  + Data structures
+  + Operators
+  + Packages
+  + Questions?
+
++ Cover:
+  - Importing and Exporting Data
+  - Working directory and Projects
+
+
+- BREAKOUT: programming practice
+  + working through small coding practice set.
+  + go over answers as a group
+
+- Generating an R project (walkthrough)
+
+
+---
+
+# Week 3
+
+### _Asynchronous_ Component
+
+- Loops + Control Structure video (5 - 10 minutes)
+- Writing functions (3 - 5 minutes)
+- R Markdown (10-20 min)
+  + Provide a very applied step-by-step walkthrough
+  + Be very clear on how to set up a code chunk and the chunk options
+  + Be very clear how to set up the YAML and YAML options
+- Reproducible example (5 - 10 minutes)
+  + How to talk about your R problems
+  + What a reprex is?
+  + What data pasta is?
+  + How to use them to generate an example an post it in Slack
+
+(23 - 45 min)
+
+### _Synchronous_ Component
+
+- How's everyone doing
+- Recap on iteration and functions. Questions?
+- BREAKOUT
+  + Have a loops & functions walkthrough/practice (that they'll work on in breakout rooms) and that you'll go over as a class
+- Walk through generating a reproducible example and post that example in slack.
+- Have students generate a reproducible example of their own.
+- Talk through what worked and what didn't work.
+
+
+---
+
+# Week 4
+
+### _Asynchronous_ Component
+
+- Data Wrangling
+  + Selecting (5 min)
+  + filtering/arranging (3 - 5 min)
+  + summarize + group_by() (3 - 5 min)
+  + other useful function (3 - 5 min)
+- piping (3 - 5 min)
+- joining (5 - 10 min)
+- reshaping (5 - 10 min)
+
+(27 - 45 min)
+
+
+### _Synchronous_ Component
+
+- How's everyone doing (10 min)
+- Recap (30 min)
+  + data wrangling concepts. Questions?
+  + joining data. Questions?
+  + restructuring data. Questions?
+- BREAKOUT
+  + Work on data manipulation walkthrough (25 minutes)
+  + Go over walkthrough as a class. (40 minuts)
+
+
+---
+
+# Week 5
+
+### _Asynchronous_ Component
+
+- Aesthetics and Visualization (5 min)
+- Grammar of graphics (5 - 10 min) (mainly slides)
+- Aethestics and Data (walkthrough)
+- Faceting (5 min)
+- Third party packages
+  - gghighlight
+  - ggrepel
+  - GGally
+  - ggthemes
+- Walkthrough visualization example (live coding 15 - 20 minutes)
+- Dealing with Dates (5 - 10 min)
+
+
+### _Synchronous_ Component
+
+- How's everyone doing
+- Questions from lecture.
+- Recap on data visuallization by walking through the in-class example (. Questions?
+- BREAKOUT
+  + Work on visualization walkthrough in groups
+  + Go over visualization walkthrough as a class.
+

@@ -46,168 +46,21 @@ class: outline
 
 # Outline for Today 
 
-<br> 
+![:space 3]
 
-- **Interacting** with `R` and `RStudio`
+- **_Objects_** 
 
-- **Objects** & **Functions**
+- **_Data Structures_** and **_Accessing_** Data Points
 
-- **Data Structures** and **accessing** data points
+- Mathematical and Logical **_Operators_**
 
-- **Importing/Exporting** data & setting the **working directory**
+- **_Functions_** and **_Packages_**
 
-- Mathematical & Logical **Operators**
+- **_Importing_** and **_Exporting_** data 
 
+- **_Working directory_** and **_Projects_**
 
----
 
-class: newsection
-
-# Interacting with `R`
-
----
-
-# R in a Nut Shell
-
-![:space 5]
-
-`R` is a statistical and graphical programming language that is based off a much older language called `S`. It's source code is written in C, Fortran, and R. And it's completely **free** under a [GNU General Public License](https://en.wikipedia.org/wiki/GNU_General_Public_License0).
-
---
-
-### What this means for us:
-- **No Barriers to Entry** &rarr; easy to acquire, easy to contribute
-
-- **Active Community** &rarr; if you can think it, there is likely a package out there that does it.
-
-- **Powerful and Adaptive** &rarr; build an estimator from scratch, scrape a web-site, automate the coding of a dataset. All is within one's reach.
-
----
-
-# Why use R?
-
-![:space 10]
-
-`R` offers a powerful way to
-
-- **analyze** data
-- **clean** excel spreadsheets (and any other data format) systematically
-- **migrate** projects across platforms
-- format and **clean** text
-- **manage** _any_ data source
-- produce compelling **graphics** and maps
-
----
-
-# R Studio
-
-![:space 10]
-
-**R Studio** is a graphical user interface (GUI) for the R programming language. The software makes `R` more user-friendly adding some point-and-click functionality along with a complete integration of graphs, the data environment, and the coding script.
-
---
-
-Think of it like this..
-> `R` is the engine that runs all our commands, and R Studio is the leather seats and steering wheel. One does the work, the other eases how that work is done.
-
----
-
-# Installing R and R Studio
-
-![:space 5]
-
-To install **R**, download R from CRAN via the following:
-
-- Windows: https://cran.r-project.org/bin/windows/base/
-- Mac: https://cran.r-project.org/bin/macosx/
-
-To install **R Studio**, download from the following:
-
-- https://www.rstudio.com/products/rstudio/download/
-
-Useful **video tutorials**:
-
-- [Prior TA's walkthrough](https://www.dropbox.com/s/7af77pyb1wh224w/R-startup.mp4?dl=0)
-- Rstudio's Walkthrough:
-  + [Install R](https://player.vimeo.com/video/203516510)
-  + [Install RStudio](https://player.vimeo.com/video/203516968)
-
----
-
-### Getting Familiar with R Studio
-
-R Studio is broken up into **4 quandrants** that can be  arranged and customized to the users preference.
-
-.center[<img src="Figures/rstudio.png", width=600>]
-
----
-
-### Getting Familiar with R Studio
-
-.center[<img src="Figures/rstudio_1_4.png", width=700>]
-
----
-
-### Getting Familiar with R Studio
-
-.center[<img src="Figures/rstudio_2_4.png", width=700>]
-
----
-
-### Getting Familiar with R Studio
-
-.center[<img src="Figures/rstudio_3_4.png", width=700>]
-
----
-
-### Getting Familiar with R Studio
-
-.center[<img src="Figures/rstudio_4_4.png", width=700>]
-
----
-
-# The Console
-
-The console is where all the action happens. This is "`R`".
-
-.center[<img src="Figures/console.png">]
-
----
-
-# The Console
-
-All commands are processed through the console directly (that is, one can type commands directly into it) or via a **script**.
-
-.center[<img src="Figures/console_with_calc.png">]
-
----
-
-# Scripts
-
-A script is a `.R` text file where we write and run code our code.
-
-.center[<img src="Figures/empty_script.png">]
-
----
-
-# Scripts
-
-When we write a line of code, we can run it in the console by highlighting the text and...
-- clicking **`run`**
-- pressing **`command + enter`** (mac)
-- pressing **`control + enter`** (windows)
-
-.left[<img src="Figures/script_run.png", width=800>]
-
----
-
-# Scripts
-
-Everything in a script will be treated as **code** -- that is if you run it, the line will be processed through the console.
-
-However, we can leave comments and notes to ourselves by **commenting out** sections of the script using a **`#`**
-
-.left[<img src="Figures/commenting_out.png", width=800>]
 
 ---
 
@@ -865,23 +718,6 @@ d
 d[ d$x > 2, ]
 ```
 
----
-
-# Tutorial
-
-<br>
-<br>
-.center[**Try for yourself!**]
-<br>
-<br>
-<br>
-The following link will take you to an interactive notebook where you can try out some of the concepts we just discussed in class
-<br>
-<br>
-<br>
-.center[**[Objects, Data Structures, and Operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/)**]
-
-
 
 ---
 
@@ -895,7 +731,7 @@ class: newsection
 
 ![:space 10]
 
-A **function** is a type of object in `R` that can perform a specific task. Unlike objects that hold data, functions take **arguments** and return the output of some manipulation.
+A **function** is a type of object in `R` that can perform a specific task. Unlike objects that hold data, functions take **arguments** as input and output some manipulated form of the inputed data. 
 
 --
 

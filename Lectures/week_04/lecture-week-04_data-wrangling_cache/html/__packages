@@ -9,3 +9,6 @@ dplyr
 stringr
 forcats
 here
+kableExtra
+tictoc
+datapasta
