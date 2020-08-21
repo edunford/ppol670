@@ -1,0 +1,393 @@
+---
+pagetitle: "PPOL670 | Week 4 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Data Wrangling </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 4 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- What is data wrangling and tidy data?
+- Data wrangling with `dplyr`
+  + `select()`ing variables
+  + `filter()`ing and `arrange()`ing tidy data
+  + `mutate()`ing data to generate new variables
+  + `group_by()` and `summarize()` data to alter the unit of analysis
+- Using the `pipe` operator to chain together data manipulations
+
+<br>
+
+**In the Synchronous Lecture**
+
+- `join()`ing data
+- Reshaping data with `tidyr`
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 1 hour 20 minutes
+
+<br>
+
+## Data Wrangling
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=aab6e9b3-8332-4bb0-a0e3-ac1e0127593c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Selecting
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#23)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=0216b15a-e6ff-494a-8be5-ac1e012ed901&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+
+# Presidential Data Frame
+dat <- presidential
+dat
+
+# Selecting Variables -----------------------------------------------------
+
+    # Allows us to select variables 
+    select(dat,name,start,party)
+
+# Selecting + Renaming + Reordering Variables ----------------------------------------------------
+
+
+    # Reorder Variables in Data Frame
+    select(dat,party,name,start,end)
+
+    # Rename variables on the fly
+    select(dat,political_party = party, president = name)
+    
+    # NOTE there is also a rename() function
+    rename(dat,political_party = party)
+    
+    # Reordering via slice operator 
+    select(dat,name:end)
+
+
+# Dropping Variables -----------------------------------------------------
+
+    # Drop 1 variable
+    select(dat,-start)
+    
+    # Dropping multiple variables
+    select(dat,-start,-end)
+    select(dat,-c(start,end))
+
+
+# Selection Helper Functions ----------------------------------------------
+
+
+    # contains() - extract columns with a specific naming convention.
+    
+    select(dat,contains("a"))
+    
+    # starts_with() - extract columns that start with a specific naming convention.
+    
+    select(dat,starts_with("n"))
+    
+    # ends_with() - extract columns that end with a specific naming convention.
+    
+    select(dat,ends_with("t"))
+    
+    # everything() - extract every remaining column not yet stated in the selection.
+    
+    select(dat,party,end,everything())
+    
+    # matches() - extract columns using a regular expression.
+    
+    select(dat,matches("^s"))
+```
+
+<br><hr><br>
+
+## Filtering/Arranging
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#35)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=3d4f406b-9414-4085-ab08-ac1e013584d3&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+
+# Presidential Data Frame
+dat <- presidential
+dat
+
+
+# Filtering Rows by Variable Values ----------------------------------------------------------
+
+
+    filter(dat, party == "Republican" )
+
+    filter(dat, party == "Democratic" )
+    filter(dat, party != "Republican" )
+    
+    # Compound logical statements
+    filter(dat, party == "Democratic" & start <= "2000-01-01")
+
+
+# Arranging Rows by Variable Values  --------------------------------------
+
+    # Arrange by character
+    arrange(dat,name)
+    arrange(dat,party)
+
+    # Arrange by date
+    arrange(dat,start)
+    
+    # Descending order using desc()
+    arrange(dat,desc(start))
+    
+    # Arranging by multiple variables 
+    arrange(dat,party,desc(start))
+
+```
+
+<br><hr><br>
+
+## Mutating
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#40)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=0d89d2a7-dadb-4ae8-962e-ac1e0148075e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+
+# Presidential Data Frame
+dat <- presidential
+dat
+
+# Mutate to generate new variables ----------------------------------------
+  
+    mutate(dat, 
+           cold_war = start <= "1989-01-01",
+           cold_war = as.numeric(cold_war),
+           republican = as.numeric(party == "Republican"),
+           interaction = cold_war * republican)
+
+
+
+# Transmute ---------------------------------------------------------------
+
+    transmute(dat, 
+              cold_war = start <= "1989-01-01",
+              cold_war = as.numeric(cold_war),
+              republican = as.numeric(party == "Republican"),
+              interaction = cold_war * republican)
+```
+
+<br><hr><br>
+
+
+## Grouping and Summarizing
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#44)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=81d63181-4ca0-4157-bb73-ac1e014b9501&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+
+# Presidential Data Frame
+dat <- presidential
+dat
+
+# Summarizing -------------------------------------------------------------
+
+    # Aggregate variables using summarize
+    summarize(dat,
+              days_in_office = mean(end-start),
+              max = max(end-start),
+              min = min(end-start))
+
+
+    # Helpful Summary Functions: n() & n_distinct()
+    summarize(dat,
+              N = n(),
+              N_party = n_distinct(party))
+    
+
+# Group By + Summarizing --------------------------------------------------
+
+    # Group by a variable
+    x <- group_by(dat,party)
+    
+    # Then summarize by group
+    summarize(x,min_in_office = min(end-start))
+    
+    
+
+# Group by + Mutate -------------------------------------------------------
+
+    x <- group_by(dat,party)
+    
+    mutate(x,min_in_office = min(end-start))
+
+```
+
+<br><hr><br>
+
+## Piping
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#60)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=f9891396-01a2-4045-8f2e-ac1e01548684&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+
+<br><hr><br>
+
+## [Bonus] Other Useful `dplyr` Functions
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#48)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=983c6a40-fe12-460a-89da-ac1e014ef6b0&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+# Practice {.tabset .tabset-pills}
+
+<br>
+
+These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
+
+For the following practice, let's use the `flights` dataset from the `nycflights13` package. 
+
+```{r,warning=F,message=F,error=F}
+# Load the packages
+require(tidyverse)
+require(nycflights13)
+```
+
+
+For information on the dataset, please consult the documentation.
+```{r,eval=F}
+?flights
+```
+
+Let's store the data in an object called `dat`.
+```{r}
+dat <- flights
+```
+
+
+<br>
+
+## _
+
+## Question 1  {.tabset}
+
+<br>
+
+Tell me about the data: 
+
+- How many observations (i.e. flights) are in the data?
+- How many `carrier`s are in the data?
+- How many different `dest`ination airports are there in the data?
+
+<br>
+
+### _
+
+### Answer
+
+```{r}
+# How many observations (i.e. flights) are in the data?
+dat %>% count()
+
+# How many carriers are in the data?
+dat %>% summarize(n_distinct(carrier))
+
+# How many different `origin` airports are there in the data?
+dat %>% summarize(n_distinct(dest))
+```
+
+
+## Question 2  {.tabset}
+
+<br>
+
+How many flights are there by month? Which month is the slowest (i.e. which month was there the least number of flights)?
+
+<br>
+
+### _
+
+### Answer
+
+```{r}
+dat %>% 
+  group_by(month) %>% 
+  count() %>% 
+  arrange(n)
+
+# Looks like February has the least number of total flights!
+```
+
+
+## Question 3 {.tabset}
+
+<br>
+
+Which is the slowest flying _day_ by month?
+
+<br>
+
+### _
+
+### Answer
+
+```{r}
+dat %>% 
+  group_by(month,day) %>% 
+  count() %>% 
+  group_by(month) %>% 
+  filter(n == min(n)) %>% 
+  arrange(month)
+```
+
+
+
+

@@ -1,0 +1,263 @@
+---
+pagetitle: "PPOL670 | Week 3 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Reproducibility in Practice </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 3 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+
+- Continue learning some `R` programming basics:
+  - Iterating over objects using `for` and `while` loops;
+  - How to save data manipulations from loops using contains;
+  - Conditional code using controls structures.
+- Generating reproducible examples using `reprex` and `datapasta`
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Using `RMarkdown` to generate reproducible documents. 
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: XXX
+
+<br>
+
+## `for` Loops
+
+### [**Relevant Slides**]()
+
+[VIDEO HERE]
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
+<br><hr><br>
+
+## `while` Loops
+
+### [**Relevant Slides**]()
+
+[VIDEO HERE]
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
+<br><hr><br>
+
+## Containers
+
+### [**Relevant Slides**]()
+
+[VIDEO HERE]
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
+<br><hr><br>
+
+## Control Structures
+
+### [**Relevant Slides**]()
+
+[VIDEO HERE]
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
+<br><hr><br>
+
+## Reproducible Examples
+
+### [**Relevant Slides**]()
+
+[VIDEO HERE]
+
+### Code from the video
+
+```{r,eval=F}
+# When code breaks --------------------------------------------------------
+
+    # Here is an example of a code chunk with a problem.
+    my_data <- cars 
+    my_data$new_var <- NA # create a new variable 
+    for( i in 1:nrow(my_data)){
+      
+      # using speed, categorize cars as fast/slow
+      if(my_data$speed[1] >= mean(my_data$speed)){
+        
+        my_data$new_var[i] <- "fast"  
+        
+      }else{
+        
+        my_data$new_var[i] <- "slow"
+        
+      }
+      
+    }
+    
+    # Print off
+    head(my_data)
+    
+    # This doesn't look right, all the cars are slow!
+    
+
+# Generating a reproducible example of the code ---------------------------------------
+
+    require(reprex) # Load the package
+    reprex() # Run the function
+    
+# Generating a reproducible example of the data ---------------------------------------    
+    
+    
+    require(datapasta) # Load the package
+
+    # Small example
+    ex_dat <- head(cars)
+    
+    # To save output to clipboard
+      df_format(ex_dat)
+      tribble_format(ex_dat)
+    
+    # To instantly paste output
+      df_paste(ex_dat)
+      tribble_paste(ex_dat)
+    
+# All together now --------------------------------------------------------
+
+    
+    # Small representative example of the data
+    ex_dat <- head(cars)
+    tribble_format(ex_dat)
+    
+    
+    # Tailor the small code example
+    
+    # Data 
+    my_data <- tibble::tribble(
+      ~speed, ~dist,
+      4,     2,
+      4,    10,
+      7,     4,
+      7,    22,
+      8,    16,
+      9,    10
+    )
+    
+    
+    # Code
+    my_data$new_var <- NA # create a new variable 
+    for( i in 1:nrow(my_data)){
+      
+      # using speed, categorize cars as fast/slow
+      if(my_data$speed[1] >= mean(my_data$speed)){
+        
+        my_data$new_var[i] <- "fast"  
+        
+      }else{
+        
+        my_data$new_var[i] <- "slow"
+        
+      }
+      
+    }
+    
+    # Print off output
+    head(my_data)
+    
+    
+    # Copy the above and then run reprex()
+    reprex()
+```
+
+<br><hr><br>
+
+# Practice {.tabset .tabset-pills}
+
+<br>
+
+These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
+
+<br>
+
+## _
+
+## Question 1  {.tabset}
+
+<br>
+
+[Enter Question Here]
+
+<br>
+
+### _
+
+### Answer
+
+## Question 2  {.tabset}
+
+<br>
+
+[Enter Question Here]
+
+<br>
+
+### _
+
+### Answer
+
+## Question 3  {.tabset}
+
+<br>
+
+[Enter Question Here]
+
+<br>
+
+### _
+
+### Answer
+
+

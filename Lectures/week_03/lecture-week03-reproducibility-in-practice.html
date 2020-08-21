@@ -45,8 +45,6 @@ class: outline
   - **_![:text_color darkred](indexing)_** and **_![:text_color darkred](iteration)_**
   
   - **_![:text_color darkred](control statements)_**
-  
-  - **_![:text_color darkred](functions)_**
 
 - Using **_`R` Markdown_** to generate reproducible documents. 
 
@@ -182,8 +180,9 @@ mtcars[,1]
 ```
 
 ```
-##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2
-## [24] 13.3 19.2 27.3 26.0 30.4 15.8 19.7 15.0 21.4
+##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
+## [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
+## [31] 15.0 21.4
 ```
 
 
@@ -368,7 +367,8 @@ letters
 ```
 
 ```
-##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z"
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+## [20] "t" "u" "v" "w" "x" "y" "z"
 ```
 
 
@@ -532,7 +532,7 @@ toc()
 ```
 
 ```
-## 0.725 sec elapsed
+## 0.72 sec elapsed
 ```
 
 ---
@@ -555,7 +555,7 @@ toc()
 ```
 
 ```
-## 2.814 sec elapsed
+## 2.604 sec elapsed
 ```
 
 
@@ -657,55 +657,9 @@ ifelse(x&lt;5,"Hello","Goodbye")
 ```
 
 ```
-##  [1] "Hello"   "Hello"   "Hello"   "Hello"   "Goodbye" "Goodbye" "Goodbye" "Goodbye" "Goodbye" "Goodbye"
+##  [1] "Hello"   "Hello"   "Hello"   "Hello"   "Goodbye" "Goodbye" "Goodbye"
+##  [8] "Goodbye" "Goodbye" "Goodbye"
 ```
-
----
-
-class: newsection
-
-# Writing Functions
-
----
-
-## Writing Functions
-
-![:space 5]
-
-
-```r
-# Basic Set Up
-
-my_function = function(x,y) # Arguments broken up by commas
-{ # Brackets that house the code 
-  
-  # Some code to execute 
-  z = x*y
-  
-  return(z) # Return a data value
-}
-
-my_function(5,6)
-```
-
-```
-## [1] 30
-```
-
----
-
-## When to Write Functions
-
-![:space 5]
-### (1) Using the same code more than once
-
-&lt;br&gt;
-
-### (2) Complicated operation 
-
-&lt;br&gt;
-
-### (3) Vectorization 
 
 ---
 

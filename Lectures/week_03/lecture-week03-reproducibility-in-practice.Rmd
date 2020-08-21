@@ -51,8 +51,6 @@ class: outline
   - **_![:text_color darkred](indexing)_** and **_![:text_color darkred](iteration)_**
   
   - **_![:text_color darkred](control statements)_**
-  
-  - **_![:text_color darkred](functions)_**
 
 - Using **_`R` Markdown_** to generate reproducible documents. 
 
@@ -429,48 +427,6 @@ ifelse(F,"Hello","Goodbye")
 x <- 1:10
 ifelse(x<5,"Hello","Goodbye")
 ```
-
----
-
-class: newsection
-
-# Writing Functions
-
----
-
-## Writing Functions
-
-![:space 5]
-
-```{r}
-# Basic Set Up
-
-my_function = function(x,y) # Arguments broken up by commas
-{ # Brackets that house the code 
-  
-  # Some code to execute 
-  z = x*y
-  
-  return(z) # Return a data value
-}
-
-my_function(5,6)
-```
-
----
-
-## When to Write Functions
-
-![:space 5]
-### (1) Using the same code more than once
-
-<br>
-
-### (2) Complicated operation 
-
-<br>
-
-### (3) Vectorization 
 
 ---
 

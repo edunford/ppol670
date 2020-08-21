@@ -358,66 +358,170 @@ array(X,dim = c(2,2,2))
 
 class:newsection
 
-# Accessing<br>Relational<br>Data
+# Indexing
 
 ---
 
-## Accessing a `data.frame` Object
+## Structure Matters
 
-![:space 10]
+![:space 5]
 
-One must understand the **structure of an object** in order to systematically access the material contained within it.
+One must understand the **structure** of a data object in order to systematically access the material contained within it.
 
---
+![:space 5]
 
-Let's use a dataset inherent to `R` called `cars`. There are a number of datasets that are built into `R`. These are for demonstration purposes.
+As we saw, `R` allows for **_many different ways of organizing information_**. 
 
-Note that these data will not appear in the environment <u>**until we assign them to an object**</u>.
+![:space 5]
+
+To **_access information_** in a data structure, we'll need to rely on an **index** or **key**.
+
+---
+
+### Index
+
+An **_index_** is a positive integer that denotes the position of a data value in a data structure. 
+
+![:space 2]
+
+`R` uses a **_`1`-based_** index system, which means we start counting at 1 as the first position in the data structure. 
+
+![:space 2]
+
+We use **_brackets_**, `[ ]`, to index data values. The brackets operator goes along side the object name, `x[]`.
+
+![:space 2]
+
+We then **_insert an integer (or a vector of integers)_** denoting the position of the value(s) we want into the bracket.
+
+
+---
+
+### Index
+
+Consider the following `vector` which contains five character data values.
+
+```{r,echo=F}
+vec <- c("A","B","C","D","E")
+```
+
+Under the hood, there lies the _`1`-based index that references the position of each data point_.
+
+```
+vec <- c("A","B","C","D","E")
+          ^   ^   ^   ^   ^
+          1   2   3   4   5
+```
+
+To access any **_individual_** value, we simply need to reference it's position.
 
 ```{r}
-data <- cars
-class(data)
+vec[3]
 ```
 
 ---
 
-## `data.frame`: relational structure
+### Index
 
-An easy way to see what's inside a data object is to just `print()` it. `R` prints objects automatically in the console.
-```{r}
-data
+Consider the following `vector` which contains five character data values.
+
+```{r,echo=F}
+vec <- c("A","B","C","D","E")
 ```
 
+Under the hood, there lies the _`1`-based index that references the position of each data point_. 
+
+```
+vec <- c("A","B","C","D","E")
+          ^   ^   ^   ^   ^
+          1   2   3   4   5
+```
+
+To access any **_multiple_** values, we need to supply a vector of index positions.
+
+```{r}
+vec[c(1,3,5)]
+```
 
 ---
 
-## `data.frame`: relational structure
+### Index
 
-We can look at the **structure** of a data object by using the `str()` function.
-```{r}
-str(data)
+Consider the following `vector` which contains five character data values.
+
+```{r,echo=F}
+vec <- c("A","B","C","D","E")
 ```
 
-Or grad that variable names using the `colnames()` function.
+Under the hood, there lies the _`1`-based index that references the position of each data point_. 
+
+```
+vec <- c("A","B","C","D","E")
+          ^   ^   ^   ^   ^
+          1   2   3   4   5
+```
+
+If we reference positions that **_exceeds the bounds_**, `R` returns a missing value or `NA`
+
 ```{r}
-colnames(data)
+vec[6]
 ```
 
 ---
 
-## Accessing data in a `data.frame` 
+### Index
 
-We can leverage what we know about the dimensionality of the data to extract parts of it.
+Consider the following `vector` which contains five character data values.
 
-We do this by using brackets `[]` alongside the data object. We then can access the **dimensions** in the data by specifying the row and column
+```{r,echo=F}
+vec <- c("A","B","C","D","E")
+```
 
-<br><br><br>
+Under the hood, there lies the _`1`-based index that references the position of each data point_. 
+
+```
+vec <- c("A","B","C","D","E")
+          ^   ^   ^   ^   ^
+          1   2   3   4   5
+```
+
+A **_negative index_** tells `R` to **_exclude_** that data value while returning the rest.
+
+```{r}
+vec[-4]
+```
+
+---
+
+### Indexing in two-dimensions
+
+A `vector` is a **_one-dimensional_** data structure, so there is only 1 index to keep track of. 
+
+
+When accessing data points in a `data.frame` or `matrix`, we need to keep track of **_2 dimensions_**
+
+
+```
+                              1      2
+                              ^      ^
+                            var_1  var_2
+                        1 <  "a"    2.3
+                        2 <  "b"    1.2
+                        3 <  "c"    3.4
+
+```
+
+We need to keep track of two indices: one for the rows, and one for the columns
+
+.center[
 `data[`<font color = 'red'>`row`</font>`,`<font color = 'blue'>`column`</font>`]`
+]
+
 
 ---
 
 ```{r,echo=FALSE,fig.align="center"}
-source('explain_data_frames.R')
+source("explain_data_frames.R")
 explain_df(1,Row)
 ```
 
@@ -465,7 +569,7 @@ explain_df2(2,1)
 explain_df2(1:3,2)
 ```
 
----
+
 
 ```{r,echo=FALSE,fig.align="center"}
 explain_df2(2:3,3:4)
@@ -473,9 +577,27 @@ explain_df2(2:3,3:4)
 
 ---
 
-## Dimensions
+### Indexing in two-dimensions
 
-![:space 10]
+Let's use a dataset inherent to `R` called `cars`. There are a number of datasets that are built into `R`. These are for demonstration purposes.
+
+Note that these data will not appear in the environment **_until we assign them to an object_**.
+
+```{r}
+data <- cars
+class(data)
+```
+
+---
+
+### Indexing in two-dimensions
+
+We can look at the **structure** of a data object by using the `str()` function.
+```{r}
+str(data)
+```
+
+--
 
 The function `dim()` can tell use about the dimensions of a data object.
 
@@ -483,51 +605,61 @@ The function `dim()` can tell use about the dimensions of a data object.
 dim(data)
 ```
 
-We now know that the object `data` has **50 rows** and **2 columns**.
 
 ---
 
-## Accessing relational data 
+### Indexing in two-dimensions
 
-![:space 10]
-
+We can look at the **structure** of a data object by using the `str()` function.
 ```{r}
-data[,2] # Access the entire 2nd column
-data[49,] # Access just the 49th row
+str(data)
 ```
 
+Or query the number of columns or row directly with `ncol()`/`nrow()`
+
+```{r}
+ncol(data)
+nrow(data)
+```
 
 ---
 
-## Accessing relational data 
+### Indexing in two-dimensions
+
+We can look at the **structure** of a data object by using the `str()` function.
+```{r}
+str(data)
+```
 
 ![:space 5]
 
-```{r}
-data[1,2] # Access just a cell
-```
+**The Point**: _one needs to know the dimensions of a relational data structure to look up values_.
+
+---
+
+## Keys
+
+Some data structures (`data.frame`s and named `list`s) have **_keys_** that allow us to look up data values. 
+
+**_Keys_** are a unique identifier (usually a character value) that we can use to look up data values. 
 
 --
 
-```{r}
-data[2:3,1:2] # partial subset
-```
+For a `data.frame` these keys take the form of **_variable names_** that provide a unique identifier for each column.
 
---
-
-The key is to keep in mind the dimensions. We can't access data that isn't there.
+We can look up these variable names using the `colnames()` function.
 
 ```{r}
-data[51,]
+colnames(data)
 ```
 
 ---
 
-## Accessing variables 
+## Looking up data values with keys
 
-Most data objects can be accessed using `$` call sign.
+We can access a data object's keys using the `$` operator. 
 
-`$` acts as a **key** by which we can extract a specific variable or data feature.
+`$` acts as a **_handle_** by which we can look up all available keys and extract a specific data feature.
 
 If we hit **Tab** after specifying the `$` after our data object, R Studio will offer a list of all available variables.
 
@@ -535,47 +667,57 @@ If we hit **Tab** after specifying the `$` after our data object, R Studio will 
 
 ---
 
-## Accessing variables 
+## Looking up data values with keys
 
 ![:space 10]
 
-Here we call the `speed` variable from our dataset.
+Here we call the `speed` variable from our dataset using the `$` and the variable name (key).
 ```{r}
 data$speed
 ```
 
-
 ---
 
-![:space 15]
-
-There are many functions designed to help us understand the **dimensions** of a data structure.
-```{r}
-dim(data) # Dimensions
-nrow(data) # Number of Rows
-ncol(data) # Number of Columns
-```
-
-
----
+## Looking up data values with keys
 
 ![:space 10]
 
-There are also some useful functions built into R to view portions of a data structure.
-
+We can also reference the key directly using the `[]` brackets operator and the key name. 
 ```{r}
-head(data,3) # Reports the 3 first entries
-tail(data,3) # Reports the 3 last entries
+data[ , "speed"]
 ```
 
 ---
 
-![:space 15]
+## Looking up data values with keys
 
-`summary()` allows for one to quickly summarize the distributions across a set of variables
+We'll come across specialized data types, like the output from a **_linear model_**.
+
 ```{r}
-summary(data)
+m <- lm(dist ~ speed, data = data)
+str(m)
 ```
+
+---
+
+## Looking up data values with keys
+
+We'll come across specialized data types, like the output from a **_linear model_**.
+
+But don't worry, these are just **_named lists_** that use keys as indices. 
+
+```{r}
+names(m)
+```
+
+--
+
+We can use those names to look up specific output from what looks like a complex object. It's that easy.
+
+```{r}
+m$coefficients
+```
+
 
 ---
 

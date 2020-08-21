@@ -24,6 +24,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
+**In the Asynchronous Lecture**
+
+- A
+- B
+- C
+
+<br>
+
+**In the Synchronous Lecture**
+
 - A
 - B
 - C
@@ -44,14 +54,29 @@ _The following tabs contain pre-recorded lecture materials for class this week. 
 
 ## Topic 1
 
+### [**Relevant Slides**]()
+
+[VIDEO HERE]
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
 <br><hr><br>
 
 ## Topic 2
 
-<br><hr><br>
+### [**Relevant Slides**]()
 
-## Topic 3
+[VIDEO HERE]
 
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
 
 <br><hr><br>
 

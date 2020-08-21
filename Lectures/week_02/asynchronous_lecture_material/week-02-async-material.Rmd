@@ -1,0 +1,228 @@
+---
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Introduction to Programming in R </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 2 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives This Week
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Learn what an **_object_** is in `R` 
+
+- Cover **_data structures_** in `R` and how to **_access_** data points in a data structure.
+
+- Examine how `R` can be used for calculations by covering its mathematical and logical **_operators_**
+
+- Overview of **_functions_** and **_packages_** in `R`.
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Talk through **_importing_** and **_exporting_** data using the `readr`, `haven`, and `readxl` packages.
+
+- Touch on setting up a **_working directory_** and `R` **_projects_**
+
+<br>
+
+## Tips
+
+For this first day of class, we'll cover a lot of ground. Keep in mind that we'll **revisit these concepts again and again**, so no worries if everything doesn't sink in on your first pass. 
+
+If you have questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: 1 hour, 28 minutes
+
+<br>
+
+## Objects
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=4444753b-2b68-4ceb-8012-ac1d01199109&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+# Object 1
+x1 <- 4
+
+# Object 2
+x2 <- "This is a cat"
+
+# Addition operator works for some classes, but not all
+x1 + 1
+x2 + 1
+
+# See the class
+class(x1)
+class(x2)
+
+# Coerce an object to be another class
+as.character(x1)
+as.numeric(x2)
+
+# removing objects
+rm(x2)
+```
+
+<br><hr><br>
+
+## Data Structures
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=673b9d7a-9712-43fd-a7a5-ac1d01216811&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+# Scalar data types
+x1 <- 4
+x2 <- "A"
+x3 <- T
+
+# Looking up the class
+class(x3)
+
+# Looking up the length of an object
+length(x1)
+
+# Make vector
+v1 <- c(1,2,3,4)
+length(v1)
+
+# Only homogenous data types
+v2 <- c("A",1,1.4,T)
+v2
+```
+
+
+<br><hr><br>
+
+## Indexing
+
+### [**Relevant Slides**]()
+
+[PLUG IN VIDEO HERE + Link to slides]
+
+### Code from the video
+
+```{r,eval=F}
+# Scalar Data Types -------------------------------------------------------
+
+    4           # Integers
+    3.4         # Numeric (double/floats)
+    TRUE        # Logical (Boolean)
+    "A"         # Character
+    factor("A") # Factor
+ 
+
+# Data Structures ---------------------------------------------------------
+
+    # Vector
+    vec <- c("a","b","c","d")
+    vec
+  
+    # List
+    my_list <- list(A = 1:4, B = 1:10)
+    my_list
+    
+    # Matrix
+    my_mat <- matrix(0, ncol=2,nrow = 5)
+    my_mat
+    
+    # Data Frame
+    my_dat <- data.frame(A = 1:4, B = c("a","b","c","d"))
+    my_dat
+
+    
+
+# Index -------------------------------------------------------------------
+
+    vec <- c("a","b","c","d","e")
+    vec    
+    
+    vec[-c(1,5,3)]
+    vec[-3:-5]
+    
+    
+    data$dist
+    data[, 2]
+    
+    
+    data[ 45:50 , c("speed","dist")]
+    
+    head(data,5)
+    tail(data,5)
+```
+
+
+<br><hr><br>
+
+## Operators
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#53)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=4fa5f030-80ed-4b28-a3a8-ac1d013d11fc&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
+<br><hr><br>
+
+## Functions & Packages
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#66)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=1c8fcd23-0521-4496-880b-ac1d0144869d&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
+<br><hr><br>
+
+#  Practice 
+
+<br>
+
+These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
+
+### **[Objects, Data Structures, and Operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/)**
+
+<br>
+
+

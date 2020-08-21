@@ -46,7 +46,6 @@
   - Importing and Exporting Data
   - Working directory and Projects
 
-
 - BREAKOUT: programming practice
   + working through small coding practice set.
   + go over answers as a group
@@ -61,11 +60,6 @@
 ### _Asynchronous_ Component
 
 - Loops + Control Structure video (5 - 10 minutes)
-- Writing functions (3 - 5 minutes)
-- R Markdown (10-20 min)
-  + Provide a very applied step-by-step walkthrough
-  + Be very clear on how to set up a code chunk and the chunk options
-  + Be very clear how to set up the YAML and YAML options
 - Reproducible example (5 - 10 minutes)
   + How to talk about your R problems
   + What a reprex is?
@@ -78,8 +72,16 @@
 
 - How's everyone doing
 - Recap on iteration and functions. Questions?
+
+- COVER
+  - R Markdown
+    + Provide a very applied step-by-step walkthrough
+    + Be very clear on how to set up a code chunk and the chunk options
+    + Be very clear how to set up the YAML and YAML options
+
 - BREAKOUT
-  + Have a loops & functions walkthrough/practice (that they'll work on in breakout rooms) and that you'll go over as a class
+  + Have a loops & control statements walkthrough/practice (that they'll work on in breakout rooms) and that you'll go over as a class
+
 - Walk through generating a reproducible example and post that example in slack.
 - Have students generate a reproducible example of their own.
 - Talk through what worked and what didn't work.
