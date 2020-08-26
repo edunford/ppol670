@@ -1,7 +1,7 @@
 ---
 title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Introduction to Programming in R </center>
 subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 2 </center><br>
-author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University<br><br> </center>
 output: 
   html_document:
     includes: 
@@ -9,6 +9,7 @@ output:
     css: async-page-style.css
     highlight: breezedark
     theme: united
+    toc: true
 ---
 
 <br><hr><br>
@@ -31,7 +32,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Examine how `R` can be used for calculations by covering its mathematical and logical **_operators_**
 
-- Overview of **_functions_** and **_packages_** in `R`.
+- Overview of **_packages_** in `R`.
 
 <br>
 
@@ -39,16 +40,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Talk through **_importing_** and **_exporting_** data using the `readr`, `haven`, and `readxl` packages.
 
-- Touch on setting up a **_working directory_** and `R` **_projects_**
+- Touch on **_working directory_** and `R` **_projects_**
 
 <br>
 
 ## Tips
 
-For this first day of class, we'll cover a lot of ground. Keep in mind that we'll **revisit these concepts again and again**, so no worries if everything doesn't sink in on your first pass. 
+In this class, we'll cover a lot of ground. Keep in mind that we'll **revisit these concepts again and again**, so no worries if everything doesn't sink in on your first pass. 
 
 If you have questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
-
 
 <br><hr><br>
 
@@ -129,9 +129,9 @@ v2
 
 ## Indexing
 
-### [**Relevant Slides**]()
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#28)
 
-[PLUG IN VIDEO HERE + Link to slides]
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e31b55bb-7193-484f-9993-ac1e01054160&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
@@ -189,28 +189,192 @@ v2
 
 ## Operators
 
-### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#53)
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#57)
 
 <iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=4fa5f030-80ed-4b28-a3a8-ac1d013d11fc&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
 ```{r,eval=F}
-# ENTER CODE
+
+
+
+
+# Math Operators ----------------------------------------------------------
+
+# + addition
+
+    4 + 2
+  
+    # The addition operator is really function under the hood
+    `+`(4,2) 
+    
+    # You cant' add all data types.
+    "a" + 2
+  
+# - subtraction
+    
+    4 - 2
+
+# / division
+  
+    4/5
+
+# * multiplication
+    
+    4*5
+
+# ^ Exponentiation
+    
+    2^3
+  
+    
+# Built in Math Functions ---------------------------------
+  
+  # There are many statistical and mathematical functions in R. They operate the
+  # same as any function and we'll see them in used in different ways in this
+  # class.
+  
+  # log()
+  # exp()
+  # mean()
+  # median()
+
+
+# Logical Operators -------------------------------------------------------
+
+  x <- 3
+  y <- 4
+  
+  # Logical statements
+  x == y      # equals to
+  x != y      # does not equal
+  x >= y      # greater than or equal to
+  x <= y      # less than or equal to
+  x > y       # greater than
+  x < y       # less than
+  
+  # Compound logical statements
+  
+  # And operator: & -- if both left and right side of the statement are true,
+  # then return true, else false
+  x == 3 & y ==4
+  x == 3 & y ==1
+  
+  
+  # Or operator: | -- if one or the other side of the statement is true,
+  # then return true, else false if both are false
+  x == 3 | y ==1
+  
+
+# Vectorization -----------------------------------------------------------
+
+  # Perform operations to all values to a vector simultaneously  
+  x <- 1:10
+  
+  x + 5
+  x * 100
+  
+  
+  # Vectorize works for logical operators as well
+  x > 5
+  x != 5 & x > 3
+
+  
+# Subsetting --------------------------------------------------------------
+
+  # We can use vectors of boolean values to subset vectors.
+  x[x==5]
+  x[x > 5]
+  x[x != 5 & x > 3] # Returns a subset
+  x[x != 5 | x > 3] # Returns everything!
+  
+  
+
+# Misc --------------------------------------------------------------------
+
+  
+  # Note that we can store vector of logical values to it's own object
+  b1 <- x != 5 & x > 3
+  # And use it later
+  x[b1]
+  
+  # Also note that we can coerce a logical vector to be numeric, which turns it
+  # into an indicator (0,1) variable
+  as.numeric(b1)
 ```
 
 <br><hr><br>
 
 ## Functions & Packages
 
-### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#66)
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70)
 
 <iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=1c8fcd23-0521-4496-880b-ac1d0144869d&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
 ```{r,eval=F}
-# ENTER CODE
+# What are functions? ------------------------
+
+    # We've already run into a number of functions
+    c() # generate a vector
+    as.character() # coerce to character class
+    data.frame() # create a data frame
+    # etc. ...
+    
+    
+    # Functions are denoted by a word and parentheses
+    # "word" with () = word()
+    
+    # Functions take arguments
+    # word(arg1 = 1,arg2 = 2)
+    
+    # And generate some kind of output
+    # output <- word(arg1 = 1,arg2 = 2)
+    
+    # Functions are objects like any other object in R. 
+    
+    # Functions are ways to house code. 
+
+
+# Base Functions  ------------------------
+    
+    # Base functions come pre-installed on R. When you turn R on, you have
+    # access to all base functions,
+
+
+# Function Documentation  ------------------------
+
+    # We can use `?` to look at a functions documentation
+    ?mean()
+
+    
+# Why we import packages?  ------------------------
+
+    # We import packages because we get additional functionality that is not
+    # native to the R programming environment
+
+# Installing packages  ------------------------
+    
+    # We can install packages using the `install.packages()` function
+    install.packages("ggplot") # We simply need to provide the name of the function. 
+    
+
+# Importing Packages ------------------------------------------------------
+
+    # Once a package is installed, we can now import the package and all it's
+    # functions using `library()` or `require()`
+    library(ggplot2)
+    require(ggplot2)
+    
+    
+
+# Referencing Package Functions without installing the pacakge ------------
+
+    # We can reference package functions without install the package using `::`
+    # operator. Specifically, we use <package_name>::<function_name>
+    ggplot2::ggplot()
 ```
 
 <br><hr><br>
@@ -221,7 +385,31 @@ v2
 
 These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
 
-### **[Objects, Data Structures, and Operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/)**
+### [Objects, Data Structures, and Operators](https://dunforde.shinyapps.io/week02-interactive-practice-01/)
+
+<br><hr><br>
+
+# [Feedback](https://forms.gle/E9WQnmYHPaXUpvnW9)
+
+The following survey asks you quick questions regarding the usefulness of the asynchronous lecture materials. Feedback will be used to modify aspect of the asynchronous materials moving forward.
+
+<br><hr><br>
+
+# Synchronous Materials 
+
+## [Lecture Slides](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html)
+
+- **_Table of Contents_**
+  - [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
+  - [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20)
+  - [Indexing](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#28)
+  - [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#57)
+  - [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70)
+  - [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#76)
+  - [Importing and Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#85)
+  - [But where is my data exactly?](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#100)
+
+<br><hr><br>
 
 <br>
 

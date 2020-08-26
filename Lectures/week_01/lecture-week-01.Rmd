@@ -156,14 +156,14 @@ read_csv(here('Syllabus/fall-2020-timeline.csv')) %>%
 - **_Asynchronous_** learning
   - Pre-recorded videos covering the main concepts for the week. 
   - Materials will be made available _one week prior_ to the scheduled class on the course website. 
-  - Approx. 1 hour of content a week. 
+  - Approx. 1 to 1.5 hours of content a week. 
   
 --
 
 - **_Synchronous_** learning
   - Meet over zoom at the scheduled class time.
   - Applied walkthroughs/hands-on examples
-  - Approx. 1.5 hours a week. 
+  - Approx. 1 to 1.5 hours a week. 
  
  
 ---
@@ -184,7 +184,7 @@ read_csv(here('Syllabus/fall-2020-timeline.csv')) %>%
 
 ![:space 2]
 
-- **_"Attendance" == "Watching recordings"_** 
+- **Participation = f(Watching, Practicing, Questions)** 
 
 
 ---
