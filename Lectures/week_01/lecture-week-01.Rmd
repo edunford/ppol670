@@ -464,31 +464,31 @@ Useful **video tutorials**:
 
 R Studio is broken up into **4 quandrants** that can be  arranged and customized to the users preference.
 
-.center[<img src="Figures/rstudio.png", width=600>]
+.center[<img src="figures/rstudio.png", width=600>]
 
 ---
 
 ### Getting Familiar with R Studio
 
-.center[<img src="Figures/rstudio_1_4.png", width=700>]
+.center[<img src="figures/rstudio_1_4.png", width=700>]
 
 ---
 
 ### Getting Familiar with R Studio
 
-.center[<img src="Figures/rstudio_2_4.png", width=700>]
+.center[<img src="figures/rstudio_2_4.png", width=700>]
 
 ---
 
 ### Getting Familiar with R Studio
 
-.center[<img src="Figures/rstudio_3_4.png", width=700>]
+.center[<img src="figures/rstudio_3_4.png", width=700>]
 
 ---
 
 ### Getting Familiar with R Studio
 
-.center[<img src="Figures/rstudio_4_4.png", width=700>]
+.center[<img src="figures/rstudio_4_4.png", width=700>]
 
 ---
 
@@ -496,7 +496,7 @@ R Studio is broken up into **4 quandrants** that can be  arranged and customized
 
 The console is where all the action happens. This is "`R`".
 
-.center[<img src="Figures/console.png">]
+.center[<img src="figures/console.png">]
 
 ---
 
@@ -504,7 +504,7 @@ The console is where all the action happens. This is "`R`".
 
 All commands are processed through the console directly (that is, one can type commands directly into it) or via a **script**.
 
-.center[<img src="Figures/console_with_calc.png">]
+.center[<img src="figures/console_with_calc.png">]
 
 ---
 
@@ -512,7 +512,7 @@ All commands are processed through the console directly (that is, one can type c
 
 A script is a `.R` text file where we write and run our code.
 
-.center[<img src="Figures/empty_script.png">]
+.center[<img src="figures/empty_script.png">]
 
 ---
 
@@ -520,7 +520,7 @@ A script is a `.R` text file where we write and run our code.
 
 A **RMarkdown** script is a `.Rmd` text file where we write **_prose_** and run our code together (more on this on Week 3).
 
-.center[<img src="Figures/rmarkdown.png">]
+.center[<img src="figures/rmarkdown.png">]
 
 ---
 
@@ -531,7 +531,7 @@ When we write a line of code, we can run it in the console by highlighting the t
 - pressing **`command + enter`** (mac)
 - pressing **`control + enter`** (windows)
 
-.left[<img src="Figures/script_run.png", width=800>]
+.left[<img src="figures/script_run.png", width=800>]
 
 ---
 
@@ -541,6 +541,6 @@ Everything in a script will be treated as **code** -- that is if you run it, the
 
 However, we can leave comments and notes to ourselves by **commenting out** sections of the script using a **`#`**
 
-.left[<img src="Figures/commenting_out.png", width=800>]
+.left[<img src="figures/commenting_out.png", width=800>]
 
 
