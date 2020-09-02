@@ -62,6 +62,10 @@ _The following tabs contain pre-recorded lecture materials for class this week. 
 
 <br>
 
+## _
+
+<br><hr><br>
+
 ## Objects
 
 ### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
@@ -393,24 +397,6 @@ These exercises are designed to help you reinforce your grasp of the concepts co
 
 The following survey asks you quick questions regarding the usefulness of the asynchronous lecture materials. Feedback will be used to modify aspect of the asynchronous materials moving forward.
 
-<br><hr><br>
 
-# Synchronous Materials 
-
-## [Lecture Slides](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html)
-
-- **_Table of Contents_**
-  - [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
-  - [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20)
-  - [Indexing](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#28)
-  - [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#57)
-  - [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70)
-  - [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#76)
-  - [Importing and Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#85)
-  - [But where is my data exactly?](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#100)
-
-<br><hr><br>
-
-<br>
 
 

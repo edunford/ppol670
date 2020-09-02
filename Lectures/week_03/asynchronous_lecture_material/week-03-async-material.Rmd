@@ -2,7 +2,7 @@
 pagetitle: "PPOL670 | Week 3 - Asynchronous lecture materials"
 title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Reproducibility in Practice </center>
 subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 3 </center><br>
-author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University<br><br></center>
 output: 
   html_document:
     includes: 
@@ -10,6 +10,7 @@ output:
     css: async-page-style.css
     highlight: breezedark
     theme: united
+    toc: true
 ---
 
 <br><hr><br>
@@ -28,16 +29,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 - Continue learning some `R` programming basics:
-  - Iterating over objects using `for` and `while` loops;
-  - How to save data manipulations from loops using contains;
-  - Conditional code using controls structures.
-- Generating reproducible examples using `reprex` and `datapasta`
+  - **Iterating** over objects using `for` and `while` loops;
+  - How to save data manipulations from loops using **containers**;
+  - Conditional code using **control statements**.
+- Generating **reproducible examples** using `reprex` and `datapasta`
 
 <br>
 
 **In the Synchronous Lecture**
 
-- Using `RMarkdown` to generate reproducible documents. 
+- Using `RMarkdown` to generate **reproducible documents**. 
+- Practice generating reproducible examples. 
+
+
+<br>
 
 > If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
 
@@ -49,71 +54,200 @@ knitr::opts_chunk$set(echo = TRUE)
 
 _The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
 
-**_Total time_**: XXX
+**_Total time_**: Approx. 1 hour and 10 minutes
 
 <br>
 
+## _
+
+<br><hr><br>
+
 ## `for` Loops
 
-### [**Relevant Slides**]()
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3)
 
-[VIDEO HERE]
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=9d847870-2068-4d68-b3f0-ac1d0164d949&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
 ```{r,eval=F}
-# ENTER CODE
+# Indexing
+fruit <- c("bananas","apples","grapes","pears","oranges")
+length(fruit) # See how many entries do we have
+fruit[1] # Extracting the first item
+
+# Say we wanted to print off each item in the vector. 
+cat("I like",fruit[1])
+cat("I like",fruit[2])
+cat("I like",fruit[3])
+cat("I like",fruit[4])
+cat("I like",fruit[5])
+
+# Note how we're systematically counting through the index positions to access
+# each item. This is laborious to do by hand, especially if this data object was
+# really big. Fear not! This is where the loop comes in.
+
+# For Loops
+for( i in fruit ){ # i takes on the value of fruit one at a time. 
+  cat("I like",i,"\n")
+}
+
+# What's happening with i?
+i <- fruit[1]
+i <- fruit[2]
+# ...
+i <- fruit[5]
+
+# Now let's use the for loop to iterate, using the index as a pointer
+
+# Create an array of numbers
+numbers = c(10,100,-1000,345,-7,999,21345,444457)
+
+# Iterate from the 2nd index until the last
+for( i in 2:length(numbers) ){
+  
+  # Multiply the two numbers together 
+  new_number <- numbers[i]*numbers[i-1] 
+  
+  print(new_number) # print the numbers 
+ 
+}
+
+# Note finally there is no special rule that the pointer has to be `i`. It can
+# be anything that is a valid object name. For example, let's trade `i` for `my_favorite_fruit`
+for( my_favorite_fruit in fruit ){ 
+  
+  cat("I like",my_favorite_fruit,"\n")
+  
+}
 ```
 
 <br><hr><br>
 
 ## `while` Loops
 
-### [**Relevant Slides**]()
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#15)
 
-[VIDEO HERE]
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=6ff70a34-114e-458c-8935-ac1d01695f6e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
 ```{r,eval=F}
-# ENTER CODE
+# While loops are similar to a for loop, but takes a condition rather than data
+# structure.
+x <- 0
+while(
+  # Conditional statement
+  x < 5
+){
+  # Code 
+  print(x)
+  x <- x + 1
+}
 ```
 
 <br><hr><br>
 
 ## Containers
 
-### [**Relevant Slides**]()
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#16)
 
-[VIDEO HERE]
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=d976c72a-e083-4de8-8719-ac1d016b8303&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
 ```{r,eval=F}
-# ENTER CODE
+# (1) Using a container to store data values
+dat_container <- as.data.frame(matrix(0, nrow = 5,ncol = 2))
+dat_container
+
+for( i in 1:5){
+  dat_container[i,1] <- i
+  dat_container[i,2] <- letters[i]
+}
+dat_container
+
+# (2) Binding output each iteration
+containter2 <- c()
+for( i in 1:10){
+  tmp_data <- data.frame(v1=i,v2=letters[i])
+  containter2 <- rbind(containter2,tmp_data)
+}
+containter2
+
+
+# Which is faster?
+
+# Using a container
+require(tictoc) # for counting how long it takes R to run
+N = 5000
+tic()
+dat_container <- as.data.frame(matrix(0, nrow = N,ncol = 2))
+for( i in 1:N){
+  dat_container[i,1] <- i
+  dat_container[i,2] <- 1/i
+}
+toc()
+
+# Building container
+N = 5000
+tic()
+dat_container <- c()
+for( i in 1:N){
+  tmp <- data.frame(V1 = i,V2 = 1/i)
+  dat_container <- rbind(dat_container,tmp)
+}
+toc()
 ```
 
 <br><hr><br>
 
-## Control Structures
+## Control Statements
 
-### [**Relevant Slides**]()
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22)
 
-[VIDEO HERE]
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e5fc4726-ab78-478e-9ccf-ac1d017115a8&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
 ```{r,eval=F}
-# ENTER CODE
+if(TRUE){ # Requires a condition
+  
+  print("Hello") # Code if the condition is True
+  
+}else{
+  
+  print("Goodbye") # Code if the condition is False
+  
+}
+
+# Control structures + Loop
+for(i in 1:10){
+  
+  if(i <= 5){
+    
+    print("Hello")
+    
+  }else{
+    
+    print("Goodbye")
+    
+  }
+  
+}
+
+# If-else vectorization
+x <- 1:10
+ifelse(x<5,"Hello","Goodbye")
 ```
 
 <br><hr><br>
 
 ## Reproducible Examples
 
-### [**Relevant Slides**]()
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50)
 
-[VIDEO HERE]
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=6ab2db14-4894-4def-a772-ac1e01187be4&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 ### Code from the video
 
@@ -212,6 +346,13 @@ _The following tabs contain pre-recorded lecture materials for class this week. 
     reprex()
 ```
 
+
+<br><hr><br>
+
+# [Feedback](https://forms.gle/wG7uo7Kw4gU7pV2MA)
+
+The following survey asks you quick questions regarding the usefulness of the asynchronous lecture materials. Feedback will be used to modify aspect of the asynchronous materials moving forward.
+
 <br><hr><br>
 
 # Practice {.tabset .tabset-pills}
@@ -228,31 +369,58 @@ These exercises are designed to help you reinforce your grasp of the concepts co
 
 <br>
 
-[Enter Question Here]
+Write a loop that iterates over the following two vectors, and multiplies the values located at each index location. So, for example, for the first iteration `3` will be multiplied by `3.3`, for the second `5` by `4.2` and so on. Print off the answer each iteration.
 
+```{r,eval=F}
+vec1 = c(3,5,7,3,99,-10)
+vec2 = c(3.3,4.2,77.5,6,102,10034)
+```
+ 
 <br>
 
 ### _
 
 ### Answer
+
+```{r,eval=F}
+vec1 = c(3,5,7,3,99,-10)
+vec2 = c(3.3,4.2,77.5,6,102,10034)
+
+for ( i in 1:length(vec1)){
+  answer <- vec1[i]*vec2[i]
+  print(answer)
+}
+  
+```
 
 ## Question 2  {.tabset}
 
 <br>
 
-[Enter Question Here]
+Write a loop that iterates through the `mtcars` data frame (which comes built into `R`) and print the message "Low Gear" if the gear variable is less than 4, else print "High Gear".
 
 <br>
 
 ### _
 
 ### Answer
+
+```{r,eval=F}
+for ( i in 1:nrow(mtcars) ){
+  if(mtcars$gear[i] < 4){
+    print("Low Gear")
+  }else{
+    print("High Gear")
+  }
+}
+```
+
 
 ## Question 3  {.tabset}
 
 <br>
 
-[Enter Question Here]
+Similar to Question 2, create a vector that sorts the `mtcars` data into "Low Gear" and "High Gear" cars using the function `ifelse()`. 
 
 <br>
 
@@ -260,4 +428,7 @@ These exercises are designed to help you reinforce your grasp of the concepts co
 
 ### Answer
 
+```{r,eval=F}
+ifelse(mtcars$gear < 4,"Low Gear","High Gear")
+```
 

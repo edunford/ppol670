@@ -1,0 +1,109 @@
+---
+title: "PPOL670 | Introduction to programming in R"
+subtitle: "Week 2 - Practice Set<br><br>"
+output:
+  html_document:
+    theme: united
+    toc: true
+    toc_float: true
+---
+
+# Instructions
+
+The following assignment seeks to reinforce some of the concepts we honed in class. Only through repeated practice will you being to really hone your skills as an `R` user. In a new `R` script, doing the following:
+
+<br>
+
+## R Projects
+
+<br>
+
+**(1) Create an `R` Project in a new folder on your desktop using RStudio.**
+
+After doing so, do the following:
+
+- Check the working directory of the new R session started in your project.
+- Close RStudio and move the folder containing your R Project off of your Desktop and into a new folder.
+- Fire RStudio back up by clicking on the project icon. 
+- Check the working directory. Has it changed from what it was previously?
+
+Please work in this R Project when answering the remaining questions.
+
+<br>
+
+## Objects and Data Structures
+
+<br>
+
+**(1) Subset a vector**
+
+The following line of code simulates one thousand random draws from a normal distribution (with a mean of 0 and a variance of 1). Please subset this vector so that only values above the mean are retained.
+```{r}
+vec <- rnorm(n = 1000,mean = 0, sd = 1)
+```
+
+
+Next, subset the vector so that only values between -.5 and .5 are retained. 
+
+<br>
+
+**(2) Subset a data frame **
+
+For the following example, we are going to use the `iris` example dataset, which is inherent in R.
+
+```{r}
+?iris # to see what it's all about
+```
+
+Using the `iris` dataset and what we know of indexing and logical operators please:
+
+
+a. Subset the data frame to only contain the "setosa" species.
+
+b. Subset the data frame to only contain the observations with `Sepal.Width` greater than `3.1`.
+
+
+<br>
+
+**(3) Create a vector containing the names of everyone in your breakout room as strings and store it in the object `student_names`.**
+
+<br>
+
+**(4) Create a data frame containing one variable `student_name` that contains the name of everyone in your breakout room. Use the vector you created in the last question to create generate the variable. Save that data frame to an object named `breakout`.**
+
+
+<br>
+
+## Exporting and Importing data 
+
+<br>
+
+Note that we'll use the following packages to import/export different data formats, so make sure they're (a) installed on your computer and (b) imported into your current R Session. 
+
+```{r,eval=F}
+install.packages("readr")
+install.packages("haven")
+install.packages("readxl")
+```
+
+<br>
+
+**(1) Export your `breakout` data into multiple file formats.**
+
+Let's **EXPORT** your `breakout` data into a number of different formats and save it to a new folder called "Data".^[Confused? See the [lecture slides](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#85) for guidance on how to do this. ] 
+
+1. Create a folder called "Data" in your R Project folder.
+2. export the `breakout` data as a stata file, e.g. `breakout_group.dta`.
+3. export the `breakout` data as a `.csv` file, e.g. `breakout_group.csv`.
+4. export the `breakout` data as an excel spreadsheet, e.g. `breakout_group.xlxs`.
+
+Look at your `Data` folder to make sure your files exported into the right place. 
+
+
+<br>
+
+**(2) Import the `breakout` data back into `R`.**
+   
+1. assign the `.dta` data file into object `S1`
+2. assign the `.xlxs` data file into the object `S2`
+3. assign the `.csv` data file into the object `S3`
