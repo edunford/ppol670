@@ -1,0 +1,124 @@
+---
+title: "Week 3 | Breakout 1 | Piecing together the code "
+output: 
+  html_document:
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+# Instructions
+
+The following questions ask you and your breakout group to piece together code that's out of order. The aim is to put it in order so that the code will run without an error. To ensure you've put the code in the right order, try running it on your machine. We'll join back together as a group and see what everyone came up with. Please report your answer using the letters for each code chunk, e.g., "A, D, C, B".
+
+<br><hr><br>
+
+## Question 1
+
+The following vector contains some country names. 
+
+```{r}
+some_countries <- c("Afghanistan", "Albania", "Algeria", "Angola",
+                    "Argentina", "Australia", "Sierra Leone",
+                    "Austria", "Bahrain", "Swaziland","Turkey",
+                    "Bangladesh", "Belgium", "Benin", "Bolivia",
+                    "Bosnia and Herzegovina", "Botswana", "Brazil",
+                    "Bulgaria", "Burkina Faso", "Burundi","Zambia")
+```
+
+
+The code seeks to separate these country names into a `starts_with_A` group and `starts_with_B` group. We'll use the first letter of each country name to figure out which group the country should be member to. If it's not either group, store it as `other`.
+
+_Note_: we'll use a function called `substr` which stands for "substring". The function takes in a string, and returns part of it, starting at `start =` and going until the `end =` argument. The user provides an index
+```{r}
+txt <- "Georgetown"
+substr(txt,start = 1,stop = 6)
+```
+
+By setting `start = 1` and `end = 1` we are calling the first letter of each country name. 
+
+#### A.
+```{r,eval=F}
+    }else{
+          other <- c(other,country)
+    }
+  }
+}
+```
+
+#### B.
+```{r,eval=F}
+}else{
+    if(substr(country,start =1,stop = 1) == "B"){
+      starts_with_B <- c(starts_with_B,country)
+```
+
+#### C.
+```{r,eval=F}
+for ( country in some_countries ){
+```
+
+#### D.
+```{r,eval=F}
+ if(substr(country,start =1, stop = 1) == "A"){
+    starts_with_A <- c(starts_with_A,country)
+```
+
+#### E.
+```{r,eval=F}
+starts_with_A <- c()
+starts_with_B <- c()
+other         <- c()
+```
+
+<br><hr><br>
+
+## Question 2
+
+The following code uses the `sleep` dataset (which comes built into `R`). 
+
+```{r}
+dat <- sleep
+head(dat,3)
+tail(dat,3)
+```
+
+The data records the effect of two soporific drugs (increase in hours of sleep compared to control) on 10 patients in each group. The following code calculates the average increased hours of sleep by group and stores it into a new data frame called `group_ave`. 
+
+#### A.
+```{r,eval=F}
+group_ave[i,1] = groups[i]
+group_ave[i,2] = ave
+```
+
+#### B.
+```{r,eval=F}
+group_ave[i,1] = groups[i]
+group_ave[i,2] = ave
+}
+```
+
+
+#### C.
+```{r,eval=F}
+group_ave <- data.frame(group=c(NA,NA),extra_sleep = c(NA,NA))
+groups <- unique(dat$group)
+```
+
+
+#### D.
+```{r,eval=F}
+for ( i in 1:length(groups) ){
+```
+
+#### E.
+```{r,eval=F}
+grab_these <- sleep$group == groups[i]
+ave <- mean(sleep[grab_these,"extra"])
+```

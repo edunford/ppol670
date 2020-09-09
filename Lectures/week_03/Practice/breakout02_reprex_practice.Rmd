@@ -1,0 +1,46 @@
+---
+title: "Week 3 | Breakout 2 | Generate a Reproducible Example"
+output: 
+  html_document:
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+# Instructions
+
+Generate a reproducible example using `reprex` and the `datapasta` packages introduced in the asynchronous lecture. **Only use the first five rows of the data** when generating your example. **Please post the reproducible example as a _direct message_ to Professor Dunford in _Slack_**.
+
+<br>
+
+# Data 
+We'll use the `iris` dataset (which is a built in dataset in `R`). See `?iris` for more details.
+
+```{r}
+dat <- iris
+summary(dat)
+```
+
+
+# Code
+
+Please generate a reproducible example of the following code. 
+
+```{r}
+new_dat <- 
+  data.frame(
+    ave_sepal_length = mean(dat$Sepal.Length),
+    ave_sepal_width = mean(dat$Sepal.Width),
+    ave_petal_length = mean(dat$Petal.Length),
+    ave_petal_width = mean(dat$Petal.Width),
+    n_species = length(unique(dat$Species))
+  )
+new_dat
+```
+

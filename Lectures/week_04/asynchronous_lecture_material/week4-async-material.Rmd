@@ -42,6 +42,9 @@ require(tidyverse)
 - `join()`ing data
 - Reshaping data with `tidyr`
 
+
+<br>
+
 > If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
 
 <br><hr><br>
@@ -284,6 +287,12 @@ dat
 ### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#48)
 
 <iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=983c6a40-fe12-460a-89da-ac1e014ef6b0&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+# [Feedback](https://forms.gle/2bwYiaS264dvzoU76)
+
+The following survey asks you quick questions regarding the usefulness of the asynchronous lecture materials. Feedback will be used to modify aspect of the asynchronous materials moving forward.
 
 <br><hr><br>
 

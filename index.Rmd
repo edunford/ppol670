@@ -291,21 +291,29 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_03/asynchronous_lecture_material/week-03-async-material.html)
 
-<!-- ### _Week 3_: [Reproducibility in Practice](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
 
-<!-- - **Table of Contents** -->
-<!--   + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3) -->
-<!--   + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22) -->
-<!--   + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26) -->
-<!--   + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50) -->
+- [**Lecture Slides**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html)
 
-<!-- - **Practice**: -->
-<!--   + <a href="Lectures/week_03/Practice/working_with_iterators_inclass_practice.R" download> In-class practice with Iterators (download `.R`) </a> -->
-<!--   + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a> -->
+  - **Table of Contents**
+    + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3)
+    + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22)
+    + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26)
+    + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50)
+
+- **Practice**:
+  + _Breakout 1_: [Piecing together the code](Lectures/week_03/Practice/breakout01_piecing-together-code.html)
+  + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a>
+  + _Breakout 2_: [Generate a Reproducible Example](Lectures/week_03/Practice/breakout02_reprex_practice.html)
+  
 
 <br>
 
 ### _Week 4_: **Data Wrangling in R**
+
+
+<br>
+
+- [**Asynchronous Material**](Lectures/week_04/asynchronous_lecture_material/week4-async-material.html)
 
 <!-- ### _Week 4_: [Data Wrangling in R](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
 
