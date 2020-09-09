@@ -59,6 +59,10 @@ _The following tabs contain pre-recorded lecture materials for class this week. 
 
 <br>
 
+## _
+
+<br><hr><br>
+
 ## Data Wrangling
 
 ### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3)
@@ -282,7 +286,7 @@ dat
 
 <br><hr><br>
 
-## [Bonus] Other Useful `dplyr` Functions
+## [Bonus/Optional] Other Useful `dplyr` Functions
 
 ### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#48)
 
