@@ -3,7 +3,6 @@ title: "PPOL 670 | Week 4 | Breakout 1"
 subtitle: "Manipulating Conflict Event Data" 
 output: 
   html_document:
-    css: async-page-style.css
     highlight: breezedark
     theme: united
     toc: true
@@ -12,8 +11,9 @@ output:
 ---
 
 ```{r,include = F}
-knitr::opts_chunk$set(error=F,warning = F)
+knitr::opts_chunk$set(warning=F,error=F,message = F)
 ```
+
 
 # Overview
 
@@ -21,7 +21,7 @@ In this notebook, we'll hone our data manipulation skills by examining conflict 
 
 As always, we need to make sure we have the `tidyverse` packages installed and loaded. 
 
-```{r}
+```{r, include = F}
 # install.packages("tidyverse")  
 require(tidyverse) 
 ```
@@ -31,7 +31,7 @@ require(tidyverse)
 
 ACLED is a "disaggregated data collection, analysis, and crisis mapping project. ACLED collects the dates, actors, locations, fatalities, and modalities of all reported political violence and protest events across Africa, South Asia, Southeast Asia, the Middle East, Central Asia and the Caucasus, Latin America and the Caribbean, and Southeastern and Eastern Europe and the Balkans." For this exercise, we'll focus just on the data pertaining to _Africa_. For more information regarding these data, please consult the [ACLED methodology](https://acleddata.com/resources/methodology/).
 
-```{r,warning=F,message=F}
+```{r}
 acled <- read_csv("https://raw.githubusercontent.com/edunford/ppol670/gh-pages/Lectures/week_04/walkthrough/acled_africa.csv")
 head(acled)
 ```

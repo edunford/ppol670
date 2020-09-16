@@ -315,25 +315,27 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_04/asynchronous_lecture_material/week4-async-material.html)
 
-<!-- ### _Week 4_: [Data Wrangling in R](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
 
-<!-- - **Table of Contents** -->
-<!--   + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3) -->
-<!--   + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9) -->
-<!--   + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17) -->
-<!--   + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#44) -->
-<!--   + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#52) -->
-<!--   + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#70) -->
-
-<!-- - **Practice**: -->
-<!--   + Practice  <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling.Rmd.zip" download> wrangling data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-01_Data-Wrangling_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a> -->
-<!--   + Practice <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping.Rmd.zip" download> joining and reshaping data (download `.Rmd`) </a> then compare your results to the <a href="Lectures/week_04/practice/week04-practice-02_joining-reshaping_ANSWERS.Rmd.zip" download> answer key (download `.Rmd`) </a> -->
+- [**Lecture Slides**](Lectures/week_04/lecture-week-04_data-wrangling.html)
+  - **Table of Contents**
+    + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3)
+    + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9)
+    + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17)
+    + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#60)
+    + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#67)
+    + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#85)
+    
+- **Practice**:
+  + _Breakout 1_: <a href="Lectures/week_04/walkthrough/breakout01_manipulating-conflict-data.Rmd.zip" download> <strong>Manipulating conflict event data </strong> </a>
+  + _Breakout 2_: <a href="Lectures/week_04/walkthrough/breakout02_joining-reshaping.Rmd.zip" download> <strong> Practice joining and reshaping data</strong> </a>
 
 <br>
 
 ### _Week 5_: **Data Visualization**
 
-<!-- ### _Week 5_: [Data Visualization](Lectures/week_05/lecture-week-05_data-visualization.html) -->
+<br>
+
+- [**Asynchronous Material**](Lectures/week_05/asynchronous_lecture_material/week5-async-material.html)
 
 
 <!-- - **Table of Contents** -->

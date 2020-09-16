@@ -1,0 +1,509 @@
+---
+pagetitle: "PPOL670 | Week 5 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Data Visualization </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 5 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Understanding the **components** of a good quantitative visualization
+- An introduction to the **grammar of graphics** (`ggplot2`)
+- Delving into the different **`geom`etric projections** available to you when visualizing:
+  - continuous on continuous data;
+  - continuous on categorical data; and
+  - categorical on categorical data.
+- Tweaking aesthetics with **themes** and **scales**.
+- Combining many plots with **`facet`ing** and `patchwork`
+
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Further develop our understanding of the `ggplot2` package with an **applied walkthrough**
+- Discuss how to **export `ggplot2` graphics**.
+- Discover some **third-party packages** that make specific visualization tasks easier.
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 1 hour and 12 minutes
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Visualizing Data
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=4fb91c69-183e-4c56-8bba-ac32013d9302&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Grammar of Graphics
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#16)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ee793e73-8504-4050-8f12-ac320152683e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+
+# Data ------------------------------------------------------------------
+
+# Simulated Data
+set.seed(1234)
+dat <- 
+  tibble::tibble(var1 = rnorm(100),
+                 var2 = var1 + rnorm(100))
+
+summary(dat)
+
+
+# Grammar of Graphics --------------------------------------------------
+ggplot(data = dat, aes(x = var1, y = var2, color = var1)) +
+  geom_point()
+```
+
+<br><hr><br>
+
+## Continuous Data
+
+<br>
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=881b1cfa-00ab-48c6-b969-ac3201585f41&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+
+# Data --------------------------------------------------------------------
+
+# Simulated Data
+set.seed(1234)
+dat <- 
+  tibble::tibble(var1 = rnorm(1000),
+                 var2 = var1 + rnorm(1000))
+
+summary(dat)
+
+dat
+
+
+# Continuous Univariate -----------------------------------------------------
+
+# Histogram
+ggplot(data = dat, aes(x = var1)) +
+  geom_histogram()
+
+
+# Density Plot
+ggplot(data = dat, aes(x = var1)) +
+  geom_density(fill="blue",color="white",alpha=.5)
+
+# Continuous Bivariate ----------------------------------------------------
+
+# Scatter Plot
+ggplot(data = dat, aes(x = var1, y = var2)) +
+  geom_point()
+
+
+# Line Plot
+ggplot(data = dat, aes(x = var1, y = var2)) +
+  geom_line()
+
+
+# Density Plot (in 2 Dimensions)
+ggplot(data = dat, aes(x = var1, y = var2)) +
+  geom_density_2d()
+
+# Same thing filled
+ggplot(data = dat, aes(x = var1, y = var2)) +
+  geom_density_2d_filled()
+
+# Hex Plot
+ggplot(data = dat, aes(x = var1, y = var2)) +
+  geom_hex()
+
+
+# Layering Geoms ----------------------------------------------------
+
+ggplot(data = dat, aes(x = var1, y = var2)) +
+  geom_point() +
+  geom_hex(alpha=.7)
+```
+
+<br><hr><br>
+
+## Categorical Data
+
+<br>
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=0d3a13c3-169b-4219-96ed-ac32015f9823&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+library(palmerpenguins) # https://github.com/allisonhorst/palmerpenguins
+
+    # Includes measurements for penguin species, island in Palmer Archipelago,
+    # size (flipper length, body mass, bill dimensions), and sex. This is a
+    # subset of penguins_raw.
+
+
+# Data --------------------------------------------------------------------
+
+dat <- penguins
+
+summary(dat)
+
+
+
+# Univariate Categorical --------------------------------------------------
+
+
+# Bar Plot
+ggplot(dat,aes(x=species)) +
+  geom_bar()
+
+
+# Ordering Bar Plot by Frequency
+ggplot(dat,aes(x=fct_infreq(species))) +
+  geom_bar()
+
+
+# Adding in more categorical data 
+ggplot(dat,aes(x=fct_infreq(species), fill = sex)) +
+  geom_bar()
+
+
+# Stacking vs. Dodge
+ggplot(dat,aes(x=fct_infreq(species), fill = sex)) +
+  geom_bar(position="dodge")
+
+
+
+# Bivariate: category on continuous -----------------------------------------
+
+
+# Box plot
+ggplot(dat,aes(x=body_mass_g,y = species)) +
+  geom_boxplot()
+
+
+# Violin plot
+ggplot(dat,aes(x=body_mass_g,y = species)) +
+  geom_violin()
+
+
+# Jitter plot
+ggplot(dat,aes(x=body_mass_g,y = species)) +
+  geom_jitter(height = .05,alpha=.5)
+
+
+# Layer the representations
+ggplot(dat,aes(x=body_mass_g,y = species)) +
+  geom_jitter(height = .15) +
+  geom_violin(alpha=.5)
+
+
+# Trivariate: category on category on continous -----------------------------------------
+
+dat %>% 
+  drop_na() %>% 
+  ggplot(aes(x=sex,y = species,fill=body_mass_g)) +
+  geom_tile()
+
+
+# Trivariate: category on category on continous -----------------------------------------
+
+dat %>% 
+  ggplot(aes(x=bill_length_mm,
+             y = flipper_length_mm,
+             color=species)) +
+  geom_point()
+```
+
+<br><hr><br>
+
+## Many Plots
+
+<br>
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=31cebcb2-9be4-49d3-869a-ac320166b7cb&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(patchwork) # for combining plots
+require(palmerpenguins) # https://github.com/allisonhorst/palmerpenguins
+
+    # Includes measurements for penguin species, island in Palmer Archipelago,
+    # size (flipper length, body mass, bill dimensions), and sex. This is a
+    # subset of penguins_raw.
+
+
+# Data --------------------------------------------------------------------
+
+dat <- penguins
+
+summary(dat)
+
+
+# Many Plots with Faceting -----------------------------------------
+
+
+  ggplot(dat,
+         aes(x=bill_length_mm,
+             y = flipper_length_mm,
+             color=species)) +
+    geom_point() 
+
+
+  # Break plots up by category with facets
+  ggplot(dat,
+         aes(x=bill_length_mm,
+             y = flipper_length_mm,
+             color=species)) +
+    geom_point() +
+    facet_wrap(~species)
+  
+  
+  # Adjust scales on the facets
+  ggplot(dat,
+         aes(x=bill_length_mm,
+             y = flipper_length_mm,
+             color=species)) +
+    geom_point() +
+    facet_wrap(~species,scales = "free")
+  
+  
+  # Facet along more than one category
+  ggplot(drop_na(dat),
+         aes(x=bill_length_mm,
+             y = flipper_length_mm,
+             color=species)) +
+    geom_point() +
+    facet_wrap(~species + sex)
+  
+  
+  # Specify the columns and rows
+  ggplot(drop_na(dat),
+         aes(x=bill_length_mm,
+             y = flipper_length_mm,
+             color=species)) +
+    geom_point() +
+    facet_wrap(~species + sex,scales = "free",ncol = 2)
+  
+
+
+# Combine Plots with Patchwork --------------------------------------------
+
+  plt1 <- 
+    ggplot(dat,aes(x=bill_length_mm,
+                   y=flipper_length_mm)) +
+    geom_point()
+  plt1
+  
+  plt2 <- 
+    ggplot(dat,aes(x=fct_infreq(species), fill = sex)) +
+    geom_bar(position="dodge")
+  plt2
+  
+  
+  # Combine them with patchwork
+  plt1 + plt2
+
+  # Arrange them
+  plt1 + plt2 + plot_layout(ncol = 1)
+  
+  
+  # resize them
+  plt1 + plt2 + plot_layout(ncol = 1,heights = c(.25,.75))
+  
+  
+  # sky is the limit
+  plt1 + plt2 + plt2 + plt1 
+```
+
+<br><hr><br>
+
+
+## Customizing Plots
+
+<br>
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=6f410890-2fff-41f9-89a1-ac32016a7868&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(palmerpenguins) # https://github.com/allisonhorst/palmerpenguins
+
+    # Includes measurements for penguin species, island in Palmer Archipelago,
+    # size (flipper length, body mass, bill dimensions), and sex. This is a
+    # subset of penguins_raw.
+
+
+# Data --------------------------------------------------------------------
+
+dat <- penguins
+
+summary(dat)
+
+
+# Customizing Plot Aesthetics -----------------------------------------
+
+ggplot(dat,
+       aes(x=bill_length_mm,
+           y = flipper_length_mm,
+           color=species)) +
+  geom_point(size=3,alpha=.75) +
+  scale_color_manual(values = c("darkred","steelblue","grey30")) +
+  theme_classic() +
+  labs(x = "Bill Length (mm)",y="Flipper Length (mm)",color="") +
+  theme(legend.position = "top")
+```
+
+<br><hr><br>
+
+# Practice {.tabset .tabset-pills}
+
+<br>
+
+These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
+
+<br>
+
+For the following questions, we'll use the `diamonds` dataset, which comes installed when we import the `ggplot2` package. The dataset contains the prices and other attributes of 54,000 diamonds. The dataset is useful for visualization purposes. 
+
+```{r, message=F,warning=F}
+require(tidyverse)
+dat <- diamonds 
+head(dat)
+```
+
+
+<br>
+
+## _
+
+## Question 1  {.tabset}
+
+<br>
+
+Using the `diamonds` data, plot the distribution of the different `cut` categories. Customize the plot as follows:
+
+- Change the `fill` of the bars be `"steelblue"`;
+- Change the theme of plot to be `minimal`;
+- Add a title using `labs()` that reads "Diamond Cuts"
+
+
+<br>
+
+### _
+
+### Answer
+
+```{r,fig.align="center",fig.width=5,fig.height=5}
+ggplot(dat,aes(x=cut)) +
+  geom_bar(fill='steelblue') +
+  labs(title = "Diamond Cuts") +
+  theme_minimal()
+```
+
+
+## Question 2  {.tabset}
+
+<br>
+
+Do the following:
+
+- Create a new variable in the `diamonds` data called `expensive` that takes on the value of `"yes"` if the price is above the average price of a diamond, `"no"` otherwise. 
+- Using the same code you used to generate the plot in Q1, use this variable to break up each category into expensive and non-expensive stacks using the `"dodge"` position (see the video on categorical data). 
+- When `expensive == "yes"` the bars should be filled `orange`, and `grey30` otherwise. 
+
+<br>
+
+### _
+
+### Answer
+
+```{r,fig.align="center",fig.width=5,fig.height=5}
+dat %>% 
+  mutate(expensive = ifelse(price > mean(price),"yes","no")) %>% 
+  ggplot(aes(x=cut,fill=expensive)) +
+  geom_bar(position="dodge") +
+  scale_fill_manual(values = c("grey30","orange")) +
+  labs(title = "Diamond Cuts") +
+  theme_minimal()
+```
+
+## Question 3  {.tabset}
+
+<br>
+
+Using the `diamonds` data, plot `price` on `carat` using points, and do the following:
+
+- Make the points transparent using `alpha = .25`;
+- Color each point by `cut`. 
+- Facet the plots by `cut` and arrange the facet plots so that you only have 1 row;
+- Change the labels so that the legend reads "Diamond Cut", the x-axis reads "Price ($)" and the y-axis reads "Carat". 
+- Change the theme to `classic`;
+- Change the position of the legend so that it's on the `"bottom"` of the plot. 
+
+<br>
+
+### _
+
+### Answer
+
+```{r,fig.align="center",fig.width=8,fig.height=4}
+dat %>% 
+  ggplot(aes(price, carat, color= cut)) +
+  geom_point(alpha=.25) +
+  facet_wrap(~cut,nrow=1) +
+  labs(color="Diamond Cut",x = "Price ($)",y="Carat") +
+  theme_classic() +
+  theme(legend.position = "bottom") 
+```
+
+

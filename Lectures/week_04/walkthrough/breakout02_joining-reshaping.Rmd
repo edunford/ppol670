@@ -1,0 +1,146 @@
+---
+title: "PPOL 670 | Week 4 | Breakout 2"
+subtitle: "Joining and Shaping Data" 
+output: 
+  html_document:
+    highlight: breezedark
+    theme: united
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(warning=F,error=F,message = F)
+# Load the tidyverse package
+require(tidyverse)
+```
+
+## Instructions
+
+The following code generates two datasets and assign the data to the respective object names `beertax` and `dogs`.
+
+
+```{r data}
+# Data Set 1
+beertax <- 
+  tibble::tribble(
+    ~STATE, ~YEAR, ~beer_tax,
+    "Montana",  2006,      0.27,
+    "Maine",  2006,      0.28,
+    "Arkansas",  2006,      0.09,
+    "Kansas",  2006,      0.05,
+    "New Mexico",  2006,      0.24,
+    "Tennessee",  2006,      0.23,
+    "Massachusetts",  2006,      0.28,
+    "Connecticut",  2006,       0.3,
+    "Minnesota",  2006,      0.28,
+    "Florida",  2006,      0.15,
+    "Oklahoma",  2006,      0.09,
+    "Washington",  2006,      0.08,
+    "Idaho",  2006,      0.16,
+    "Colorado",  2006,      0.15,
+    "North Carolina",  2006,       0.1,
+    "Oregon",  2006,      0.29,
+    "Virginia",  2006,      0.19,
+    "California",  2006,      0.05,
+    "South Carolina",  2006,      0.13,
+    "West Virginia",  2006,      0.28,
+    "Rhode Island",  2006,      0.15,
+    "South Dakota",  2006,      0.27,
+    "Alabama",  2006,      0.18,
+    "New Hampshire",  2006,      0.19,
+    "Maryland",  2006,      0.26,
+    "Nevada",  2006,      0.16,
+    "Indiana",  2006,       0.3,
+    "Texas",  2006,       0.1,
+    "New York",  2006,      0.15,
+    "Arizona",  2006,      0.11,
+    "Vermont",  2006,      0.19,
+    "Utah",  2006,      0.23,
+    "Wisconsin",  2006,      0.17,
+    "Delaware",  2006,      0.29,
+    "Missouri",  2006,      0.18,
+    "Hawaii",  2006,      0.14,
+    "Alaska",  2006,      0.08,
+    "Illinois",  2006,      0.03,
+    "Mississippi",  2006,      0.26,
+    "Louisiana",  2006,      0.08
+  )
+
+
+# Dataset 2
+dogs <- tibble::tribble(
+            ~state, ~year, ~dogs_per_1000,
+        "Colorado",  2006,          13.52,
+      "New Mexico",  2006,          15.48,
+      "New Jersey",  2006,           3.25,
+   "West Virginia",  2006,           7.49,
+  "South Carolina",  2006,          10.07,
+   "New Hampshire",  2006,          12.82,
+         "Alabama",  2006,           7.41,
+         "Georgia",  2006,          13.47,
+          "Nevada",  2006,           11.5,
+        "Michigan",  2006,          11.24,
+       "Tennessee",  2006,          10.02,
+    "South Dakota",  2006,           9.85,
+          "Hawaii",  2006,           12.9,
+            "Ohio",  2006,           8.01,
+    "Pennsylvania",  2006,          10.05,
+      "Washington",  2006,          10.04,
+           "Texas",  2006,          12.71,
+         "Florida",  2006,          14.12,
+         "Wyoming",  2006,           3.08,
+        "Delaware",  2006,           1.18,
+    "North Dakota",  2006,          12.17,
+  "North Carolina",  2006,          10.09,
+      "California",  2006,          10.65,
+          "Alaska",  2006,          14.97,
+        "New York",  2006,          13.13
+  )
+```
+
+Please use the `_join()` functions from the tidyverse (`dplyr`) to complete each question. In addition, some of the questions require you to reshape the data. For these question, please use the `pivot_longer()` and `pivot_wider()` functions (`tidyr`). Both functions can be acquired by loading the `tidyverse` package
+
+
+
+## Question 1
+
+
+#### (a) Join `beertax` and `dogs` data so that only the states in `dogs` are retained? Assign to the object named `join1`.
+
+```{r}
+
+```
+
+#### (b) How many entries for the `beer_tax` variable are missing from the `join1` data? Why are these values missing?
+
+```{r}
+
+```
+
+
+#### (c) Join `beertax` and `dogs` data so that only the states in `beertax` are retained? Assign to the object named `join2`.
+
+```{r}
+
+```
+
+#### (d) How many entries for the `dogs_per_1000` variable are missing from the `join2` data? Why are these values missing?
+
+```{r}
+
+```
+
+
+# Question 2
+
+#### (a) spread the `join2` data into a wide format. Where the `year` makes up the columns and `dogs_per_1000` populate the values for each of the spread out columns. Assign the output to the object `fulldat`.
+
+```{r}
+
+```
+
+
+#### (b) using `replace_na()` replace all missing values with `-99` in `fulldat`. Overwrite the `fulldat` object to retain your changes. (Tip: use the documentation to learn how to use `?replace_na()`)
+
+```{r}
+
+```
