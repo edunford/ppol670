@@ -1,0 +1,298 @@
+---
+pagetitle: "PPOL670 | Week 6 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Webscraping </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 6 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Cover the basics of writing **functions**;
+- Understanding **html structure** to look up content on a website;
+- **Scrape content** from a website;
+- Building a **scraper** to systematically draw content from similarly organized webpages. 
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Talk about **legality** when scraping a webcontent and how to reduce harm. 
+- Useful `R` packages to streamline downloading data from the web. 
+- Talk about how to deal with **`Date`** class objects in `R` using `lubridate`.
+
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 50 minutes.
+
+<br>
+
+Note that this week we'll be using **loops**. We covered loops in [Week 3](http://ericdunford.com/ppol670/Lectures/week_03/asynchronous_lecture_material/week-03-async-material.html). If you're a bit shaky on writing loops, please revisit that content. 
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Writing Functions
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ebcf277c-1d60-40f3-9c5f-ac3301074744&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+# Functions allow us to house code in a single operation
+
+# Example function that adds two values.
+add <- function(x=5,y=5){
+  total <- x + y
+  return(total)
+}
+
+# We can specify values for our arguments altering the output as defined in the
+# function
+add(x=1000,y=4000)
+ 
+# When call the function but don't provide values for our arguments then the
+# default values are used.
+add()
+```
+
+<br><hr><br>
+
+## Websites
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#6)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=417e77ec-2350-4aa2-8e89-ac330137491c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Scraping Content
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#15)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=6e1755d8-67ba-41d8-856d-ac33013ee97c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(rvest)
+
+# Let's scrape content from the follow url which links to a BBC story.
+url <-  "https://www.bbc.com/news/blogs-trending-54121992"
+
+# Download the website
+raw_website <- read_html(url)
+
+
+# Let's get the headline 
+headline <- 
+  raw_website %>% 
+  html_nodes(xpath = '//*[@id="comp-blog-story-content"]/h2/span') %>% 
+  html_text()
+
+# Date
+date <- 
+  raw_website %>% 
+  html_nodes(xpath = '//*[@id="comp-blog-story-content"]/div[2]/div/div/div[1]/ul/li/div') %>% 
+  html_text()
+
+
+# Content 
+content <- 
+  raw_website %>% 
+  html_nodes(xpath = '//*[@id="comp-blog-story-content"]/div[3]/p') %>% 
+  html_text() %>% 
+  paste0(.,collapse = " ")
+
+# Each independent data object 
+headline
+date
+content
+
+dat <- tibble(headline,date,content)
+glimpse(dat)
+```
+
+<br><hr><br>
+
+## Building a Scraper
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#29)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=2e247bab-2e24-4087-8d62-ac3301532572&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+# Build a bbc scraper
+bbc_scraper <- function(url){
+  # Download the website
+  raw_website <- read_html(url)
+  
+  # Let's get the headline 
+  headline <- 
+    raw_website %>% 
+    html_nodes(xpath = '//*[@id="comp-blog-story-content"]/h2/span') %>% 
+    html_text()
+  
+  # Date
+  date <- 
+    raw_website %>% 
+    html_nodes(xpath = '//*[@id="comp-blog-story-content"]/div[2]/div/div/div[1]/ul/li/div') %>% 
+    html_text()
+  
+  
+  # Content 
+  content <- 
+    raw_website %>% 
+    html_nodes(xpath = '//*[@id="comp-blog-story-content"]/div[3]/p') %>% 
+    html_text() %>% 
+    paste0(.,collapse = " ")
+  
+  
+  # Combind as data
+  dat <- tibble(headline,date,content)
+  return(dat)
+}
+
+# Run scraper
+bbc_scraper("https://www.bbc.com/news/blogs-trending-53997203")
+
+
+# Loop over urls to generate a data frame of news stories 
+
+urls <- c(
+  "https://www.bbc.com/news/blogs-trending-54121992",
+  "https://www.bbc.com/news/blogs-trending-53997203",
+  "https://www.bbc.com/news/blogs-trending-53948820"
+)
+
+# write loop 
+news_stories <- c()
+for( i in 1:length(urls) ){
+  news_stories <- bind_rows(news_stories,bbc_scraper(urls[i]))
+}
+
+# Look at content
+news_stories
+```
+
+<br><hr><br>
+
+
+# Practice {.tabset .tabset-pills}
+
+<br>
+
+These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
+
+<br>
+
+For the following question, let's use this Wikipedia page to practice some of the webscraping concepts covered in the asynchronous lecture. 
+
+```{r,eval=F}
+require(rvest)
+require(tidyverse)
+wiki_url <- "https://en.wikipedia.org/wiki/Machine_learning"
+```
+
+
+<br>
+
+## _
+
+## Question 1  {.tabset}
+
+<br>
+
+Download the website of the Wikipedia article. 
+
+<br>
+
+### _
+
+### Answer
+
+```{r,eval=F}
+site <- read_html(wiki_url)
+```
+
+
+## Question 2  {.tabset}
+
+<br>
+
+Scrape the article **_title_** from the Wikipedia article. 
+
+<br>
+
+### _
+
+### Answer
+
+```{r,eval=F}
+article_title <- 
+  site %>% 
+  html_nodes(xpath = '//*[@id="firstHeading"]') %>% 
+  html_text()
+article_title
+```
+
+
+## Question 3  {.tabset}
+
+<br>
+
+Scrape the article **_content_** from the Wikipedia article. Make sure the content is collapsed into a single character string. 
+
+<br>
+
+### _
+
+### Answer
+
+
+```{r,eval=F}
+article_content <- 
+  site %>% 
+  html_nodes(xpath = '//*[@id="mw-content-text"]/div[1]/p') %>% 
+  html_text() %>% 
+  paste0(.,collapse="")
+article_content
+```
+

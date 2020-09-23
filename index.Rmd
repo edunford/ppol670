@@ -358,7 +358,10 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 <br>
 
-### _Week 6_: **Web Scrapping and APIs**
+### _Week 6_: **Web Scrapping**
+
+
+- [**Asynchronous Material**](Lectures/week_06/asynchronous_lecture_material/week6-async-material.html)
 
 <!-- ### _Week 6_: [Web Scrapping and APIs](Lectures/week_06/lecture-week-06_webscraping-and-apis.html) -->
 

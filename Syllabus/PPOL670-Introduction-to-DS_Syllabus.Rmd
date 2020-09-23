@@ -2,18 +2,18 @@
 pagetitle: PPOL670 - Syllabus
 fontsize: 12pt
 output:
-  # pdf_document: default
-  html_document:
-    css: style.css
-    theme: united
-    highlight: default
-    toc_depth: 3
-    toc: true
-    toc_collapsed: true
-    toc_float: true
+  pdf_document: default
+  # html_document:
+  #   css: style.css
+  #   theme: united
+  #   highlight: default
+  #   toc_depth: 3
+  #   toc: true
+  #   toc_collapsed: true
+  #   toc_float: true
 ---
 
-### [Home](../index.html)
+<!-- ### [Home](../index.html) -->
 
 \begin{center}
  
@@ -335,12 +335,12 @@ More information about campus resources and reporting sexual misconduct can be f
 ```{r,echo=F,message=F,results='asis'}
 read_csv('Syllabus/fall-2020-timeline.csv') %>% 
   {.[is.na(.)]="";.} %>% 
-  # kable(., "latex", booktabs = T,align = c('c','l','l','l')) %>%
-  kable(., "html", booktabs = T,align = c('c','l','l','l')) %>%
+  kable(., "latex", booktabs = T,align = c('c','l','l','l')) %>%
+  # kable(., "html", booktabs = T,align = c('c','l','l','l')) %>%
   kable_styling(latex_options = c("striped",
                                   "scale_down","repeat_header"),
-                font_size = 20,
-                # font_size = 12,
+                # font_size = 20,
+                font_size = 12,
                 full_width = T) %>% 
   column_spec(1,width = '.5in') %>% 
   column_spec(2,width = '1in') %>% 

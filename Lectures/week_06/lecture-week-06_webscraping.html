@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 6       Webscraping</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 6 </font> <br> <br> <font size=100, face="bold"> Webscraping </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 6 &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Webscraping &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+&lt;br&gt;&lt;br&gt;
+
+- **Writing Functions**
+
+- Building **Web scrapers** to scrape content from the web
+
+- Dealing with **Dates** and **Time**
+
+---
+
+class: newsection
+
+##  Functions
+
+---
+
+## Writing Functions
+
+![:space 5]
+
+
+```r
+# Basic Set Up
+
+my_function = function(x,y) # Arguments broken up by commas
+{ # Brackets that house the code 
+  
+  # Some code to execute 
+  z = x*y
+  
+  return(z) # Return a data value
+}
+
+my_function(5,6)
+```
+
+```
+## [1] 30
+```
+
+---
+
+## When to Write Functions
+
+![:space 10]
+### (1) Using the same code more than once
+
+&lt;br&gt;
+
+### (2) Complicated operation 
+
+&lt;br&gt;
+
+### (3) Vectorization 
+
+---
+
+class: newsection
+
+## So you wanna scrape the web...
+
+---
+
+### What does it mean to "scrape" something off the web?
+
+--
+
+&lt;br&gt;
+&lt;br&gt;
+
+- leveraging the structure of a website to **grab it's contents**
+
+- using a programming environment (such as R, Python, Java, etc.) to **systematically extract** that content.
+
+- accomplishing the above in an "unobtrusive" and **legal** way.
+
+---
+
+### Website 
+
+As internet consumers, we interact with the interface (or a **rendered version**) of a [webpage](https://www.bbc.com/news/world-middle-east-36156865). Since websites are just rendered code, every piece of that code can be tapped into.
+
+.pull-left[
+&lt;img src = "Figures/rendered-webpage.png" width=400&gt;
+]
+
+.pull-right[
+&lt;img src = "Figures/html-webpage.png" width=400&gt;
+]
+
+---
+
+### The many faces of HTML code
+
+Keep in mind that there is 5 types of coding playing out simultaneously when rendering a website:
+
+--
+
+- **HTML**: generates/creates the actual content of a website
+- **XML**: used to transmit data to a webpage from a server
+- **PHP**: relays information between a server and the page (think passwords)
+- **CSS**: responsible for the design of the website
+- **JavaScript**: handles changes and animation.
+
+--
+
+All these different pieces of code work in conjunction (so all will be simultaneously present when viewing a website).
+
+When scraping, we care primarily about **CSS** and **XML**.
+
+
+
+---
+
+### The Sturcture of HTML
+
+![:space 5]
+
+HTML code is structured using tags, and information is organized hierarchcially (like a list or an array) from top to bottom. When scraping, the tags that are of most use are:
+
+- **p** – paragraphs
+- **a href** – links
+- **div** – divisions
+- **h** – headings
+- **table** – tables
+
+We can examine the HTML of a website by inspecting the content within it.
+
+---
+
+### R Packages
+
+There are many packages that can be effectively used to download content from a website. Here I highlight a few, but new stuff is coming out all the time.
+
+&lt;br&gt;&lt;br&gt;
+
+
+```r
+require(rvest) # existing in the tidyverse 
+require(httr) # great for interacting with APIs
+require(xml2) # rvest draw from this package
+require(RCurl) # older but stable. Behaves well with other packages
+require(XML) # older but stable. Behaves well with other packages
+require(jsonlite) # for dealing with json output
+```
+
+
+---
+
+class:newsection
+
+## Scraping Content
+
+---
+
+### ABCs of Webscraping 
+
+Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/blogs-trending-54121992).
+
+--
+
+&lt;br&gt;
+
+When scraping data online, keep the following procedure in mind:
+
+- (**A**) identify what information you want
+- (**B**) examine the HTML structure and elements
+- (**C**) download website
+- (**D**) extract element (i.e. it's position)
+- (**E**) clean element
+- (**F**) store outcome
+
+---
+
+### ABCs of Webscraping 
+
+Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/blogs-trending-54121992).
+
+&lt;br&gt;
+
+Here let's aim to extract three pieces of information from the BBC story:
+
+- **Headline**
+
+- **Date**
+
+- **Story Content**
+
+---
+
+### Download the website
+
+![:space 5]
+
+
+```r
+require(rvest) 
+
+url &lt;-  "https://www.bbc.com/news/blogs-trending-54121992"
+site &lt;- read_html(url)
+site
+```
+
+```
+## {html_document}
+## &lt;html lang="en" id="responsive-news"&gt;
+## [1] &lt;head prefix="og: http://ogp.me/ns#"&gt;\n&lt;meta http-equiv="Content-Type" co ...
+## [2] &lt;body id="asset-type-sty" class="device--feature"&gt;\n&lt;!--&lt;![endif]--&gt;\n    ...
+```
+
+![:space 5]
+
+Here the entire information located on the website is no retained in a single object. **Why is this useful?**
+
+---
+
+### Extract and clean the desired element
+
+![:space 5]
+
+Let's locate the XML code for the headline.
+
+
+```r
+headline.path = '//*[@id="comp-blog-story-content"]/h2/span'
+headline = site %&gt;% html_node(.,xpath = headline.path)
+headline
+```
+
+```
+## {html_node}
+## &lt;span class="cta"&gt;
+```
+
+![:space 5]
+
+Still jargon ...
+
+
+---
+
+### Extract and clean the desired element
+
+![:space 5]
+
+We need to clarify what _kind_ of element we are seeking to retrieve (think of this as translating the HTML).
+
+
+```r
+headline = headline %&gt;% html_text(.)
+headline
+```
+
+```
+## [1] "Oregon wildfires: False Oregon fire rumours 'inundate' officers"
+```
+
+![:space 5]
+
+**Success!**
+
+---
+
+### Extraction takes many forms
+
+
+```r
+site %&gt;% 
+  html_node(.,xpath = headline.path) %&gt;% 
+  html_name(.)
+```
+
+```
+## [1] "span"
+```
+
+
+```r
+site %&gt;% 
+  html_node(.,xpath = headline.path) %&gt;% 
+  html_attrs(.)
+```
+
+```
+## class 
+## "cta"
+```
+
+
+```r
+site %&gt;% 
+  html_node(.,xpath = headline.path) %&gt;% 
+  html_structure(.)
+```
+
+```
+## &lt;span.cta&gt;
+##   {text}
+```
+
+---
+
+### Rinse, wash, and repeat: Date
+
+![:space 5]
+
+
+```r
+# Grab the date using CSS
+date.path = '#comp-blog-story-content &gt; div.with-extracted-share-icons &gt; div &gt; div &gt; div.mini-info-list-wrap &gt; ul &gt; li &gt; div'
+
+# So long! That's why I prefer XML
+date = site %&gt;% 
+  html_node(.,css = date.path) %&gt;% 
+  html_text(.)
+
+# format date into a usable "R format"
+date = as.Date(date,"%d %b %Y")
+date
+```
+
+```
+## [1] "2020-09-11"
+```
+
+---
+
+### Rinse, wash, and repeat: Story
+
+![:space 5]
+
+To get **all** of the body text, we really need to think about what it is we are grabbing. Here comprehending the structure of the website can be really useful.
+
+
+```r
+body.path = '//*[@id="comp-blog-story-content"]/div[3]/p[1]'
+
+site %&gt;% 
+  html_node(.,xpath=body.path) %&gt;% 
+  html_text(.)
+```
+
+```
+## [1] "Misinformation about wildfires raging across the US state of Oregon has been rife on social media, prompting local officials to try to dispel the rumours."
+```
+
+This will only give us a piece of the story – **p[1]**
+
+---
+
+### Rinse, wash, and repeat: Story
+
+But we want the _whole_ thing
+
+
+```r
+body.path = body.path = '//*[@id="comp-blog-story-content"]/div[3]/p'
+
+body &lt;- 
+  site %&gt;% 
+* html_nodes(.,xpath=body.path) %&gt;%
+  html_text(.) 
+body
+```
+
+```
+##  [1] "Misinformation about wildfires raging across the US state of Oregon has been rife on social media, prompting local officials to try to dispel the rumours."                                                                                  
+##  [2] "Unsubstantiated online claims blamed the fires on activists from two fringe groups - antifa, short for \"anti-fascist\", and the nationalist Proud Boys group. "                                                                             
+##  [3] "Both groups have been accused by politicians, law enforcement and some commentators of encouraging and participating in violence during anti-racism protests in the US, including regular confrontations in Portland, Oregon's largest city."
+##  [4] "Dozens of posts with bogus wildfire allegations were shared across multiple social networks - the most popular were shared thousands of times."                                                                                              
+##  [5] "As a result, some local law enforcement agencies say they have been overwhelmed with requests based on false information."                                                                                                                   
+##  [6] "\"Rumors spread just like wildfire,\" the sheriff's office in southern Oregon's Douglas County wrote on Facebook on Thursday. "                                                                                                              
+##  [7] "\"Now our 9-1-1 dispatchers and professional staff are being overrun with requests for information and inquiries on an UNTRUE rumor that 6 Antifa members have been arrested for setting fires\"."                                           
+##  [8] "The sheriff's office in neighbouring Jackson County also said they were \"inundated with questions\" about fake stories and urged members of the public to verify information and check official sources."                                   
+##  [9] "\"Rumors make the job of protecting the community more difficult,\" the sheriff's office said in a Facebook post.  "                                                                                                                         
+## [10] "Similarly, the police department in the city of Medford in Jackson County took to social media to debunk a fake screenshot circulated online that uses its logo and a photo from an unrelated arrest."                                       
+## [11] "The false post suggested that five people had been arrested \"in connection with a string of fires\". "                                                                                                                                      
+## [12] "\"We did not arrest this person for arson, nor anyone affiliated with Antifa or 'Proud Boys' as we've heard throughout the day,\" police said, adding that \"no confirmed gatherings of Antifa\" had been reported in the area."             
+## [13] "Journalists reporting on the fires outside the town of Molalla, about 30 miles from Portland, said on Twitter that they had been asked to leave by armed people concerned by the rumours about arsonists in the area. "                      
+## [14] "And a Portland videographer who came to Molalla to take footage of the blazes said he was reported to the police by locals who thought he and his partner were antifa arsonists."                                                            
+## [15] "Fanned by unusually hot, dry winds, dozens of fires have been sweeping Oregon, on the west coast of the US."                                                                                                                                 
+## [16] "At least one of those, the Almeda Fire, which started in Ashland near the California border, is being treated as suspicious."                                                                                                                
+## [17] "It has been linked to at least two deaths and destroyed hundreds of homes."                                                                                                                                                                  
+## [18] "Although the investigation is ongoing, Ashland police chief Tighe O'Meara told the Oregonian newspaper that no leads pointed towards members of the the antifa movement."                                                                    
+## [19] "\"One thing I can say is that the rumor it was set by Antifa is 100% false information,\" he told the paper."                                                                                                                                
+## [20] "Have you seen something suspicious online? Email us."                                                                                                                                                                                        
+## [21] "Subscribe to the BBC Trending podcast or follow us on Twitter @BBCtrending or Facebook. "
+```
+
+---
+
+### Storage
+
+![:space 5]
+
+
+```r
+output &lt;- 
+  tibble(headline,
+         date,
+*        body = paste0(body,collapse=" "))
+output
+```
+
+```
+## # A tibble: 1 x 3
+##   headline                        date       body                               
+##   &lt;chr&gt;                           &lt;date&gt;     &lt;chr&gt;                              
+## 1 Oregon wildfires: False Oregon… 2020-09-11 "Misinformation about wildfires ra…
+```
+
+
+```r
+# Number of characters in the variable entry
+nchar(output$body) 
+```
+
+```
+## [1] 3082
+```
+
+---
+
+### Sidenote on `html_table`s
+
+![:space 10]
+
+Sometimes data is conveniently organized as **_tables_** in the html code, i.e. there is a table tag in the `&lt;table&gt;`.
+
+For example, let's look at this [Wikipedia post on English Towns and Cities](https://en.wikipedia.org/wiki/List_of_towns_in_England)... should look familiar ;).
+
+Extracting the **_table in the post_** is a breeze thanks to the `html_table()` function.
+
+_Note that there can be many tables on a page, `html_table()` downloads them all and then stores the content as a list._
+
+---
+
+### Sidenote on `html_table`s
+
+
+```r
+url &lt;- 'https://en.wikipedia.org/wiki/List_of_towns_in_England'
+
+d &lt;- read_html(url) %&gt;% 
+  html_table(fill = TRUE)
+
+*d[[1]] # Data returned as a list
+```
+
+```
+##                      Town  Ceremonial county              Status
+## 1      Abingdon-on-Thames        Oxfordshire       town council1
+## 2              Accrington         Lancashire borough (1878–1974)
+## 3                    Acle            Norfolk      market charter
+## 4                   Acton     Greater London borough (1921–1965)
+## 5               Adlington         Lancashire       town council1
+## 6                Alcester       Warwickshire        town council
+## 7               Aldeburgh            Suffolk       town council1
+## 8               Aldershot          Hampshire borough (1922–1974)
+## 9                  Alford       Lincolnshire       town council1
+## 10               Alfreton         Derbyshire        town council
+## 11                Alnwick     Northumberland       town council1
+## 12                Alsager           Cheshire       town council1
+## 13                 Alston            Cumbria      market charter
+## 14                  Alton          Hampshire       town council1
+## 15             Altrincham Greater Manchester borough (1937–1974)
+## 16                  Amble     Northumberland       town council1
+## 17              Ambleside            Cumbria      market charter
+## 18               Amersham    Buckinghamshire        town council
+## 19               Amesbury          Wiltshire        town council
+## 20               Ampthill       Bedfordshire       town council1
+## 21                Andover          Hampshire borough (1835–1974)
+## 22 Appleby-in-Westmorland            Cumbria       town council1
+## 23                Arlesey       Bedfordshire        town council
+## 24                Arundel        West Sussex       town council1
+## 25              Ashbourne         Derbyshire       town council1
+## 26              Ashburton              Devon       town council1
+## 27      Ashby-de-la-Zouch     Leicestershire       town council1
+## 28           Ashby Woulds     Leicestershire       town council1
+## 29                Ashford               Kent      market charter
+## 30              Ashington     Northumberland        town council
+## 31      Ashton-under-Lyne Greater Manchester borough (1847–1974)
+## 32                 Askern    South Yorkshire        town council
+## 33               Aspatria            Cumbria        town council
+## 34             Atherstone       Warwickshire        town council
+## 35           Attleborough            Norfolk        town council
+## 36               Axbridge           Somerset        town council
+## 37              Axminster              Devon        town council
+## 38              Aylesbury    Buckinghamshire        town council
+## 39                Aylsham            Norfolk        town council
+```
+
+---
+
+class:newsection
+
+## Building a Scraper
+
+---
+
+### Got the bones? Get the goods
+
+Once you have a blueprint of the HTML structure, you can easily find your way around.
+
+We can **systematically use the information** we know about the HTML structure to grab new information with ease.
+
+This allows us to draw similar information from similarly composed html pages. 
+--
+
+### HTML structure changes over time!
+
+Websites are constantly being updated, reformatted, and changed in other ways. This presents a real challenge when scraping, because we need to understand the variability in the structure and adapt our code to it.
+
+---
+
+### Building a "BBC Scraper"
+
+![:space 5]
+
+The aim: 
+
+- wrap the three steps from the example into a convenient function. 
+
+- the function takes in a _url_ as **input**, and
+
+- **outputs** the desired web content. 
+
+---
+
+
+```r
+bbc_scraper &lt;- function(url){
+  
+  # Download website   
+  raw = read_html(url)
+  
+  # Extract headline
+  headline = raw %&gt;% 
+    html_nodes(xpath='//*[@id="comp-blog-story-content"]/h2/span') %&gt;% 
+    html_text()
+  
+  
+  # Extract dat3
+  date = raw %&gt;% 
+    html_nodes(xpath='//*[@id="comp-blog-story-content"]/div[2]/div/div/div[1]/ul/li/div') %&gt;% 
+    html_text()
+  
+  # Extract Story
+  story = raw %&gt;% 
+    html_nodes(xpath='//*[@id="comp-blog-story-content"]/div[3]/p') %&gt;% 
+    html_text() %&gt;% paste0(.,collapse = " ")
+  
+  # Output as data frame and return
+  data.out = tibble(headline,date,story)
+  return(data.out)
+}
+```
+
+
+---
+
+
+![:space 10]
+
+Now all we need is to feed it urls.
+
+
+```r
+urls &lt;- c(
+  "https://www.bbc.com/news/blogs-trending-54121992",
+  "https://www.bbc.com/news/blogs-trending-53997203",
+  "https://www.bbc.com/news/blogs-trending-53948820"
+)
+
+output &lt;- c()
+for(i in 1:length(urls)){
+  draw &lt;- bbc_scraper(urls[i])  
+  output &lt;- bind_rows(output,draw)
+}
+
+glimpse(output)
+```
+
+```
+## Rows: 3
+## Columns: 3
+## $ headline &lt;chr&gt; "Oregon wildfires: False Oregon fire rumours 'inundate' offi…
+## $ date     &lt;chr&gt; "11 September 2020", "3 September 2020", "28 August 2020"
+## $ story    &lt;chr&gt; "Misinformation about wildfires raging across the US state o…
+```
+
+---
+
+![:space 10]
+
+
+```r
+output$headline 
+```
+
+```
+## [1] "Oregon wildfires: False Oregon fire rumours 'inundate' officers"                   
+## [2] "How Covid-19 myths are merging with the QAnon conspiracy theory"                   
+## [3] "Coronavirus: Health worker investigated by employer after posting conspiracy video"
+```
+
+
+```r
+output$date
+```
+
+```
+## [1] "11 September 2020" "3 September 2020"  "28 August 2020"
+```
+
+
+```r
+output$story
+```
+
+```
+## [1] "Misinformation about wildfires raging across the US state of Oregon has been rife on social media, prompting local officials to try to dispel the rumours. Unsubstantiated online claims blamed the fires on activists from two fringe groups - antifa, short for \"anti-fascist\", and the nationalist Proud Boys group.  Both groups have been accused by politicians, law enforcement and some commentators of encouraging and participating in violence during anti-racism protests in the US, including regular confrontations in Portland, Oregon's largest city. Dozens of posts with bogus wildfire allegations were shared across multiple social networks - the most popular were shared thousands of times. As a result, some local law enforcement agencies say they have been overwhelmed with requests based on false information. \"Rumors spread just like wildfire,\" the sheriff's office in southern Oregon's Douglas County wrote on Facebook on Thursday.  \"Now our 9-1-1 dispatchers and professional staff are being overrun with requests for information and inquiries on an UNTRUE rumor that 6 Antifa members have been arrested for setting fires\". The sheriff's office in neighbouring Jackson County also said they were \"inundated with questions\" about fake stories and urged members of the public to verify information and check official sources. \"Rumors make the job of protecting the community more difficult,\" the sheriff's office said in a Facebook post.   Similarly, the police department in the city of Medford in Jackson County took to social media to debunk a fake screenshot circulated online that uses its logo and a photo from an unrelated arrest. The false post suggested that five people had been arrested \"in connection with a string of fires\".  \"We did not arrest this person for arson, nor anyone affiliated with Antifa or 'Proud Boys' as we've heard throughout the day,\" police said, adding that \"no confirmed gatherings of Antifa\" had been reported in the area. Journalists reporting on the fires outside the town of Molalla, about 30 miles from Portland, said on Twitter that they had been asked to leave by armed people concerned by the rumours about arsonists in the area.  And a Portland videographer who came to Molalla to take footage of the blazes said he was reported to the police by locals who thought he and his partner were antifa arsonists. Fanned by unusually hot, dry winds, dozens of fires have been sweeping Oregon, on the west coast of the US. At least one of those, the Almeda Fire, which started in Ashland near the California border, is being treated as suspicious. It has been linked to at least two deaths and destroyed hundreds of homes. Although the investigation is ongoing, Ashland police chief Tighe O'Meara told the Oregonian newspaper that no leads pointed towards members of the the antifa movement. \"One thing I can say is that the rumor it was set by Antifa is 100% false information,\" he told the paper. Have you seen something suspicious online? Email us. Subscribe to the BBC Trending podcast or follow us on Twitter @BBCtrending or Facebook. "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+## [2] "Online and in real-life demonstrations, two viral conspiracy theories are increasingly coming together. At first glance the only thing they appear to have in common is their vast distance from reality. On one hand, QAnon: a convoluted conspiracy theory that contends that President Trump is waging a secret war against Satan-worshipping elite paedophiles.   On the other, a swirling mass of pseudoscience claiming that coronavirus does not exist, or is not fatal, or any number of other baseless claims. These two ideas are now increasingly coming together, in a grand conspiracy mash-up. It was apparent on the streets of London last weekend, where speakers addressing thousands of followers at an anti-mask, anti-lockdown demonstration touched on both themes. Posters promoting QAnon and a range of other conspiracy theories were on display.  On Sunday, President Trump retweeted a message claiming the true number of Covid-19 deaths in the United States was a small fraction of the official numbers. The tweet was later deleted by Twitter under its policy on misinformation.  The account that posted it - \"Mel Q\" - is still live, and is a copious spreader of QAnon ideas.  QAnon's main strand of thought is that President Trump is leading a fight against child trafficking that will end in a day of reckoning with prominent politicians and journalists being arrested and executed. Mel Q is just one of many QAnon influencers who have also been plugging coronavirus disinformation.  The merger between QAnon and Covid-19 conspiracies is also apparent in a number of emails received by the BBC.  \"Coronavirus is a cover-up for… child sex trafficking - a major issue in this world and nobody wants to report about it,\" one typical email read.  Another man got in touch to explain how his mother - who attended the protests - has been led down the rabbit hole over the course of the pandemic, taken in first by coronavirus conspiracy theories and now by QAnon.  There has long been overlap between QAnon influencers and pandemic conspiracists, but the weekend protests in London and other cities around the world were the biggest offline demonstration to date of their increasing ties.  \"Proponents of Covid conspiracies have found ready-made audiences in the QAnon crowd and vice versa,\" says Chloe Colliver, senior policy director at the Institute for Strategic Dialogue (ISD), a think tank focused on extremism. \"In the face of the pandemic, conspiracy theories paint a world that is ordered, and controllable,\" explains Open University psychologist Jovan Byford. \"Conspiracy theories flourish when social machinery breaks down and available ways of making sense of the world prove inadequate for what is going on.\" While the pandemic has increased the overall potential audience for such ideas, the QAnon and coronavirus strands are also linked by a preoccupation - or obsession - with children and their safety. That explains why we've seen these theories spread in local Facebook groups where more benign discussions cover which cafes are baby-friendly or which local schools make the grade. \"Child abuse is the epitome of sexual and moral depravity and something that is indisputably evil,\" Jovan Byford says, \"so its incorporation into the theory helps take the idea of the conspirators' monstrosity and iniquity to the absolute, unquestionable extreme.\"  Some of those in Saturday's crowd were presumably drawn by legitimate concerns about mental health, the economy, criticism of government policy or by questions about still-evolving science.  But, overwhelmingly, what attendees heard from the speakers was a steady stream of bad information (about coronavirus death rates), groundless speculation (about child abuse and \"mandatory\" vaccinations) and baseless assertions (about the pandemic being planned by governments or shadowy forces - or in the words of the conspiracy theorists, a \"plandemic\"). \"The overwhelming majority of the content was about conspiracies,\" says Joe Mulhall, a senior researcher at Hope Not Hate, an advocacy group which tracks far-right and conspiracy movements. \"Very little of it came from a constructive viewpoint. There were no speakers talking about, for instance, the impact of the lockdown on small businesses,\" says Mulhall, who was at Saturday's event. And conspiratorial thinking wasn't limited to the UK - similar signs could be seen in weekend demonstrations in Boston, Berlin and elsewhere. QAnon and coronavirus conspiracy theories have truly gone international. One man who contacted the BBC says his mother attended the London demonstration and carried two posters. One featured a coronavirus conspiracy theory: \"Arrest Bill Gates for crimes against humanity\". The other had a QAnon hashtag: \"#SavetheChildren\" (which is used along with \"#SaveourChildren\", but has no association with the charity of the same name). The man, who wanted to remain anonymous for fear of falling out with his family, explained how his mother adopted conspiratorial views after becoming increasingly obsessed with YouTube videos of a number of the protest speakers.  \"She's become so into these different conspiracy theories, it's becoming difficult to pin down what she believes. Everything contradicts each other,\" he explained.   His mother's transformation has put a huge strain on their relationship.  \"She's always sending videos and messages promoting these conspiracy theories on the family WhatsApp chat now,\" he says. \"It's so hard to have a normal conversation.\" One of the groups behind Saturday's rally said it takes \"no views about QAnon.\"  \"It was a public rally organised by many different groups and individuals. We didn't have a person to fact check people before participating,\" said StandUpX via Twitter. \"We cannot be accountable for the views of each and everyone appearing at the rally.\"  \"What worries us is that these lines of thought are being linked into a super-conspiracy with QAnon as its backbone,\" says Joe Mulhall of Hope Not Hate. \"Q allows you to join the dots between all different conspiracies - there's a secret cabal doing things behind the scenes. And as soon as you talk about super-conspiracies and secret hands, it is a short step to the 'other' and in many cases, that means 'Jews'. \"Anti-Semitism is never far from the surface of these conspiracy theories,\" he adds. \"The potential audiences for dangerous disinformation are growing and harder to isolate and contain,\" says Chloe Colliver of the ISD. \"They are becoming so inter-connected that it is hard for tech platforms at this late stage to now get a grip on limiting the reach of potentially dangerous disinformation.\"  In recent weeks, Twitter has acted to remove a number of big QAnon accounts; Facebook has closed large many QAnon groups; and thousands of QAnon Instagram pages have been removed. TikTok has also blocked hashtags linked to the conspiracy theory. In response, the conspiracy theorists have pivoted to new slogans and hashtags - for instance, #SaveTheChildren.  The growing conspiracy movement - while still at the fringes - seems to be picking up momentum on the streets. \"We can't pick up all the events that are being organised,\" Joe Mulhall says. \"They're being set up too fast.\" Subscribe to the BBC Trending podcast or follow us on Twitter @BBCtrending or Facebook. You can also email us."
+## [3] "A worker at a major NHS provider is under investigation by her employer for posting a video on social media in which she appeared to suggest the Covid-19 pandemic didn't exist. Louise Hampton, who works for Care UK, posted a video to Facebook on Wednesday in which she claimed her service had been \"dead\" throughout the Covid-19 pandemic and she had done nothing at all. Brandishing her NHS badge and a certificate signed by a Care UK manager that thanked her for making a difference to patients, Ms Hampton said: \"Apparently, I worked really hard during Covid.\"  She then went on a rant peppered with profanity and claimed that she had done no work \"because our service was dead. We weren't getting the calls. It was dead. Covid is a load of ...  \"And I didn't clap for the NHS. I didn't clap for myself.\" In a statement, Care UK, which provides call centres and a range of other services to the NHS, said it was investigating. \"We are aware of this video, which we consider to be materially inaccurate in a number of ways, and can confirm that a member of staff is subject to investigation,\" a spokesperson said. \"We expect all our colleagues and services to support the work of the NHS in giving the public the right information and support during the pandemic. Our call centres were, in fact, exceptionally busy, handling a peak of 400% more calls than usual. Our teams showed huge commitment and dedication in delivering the service, and we have rightly thanked them for the efforts they have made.\" The video quickly racked up nearly half a million views across Facebook and Twitter.  In a later post, Ms Hampton claimed she had received \"messages of support from people including NHS workers who are speaking out\".  Her Facebook account includes a number of coronavirus conspiracy theories and references to the QAnon conspiracy theory. However, copies of the video had already proliferated across social media sites. It was particularly popular in groups and communities promoting Covid-19 misinformation.  QAnon supporters - who believe Donald Trump is secretly saving the world from a cabal of paedophiles - have also spread unfounded theories about coronavirus, calling it a \"deep state\" hoax and promoting misinformation about face masks and vaccines. She also made references to Plandemic, a coronavirus conspiracy theory video that went viral in May and was subsequently taken down by major social media networks. BBC News has contacted Ms Hampton for comment. Clarification 10 September: The opening paragraph of this article was amended to make the language clearer and add the words \"appeared to suggest\". Subscribe to the BBC Trending podcast or follow us on Twitter @BBCtrending or Facebook.  "
+```
+
+---
+
+class: break
+
+# Legality
+
+Now that you've learned how to build a simple scaper. Here are a few things to keep in mind…
+
+![:space 5]
+
+**Don't scrape too fast!&lt;/font&gt;**
+
+- Your behavior is statistically distinguishable from human users.
+
+- Constitutes a [DDOS attack](https://en.wikipedia.org/wiki/Denial-of-service_attack)
+
+- Known the websites **terms of service** – breaking those terms can lead to being banned from the site or even [jail time](https://www.wired.com/2011/07/swartz-arrest/).
+
+
+---
+
+# Solution
+
+&lt;br&gt;
+
+- **Slow down**
+
+- **Add noise** to make your behavior less statistically distinguishable.
+
+- **Know what you're doing** and who you're doing it to.
+  + In the words of Nietzsche: “if thou gaze long into an abyss, the abyss will also gaze into thee”
+  + That is, the internet is a two way street. Scraping content from some sites puts you on peoples' radar.
+
+- [`robot.txt`](http://www.robotstxt.org/) to know what you can and can't scrape.
+  + `www.bbc.com/robots.txt`
+
+---
+
+# Solution
+
+&lt;br&gt;
+
+Create noise by **randomly** putting your scraper to **sleep**.
+
+
+```r
+# One random unit of time drawn from a uniform distribution
+runif(1,1,4) 
+```
+
+```
+## [1] 3.454257
+```
+&lt;br&gt;
+&lt;br&gt;
+
+```r
+# Put the system to sleep by that random unit
+Sys.sleep(runif(1,1,5))
+```
+
+---
+
+# Solution
+
+&lt;br&gt;
+
+Using our previous example, we deliberately slow `bbc_scraper()` down:
+
+
+
+```r
+output &lt;- c()
+for(i in 1:length(urls)){
+* Sys.sleep(runif(1,1,5))
+  draw &lt;- bbc_scraper(urls[i])  
+  output &lt;- bind_rows(output,draw)
+}
+```
+
+&lt;br&gt;
+
+Keep in mind that if you're a social scientist (which we are), nothing you're doing is **_that_** pressing. You can wait and everyone will be better off for it!
+
+---
+
+## Grab data once, &lt;br&gt; _not again and again_....
+
+One important thing to keep in mind when writing scraping code in `.Rmd`: we _don't_ want to accidently _re-scrape_ the data every time we knit the document! 
+
+**Two stategies to get around this:**
+
+- **_(1) cache results for code chunks that aim to scrape data._**
+
+- **_(2) set `eval = FALSE` for the code chunks that aim to scrape data._**
+
+    - Scrape the data on your own;
+    - Save the data to the project;
+    - Re-read the data back in when knitting the document.
+
+---
+
+
+class: newsection
+
+# Dates
+
+---
+
+## Dates and Time
+
+`R` has a specific `Date` class. We will use the function `as.Date()` to coerce a relevant string into a date class.
+
+
+```r
+str &lt;- "2006-04-30"
+class(str)
+```
+
+```
+## [1] "character"
+```
+
+```r
+date_str &lt;- as.Date(str)
+class(date_str)
+```
+
+```
+## [1] "Date"
+```
+
+---
+
+Objects of class date have some nice properties, that makes analysis and manipulation easy.
+
+
+```r
+date_str
+```
+
+```
+## [1] "2006-04-30"
+```
+
+```r
+date_str + 30 # date in 30 days
+```
+
+```
+## [1] "2006-05-30"
+```
+
+```r
+date_str - 3000 # date 300 days ago.
+```
+
+```
+## [1] "1998-02-11"
+```
+
+---
+
+This also allows us to look at the distance between two dates.
+
+
+```r
+date1
+```
+
+```
+## [1] "2015-06-07"
+```
+
+```r
+date2
+```
+
+```
+## [1] "2013-02-14"
+```
+
+```r
+date1-date2
+```
+
+```
+## Time difference of 843 days
+```
+
+
+---
+
+## Formatting Dates
+
+That said, dates come in many different formats. To let `R` know that a specific string is a date, we have to tell it the **date format**.
+
+
+```r
+example &lt;- "February 3, 1987"
+as.Date(example)
+```
+
+---
+
+## Formatting Dates
+
+That said, dates come in many different formats. To let `R` know that a specific string is a date, we have to tell it the **date format**.
+
+```r
+example &lt;- "February 3, 1987"
+as.Date(example, format = "%B %d, %Y")
+```
+
+```
+## [1] "1987-02-03"
+```
+
+---
+
+**Formatting dates** is requires that we articulate to `R`via special syntax what each date feature is. In a string (i.e. using " "), we specify the exact pattern of the date with **_all appropriate punctuation and spacing_**.
+
+The following are the main expressions used in formatting.
+
+.center[
+| Expression  | Type of Date |
+|------|-----------------|
+| `%d` | day as a number | 
+| `%a` | abbreviated weekday |
+| `%A` | unabbreviated weekday |
+| `%m` | month as number |
+| `%b` | abbreviated month |
+| `%B` | unabbreviated month
+| `%y` | 2 digit year |
+| `%Y` | 4 digit year |
+]
+
+---
+
+
+```r
+as.Date("Friday March 13, 2009","%A %B %d, %Y")
+```
+
+```
+## [1] "2009-03-13"
+```
+
+
+```r
+as.Date("11/13/14","%m/%d/%y")
+```
+
+```
+## [1] "2014-11-13"
+```
+
+
+```r
+as.Date("7th of May 2000","%dth of %B %Y")
+```
+
+```
+## [1] "2000-05-07"
+```
+
+---
+
+## Practice
+
+How would we convert this date: `03Feb2009`?
+
+--
+
+
+```r
+as.Date("03Feb2009","%d%b%Y")
+```
+
+```
+## [1] "2009-02-03"
+```
+
+--
+
+How would we convert this date: `01/10/02`?
+
+--
+
+
+```r
+# Tricky... Which is the month? Year? Day?
+as.Date("01/10/02","%d/%m/%y")
+```
+
+```
+## [1] "2002-10-01"
+```
+
+```r
+# ???
+as.Date("01/10/02","%y/%m/%d")
+```
+
+```
+## [1] "2001-10-02"
+```
+
+```r
+# ???
+as.Date("01/10/02","%m/%y/%d")
+```
+
+```
+## [1] "2010-01-02"
+```
+
+---
+
+## Lubridate
+
+The `lubridate` package offers a useful toolkit for dealing with date features in `R`. It offers a number of parsing features that dramatically ease date manipulation. 
+
+
+```r
+install.package("lubridate")
+require(lubridate)
+```
+
+--
+
+
+```r
+our_date = as.Date("1990-05-03")
+our_date
+```
+
+```
+## [1] "1990-05-03"
+```
+
+
+```r
+year(our_date)
+```
+
+```
+## [1] 1990
+```
+
+
+```r
+month(our_date)
+```
+
+```
+## [1] 5
+```
+
+
+```r
+day(our_date)
+```
+
+```
+## [1] 3
+```
+
+---
+
+Quick parsing features
+
+
+```r
+ymd("1990/05/03")
+```
+
+```
+## [1] "1990-05-03"
+```
+
+
+```r
+ydm("1990/03/05")
+```
+
+```
+## [1] "1990-05-03"
+```
+
+
+```r
+dmy("03/05/1990")
+```
+
+```
+## [1] "1990-05-03"
+```
+
+--
+
+Gather qualitative labels
+
+
+```r
+wday(our_date,label=T)
+```
+
+```
+## [1] Thu
+## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat
+```
+
+
+```r
+wday(our_date+5,label=T)
+```
+
+```
+## [1] Tue
+## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat
+```
+
+---
+
+More complex expressions of time.
+
+
+```r
+our_date2 &lt;- "2009-05-04 05:11:33"
+ymd_hms(our_date2)
+```
+
+```
+## [1] "2009-05-04 05:11:33 UTC"
+```
+
+Specify time zone
+
+
+```r
+tt &lt;- ymd_hms(our_date2,tz = "EST")
+tt
+```
+
+```
+## [1] "2009-05-04 05:11:33 EST"
+```
+
+Convert time zone.
+
+
+```r
+with_tz(tt,tzone = "America/Boise")
+```
+
+```
+## [1] "2009-05-04 04:11:33 MDT"
+```
+
+---
+
+## Rounding dates 
+
+
+```r
+our_date
+```
+
+```
+## [1] "1990-05-03"
+```
+
+
+
+```r
+round_date(our_date,unit = "week")
+```
+
+```
+## [1] "1990-05-06"
+```
+
+
+```r
+round_date(our_date,unit = "month")
+```
+
+```
+## [1] "1990-05-01"
+```
+
+
+```r
+round_date(our_date,unit = "year")
+```
+
+```
+## [1] "1990-01-01"
+```
+
+
+
+```r
+floor_date(tt,unit = "hour")
+```
+
+```
+## [1] "2009-05-04 05:00:00 EST"
+```
+
+
+
+```r
+ceiling_date(tt,unit = "minute")
+```
+
+```
+## [1] "2009-05-04 05:12:00 EST"
+```
+
+
+---
+
+## Durations
+
+
+```r
+dyears(3)
+```
+
+```
+## [1] "94608000s (~3 years)"
+```
+
+
+```r
+dweeks(3)
+```
+
+```
+## [1] "1814400s (~3 weeks)"
+```
+
+
+```r
+# How many seconds of your youth am I taking from you?
+dhours(2.5) 
+```
+
+```
+## [1] "9000s (~2.5 hours)"
+```
+
+---
+
+### Dates are frustrating... but they don't need to be
+
+![:space 5]
+
+- Dates in `R` can be frustrating, but **lubridate** eases manipulation and is readable to boot!
+
+&lt;br&gt;
+
+- Check out the [Cheatsheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf) for a quick guide on date formating.
+
+&lt;br&gt;
+
+- See reading [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) chapter from the reading this week.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
