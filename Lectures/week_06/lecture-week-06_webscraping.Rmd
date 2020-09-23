@@ -43,19 +43,6 @@ Webscraping <!-- Title of the lecture here -->
 </span></div> 
 
 ---
-class: outline
-
-# Outline for Today 
-
-<br><br>
-
-- **Writing Functions**
-
-- Building **Web scrapers** to scrape content from the web
-
-- Dealing with **Dates** and **Time**
-
----
 
 class: newsection
 

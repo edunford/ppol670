@@ -66,7 +66,7 @@ Note that this week we'll be using **loops**. We covered loops in [Week 3](http:
 
 ## Writing Functions
 
-### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#3)
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#2)
 
 <iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ebcf277c-1d60-40f3-9c5f-ac3301074744&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
@@ -94,7 +94,7 @@ add()
 
 ## Websites
 
-### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#6)
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#5)
 
 <iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=417e77ec-2350-4aa2-8e89-ac330137491c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
@@ -102,7 +102,7 @@ add()
 
 ## Scraping Content
 
-### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#15)
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#14)
 
 <iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=6e1755d8-67ba-41d8-856d-ac33013ee97c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
@@ -152,7 +152,7 @@ glimpse(dat)
 
 ## Building a Scraper
 
-### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#29)
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28)
 
 <iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=2e247bab-2e24-4087-8d62-ac3301532572&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
