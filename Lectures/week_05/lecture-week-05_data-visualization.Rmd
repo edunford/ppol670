@@ -44,21 +44,6 @@ Data Visualization <!-- Title of the lecture here -->
 </span></div> 
 
 ---
-class: outline
-
-# Outline for Today 
-
-<br><br>
-
-- The **components** of a quantitative visualization
-
-- Grammar of graphics with **`ggplot2`**
-
-- Step-by-step **examples** of visualizing data
-
-- Handling **dates**
-
----
 
 class: newsection
 

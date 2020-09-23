@@ -1,0 +1,156 @@
+---
+title: "PPOL 670 | Week 5 | Walthrough"
+subtitle: | 
+  | Data Visualization Application - Gapminder Data 
+output: 
+  html_notebook:
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 5
+---
+
+<br><br>
+
+```{r setup, include= F}
+knitr::opts_chunk$set(error=F,warning = F,comment=F)
+```
+
+
+
+```{r dependencies}
+#install.packages("tidyverse")
+require(tidyverse) # The tidyverse package covered last time 
+
+# install.packages("ggthemes")
+require(ggthemes) # for great visualization colors and themes. 
+
+# install.packages("maps")
+require(maps) # for some maps data
+
+# Gapminder data (for example)
+#install.packages("gapminder")
+require(gapminder)
+```
+
+# Data 
+
+The [`Gapminder` dataset](https://www.gapminder.org/) is a famous dataset used by Hans Rosling to visualize development outcomes. The data covers 1952 to 2007 in five year intervals and measures life expectancy, population, and GDP Per Capita. 
+
+```{r}
+gapminder %>% head()
+```
+
+
+# Get to know the data through visualization
+
+Each of the following questions are targeted at making sure we understand our data better. A great way to get a "feel" for a dataset is to visualize it. Answer each of the below questions with a (publishable-quality) picture. 
+
+#### 1. How is `lifeExp`, `pop` and `gdpPercap` variables distributed?
+
+Two ways to think about this: one is to plot each figure individually. 
+```{r,fig.align="center",fig.width=7,fig.height=4}
+
+```
+
+
+The better way is to plot all the functions at once using the `pivot_longer()` function from last time with `facet_wrap()`
+
+```{r,fig.align="center",fig.width=10,fig.height=4}
+
+```
+We can quickly see that there is large right skews in both `gdpPercap` and `pop`. Let's transform these variables and re-plot.
+
+```{r,fig.align="center",fig.width=10,fig.height=4}
+
+```
+
+Now let's make things look professional!
+
+```{r,fig.align="center",fig.width=10,fig.height=4}
+
+```
+
+
+
+#### 2. What's the relationship between economic development and life expectancy? Is the relationship the same for all continents?
+
+```{r,fig.align="center",fig.width=10,fig.height=4}
+
+```
+
+Useful but there are a number of small aesthetic adjustments we could make to really help use distinguish between what is going on. 
+
+```{r,fig.align="center",fig.width=10,fig.height=4}
+
+```
+
+Is the trend the same by continent?
+
+```{r,fig.align="center",fig.width=10,fig.height=4}
+
+```
+
+Generally speaking, it appears so, but it's difficult to hone in on any one continent. There is just a lot going on. Let's consider two alternative ways of presenting this same data. 
+
+Way 1: separate plots using `facet_`
+
+```{r,fig.align="center",fig.width=10,fig.height=4}
+
+```
+
+Way 2: Plot the trends but not the individual data points
+
+```{r,fig.align="center",fig.width=7,fig.height=5}
+
+```
+
+#### 3. Which countries in Africa have the lowest levels of life expectancy?
+
+Two ways we could go about answering a question like this. The first might just be an ordered barplot. Here we might rephrase the question as: "Which countries in Africa have the lowest levels of life expectancy _on average_?"
+
+```{r,fig.align="center",fig.width=7,fig.height=7}
+
+```
+
+Nice, but ordering the factor fields would go a long way. Doing so is easy using the tidy `forcats` package (which is part of the tidyverse), and why we're at it, lets' add a little polish. 
+
+```{r,fig.align="center",fig.width=7,fig.height=7.5}
+
+```
+
+Another way we could approach this is to lay everything out spatially. ggplot with the `maps` package provides a useful way to extract map data on the fly. 
+
+```{r,fig.align="center",fig.width=11,fig.height=7}
+
+```
+
+Our focus is the African continent, so we'll just focus on that portion of the data using the data wrangling principals. 
+
+```{r}
+
+```
+
+Let's plot the map. 
+
+```{r,fig.align="center",fig.width=6,fig.height=7}
+
+```
+
+
+Now let's fill in the fields on the map using the average life expectancy values.
+
+```{r,fig.align="center",fig.width=6,fig.height=7}
+
+```
+
+What if we wanted to look at how these spatial patterns shifted over time? Not a problem, we just need to tweak the data and plot code a little bit. 
+
+```{r,fig.align="center",fig.width=15,fig.height=15}
+
+```
+
+
+
+
+

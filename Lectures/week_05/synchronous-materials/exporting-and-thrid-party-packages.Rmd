@@ -1,0 +1,101 @@
+---
+title: "Week 5| Data Visualization | Synchronous Topics"
+output: 
+  html_document:
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Data 
+```{r}
+require(tidyverse)
+require(GGally)
+require(gghighlight)
+require(ggrepel)
+
+
+require(gapminder)
+dat <- gapminder %>% 
+  mutate(ln_gdppc = log(gdpPercap),
+         ln_pop = log(pop))
+dat %>% head()
+```
+
+# Building a graphic
+
+```{r}
+plt <- 
+  dat %>% 
+  ggplot(aes(x=year,y=ln_gdppc,group=country)) +
+  geom_line(alpha=.5)
+plt
+```
+
+# Exporting Plots
+
+```{r}
+
+```
+
+
+# `GGally`
+
+```{r}
+ggcorr(dat,label = T)
+```
+
+```{r,comment=F}
+dat %>% 
+  select(continent,ln_pop,ln_gdppc,lifeExp) %>% 
+  GGally::ggpairs(.,progress = F)
+```
+
+# `gghighlight`
+
+```{r}
+dat %>% 
+  ggplot(aes(x=year,y=ln_gdppc,color=country)) +
+  geom_line(size=.75) +
+  gghighlight(max(ln_pop) > 19) +
+  theme_minimal()
+```
+
+
+## `ggrepel`
+
+
+```{r}
+dat %>% 
+  filter(country=="Nigeria") %>% 
+  ggplot(aes(ln_gdppc,lifeExp)) +
+  geom_point() +
+  geom_text_repel(aes(label=year))
+```
+
+```{r}
+dat %>% 
+  filter(country=="Nigeria") %>% 
+  ggplot(aes(ln_gdppc,lifeExp)) +
+  geom_point() +
+  geom_label_repel(aes(label=year))
+```
+
+
+```{r,fig.align="center",fig.height=4}
+dat %>% 
+  filter(country=="Nigeria") %>% 
+  mutate(cold_war = ifelse(year <= 1990,"yes","no")) %>% 
+  ggplot(aes(ln_gdppc,lifeExp,color=cold_war)) +
+  geom_point(show.legend = F) +
+  scale_color_manual(values=c("steelblue","black")) +
+  geom_label_repel(aes(label=year),show.legend = F) +
+  ggthemes::theme_economist() +
+  labs(x="Log GDP Per Capita",y="Life Expectancy",
+       title="Development in Nigeria",
+       subtitle = "1952 - 2007",
+       caption="Source: Gapminder.org")
+```
