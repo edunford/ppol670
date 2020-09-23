@@ -4,7 +4,7 @@ title:
   <font size=6, face="bold"> Week 6 </font> 
   <br>
   <br>
-  <font size=100, face="bold"> Webscraping & APIs </font>
+  <font size=100, face="bold"> Webscraping </font>
 author: 
   <font class = "title-footer"> 
   &emsp;Prof. Eric Dunford &emsp;&#9670;&emsp; Georgetown University &emsp;&#9670;&emsp; McCourt School of Public Policy &emsp;&#9670;&emsp; eric.dunford@georgetown.edu</font>
@@ -24,6 +24,7 @@ output:
 knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F,cache=F)
 require(rvest)
 require(tidyverse)
+require(lubridate)
 ```
 
 layout: true
@@ -37,7 +38,7 @@ Week 6 <!-- Week of the Footer Here -->
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
-Webscraping & APIs <!-- Title of the lecture here -->
+Webscraping <!-- Title of the lecture here -->
 
 </span></div> 
 
@@ -48,96 +49,17 @@ class: outline
 
 <br><br>
 
-- **Refresh on Loops and Functions**
+- **Writing Functions**
 
-- **Webscraping**
+- Building **Web scrapers** to scrape content from the web
 
-- **Using APIs**
+- Dealing with **Dates** and **Time**
 
 ---
 
 class: newsection
 
-## Loops & Functions
-
----
-
-### `for` loop components
-
-(1) the **_`for()` function_** which we use to specify 
-  
-  a. what object we're drawing from and 
-  
-  b. what object we are writing to.
-
-<br> 
-
-```{}
-            for( i  in  items  )
-                 ^        ^
-                 |        |___ object we are drawing from
-                 |
-          obj. we write each item to 
-```
-
----
-
-### `for` loop components
-
-(2) the **_brackets `{}`_**, which houses the code that is going to happen each iteration</u>. 
-
-<br> 
-```{}
-        for( i  in  items  ){
-          |~~~~~~~~~~~~~~~~|   
-          |~~~~~~~~~~~~~~~~|
-          |~~~~~~~~~~~~~~~~| code we need perform on each iteration.
-          |~~~~~~~~~~~~~~~~|
-          |~~~~~~~~~~~~~~~~|
-        }
-```
-
-
----
-
-### Storing output in a _predefined_ data object
-
-```{r}
-letters
-```
-
-
-```{r}
-# Container with 10 spaces
-container <- rep(0,10)
-container
-```
-
-
-```{r}
-# Each loop, we store the output of some code.
-for(i in 1:10){
-  container[i] <- paste0(letters[i],letters[i+1])
-}
-container
-```
-
-
----
-
-### Storing data by binding output
-
-```{r}
-containter2 <- c()
-for( i in 1:10){
-  
-  tmp_data <- data.frame(v1=i,v2=letters[i])
-  
-  containter2 <- bind_rows(containter2,tmp_data)
-  
-}
-containter2
-```
+##  Functions
 
 ---
 
@@ -276,7 +198,7 @@ class:newsection
 
 ### ABCs of Webscraping 
 
-Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/world-us-canada-51545383).
+Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/blogs-trending-54121992).
 
 --
 
@@ -295,7 +217,7 @@ When scraping data online, keep the following procedure in mind:
 
 ### ABCs of Webscraping 
 
-Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/world-middle-east-36156865).
+Let's scrape content off of the following BBC [news story](https://www.bbc.com/news/blogs-trending-54121992).
 
 <br>
 
@@ -316,8 +238,8 @@ Here let's aim to extract three pieces of information from the BBC story:
 ```{r}
 require(rvest) 
 
-url = "https://www.bbc.com/news/world-us-canada-51545383"
-site = read_html(url)
+url <-  "https://www.bbc.com/news/blogs-trending-54121992"
+site <- read_html(url)
 site
 ```
 
@@ -334,7 +256,7 @@ Here the entire information located on the website is no retained in a single ob
 Let's locate the XML code for the headline.
 
 ```{r}
-headline.path = "//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/h1"
+headline.path = '//*[@id="comp-blog-story-content"]/h2/span'
 headline = site %>% html_node(.,xpath = headline.path)
 headline
 ```
@@ -391,7 +313,7 @@ site %>%
 
 ```{r}
 # Grab the date using CSS
-date.path = "#page > div:nth-child(1) > div.container > div > div.column--primary > div.story-body > div.with-extracted-share-icons > div > div.story-body__mini-info-list-and-share-row > div.mini-info-list-wrap > ul > li > div"
+date.path = '#comp-blog-story-content > div.with-extracted-share-icons > div > div > div.mini-info-list-wrap > ul > li > div'
 
 # So long! That's why I prefer XML
 date = site %>% 
@@ -412,7 +334,7 @@ date
 To get **all** of the body text, we really need to think about what it is we are grabbing. Here comprehending the structure of the website can be really useful.
 
 ```{r}
-body.path = "//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p[1]"
+body.path = '//*[@id="comp-blog-story-content"]/div[3]/p[1]'
 
 site %>% 
   html_node(.,xpath=body.path) %>% 
@@ -428,7 +350,7 @@ This will only give us a piece of the story – **p[1]**
 But we want the _whole_ thing
 
 ```{r,highlight=T}
-body.path = "//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p"
+body.path = body.path = '//*[@id="comp-blog-story-content"]/div[3]/p'
 
 body <- 
   site %>% 
@@ -522,27 +444,28 @@ The aim:
 
 ```{r}
 bbc_scraper <- function(url){
-     
+  
   # Download website   
   raw = read_html(url)
   
   # Extract headline
   headline = raw %>% 
-    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/h1") %>% 
-    html_text(.)
+    html_nodes(xpath='//*[@id="comp-blog-story-content"]/h2/span') %>% 
+    html_text()
   
-  # Extract data
+  
+  # Extract dat3
   date = raw %>% 
-    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[1]/div/div[1]/div[1]/ul/li/div") %>% 
-    html_text(.) %>% as.Date(.,"%d %b %Y")
+    html_nodes(xpath='//*[@id="comp-blog-story-content"]/div[2]/div/div/div[1]/ul/li/div') %>% 
+    html_text()
   
   # Extract Story
   story = raw %>% 
-    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p") %>% 
-    html_text(.) %>% paste0(.,collapse = " ")
+    html_nodes(xpath='//*[@id="comp-blog-story-content"]/div[3]/p') %>% 
+    html_text() %>% paste0(.,collapse = " ")
   
   # Output as data frame and return
-  data.out = data.frame(headline,date,story)
+  data.out = tibble(headline,date,story)
   return(data.out)
 }
 ```
@@ -553,13 +476,14 @@ bbc_scraper <- function(url){
 
 ![:space 10]
 
-Now all we need is to feed it urls
+Now all we need is to feed it urls.
 
 ```{r,cache=T}
-urls <- c("http://www.bbc.com/news/world-middle-east-36156865",
-          "http://www.bbc.com/news/world-middle-east-36162701",
-          "http://www.bbc.com/news/world-australia-36166803",
-          "http://www.bbc.com/news/world-latin-america-36166632")
+urls <- c(
+  "https://www.bbc.com/news/blogs-trending-54121992",
+  "https://www.bbc.com/news/blogs-trending-53997203",
+  "https://www.bbc.com/news/blogs-trending-53948820"
+)
 
 output <- c()
 for(i in 1:length(urls)){
@@ -567,7 +491,7 @@ for(i in 1:length(urls)){
   output <- bind_rows(output,draw)
 }
 
-str(output)
+glimpse(output)
 ```
 
 ---
@@ -681,147 +605,274 @@ One important thing to keep in mind when writing scraping code in `.Rmd`: we _do
 
 ---
 
+
 class: newsection
 
-# APIs
+# Dates
 
 ---
 
-### Application Programming Interface (API)
+## Dates and Time
 
-- APIs take user requests to a system and return a response (usually in the form of data)
-  + Classic example: think waiter at a restraunt, you give him/her your order, waiter goes to the kitchen, waiter brings back what you ordered.
-  
-- an API is the way applications speak to databases. 
-  + For example, when a news interface presents statistics regarding how often someone "liked" a story on social media, they are using an API to request from the social media's database how many time the story has been shared, the social media site's API then returns a number (likes/shares/retweets/etc.) which the news website then reports
-
-- We use APIs all the time: online forms, aggregation sites, apps, ect. 
-
----
-
-### Application Programming Interface (API)
-
-- There are many kinds of APIs, but we'll focus on **REST APIs** 
-  
-  + REST == "**re**presntational **s**tate **t**ransfer"
-  
-  + Works like a website: client makes a request to a server via the http protocol. 
-  
-  + Looks and behaves much like a url
-  
-  + Returns data formated as Java Script Object Notation (JSON) data: structured as key value pairs. 
-  
-  + `httr` packages converts json to lists in `R`
-  
-- Most all APIs require and **API key** or token to access.
-  
----
-
-### Example: Data.gov
-
-- Data.gov [documentation](https://api.data.gov/) for their various APIs
-
-- Need API Key: [get a key](https://api.data.gov/signup/)
+`R` has a specific `Date` class. We will use the function `as.Date()` to coerce a relevant string into a date class.
 
 ```{r}
-require(httr) # To make requests
-api <- 'https://catalog.data.gov/api/3/action/group_list'
-get_cat <- GET(api)
-content(get_cat)
+str <- "2006-04-30"
+class(str)
+date_str <- as.Date(str)
+class(date_str)
 ```
 
 ---
 
-### Example: Department of Education
+Objects of class date have some nice properties, that makes analysis and manipulation easy.
 
+```{r}
+date_str
+date_str + 30 # date in 30 days
+date_str - 3000 # date 300 days ago.
+```
+
+---
+
+This also allows us to look at the distance between two dates.
 ```{r,echo=F}
-my_api_key = '6gpt6tLmcCpWw9SG234PD2uZVWDUprtmgsjYCeZ0'
+date1 = as.Date("2015-06-07")
+date2 = as.Date("2013-02-14")
 ```
-
-Make request
-```{r,highlight=T,cache=TRUE}
-api <- 'https://api.data.gov/ed/collegescorecard/v1/schools'
-data_request <- GET(api,
-                    query=list(api_key=my_api_key, # Need your key #<<
-                               school.name="Georgetown University"))
-```
-
 ```{r}
-# Extract content
-dat <- content(data_request)
-names(dat) # what is returned is a huge list!
+date1
+date2
+date1-date2
 ```
 
-Large list that we can handle into...
-```{r}
-# Number of Graduate students enrolled in 2016
-dat$results[[1]]$`2016`$student$grad_students
+
+---
+
+## Formatting Dates
+
+That said, dates come in many different formats. To let `R` know that a specific string is a date, we have to tell it the **date format**.
+
+```{r,eval=F}
+example <- "February 3, 1987"
+as.Date(example)
 ```
 
 ---
 
-### Example: FBI API
+## Formatting Dates
 
-[Crime Data Explorer](https://crime-data-explorer.fr.cloud.gov/api)
-
-API Set up: `/api/nibrs/{offense}/victim/national/{variable}`
-
-Make call to the API
-```{r,cache=TRUE}
-fbi_api <- 'https://api.usa.gov/crime/fbi/sapi/api/nibrs/homicide/victim/national/age'
-get_fbi_dat <- GET(fbi_api,query=list(api_key=my_api_key))
-fbi_dat <- content(get_fbi_dat)
-
-# Tap into the results...
-as_tibble(fbi_dat$data[[1]])
-```
-
----
-
-Need to reorganize into a single data frame.We can build this data up by using a loop!
+That said, dates come in many different formats. To let `R` know that a specific string is a date, we have to tell it the **date format**.
 ```{r}
-total_entries <- length(fbi_dat$data) 
-total_entries
-```
-
-```{r,highlight=T}
-homicide_data <- c()
-for(i in 1:total_entries){
-  tmp <- as_tibble(fbi_dat$data[[i]])  #<<
-  homicide_data <- bind_rows(homicide_data,tmp)
-}
-homicide_data
+example <- "February 3, 1987"
+as.Date(example, format = "%B %d, %Y")
 ```
 
 ---
 
-Now manipulate...
+**Formatting dates** is requires that we articulate to `R`via special syntax what each date feature is. In a string (i.e. using " "), we specify the exact pattern of the date with **_all appropriate punctuation and spacing_**.
+
+The following are the main expressions used in formatting.
+
+.center[
+| Expression  | Type of Date |
+|------|-----------------|
+| `%d` | day as a number | 
+| `%a` | abbreviated weekday |
+| `%A` | unabbreviated weekday |
+| `%m` | month as number |
+| `%b` | abbreviated month |
+| `%B` | unabbreviated month
+| `%y` | 2 digit year |
+| `%Y` | 4 digit year |
+]
+
+---
 
 ```{r}
-homicide_data_clean <-
-  homicide_data %>%  
-  select(year = data_year,
-         age_range = key,
-         count = value) %>%  
-  arrange(year,age_range) # Arrange by year, age
+as.Date("Friday March 13, 2009","%A %B %d, %Y")
+```
 
-# Print
-homicide_data_clean
+```{r}
+as.Date("11/13/14","%m/%d/%y")
+```
+
+```{r}
+as.Date("7th of May 2000","%dth of %B %Y")
 ```
 
 ---
 
-Finally, let's visualize!
+## Practice
 
-```{r,fig.align="center",fig.height=3.4,fig.width=9,dpi=300}
-homicide_data_clean %>% 
-  ggplot(aes(year,age_range,fill=log(count))) +
-  geom_tile() +
-  scale_fill_viridis_c() +
-  theme_minimal() +
-  labs(y="Age Range",x="Year",
-       title="Total Number of Deaths by Homicide by Age in the U.S. (1995 to 2018)",
-       subtitle="Data drawn from FBI database ",
-       caption = "Source: Data.Gov")
+How would we convert this date: `03Feb2009`?
+
+--
+
+```{r}
+as.Date("03Feb2009","%d%b%Y")
 ```
 
+--
+
+How would we convert this date: `01/10/02`?
+
+--
+
+```{r}
+# Tricky... Which is the month? Year? Day?
+as.Date("01/10/02","%d/%m/%y")
+```
+```{r}
+# ???
+as.Date("01/10/02","%y/%m/%d")
+```
+```{r}
+# ???
+as.Date("01/10/02","%m/%y/%d")
+```
+
+---
+
+## Lubridate
+
+The `lubridate` package offers a useful toolkit for dealing with date features in `R`. It offers a number of parsing features that dramatically ease date manipulation. 
+
+```{r,eval=F}
+install.package("lubridate")
+require(lubridate)
+```
+
+--
+
+```{r}
+our_date = as.Date("1990-05-03")
+our_date
+```
+
+```{r}
+year(our_date)
+```
+
+```{r}
+month(our_date)
+```
+
+```{r}
+day(our_date)
+```
+
+---
+
+Quick parsing features
+
+```{r}
+ymd("1990/05/03")
+```
+
+```{r}
+ydm("1990/03/05")
+```
+
+```{r}
+dmy("03/05/1990")
+```
+
+--
+
+Gather qualitative labels
+
+```{r}
+wday(our_date,label=T)
+```
+
+```{r}
+wday(our_date+5,label=T)
+```
+
+---
+
+More complex expressions of time.
+
+```{r}
+our_date2 <- "2009-05-04 05:11:33"
+ymd_hms(our_date2)
+```
+
+Specify time zone
+
+```{r}
+tt <- ymd_hms(our_date2,tz = "EST")
+tt
+```
+
+Convert time zone.
+
+```{r}
+with_tz(tt,tzone = "America/Boise")
+```
+
+---
+
+## Rounding dates 
+
+```{r}
+our_date
+```
+
+
+```{r}
+round_date(our_date,unit = "week")
+```
+
+```{r}
+round_date(our_date,unit = "month")
+```
+
+```{r}
+round_date(our_date,unit = "year")
+```
+
+
+```{r}
+floor_date(tt,unit = "hour")
+```
+
+
+```{r}
+ceiling_date(tt,unit = "minute")
+```
+
+
+---
+
+## Durations
+
+```{r}
+dyears(3)
+```
+
+```{r}
+dweeks(3)
+```
+
+```{r}
+# How many seconds of your youth am I taking from you?
+dhours(2.5) 
+```
+
+---
+
+### Dates are frustrating... but they don't need to be
+
+![:space 5]
+
+- Dates in `R` can be frustrating, but **lubridate** eases manipulation and is readable to boot!
+
+<br>
+
+- Check out the [Cheatsheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf) for a quick guide on date formating.
+
+<br>
+
+- See reading [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) chapter from the reading this week. 

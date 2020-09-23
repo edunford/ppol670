@@ -171,7 +171,7 @@ I've broken the readings up into "Required" and "Additional Resources and Sugges
   
 <br>     
   
-### Week 6: Web Scrapping and APIs
+### Week 6: Web Scraping
 
 <br>
 
@@ -179,12 +179,11 @@ I've broken the readings up into "Required" and "Additional Resources and Sugges
     + [Ch. 19: Functions](https://r4ds.had.co.nz/functions.html) - `r4ds`
     + _refresh_ [Ch. 21: Iteration](https://r4ds.had.co.nz/iteration.html) - `r4ds`
         - Only 21.1 - 21.4
-    + [Ch. 14: Strings](https://r4ds.had.co.nz/strings.html) - `r4ds`
     + **Web Scraping**
       - [`rvest`: easy web scraping with R](https://blog.rstudio.com/2014/11/24/rvest-easy-web-scraping-with-r/)
-    + **APIs**
-      - [Using R to extract data from web APIs](https://www.tylerclavelle.com/code/2017/randapis/)
-      - [Accessing APIs from R](https://www.r-bloggers.com/accessing-apis-from-r-and-a-little-r-programming/): Good post, only need to read the first part of it.
+    <!-- + **APIs** -->
+    <!--   - [Using R to extract data from web APIs](https://www.tylerclavelle.com/code/2017/randapis/) -->
+    <!--   - [Accessing APIs from R](https://www.r-bloggers.com/accessing-apis-from-r-and-a-little-r-programming/): Good post, only need to read the first part of it. -->
     + **Legal**
       + [Web Scraping and Crawling are Perfectly Legal, Right?](https://benbernardblog.com/web-scraping-and-crawling-are-perfectly-legal-right/)
       + [robots.txt](http://www.robotstxt.org/robotstxt.html)
@@ -217,7 +216,7 @@ I've broken the readings up into "Required" and "Additional Resources and Sugges
 <br>
 
 - **_Required Readings_**:
-    + Refresh [Ch. 14: Strings](https://r4ds.had.co.nz/strings.html) - `r4ds`
+    + [Ch. 14: Strings](https://r4ds.had.co.nz/strings.html) - `r4ds`
     + [Ch. 1: The tidy text format](https://www.tidytextmining.com/tidytext.html) - `TT`
     + [Ch. 2: Sentiment analysis with tidy data](https://www.tidytextmining.com/sentiment.html) - `TT`
     + [Ch. 3: Analyzing word and document frequency: tf-idf](https://www.tidytextmining.com/tfidf.html) - `TT` 
