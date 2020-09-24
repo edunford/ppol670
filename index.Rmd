@@ -345,7 +345,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - **Practice**:
   - _Walkthrough_: let's visualize the [Gapminder](https://www.gapminder.org/) dataset in a live coding walkthrough. 
-    + <a href="Lectures/week_05/synchronous-materials/gapminder_visualization_practice.rmd.zip" download><strong>Download the notebook</strong></a> (`.rmd` as a `.zip`)
+    + <a href="Lectures/week_05/synchronous-materials/gapminder_visualization_practice.Rmd.zip" download><strong>Download the notebook</strong></a> (`.rmd` as a `.zip`)
     + [**Answers**](Lectures/week_05/synchronous-materials/gapminder_visualization_practice_ANSWERS.nb.html) to the notebook. 
     
     
