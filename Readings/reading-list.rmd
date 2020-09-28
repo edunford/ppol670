@@ -32,7 +32,7 @@ I've broken the readings up into "Required" and "Additional Resources and Sugges
 | https://git-scm.com/book/en/v2 | Pro Git | `progit` |
 | http://plain-text.co/ | The Plain Person's Guide to Plain Text Social Science | `ptext` |
 | https://swcarpentry.github.io/ | Software Carpentry | `carp`  |
-| https://serialmentor.com/dataviz/index.html | Fundamentals of Data Visualization | `datviz` |
+| https://clauswilke.com/dataviz/index.html | Fundamentals of Data Visualization | `datviz` |
 | https://bookdown.org/yihui/rmarkdown/ | R Markdown: The Definitive Guide | `rmark` |
 | https://moderndive.com/index.html | ModernDive | `MD` |
 | https://www.tidytextmining.com/index.html | TidyText | `TT` |
@@ -158,15 +158,15 @@ I've broken the readings up into "Required" and "Additional Resources and Sugges
 
 - **_Required Readings_**:
     + [Ch. 3: Data Visualization](https://r4ds.had.co.nz/data-visualisation.html) - `r4ds`
-    + [Ch. 2: Visualizing data: Mapping data onto aesthetics](https://serialmentor.com/dataviz/aesthetic-mapping.html) - `datviz`
-    + [Ch. 4: Color scales](https://serialmentor.com/dataviz/color-basics.html) - `datviz`
+    + [Ch. 2: Visualizing data: Mapping data onto aesthetics](https://clauswilke.com/dataviz/aesthetic-mapping.html) - `datviz`
+    + [Ch. 4: Color scales](https://clauswilke.com/dataviz/color-basics.html) - `datviz`
     + **Visualizing Different Data Type**:
-        - [Ch. 5: Directory of Visualizations](https://serialmentor.com/dataviz/directory-of-visualizations.html) - `datviz`
-        - [Ch. 6: Visualizing Amounts](https://serialmentor.com/dataviz/visualizing-amounts.html) - `datviz`
-        - [Ch. 7: Visualizing Distributions](https://serialmentor.com/dataviz/histograms-density-plots.html) - `datviz`
-        - [Ch. 10: Visualizing Proportions](https://serialmentor.com/dataviz/visualizing-proportions.html) - `datviz`
-        - [Ch. 12: Visualizing Associations](https://serialmentor.com/dataviz/visualizing-associations.html) - `datviz`
-    + [Image File Formats](https://serialmentor.com/dataviz/image-file-formats.html) - `datviz`
+        - [Ch. 5: Directory of Visualizations](https://clauswilke.com/dataviz/directory-of-visualizations.html) - `datviz`
+        - [Ch. 6: Visualizing Amounts](https://clauswilke.com/dataviz/visualizing-amounts.html) - `datviz`
+        - [Ch. 7: Visualizing Distributions](https://clauswilke.com/dataviz/histograms-density-plots.html) - `datviz`
+        - [Ch. 10: Visualizing Proportions](https://clauswilke.com/dataviz/visualizing-proportions.html) - `datviz`
+        - [Ch. 12: Visualizing Associations](https://clauswilke.com/dataviz/visualizing-associations.html) - `datviz`
+    + [Image File Formats](https://clauswilke.com/dataviz/image-file-formats.html) - `datviz`
     + [Ch. 15: Dates and Times](https://r4ds.had.co.nz/dates-and-times.html) - `r4ds`
   
 <br>     
@@ -195,16 +195,16 @@ I've broken the readings up into "Required" and "Additional Resources and Sugges
 <br>
 
 - **_Required Readings_**:
-  - [Ch. 1: Introduction](https://geocompr.robinlovelace.net/intro.html) - `geo`
   - [Ch. 2: Geographic Data in R](https://geocompr.robinlovelace.net/spatial-class.html) - `geo`
-  - [Chapter 15: Visualizing geospatial data](https://serialmentor.com/dataviz/geospatial-data.html) - `datviz`
+    + 2.1 - 2.5
+  - [Ch. 3: Attribute data operations](https://geocompr.robinlovelace.net/attr.html) - `geo`  
+  - [Ch. 4: Spatial data operations](https://geocompr.robinlovelace.net/spatial-operations.html) - `geo`
+  - [Chapter 15: Visualizing geospatial data](https://clauswilke.com/dataviz/geospatial-data.html) - `datviz`
   
 <br>  
 
 - <font color = "grey">**_Additional Resources and Suggested Materials_**</font>
   - More from [Geocomputation with R](https://geocompr.robinlovelace.net/)
-    + [Ch. 3: Attribute data operations](https://geocompr.robinlovelace.net/attr.html) - `geo`
-    + [Ch. 4: Spatial data operations](https://geocompr.robinlovelace.net/spatial-operations.html) - `geo`
     + [Ch. 5: Geometry operations](https://geocompr.robinlovelace.net/geometric-operations.html) - `geo`
     + [Ch. 6: Reprojecting geographic data](https://geocompr.robinlovelace.net/reproj-geo-data.html) - `geo`
     + [Ch. 7: Geographic data I/O](https://geocompr.robinlovelace.net/read-write.html) - `geo`
