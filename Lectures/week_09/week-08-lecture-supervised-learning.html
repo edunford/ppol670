@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 8       Introduction to Statistical Learning</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 8 </font> <br> <br> <font size=100, face="bold"> Introduction to Statistical Learning </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 8  &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Introduction to Statistical Learning &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+- **_What is Statistical Learning?_**
+
+- Talk about **_Supervised Learning_** and issues of over/under fitting
+
+- Delve into **_Cross-Validation_**
+
+- Briefly discuss **_Performance Metrics_**
+
+- Introduction to the **`caret`** package 
+
+- Discussion **_preprocessing data_**
+
+&lt;br&gt;
+
+&gt; This week covers the basics/theory, next time we meet we'll apply what we learned.
+
+---
+
+class: newsection
+
+# Statistical Learning
+
+---
+
+### What is statistical learning?
+
+The aim is to model the  relationship between the outcome and some set of features features
+
+`$$y = f(X) + \epsilon$$`
+
+where 
+
+- `\(y\)` is the outcome/dependent/response variable 
+
+- `\(X\)` is a matrix of predictors/features/independent variables 
+
+- `\(f\)` is some fixed but unknown function mapping `\(X\)` to `\(y\)`. The "signal" in the data.
+
+- `\(\epsilon\)` is some random error term. The "noise" in the data.
+
+---
+
+### What is statistical learning?
+
+Statistical learning refers to a set of methods/approaches for estimating `\(f(.)\)` 
+
+`$$\hat{y} = \hat{f}(X)$$`
+
+Where `\(\hat{f}(X)\)` is an approximation of the "true" functional form, `\(f(X)\)`, and `\(\hat{y}\)` is the predicted value.
+
+The aim is to find a `\(\hat{f}(X)\)` that minimizes the **_reducible_ error**.
+
+--
+
+`$$E(y - \hat{y})^2$$`
+`$$E[f(X) + \epsilon -  \hat{f}(X)]^2$$`
+
+`$$\underbrace{E[f(X) -\hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{var(\epsilon)}_{\text{Irreducible}}$$`
+
+---
+
+### Reducible vs. Irreducible Error
+
+`$$\underbrace{E[f(X) -\hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{var(\epsilon)}_{\text{Irreducible}}$$`
+
+
+
+The **"reducible" error** is the systematic **signal**. We can reduce this error by using different functional forms, better data, or a mixture of those two. 
+
+The **"irreducible" error** is associated with the random **noise** around `\(y\)`. 
+
+Statistical learning is concerned with minimizing the reducible error. However, our predictions  will never be perfect given the irreducible error. 
+
+There is a lower bound on how accurate we can be.
+
+---
+
+### Inference vs. Prediction
+
+Two reasons we want to estimate `\(f(\cdot)\)`: 
+
+--
+
+- **Inference**
+
+  + Goal is **_interpretation_**
+  
+      - _Which predictors are associated with the response?_
+      - _What is the relationship between the response and the predictors?_
+      - _Is the relationship causal?_
+      
+  + **&lt;font color = "darkred"&gt; Key limitation&lt;/font&gt;**: 
+  
+      - using functional forms that are easy to interpret (e.g. lines) might be far away from the true function form of `\(f(X)\)`.
+  
+---
+  
+### Inference vs. Prediction
+
+Two reasons we want to estimate `\(f(\cdot)\)`: 
+  
+- **Prediction**
+
+  + Goal is to **_predict_** future values of the outcome, `\(\hat{y}_{t+1}\)`
+  
+  + `\(\hat{f}(X)\)` is treated as a **&lt;font color=#282828&gt;_black box_&lt;/font&gt;**
+      + model doesn't need to be interpretable as long as it provides an accurate prediction of `\(y\)`.
+  
+  + **&lt;font color = "darkred"&gt; Key limitation&lt;/font&gt;**: 
+  
+      - &lt;u&gt;Interpretation&lt;/u&gt;: it is difficult to know which variables are doing the heavy lifting and the exact influence of `\(x\)` on `\(y\)`.
+      
+
+---
+
+### Supervised vs. Unsupervised Learning
+
+- &lt;u&gt;**Supervised Learning**&lt;/u&gt; (our focus today)
+
+  - for each observation of the predictor measurement `\(x_i\)` there is an associated response measurement `\(y_i\)`. In essence, there is an _outcome_ we are aiming to accurately predict or understand.
+  
+  - use regression and classification methods
+  
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+  
+ 
+---
+  
+### Supervised vs. Unsupervised Learning
+  
+- &lt;u&gt;**Unsupervised Learning**&lt;/u&gt;  
+
+  - we observe a vector of measurements `\(x_i\)` but _no_ associated response `\(y_i\)`.
+  
+  - "unsupervised" because we lack a response variable that can supervise our analysis.
+  
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+  
+
+---
+
+class: newsection
+
+# Supervised Learning
+
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+--
+
+- **Quantitative** outcome
+
+  + a continuous/interval-based outcome: e.g. housing price, number of bills passed, stock market prices, etc.
+  
+  + Regression Methods: linear, penalization, generalized additive models (GAMs) 
+  
+  + Both parametric and non-parametric ways of approximating `\(f(\cdot)\)`
+
+
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+- **Quantitative** outcome
+
+- **Qualitative** outcome
+
+  + a discrete outcome
+  
+      + _Binary_: War/No War; Sick/Not Sick
+      
+      + _Ordered_: Don't Support, Neutral, Support
+      
+      + _Categorical_: Cat, Dog, Bus, ... 
+      
+  + Classification Methods: logistic regression, naive Bayes, support vector machines, neural networks
+  
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+- **Quantitative** outcome
+
+- **Qualitative** outcome
+ 
+- Some methods can be used on either outcome type
+  - K nearest neighbors
+  - tree-based methods (random forest, gradient boosting)
+
+- Every model has specific **tuning parameters** that we can use to optimize performance. 
+  
+---
+
+### Interpretation vs. Flexibility
+
+&lt;br&gt;
+.center[_"There is no free lunch in statistics"_]
+
+.pull-left[
+- No one method dominates all others over all possible data sets. 
+
+- It is an important task to decide for any given set of data which method produces the best results
+
+- Balance between  model interpretation and model flexibility
+]
+
+.pull-right[
+&lt;br&gt;&lt;br&gt;
+&lt;img src="Figures/interpret-vs-flexible.png",width=700px,height=700&gt;
+]
+
+---
+
+### Under-fitting (Bias)
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Over-fitting (Variance)
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model Accuracy
+
+- We need to quantify the extent to which the predicted response value for a given observation is close to the true response value for that observation
+
+--
+
+- There are many metrics for model accuracy. Which metric you use depends on:
+
+  + type of learning problem you are trying to solve 
+  
+  + what you aspect of the model you're aiming to optimize
+  
+--
+  
+- In the regression setting, the most common accuracy metric is _mean squared error_ (MSE).
+
+`$$MSE = \frac{\sum^N_{i=1} (y_i - \hat{f}(X_i))^2}{N}$$`
+---
+
+
+### Model Accuracy
+
+`$$MSE = \frac{\sum^N_{i=1} (y_i - \hat{f}(X_i))^2}{N}$$`
+
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Model Accuracy
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Training and Test Data
+
+- Utilize accuracy metrics to assess model performance, &lt;u&gt;_but we can always make our models flexible enough to minimize the MSE_&lt;/u&gt;. 
+
+--
+
+- Need to see how accurate the model is on **_previously unseen data_**.
+
+- Data is usually hard to come by so we partition the data we _do have_ into **training** and **test** sets. The idea is to hold the test data back and &lt;u&gt;never look at it&lt;/u&gt;.
+
+--
+
+- Use the test data to calculate the **out of sample predictive accuracy**. 
+
+- By holding off some data we can reduce the tendency to **overfit** the data.
+
+---
+
+### Model accuracy on New Data 
+
+
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Bias-Variance Tradeoff
+
+.center[&lt;img src = "Figures/bias-variance-tradeoff.png",width=800&gt;]
+
+- **high variance**: new data, new pattern.
+
+- **high bias**: rigid pattern, doesn't reflect the data 
+
+
+---
+
+### Bias-Variance Tradeoff
+
+.center[&lt;img src = "Figures/bias-variance-tradeoff.png"&gt;]
+
+- Reality is a **tradeoff**
+
+  - More variance, less bias
+  
+  - More bias, less variance
+
+---
+
+class: newsection
+
+# Cross-Validation
+
+---
+
+### What is cross-validation?
+
+&lt;br&gt;
+
+- As we saw, the training error will always be less than the test error due to over-fitting. We need to see how our model performs on data it wasn't trained on (test error)
+
+- "**Re-sampling**" involves repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the fitted model. 
+
+- We can use re-sampling techniques to **generate estimates for the test error**. 
+
+- Let's look at **_three cross-validation approaches_**.
+
+
+---
+
+### Validation Set Approach
+
+- Involves randomly dividing the data into two comparably sized samples, a training set and a validation/test/hold-out set.
+
+- Model is fit to the training set then used to predict the response in the validation set. 
+
+- The resulting error provides an estimate of the test error rate. 
+&lt;br&gt;
+.center[
+&lt;img src="Figures/validation-set.png"&gt;
+]
+
+---
+
+### Validation Set Approach
+
+**&lt;font color = "darkred"&gt;Drawbacks&lt;/font&gt;**
+
+- Highly variable: test error rate is sensitive to the estimates that are in the training and test set. 
+
+- Overestimates the test error: only trained on one sub-sample of the data. Models tend to perform worse when trained on less data. 
+&lt;br&gt;
+.center[
+&lt;img src="Figures/validation-set.png"&gt;
+]
+
+---
+
+### "Leave-One-Out" Cross-Validation (LOOCV)
+
+- Involves splitting the set of observations into two parts. Rather than creating two subsets of comparable size, a single observation is used for the validation set. 
+
+- Estimate the model on `\(N-1\)` observation, then test on the remaining observation.
+
+- Do this `\(N\)` times and average the test error. 
+
+.center[
+&lt;img src="Figures/LOOCV.png"&gt;
+]
+
+
+---
+
+### "Leave-One-Out" Cross-Validation (LOOCV)
+
+Far less biased than the validation approach. Does not overestimate the test error. No randomness in the training/test split
+
+**&lt;font color = "darkred"&gt;Drawbacks&lt;/font&gt;**: 
+
+- Computationally expensive: you have to re-estimate the same model N times!
+
+.center[
+&lt;img src="Figures/LOOCV.png"&gt;
+]
+
+---
+
+
+### `\(K\)`-Fold Cross-Validation
+
+- Involves randomly dividing the data into `\(k\)` groups (or folds). Model is trained on `\(k-1\)` folds, then test on the remaining fold. 
+
+- Process is repeated `\(k\)` times, each time using a new fold. Offers `\(k\)` estimates of the test error, which we average. 
+
+.center[
+&lt;img src="Figures/k-fold-validation.png"&gt;
+]
+
+---
+
+### `\(K\)`-Fold Cross-Validation
+
+- Less computationally expensive (LOOCV is a special case of `\(K\)`-fold where `\(k = n\)`) 
+
+- Gives more accurate estimates of the test error rate than LOOCV
+
+.center[
+&lt;img src="Figures/k-fold-validation.png"&gt;
+]
+
+
+---
+
+class: newsection
+
+# Performance Metrics 
+
+---
+
+### How did we do? 
+
+- Our aim is to model the signal, not the noise. As we've seen, model over-fitting is a real problem, but re-sampling methods can offer us a way out. 
+
+- Central to any machine learning task is how we choose to define "good" performance. 
+
+--
+
+- When dealing with quantitative outcomes (intervals), we can utilize metrics like MSE to assess performance.
+
+`$$MSE = \frac{\sum^N_{i=1} (y_i - \hat{f}(X_i))^2}{N}$$`
+
+---
+
+### How did we do? 
+
+- Our aim is to model the signal, not the noise. As we've seen, model over-fitting is a real problem, but re-sampling methods can offer us a way out. 
+
+- Central to any machine learning task is how we choose to define "good" performance. 
+
+- When dealing with quantitative outcomes (intervals), we can utilize metrics like MSE to assess performance.
+
+- When dealing with qualitative outcome (categories), we need to rely on different metrics to assess performance.
+
+&lt;br&gt;
+
+`$$\text{Accuracy} = \frac{\text{Correctly Classified}}{\text{Total Possible}}$$`
+`$$\text{Error} = 1 - \text{Accuracy}$$`
+
+
+---
+
+### The Weather Today 
+
+Consider if we were testing the accuracy of two weather persons. Below are their forecasts for the weather in a given week alongside the observed weather pattern. (For now, let's just focus on binary outcomes: sunny day or rainy day)
+
+.center[
+|Weather Person | M | Tu | W | Th | F | St | Su |
+|---------------|---|----|---|----|---|----|----|
+| `\(WP_1\)` Prediction | Rain | Sun  | Rain | Sun | Sun | Rain | Rain |
+| `\(WP_2\)` Prediction | Sun  | Sun  | Sun  | Sun | Sun | Sun  | Sun  |
+| Actual            | Sun  | Sun  | Rain | Sun | Sun | Sun  | Sun |
+]
+
+--
+
+.center[
+|Weather Person | Correct | Total | Accuracy | Error |
+|---------------|---------|-------|----------|-------|
+| `\(WP_1\)`        |    4    |   7   |   57.1%  | 42.9% |
+| `\(WP_2\)`        |    6    |   7   |   85.7%  | 14.3% |
+]
+
+If we calculate the accuracy for each, it looks as if Weather Person 2 is the most accurate. Does that make sense?
+
+---
+
+### The Weather Today 
+
+Consider if we were testing the accuracy of two weather persons. Below are their forecasts for the weather in a given week alongside the observed weather pattern. (For now, let's just focus on binary outcomes: sunny day or rainy day)
+
+.center[
+|Weather Person | M | Tu | W | Th | F | St | Su |
+|---------------|---|----|---|----|---|----|----|
+| `\(WP_1\)` Prediction | Rain | Sun  | Rain | Sun | Sun | Rain | Rain |
+| `\(WP_2\)` Prediction | Sun  | Sun  | Sun  | Sun | Sun | Sun  | Sun  |
+| Actual            | Sun  | Sun  | Rain | Sun | Sun | Sun  | Sun |
+]
+
+.center[
+|Weather Person | Correct | Total | Accuracy | Error |
+|---------------|---------|-------|----------|-------|
+| `\(WP_1\)`        |    4    |   7   |   57.1%  | 42.9% |
+| `\(WP_2\)`        |    6    |   7   |   85.7%  | 14.3% |
+]
+
+Rain is **rare**. We can always have high accuracy if we just guess sun every day. This is generates a problem if what people care about is when to pack an umbrella!
+
+---
+
+### Confusion Matrix
+
+&lt;br&gt; 
+
+.center[
+|                       |  `\(Positive_{~~\text{Actual}}\)` |  `\(Negative_{~~\text{Actual}}\)` |
+|-----------------------|----------|----------|
+| `\(Positive_{~~\text{Predicted}}\)`  |   True Positive (TP)       | False Positive (FP)          |
+| `\(Negative_{~~\text{Predicted}}\)`  |   False Negative (FN)       |  True Negative (TN)         |
+
+]
+
+--
+
+&lt;br&gt;
+
+| Metric | Calculation |  Description |
+|---|-----| -----|
+| Accuracy | `\(\frac{TP + TN}{TP+FP+TN+FN}\)` | In total, how accurate is the model |
+| Precision | `\(\frac{TP}{TP+FP}\)` | Of the true positives classified, how many are actually positive | 
+| Specificity | `\(\frac{ TN }{ TN + FP }\)` | Of the actual true negatives, how many were correctly classified | 
+| Recall/Sensitivity | `\(\frac{TP}{ TP + FN}\)` | Of the actual true positives, how many were correctly classified |
+
+
+---
+
+### Weather Person 1
+
+&lt;br&gt;
+
+.center[
+|                       |  `\(Positive_{~~\text{Actual}}\)` |  `\(Negative_{~~\text{Actual}}\)` |
+|-----------------------|----------|----------|
+| `\(Positive_{~~\text{Predicted}}\)`  |   3      |  0   |
+| `\(Negative_{~~\text{Predicted}}\)`  |   3      |  1   |
+
+]
+
+&lt;br&gt;
+
+- Accuracy = 57.1%
+
+- Precision = 1%
+
+- Specificity = 100%
+
+- Recall = 50%
+
+
+---
+
+### Weather Person 2
+
+&lt;br&gt;
+
+.center[
+|                       |  `\(Positive_{~~\text{Actual}}\)` |  `\(Negative_{~~\text{Actual}}\)` |
+|-----------------------|----------|----------|
+| `\(Positive_{~~\text{Predicted}}\)`  |   6      |  1   |
+| `\(Negative_{~~\text{Predicted}}\)`  |   0      |  0   |
+
+]
+
+&lt;br&gt;
+
+- Accuracy = 85.7%
+
+- Precision = 85.7%
+
+- Specificity = 0%
+
+- Recall = 100%
+
+---
+
+### ROC Curves
+
+Consider the following: 
+
+- We want to predict how many rainy days (1) there will be, sunny otherwise (0). 
+
+- Our model outputs probabilities of a rainy day where 0 means no chance, 1 means it's absolutely going to rain. 
+  
+&lt;br&gt;  
+  
+
+
+
+```r
+# Our estimated probabilities 
+est_probs 
+```
+
+```
+## [1] 0.4 0.7 0.3 0.5 0.9 0.1 0.7
+```
+
+
+
+---
+
+### ROC Curves
+
+Consider the following: 
+
+- We need to convert these probabilities to predictions. We can do this by setting a **threshold**.
+  
+&lt;br&gt;&lt;br&gt;&lt;br&gt;  
+
+```r
+threshold = .5
+our_preds = as.numeric(est_probs &gt;= threshold)
+our_preds
+```
+
+```
+## [1] 0 1 0 1 1 0 1
+```
+
+
+---
+
+### ROC Curves
+
+
+Consider the following: 
+
+- We can now compare these predictions to the actual values. 
+
+
+```r
+table(our_preds,true_values)
+```
+
+```
+##          true_values
+## our_preds 0 1
+##         0 2 1
+##         1 1 3
+```
+
+- Thresholds reflect how sensitive we are to true or false positives. 
+  
+  + The higher the threshold, the less false positives.
+  
+  + The lower the threshold, the more false positives but more true positives. 
+  
+  + **It's another tradeoff!**
+  
+---
+
+### ROC Curves
+
+Receiver operating characteristic (ROC) curve offers a visual representation of model performance across different potential thresholds.  
+
+.center[&lt;img src = "Figures/roc-plot.png", width=400&gt;]
+
+
+---
+
+### Area Under the Curve (AUC)
+
+We can calculate the area under the ROC curve to quickly and easily compare model performance.
+
+
+.center[&lt;img src = "Figures/roc-mueller-rauh.png"&gt;]
+
+
+---
+
+class: newsection
+
+# `caret`
+
+---
+
+### Machine learning in `R`
+
+&lt;br&gt;&lt;br&gt;
+
+- There are LARGE assortment of ML packages in `R`: essentially one for every possible learning method. 
+
+- Each package has it's own unique ways of reading data in, outputting results, and post-processing. 
+
+- This can make it difficult to implement different types of models quickly.
+
+- The [`caret` package](http://topepo.github.io/caret/index.html) eases this process by creating a system of wrapper functions that make it very easy to implement models
+
+
+---
+
+### `caret` 
+
+- The main `caret` function is `train()`, 
+
+  + `method = ` argument allows us to select a specific machine learning algorithm. 
+  
+  + `trControl = ` argument allows us to feed it a `trainControl()` function which allows use to easily set cross-validation specifications. 
+  
+  + `metric =` argument allows us to specify what sorts of accuracy metrics the best performing model should be evaluated by. 
+  
+  + `tuneGrid =` argument allows us to easily try out different tuning parameters (more on this later).
+  
+---
+
+
+```r
+require(caret)
+library(mlbench) # Holds the Sonar Data 
+data(Sonar)
+str(Sonar[, 1:10])
+```
+
+```
+## 'data.frame':	208 obs. of  10 variables:
+##  $ V1 : num  0.02 0.0453 0.0262 0.01 0.0762 0.0286 0.0317 0.0519 0.0223 0.0164 ...
+##  $ V2 : num  0.0371 0.0523 0.0582 0.0171 0.0666 0.0453 0.0956 0.0548 0.0375 0.0173 ...
+##  $ V3 : num  0.0428 0.0843 0.1099 0.0623 0.0481 ...
+##  $ V4 : num  0.0207 0.0689 0.1083 0.0205 0.0394 ...
+##  $ V5 : num  0.0954 0.1183 0.0974 0.0205 0.059 ...
+##  $ V6 : num  0.0986 0.2583 0.228 0.0368 0.0649 ...
+##  $ V7 : num  0.154 0.216 0.243 0.11 0.121 ...
+##  $ V8 : num  0.16 0.348 0.377 0.128 0.247 ...
+##  $ V9 : num  0.3109 0.3337 0.5598 0.0598 0.3564 ...
+##  $ V10: num  0.211 0.287 0.619 0.126 0.446 ...
+```
+
+
+```r
+# R == "Rock", M == "Mine"
+table(Sonar$Class) 
+```
+
+```
+## 
+##   M   R 
+## 111  97
+```
+
+---
+
+
+
+```r
+# Break into training and test datasets
+set.seed(998)
+inTraining &lt;- createDataPartition(Sonar$Class, 
+                                  p = .75, 
+                                  list = FALSE)
+training &lt;- Sonar[ inTraining,]
+testing  &lt;- Sonar[-inTraining,]
+
+dim(training)
+```
+
+```
+## [1] 157  61
+```
+
+```r
+dim(testing)
+```
+
+```
+## [1] 51 61
+```
+
+
+---
+
+
+```r
+## 10-fold CV 
+fitControl &lt;- trainControl(method = "cv",number = 10)
+
+fit &lt;- train(Class ~ ., 
+             data = training, 
+             method = "gbm", 
+             trControl = fitControl,
+             verbose = FALSE)
+fit
+```
+
+```
+## Stochastic Gradient Boosting 
+## 
+## 157 samples
+##  60 predictor
+##   2 classes: 'M', 'R' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 142, 141, 141, 140, 142, 141, ... 
+## Resampling results across tuning parameters:
+## 
+##   interaction.depth  n.trees  Accuracy   Kappa    
+##   1                   50      0.8156863  0.6256943
+##   1                  100      0.8086520  0.6096252
+##   1                  150      0.8207843  0.6342288
+##   2                   50      0.7836029  0.5573825
+##   2                  100      0.8144853  0.6210137
+##   2                  150      0.8532843  0.6998732
+##   3                   50      0.7824020  0.5583936
+##   3                  100      0.8337010  0.6618992
+##   3                  150      0.8207843  0.6350545
+## 
+## Tuning parameter 'shrinkage' was held constant at a value of 0.1
+## 
+## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were n.trees = 150,
+##  interaction.depth = 2, shrinkage = 0.1 and n.minobsinnode = 10.
+```
+
+
+---
+
+
+```r
+pred &lt;-  predict(fit,newdata = testing)
+table(pred,testing$Class)
+```
+
+```
+##     
+## pred  M  R
+##    M 25  3
+##    R  2 21
+```
+
+---
+
+
+```r
+confusionMatrix(table(pred,testing$Class))
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##     
+## pred  M  R
+##    M 25  3
+##    R  2 21
+##                                           
+##                Accuracy : 0.902           
+##                  95% CI : (0.7859, 0.9674)
+##     No Information Rate : 0.5294          
+##     P-Value [Acc &gt; NIR] : 1.209e-08       
+##                                           
+##                   Kappa : 0.8028          
+##  Mcnemar's Test P-Value : 1               
+##                                           
+##             Sensitivity : 0.9259          
+##             Specificity : 0.8750          
+##          Pos Pred Value : 0.8929          
+##          Neg Pred Value : 0.9130          
+##              Prevalence : 0.5294          
+##          Detection Rate : 0.4902          
+##    Detection Prevalence : 0.5490          
+##       Balanced Accuracy : 0.9005          
+##                                           
+##        'Positive' Class : M               
+## 
+```
+
+---
+
+class:newsection
+
+# Pre-Processing Data
+
+---
+
+### Feature Cleaning 
+
+We've already talked about **data manipulation**.
+
+- raw data to **tidy** data
+- transform the **unit of analysis**
+- **class** management (e.g. characters to dates)
+
+--
+
+&lt;br&gt;
+
+However, often our variables exist on different scales, which can complicate machine learning and statistics tasks.
+
+By complicate, I mean it can make **optimization problems intractable**. 
+
+---
+
+### Feature Cleaning 
+
+Feature (or variable) cleaning is the process of curating a **design matrix** for a machine learning or modeling task. 
+
+&lt;br&gt;
+
+&gt; In statistics, a **design matrix** (also known as regressor matrix or model matrix) is a matrix of values of explanatory variables of a set of objects, often denoted by X. Each row represents an individual object, with the successive columns corresponding to the variables and their specific values for that object. _We saw this earlier!_
+
+&lt;br&gt;
+
+This is known as data **pre-processing** the data.
+
+---
+
+### Feature Cleaning 
+
+
+
+
+```r
+D %&gt;% ggplot(aes(x,y)) + geom_point()
+```
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Feature Cleaning 
+
+
+
+```r
+D %&gt;% 
+  gather(var,val) %&gt;% 
+  ggplot(aes(val,fill=var)) + geom_density()
+```
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Feature Cleaning 
+
+Variables at different scales can impact estimation. The coefficient estimates are scaled down (i.e. a unit change in x has a really really small unit change in y). 
+
+
+```r
+lm(y~x,data=D) %&gt;% 
+  coef(.) %&gt;% 
+  round(.,6)
+```
+
+```
+## (Intercept)           x 
+##   -0.921649    0.000002
+```
+
+
+---
+
+### Scaling
+
+**scaling** is the process of transforming our data so that it all falls within the same numerical range. Below `x` is transformed to have a mean of `0` and a variance of `1`.
+
+
+```r
+D %&gt;% 
+  mutate(x = scale(x)) %&gt;% 
+  gather(var,val) %&gt;% 
+  ggplot(aes(val,fill=var)) +geom_density(alpha=.5)
+```
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Scaling
+
+**scaling** is the process of transforming our data so that it all falls within the same numerical range. Below `x` is transformed to have a mean of `0` and a variance of `1`.
+
+
+```r
+D %&gt;% 
+* mutate(x = (x-mean(x))/sd(x) ) %&gt;%
+  gather(var,val) %&gt;% 
+  ggplot(aes(val,fill=var)) +geom_density(alpha=.5)
+```
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Scaling
+
+The scaled versions of our variables behave better. 
+
+
+```r
+D %&gt;% 
+  mutate(x = (x-mean(x))/sd(x) ) %&gt;%
+  lm(y~x,data=.) %&gt;% 
+  coef(.) %&gt;% 
+  round(.,3)
+```
+
+```
+## (Intercept)           x 
+##       0.000       0.899
+```
+
+---
+
+### Data preprocessing
+
+&lt;br&gt;&lt;br&gt;
+
+Common pre-processing tasks:
+
+- **Scaling** and transforming continuous values 
+
+- Converting categorical variables to **dummy** variables.
+
+- Detecting and **imputing** missing values
+
+
+---
+
+### `recipes()` package
+
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;
+.center[&lt;img src="Figures/recipes_hex_thumb.png",width=700&gt;]
+]
+
+.pull-right[
+[`recipes`](https://tidymodels.github.io/recipes/) package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization.
+
+
+The idea of the `recipes` package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. “feature engineering”).
+]
+
+
+---
+
+### `recipes()` package
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;
+.center[&lt;img src="Figures/recipes_hex_thumb.png"&gt;]
+]
+.pull-right[
+The basic setup of `recipes()`:
+
+- Initialize a recipe object
+
+- Specify the transformation steps
+
+- Estimates the required quantities and statistics required by any operations.
+
+- Apply the transformations 
+]
+
+---
+
+### Data 
+
+Data on whether a person will pay back a bank loan. The outcome variable is `status`. 13 other variables track features about the debtor and the loan. (See `?credit_data` for more details.)
+
+
+```r
+data("credit_data") # Load data (from recipes package)
+glimpse(credit_data)
+```
+
+```
+## Observations: 4,454
+## Variables: 14
+## $ Status    &lt;fct&gt; good, good, bad, good, good, good, good, good, good, b…
+## $ Seniority &lt;int&gt; 9, 17, 10, 0, 0, 1, 29, 9, 0, 0, 6, 7, 8, 19, 0, 0, 15…
+## $ Home      &lt;fct&gt; rent, rent, owner, rent, rent, owner, owner, parents, …
+## $ Time      &lt;int&gt; 60, 60, 36, 60, 36, 60, 60, 12, 60, 48, 48, 36, 60, 36…
+## $ Age       &lt;int&gt; 30, 58, 46, 24, 26, 36, 44, 27, 32, 41, 34, 29, 30, 37…
+## $ Marital   &lt;fct&gt; married, widow, married, single, single, married, marr…
+## $ Records   &lt;fct&gt; no, no, yes, no, no, no, no, no, no, no, no, no, no, n…
+## $ Job       &lt;fct&gt; freelance, fixed, freelance, fixed, fixed, fixed, fixe…
+## $ Expenses  &lt;int&gt; 73, 48, 90, 63, 46, 75, 75, 35, 90, 90, 60, 60, 75, 75…
+## $ Income    &lt;int&gt; 129, 131, 200, 182, 107, 214, 125, 80, 107, 80, 125, 1…
+## $ Assets    &lt;int&gt; 0, 0, 3000, 2500, 0, 3500, 10000, 0, 15000, 0, 4000, 3…
+## $ Debt      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2500, 260, 0, 0, 0…
+## $ Amount    &lt;int&gt; 800, 1000, 2000, 900, 310, 650, 1600, 200, 1200, 1200,…
+## $ Price     &lt;int&gt; 846, 1658, 2985, 1325, 910, 1645, 1800, 1093, 1957, 14…
+```
+
+---
+
+Variables of different types
+
+
+```r
+credit_data %&gt;% 
+  summarize_all(class) %&gt;% 
+  glimpse()
+```
+
+```
+## Observations: 1
+## Variables: 14
+## $ Status    &lt;chr&gt; "factor"
+## $ Seniority &lt;chr&gt; "integer"
+## $ Home      &lt;chr&gt; "factor"
+## $ Time      &lt;chr&gt; "integer"
+## $ Age       &lt;chr&gt; "integer"
+## $ Marital   &lt;chr&gt; "factor"
+## $ Records   &lt;chr&gt; "factor"
+## $ Job       &lt;chr&gt; "factor"
+## $ Expenses  &lt;chr&gt; "integer"
+## $ Income    &lt;chr&gt; "integer"
+## $ Assets    &lt;chr&gt; "integer"
+## $ Debt      &lt;chr&gt; "integer"
+## $ Amount    &lt;chr&gt; "integer"
+## $ Price     &lt;chr&gt; "integer"
+```
+
+---
+
+Variables on different scales... with some missing values!
+
+
+```r
+credit_data %&gt;% 
+* summarize_if(is.numeric, function(x) mean(x)) %&gt;%
+  glimpse()
+```
+
+```
+## Observations: 1
+## Variables: 9
+## $ Seniority &lt;dbl&gt; 7.986753
+## $ Time      &lt;dbl&gt; 46.43871
+## $ Age       &lt;dbl&gt; 37.08038
+## $ Expenses  &lt;dbl&gt; 55.57342
+## $ Income    &lt;dbl&gt; NA
+## $ Assets    &lt;dbl&gt; NA
+## $ Debt      &lt;dbl&gt; NA
+## $ Amount    &lt;dbl&gt; 1038.918
+## $ Price     &lt;dbl&gt; 1462.78
+```
+
+---
+
+Variables on different scales... 
+
+
+```r
+credit_data %&gt;% 
+  summarize_if(is.numeric, function(x) mean(x,na.rm = T)) %&gt;% 
+  glimpse()
+```
+
+```
+## Observations: 1
+## Variables: 9
+## $ Seniority &lt;dbl&gt; 7.986753
+## $ Time      &lt;dbl&gt; 46.43871
+## $ Age       &lt;dbl&gt; 37.08038
+## $ Expenses  &lt;dbl&gt; 55.57342
+## $ Income    &lt;dbl&gt; 141.6877
+## $ Assets    &lt;dbl&gt; 5403.979
+## $ Debt      &lt;dbl&gt; 343.0259
+## $ Amount    &lt;dbl&gt; 1038.918
+## $ Price     &lt;dbl&gt; 1462.78
+```
+
+---
+
+Categorical variables...
+
+
+```r
+credit_data %&gt;% 
+  select_if(is.factor) %&gt;% 
+  glimpse()
+```
+
+```
+## Observations: 4,454
+## Variables: 5
+## $ Status  &lt;fct&gt; good, good, bad, good, good, good, good, good, good, bad…
+## $ Home    &lt;fct&gt; rent, rent, owner, rent, rent, owner, owner, parents, ow…
+## $ Marital &lt;fct&gt; married, widow, married, single, single, married, marrie…
+## $ Records &lt;fct&gt; no, no, yes, no, no, no, no, no, no, no, no, no, no, no,…
+## $ Job     &lt;fct&gt; freelance, fixed, freelance, fixed, fixed, fixed, fixed,…
+```
+
+
+```r
+credit_data %&gt;% 
+  select_if(is.factor) %&gt;% 
+  summarize_all(function(x) sum(is.na(x)))
+```
+
+```
+##   Status Home Marital Records Job
+## 1      0    6       1       0   2
+```
+
+---
+
+### Building a recipe
+
+The package operates by laying out a series of steps that are then itemized. Once we have all our steps in place we then `bake` the recipe (i.e. execute and transform the data all at once).
+
+&lt;br&gt; 
+
+`step_`s we need to perform:
+
+1. imput any missing values.
+
+2. scale the continuous variables
+
+3. convert the categorical variables to dummy variables
+
+
+---
+
+### Building a recipe
+
+First, let's initialize the recipe object. 
+
+
+```r
+our_recipe &lt;- recipe(Status ~ ., data = credit_data)
+our_recipe
+```
+
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         13
+```
+
+---
+
+### (1) Impute any missing values
+
+`recipes` offers many different forms of imputation.
+
+&lt;br&gt; 
+
+.center[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Imputation Methods &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; step_bagimpute &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; step_knnimpute &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; step_lowerimpute &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; step_meanimpute &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; step_medianimpute &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; step_modeimpute &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; step_rollimpute &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### (1) Impute any missing values
+
+`recipes` offers many different forms of imputation.
+
+
+```r
+our_recipe &lt;-
+  our_recipe %&gt;% 
+  step_knnimpute(all_predictors())
+our_recipe
+```
+
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         13
+## 
+## Operations:
+## 
+## 5-nearest neighbor imputation for all_predictors()
+```
+
+---
+
+### (2) Scale the continuous variables
+
+
+```r
+our_recipe &lt;-
+  our_recipe %&gt;% 
+  step_center(all_numeric()) %&gt;% # Center mean around 0
+  step_scale(all_numeric()) # Set variance to 1
+our_recipe
+```
+
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         13
+## 
+## Operations:
+## 
+## 5-nearest neighbor imputation for all_predictors()
+## Centering for all_numeric()
+## Scaling for all_numeric()
+```
+
+---
+
+### (3) Convert the categories to dummies
+
+
+```r
+our_recipe &lt;- 
+  our_recipe %&gt;% 
+  step_dummy(all_nominal())
+our_recipe
+```
+
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         13
+## 
+## Operations:
+## 
+## 5-nearest neighbor imputation for all_predictors()
+## Centering for all_numeric()
+## Scaling for all_numeric()
+## Dummy variables from all_nominal()
+```
+
+---
+
+### Prepare the recipe
+
+&lt;!-- Need to calculate all the necessary statistics and values for the transformations.  --&gt;
+
+
+```r
+prepared_recipe &lt;- our_recipe %&gt;% prep()
+prepared_recipe
+```
+
+```
+## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor         13
+## 
+## Training data contained 4454 data points and 415 incomplete rows. 
+## 
+## Operations:
+## 
+## 5-nearest neighbor imputation for Home, Time, Age, Marital, Records, ... [trained]
+## Centering for Seniority, Time, Age, Expenses, ... [trained]
+## Scaling for Seniority, Time, Age, Expenses, ... [trained]
+## Dummy variables from Home, Marital, Records, Job, Status [trained]
+```
+
+
+---
+
+### Bake!
+
+&lt;!-- Now that the recipe is prepared... we can apply it to our data. --&gt;
+
+_Before_
+
+```r
+glimpse(credit_data) 
+```
+
+```
+## Observations: 4,454
+## Variables: 14
+## $ Status    &lt;fct&gt; good, good, bad, good, good, good, good, good, good, b…
+## $ Seniority &lt;int&gt; 9, 17, 10, 0, 0, 1, 29, 9, 0, 0, 6, 7, 8, 19, 0, 0, 15…
+## $ Home      &lt;fct&gt; rent, rent, owner, rent, rent, owner, owner, parents, …
+## $ Time      &lt;int&gt; 60, 60, 36, 60, 36, 60, 60, 12, 60, 48, 48, 36, 60, 36…
+## $ Age       &lt;int&gt; 30, 58, 46, 24, 26, 36, 44, 27, 32, 41, 34, 29, 30, 37…
+## $ Marital   &lt;fct&gt; married, widow, married, single, single, married, marr…
+## $ Records   &lt;fct&gt; no, no, yes, no, no, no, no, no, no, no, no, no, no, n…
+## $ Job       &lt;fct&gt; freelance, fixed, freelance, fixed, fixed, fixed, fixe…
+## $ Expenses  &lt;int&gt; 73, 48, 90, 63, 46, 75, 75, 35, 90, 90, 60, 60, 75, 75…
+## $ Income    &lt;int&gt; 129, 131, 200, 182, 107, 214, 125, 80, 107, 80, 125, 1…
+## $ Assets    &lt;int&gt; 0, 0, 3000, 2500, 0, 3500, 10000, 0, 15000, 0, 4000, 3…
+## $ Debt      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2500, 260, 0, 0, 0…
+## $ Amount    &lt;int&gt; 800, 1000, 2000, 900, 310, 650, 1600, 200, 1200, 1200,…
+## $ Price     &lt;int&gt; 846, 1658, 2985, 1325, 910, 1645, 1800, 1093, 1957, 14…
+```
+
+---
+
+### Bake!
+
+_After_
+
+```r
+dat_processed &lt;- bake(prepared_recipe,new_data = credit_data)
+glimpse(dat_processed) 
+```
+
+```
+## Observations: 4,454
+## Variables: 23
+## $ Seniority         &lt;dbl&gt; 0.123955057, 1.102631460, 0.246289608, -0.9770…
+## $ Time              &lt;dbl&gt; 0.9253405, 0.9253405, -0.7122742, 0.9253405, -…
+## $ Age               &lt;dbl&gt; -0.644573149, 1.904450396, 0.812011734, -1.190…
+## $ Expenses          &lt;dbl&gt; 0.8929550, -0.3880692, 1.7640514, 0.3805453, -…
+## $ Income            &lt;dbl&gt; -0.16098875, -0.13553594, 0.74258608, 0.513510…
+## $ Assets            &lt;dbl&gt; -0.47046400, -0.47046400, -0.21049460, -0.2538…
+## $ Debt              &lt;dbl&gt; -0.27568376, -0.27568376, -0.27568376, -0.2756…
+## $ Amount            &lt;dbl&gt; -0.5034671, -0.0820116, 2.0252657, -0.2927393,…
+## $ Price             &lt;dbl&gt; -0.981933746, 0.310796152, 2.423422475, -0.219…
+## $ Home_other        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0…
+## $ Home_owner        &lt;dbl&gt; 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1…
+## $ Home_parents      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0…
+## $ Home_priv         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0…
+## $ Home_rent         &lt;dbl&gt; 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Marital_married   &lt;dbl&gt; 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1…
+## $ Marital_separated &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Marital_single    &lt;dbl&gt; 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0…
+## $ Marital_widow     &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Records_yes       &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0…
+## $ Job_freelance     &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0…
+## $ Job_others        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Job_partime       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0…
+## $ Status_good       &lt;dbl&gt; 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1…
+```
+
+---
+
+&lt;br&gt;
+.pull-left[
+
+```r
+credit_data %&gt;% 
+  ggplot(aes(Seniority)) +
+  geom_density(fill="pink",
+               alpha=.5)
+```
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+dat_processed %&gt;% 
+  ggplot(aes(Seniority)) +
+  geom_density(fill="pink",
+               alpha=.5)
+```
+
+&lt;img src="week-08-lecture-supervised-learning_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+### `recipe()`
+
+&lt;br&gt;
+`recipe()` provides a way to systematically transform our data and apply it to any _new_ versions of the data.
+
+&lt;br&gt;
+
+This becomes really important when pre-processing **training data** that we then need to apply to **test data** in order to calculate our out of sample predictions.
+
+&lt;br&gt; 
+
+The `prep()` function allows us to use the same statistics (like the mean when centering) that we used to process the old and new data. 
+
+Then `bake()` allows allows us to seamlessly and implement those steps.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

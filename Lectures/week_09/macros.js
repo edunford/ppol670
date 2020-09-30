@@ -18,7 +18,6 @@ remark.macros.center_img = function(widthpercent) {
           </div>`;
 };
 
-/** Text Color  **/
 remark.macros.text_color = function(color) {
   const text = this;
   return `<span style="color:${color}">${text}</span>`;
