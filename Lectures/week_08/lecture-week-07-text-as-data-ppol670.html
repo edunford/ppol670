@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 7       Text as Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+    <script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 7 </font> <br> <br> <font size=100, face="bold"> Text as Data </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 7 &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Text-as-Data &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+![:space 10]
+
+- **String Manipulation**
+
+- **Text as "tidy" data**
+
+- **Sentiment Analysis**
+
+- **Topic Models**
+
+---
+
+class: newsection
+
+# Strings
+
+---
+
+### String Manipulation in `R`
+
+
+.pull-left[
+![:center_img 50](Figures/stringr-log.png)
+]
+
+.pull-right[
+
+
+```r
+require(stringr)
+
+# or
+
+require(tidyverse)
+```
+]
+
+--
+
+![:space 30]
+
+.center[
+`str_&lt;prefix&gt;()`
+
+
+```r
+str_c("a","b")
+```
+
+```
+## [1] "ab"
+```
+
+
+```r
+str_detect("There is a cat in the street",pattern = "cat")
+```
+
+```
+## [1] TRUE
+```
+
+]
+
+
+---
+
+![:space 20]
+
+
+```r
+text = "There were 5 cats!"
+text
+```
+
+```
+## [1] "There were 5 cats!"
+```
+
+--
+
+![:space 10]
+
+
+```r
+str_view(text,"cats")
+```
+
+<div id="htmlwidget-006e0e6c70b7d9828be5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-006e0e6c70b7d9828be5">{"x":{"html":"<ul>\n  <li>There were 5 <span class='match'>cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+
+---
+
+### Regular Expressions (regex)
+
+.center[
+
+
+|Regex | Description |
+|:----:|------------------------------|
+| `+`  | match 1 or more of the previous character |
+| `*`  | match 0 or more of the previous character
+| `?` |the preceding item is optional (i.e., match 0 or 1 of the previous character).
+| `[ ]` | match 1 of the set of things inside the bracket
+| `\\w` | match a "word" character (i.e., letters and numbers).
+| `\\d` | match digits
+| `\\s` | match a space character
+| `\\t` | match a "tab" character
+| `\\n` | match a "newline" character
+| `^`   | the "beginning edge" of a string
+| `$` | the "ending edge" of a string
+| {n} | the preceding character is matched n times
+]
+
+
+
+---
+
+![:space 30]
+
+
+```r
+str_view(string = text, pattern = "\\d")
+```
+
+<div id="htmlwidget-4ac9e345ae2fa529ada3" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4ac9e345ae2fa529ada3">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5<\/span> cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+---
+
+![:space 30]
+
+
+```r
+str_view_all(string = text, pattern = "\\s")
+```
+
+<div id="htmlwidget-f80932ab7a4806063307" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f80932ab7a4806063307">{"x":{"html":"<ul>\n  <li>There<span class='match'> <\/span>were<span class='match'> <\/span>5<span class='match'> <\/span>cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+---
+
+![:space 30]
+
+
+```r
+str_view_all(string = text, pattern = "\\d+\\s+\\w+")
+```
+
+<div id="htmlwidget-dfd9379f562d08f4a5fd" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dfd9379f562d08f4a5fd">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5 cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+---
+
+### String Editing
+
+![:space 5]
+
+
+```r
+str_replace(string = text, pattern = "cats", replacement = "dogs")
+```
+
+```
+## [1] "There were 5 dogs!"
+```
+
+--
+
+![:space 5]
+
+
+```r
+str_remove(string = text, pattern = "[:punct:]")
+```
+
+```
+## [1] "There were 5 cats"
+```
+
+
+--
+
+![:space 5]
+
+
+```r
+str_extract(text,pattern = "\\d")
+```
+
+```
+## [1] "5"
+```
+
+---
+
+### Locating text 
+
+
+```r
+texts &lt;- c("The man drank 5 beers.",
+           "Obama was president.",
+           "I think we should walk 2 blocks.")
+```
+
+![:space 5]
+
+
+```r
+str_detect(texts,pattern = "\\d")
+```
+
+```
+## [1]  TRUE FALSE  TRUE
+```
+
+
+![:space 5]
+
+
+```r
+str_which(texts,pattern = "\\d")
+```
+
+```
+## [1] 1 3
+```
+
+
+---
+
+### Insert data in a string
+
+![:space 5]
+
+
+```r
+x &lt;- 10
+str_c("The value is ",x,"%")
+```
+
+```
+## [1] "The value is 10%"
+```
+
+--
+
+![:space 3]
+
+
+```r
+x &lt;- 10
+str_glue("The value is {x}%")
+```
+
+```
+## The value is 10%
+```
+
+--
+
+![:space 3]
+
+
+```r
+x &lt;- 10
+str_glue("The value is {x + 5}%")
+```
+
+```
+## The value is 15%
+```
+
+---
+
+### Capitalization
+
+
+```r
+text2 &lt;- "TeXt MininG iN r"
+```
+
+
+```r
+str_to_lower(text2)
+```
+
+```
+## [1] "text mining in r"
+```
+
+
+```r
+str_to_upper(text2)
+```
+
+```
+## [1] "TEXT MINING IN R"
+```
+
+
+```r
+str_to_title(text2)
+```
+
+```
+## [1] "Text Mining In R"
+```
+
+
+```r
+str_to_sentence(text2)
+```
+
+```
+## [1] "Text mining in r"
+```
+
+---
+
+class: newsection
+
+# Tidy Text
+
+---
+
+![:space 20]
+
+.pull-left[
+![:center_img 85](Figures/tidytext-logo.png)
+]
+
+.pull-right[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+
+```r
+require(tidytext)
+```
+
+]
+
+
+---
+
+![:space 5]
+
+.pull-left[
+![:center_img 75](Figures/tidy-text-cover.png)
+]
+
+.pull-right[
+- ![:text_color steelblue](`Tidy` data principals)
+
+- ![:text_color orangered](Plays well with existing data manipulation and visualization toolkit)
+
+- ![:text_color forestgreen](Streamlined integration with other text mining libraries): that require that the data be organized differently 
+
+]
+
+--
+
+![:space 65]
+
+![:center_img 100](Figures/tidyflow-ch-1.png)
+
+
+---
+
+
+![:space 5]
+
+.pull-left[
+![:center_img 75](Figures/tidy-text-cover.png)
+]
+
+.pull-right[
+**Tidy Text Data**
+
+- Each variable is a column
+- Each observation is a row
+- Each type of observational unit is a table
+
+tidy text format is a **table with one-token-per-row**
+
+]
+
+
+![:space 65]
+
+![:center_img 100](Figures/tidyflow-ch-1.png)
+
+
+---
+
+### Tokenization 
+
+
+
+![:space 5]
+
+
+```r
+text
+```
+
+[1] "US opposition politicians and aid agencies have questioned a decision by President Donald Trump to cut off aid to three Central American states --- or so the story reports!"
+
+
+
+```r
+text_data &lt;- tibble(text = text)
+text_data
+```
+
+```
+## # A tibble: 1 x 1
+##   text                                                              
+##   &lt;chr&gt;                                                             
+## 1 US opposition politicians and aid agencies have questioned a deci…
+```
+
+---
+
+### Tokenization (words)
+
+
+```r
+text_data %&gt;% 
+  unnest_tokens(word,text,token = "words") # Words are Default
+```
+
+```
+## # A tibble: 28 x 1
+##    word       
+##    &lt;chr&gt;      
+##  1 us         
+##  2 opposition 
+##  3 politicians
+##  4 and        
+##  5 aid        
+##  6 agencies   
+##  7 have       
+##  8 questioned 
+##  9 a          
+## 10 decision   
+## # … with 18 more rows
+```
+
+---
+
+### Tokenization (characters)
+
+
+```r
+text_data %&gt;% 
+  unnest_tokens(word,text,token = "characters")
+```
+
+```
+## # A tibble: 140 x 1
+##    word 
+##    &lt;chr&gt;
+##  1 u    
+##  2 s    
+##  3 o    
+##  4 p    
+##  5 p    
+##  6 o    
+##  7 s    
+##  8 i    
+##  9 t    
+## 10 i    
+## # … with 130 more rows
+```
+
+---
+
+### Tokenization (ngrams)
+
+
+```r
+text_data %&gt;% 
+  unnest_tokens(word,text,token = "ngrams",n=2)
+```
+
+```
+## # A tibble: 27 x 1
+##    word                  
+##    &lt;chr&gt;                 
+##  1 us opposition         
+##  2 opposition politicians
+##  3 politicians and       
+##  4 and aid               
+##  5 aid agencies          
+##  6 agencies have         
+##  7 have questioned       
+##  8 questioned a          
+##  9 a decision            
+## 10 decision by           
+## # … with 17 more rows
+```
+
+---
+
+### Tokenization (ngrams)
+
+
+```r
+text_data %&gt;% 
+  unnest_tokens(word,text,token = "ngrams",n=3)
+```
+
+```
+## # A tibble: 26 x 1
+##    word                      
+##    &lt;chr&gt;                     
+##  1 us opposition politicians 
+##  2 opposition politicians and
+##  3 politicians and aid       
+##  4 and aid agencies          
+##  5 aid agencies have         
+##  6 agencies have questioned  
+##  7 have questioned a         
+##  8 questioned a decision     
+##  9 a decision by             
+## 10 decision by president     
+## # … with 16 more rows
+```
+
+---
+
+### Tokenization (tweets)
+
+
+```r
+tibble(text = "Hey @professor, this assignment doesn't make sense") %&gt;% 
+  unnest_tokens(word,text,token = "tweets") %&gt;% head(3)
+```
+
+```
+## # A tibble: 3 x 1
+##   word      
+##   &lt;chr&gt;     
+## 1 hey       
+## 2 @professor
+## 3 this
+```
+
+
+
+```r
+tibble(text = "Hey @professor, this assignment doesn't make sense") %&gt;% 
+  unnest_tokens(word,text,token = "words") %&gt;% head(3)
+```
+
+```
+## # A tibble: 3 x 1
+##   word     
+##   &lt;chr&gt;    
+## 1 hey      
+## 2 professor
+## 3 this
+```
+
+---
+
+### From words to numbers (a.k.a. counting)
+
+Number of times a word appears in the text.
+
+```r
+text_data %&gt;% 
+  unnest_tokens(word,text) %&gt;% 
+  count(word, sort = TRUE) 
+```
+
+```
+## # A tibble: 26 x 2
+##    word         n
+##    &lt;chr&gt;    &lt;int&gt;
+##  1 aid          2
+##  2 to           2
+##  3 a            1
+##  4 agencies     1
+##  5 american     1
+##  6 and          1
+##  7 by           1
+##  8 central      1
+##  9 cut          1
+## 10 decision     1
+## # … with 16 more rows
+```
+
+---
+
+### Stopwords
+
+Some words are common, carrying little to no _unique_ information, and need to be removed. 
+
+`tidytext` comes with a database of common stop words, which we can leverage to remove these low information words.
+
+
+```r
+set.seed(11)  
+stop_words %&gt;% sample_n(10)
+```
+
+```
+## # A tibble: 10 x 2
+##    word      lexicon 
+##    &lt;chr&gt;     &lt;chr&gt;   
+##  1 oh        SMART   
+##  2 a         SMART   
+##  3 him       snowball
+##  4 allows    SMART   
+##  5 both      SMART   
+##  6 too       onix    
+##  7 consider  SMART   
+##  8 otherwise SMART   
+##  9 perhaps   onix    
+## 10 everybody SMART
+```
+
+---
+
+### Drop Stopwords
+
+
+```r
+text_data %&gt;% 
+  unnest_tokens(word,text) %&gt;%  
+* anti_join(stop_words) %&gt;%
+  count(word,sort = T)
+```
+
+```
+## # A tibble: 14 x 2
+##    word            n
+##    &lt;chr&gt;       &lt;int&gt;
+##  1 aid             2
+##  2 agencies        1
+##  3 american        1
+##  4 central         1
+##  5 cut             1
+##  6 decision        1
+##  7 donald          1
+##  8 opposition      1
+##  9 politicians     1
+## 10 president       1
+## 11 questioned      1
+## 12 reports         1
+## 13 story           1
+## 14 trump           1
+```
+
+---
+
+### Stemming 
+
+Often words are the same but appear different because of their tense.
+
+
+```r
+txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
+tibble(text = txt) %&gt;% 
+  unnest_tokens(word,text) %&gt;% 
+  count(word)
+```
+
+```
+## # A tibble: 8 x 2
+##   word          n
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 beautiful     1
+## 2 beauty        1
+## 3 cleaned       1
+## 4 cleaner       1
+## 5 cleaning      1
+## 6 killed        1
+## 7 killer        1
+## 8 killing       1
+```
+
+---
+
+### Stemming 
+
+Stemming allows use to reduce a word down to it's fundamental root. ( _Note: Need to install `SnowballC` package_ )
+
+
+```r
+txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
+tibble(text = txt) %&gt;% 
+  unnest_tokens(word,text) %&gt;% 
+* mutate(word = SnowballC::wordStem(word)) %&gt;%
+  count(word)
+```
+
+```
+## # A tibble: 5 x 2
+##   word        n
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 beauti      2
+## 2 clean       2
+## 3 cleaner     1
+## 4 kill        2
+## 5 killer      1
+```
+
+---
+
+### Stemming 
+
+
+```r
+text_data %&gt;% 
+  unnest_tokens(word,text) %&gt;%  
+  anti_join(stop_words) %&gt;% 
+* mutate(word = SnowballC::wordStem(word)) %&gt;%
+  count(word,sort = T)
+```
+
+```
+## # A tibble: 14 x 2
+##    word           n
+##    &lt;chr&gt;      &lt;int&gt;
+##  1 aid            2
+##  2 agenc          1
+##  3 american       1
+##  4 central        1
+##  5 cut            1
+##  6 decis          1
+##  7 donald         1
+##  8 opposit        1
+##  9 politician     1
+## 10 presid         1
+## 11 question       1
+## 12 report         1
+## 13 stori          1
+## 14 trump          1
+```
+
+---
+
+### Example 
+
+
+
+
+
+```r
+require(rvest)
+urls &lt;- c("https://www.bbc.com/news/world-us-canada-47764237",
+          "https://www.bbc.com/news/world-middle-east-50075703",
+          "https://www.bbc.com/news/world-us-canada-50061727")
+
+# Recall the BBC Scraper we build last class:
+news_data &lt;- c()
+for(i in 1:length(urls)){
+  draw &lt;- bbc_scraper(urls[i])  
+  news_data &lt;- bind_rows(news_data,draw)
+}
+```
+
+
+---
+
+### Example 
+
+
+```r
+news_data &lt;- 
+  news_data %&gt;% 
+  mutate(story_id = row_number()) # Create an id for the document
+
+glimpse(news_data)
+```
+
+```
+## Observations: 3
+## Variables: 4
+## $ headline &lt;chr&gt; "Dismay after Trump moves to cut aid to Central …
+## $ date     &lt;date&gt; 2019-03-31, 2019-10-16, 2019-10-16
+## $ story    &lt;chr&gt; "US opposition politicians and aid agencies have…
+## $ story_id &lt;int&gt; 1, 2, 3
+```
+
+---
+
+
+```r
+text_data &lt;- 
+  news_data %&gt;% 
+  group_by(story_id) %&gt;% 
+* unnest_tokens(word,story) %&gt;%
+  ungroup()
+text_data
+```
+
+```
+## # A tibble: 2,471 x 4
+##    headline                                        date       story_id word     
+##    &lt;chr&gt;                                           &lt;date&gt;        &lt;int&gt; &lt;chr&gt;    
+##  1 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 us       
+##  2 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 oppositi…
+##  3 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 politici…
+##  4 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 and      
+##  5 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 aid      
+##  6 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 agencies 
+##  7 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 have     
+##  8 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 question…
+##  9 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 a        
+## 10 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 decision 
+## # … with 2,461 more rows
+```
+
+
+---
+
+
+```r
+# Term Frequency 
+
+text_data %&gt;% 
+  group_by(story_id) %&gt;% 
+  count(word,sort=T) 
+```
+
+```
+## # A tibble: 1,102 x 3
+## # Groups:   story_id [3]
+##    story_id word      n
+##       &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+##  1        3 the      78
+##  2        2 the      71
+##  3        3 to       43
+##  4        1 the      35
+##  5        3 a        34
+##  6        2 to       29
+##  7        2 a        27
+##  8        3 of       27
+##  9        1 to       26
+## 10        2 of       24
+## # … with 1,092 more rows
+```
+
+---
+
+
+```r
+### Dropping stopwords
+
+text_data &lt;-
+  text_data %&gt;% 
+* anti_join(stop_words)
+
+text_data %&gt;% 
+  group_by(story_id) %&gt;% 
+  count(word,sort = T) 
+```
+
+```
+## # A tibble: 715 x 3
+## # Groups:   story_id [3]
+##    story_id word            n
+##       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;
+##  1        3 house          20
+##  2        3 impeachment    17
+##  3        3 vote           14
+##  4        2 president      10
+##  5        2 trump          10
+##  6        3 pelosi         10
+##  7        2 border          9
+##  8        2 forces          9
+##  9        2 syria           9
+## 10        2 syrian          9
+## # … with 705 more rows
+```
+
+---
+
+Let's drop words that have digits in them... using regular expressions and the `stringr` package. 
+
+
+```r
+# Further Cleaning 
+text_data %&gt;% 
+  filter(str_detect(word,"\\d")) %&gt;% 
+  select(story_id,word)
+```
+
+```
+## # A tibble: 19 x 2
+## # Groups:   story_id [3]
+##    story_id word   
+##       &lt;int&gt; &lt;chr&gt;  
+##  1        1 60     
+##  2        1 300    
+##  3        1 2017   
+##  4        1 2018   
+##  5        1 500m   
+##  6        1 383m   
+##  7        1 2018   
+##  8        1 700m   
+##  9        1 2017   
+## 10        1 248m   
+## 11        1 175m   
+## 12        1 115m   
+## 13        1 2016   
+## 14        2 9      
+## 15        2 160,000
+## 16        3 1993   
+## 17        3 1868   
+## 18        3 1998   
+## 19        3 1974
+```
+
+---
+
+Let's drop words that have digits in them... using regular expressions and the `stringr` package. 
+
+```r
+# Further Cleaning 
+
+text_data &lt;- 
+  text_data %&gt;% 
+  filter(!str_detect(word,"\\d")) 
+
+text_data %&gt;% select(story_id,word)
+```
+
+```
+## # A tibble: 1,098 x 2
+## # Groups:   story_id [3]
+##    story_id word       
+##       &lt;int&gt; &lt;chr&gt;      
+##  1        1 opposition 
+##  2        1 politicians
+##  3        1 aid        
+##  4        1 agencies   
+##  5        1 questioned 
+##  6        1 decision   
+##  7        1 president  
+##  8        1 donald     
+##  9        1 trump      
+## 10        1 cut        
+## # … with 1,088 more rows
+```
+
+---
+
+
+```r
+# Stemming 
+
+text_data &lt;- 
+  text_data %&gt;% 
+  mutate(word = SnowballC::wordStem(word)) 
+
+# Now count for real
+text_data_cnts &lt;- 
+  text_data %&gt;% 
+  group_by(story_id,headline) %&gt;% 
+  count(word,sort=T) %&gt;% 
+  ungroup()
+
+text_data_cnts 
+```
+
+```
+## # A tibble: 640 x 4
+##    story_id headline                                                word       n
+##       &lt;int&gt; &lt;chr&gt;                                                   &lt;chr&gt;  &lt;int&gt;
+##  1        3 Why won't Democrats vote to authorise impeachment?      impea…    24
+##  2        3 Why won't Democrats vote to authorise impeachment?      hous      20
+##  3        3 Why won't Democrats vote to authorise impeachment?      vote      18
+##  4        2 Turkey-Syria offensive: Not our border, says Donald Tr… presid    10
+##  5        2 Turkey-Syria offensive: Not our border, says Donald Tr… trump     10
+##  6        3 Why won't Democrats vote to authorise impeachment?      pelosi    10
+##  7        2 Turkey-Syria offensive: Not our border, says Donald Tr… border     9
+##  8        2 Turkey-Syria offensive: Not our border, says Donald Tr… forc       9
+##  9        2 Turkey-Syria offensive: Not our border, says Donald Tr… syria      9
+## 10        2 Turkey-Syria offensive: Not our border, says Donald Tr… syrian     9
+## # … with 630 more rows
+```
+
+
+---
+
+### Inverse Document Frequency (tf-idf)
+
+Measures how important a word is given all words in the text. Mainly, we want to _up weight_ infrequently used words across the documents, and _down weight_ words that are used often by all the documents. 
+
+&lt;br&gt;
+
+`$$idf(term) = ln(\frac{n_{documents}}{n_{documents~containing~term}})$$`
+
+`$$tf(term) = \frac{n_{word}}{n_{document}})$$`
+
+`$$tf\_idf(term) = tf(term)*idf(term)$$`
+
+![:space 5]
+
+It's in the words particular to an author or document that the real information lies!
+
+---
+
+
+```r
+text_data_cnts2 &lt;- 
+  text_data_cnts %&gt;% 
+  bind_tf_idf(word, story_id, n)
+
+text_data_cnts2 %&gt;% 
+  select(n,tf,idf,tf_idf)
+```
+
+```
+## # A tibble: 640 x 4
+##        n     tf   idf  tf_idf
+##    &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1    24 0.0532 1.10  0.0585 
+##  2    20 0.0443 0     0      
+##  3    18 0.0399 0.405 0.0162 
+##  4    10 0.0246 0     0      
+##  5    10 0.0246 0     0      
+##  6    10 0.0222 0.405 0.00899
+##  7     9 0.0221 0.405 0.00897
+##  8     9 0.0221 1.10  0.0243 
+##  9     9 0.0221 1.10  0.0243 
+## 10     9 0.0221 1.10  0.0243 
+## # … with 630 more rows
+```
+
+
+---
+
+### Visualize!
+
+![:space 10]
+
+
+```r
+text_data_cnts2 %&gt;%
+  group_by(story_id) %&gt;% 
+  top_n(5, tf_idf) %&gt;% 
+  ungroup() %&gt;%
+  mutate(word = reorder(word, tf_idf)) %&gt;% 
+  ggplot(aes(word, tf_idf,fill=headline)) +
+  geom_col(show.legend = F) +
+  xlab(NULL) +
+  coord_flip() +
+  facet_wrap(~headline,ncol=1,scales="free") +
+  theme(text=element_text(size=30))
+```
+
+---
+
+### Visualize!
+
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+class: newsection
+
+# Sentiment 
+
+---
+
+![:space 25]
+![:center_img](Figures/tidyflow-ch-2.png)
+
+
+---
+
+### Sentiment Dictionaries
+
+![:space 15]
+
+
+--
+.center[
+|Dictionary Name | Source 
+|:----------------:|--------|
+| `nrc` | http://saifmohammad.com/WebPages/lexicons.html
+| `AFINN` | http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010
+| `bing` | https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html
+| `loughran` | https://sraf.nd.edu/
+]
+
+---
+
+### Sentiment Dictionaries
+
+.pull-left[
+
+```r
+get_sentiments("afinn")
+```
+
+```
+## # A tibble: 2,477 x 2
+##    word       value
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 abandon       -2
+##  2 abandoned     -2
+##  3 abandons      -2
+##  4 abducted      -2
+##  5 abduction     -2
+##  6 abductions    -2
+##  7 abhor         -3
+##  8 abhorred      -3
+##  9 abhorrent     -3
+## 10 abhors        -3
+## # … with 2,467 more rows
+```
+]
+
+.pull-right[
+
+```r
+get_sentiments("bing")
+```
+
+```
+## # A tibble: 6,786 x 2
+##    word        sentiment
+##    &lt;chr&gt;       &lt;chr&gt;    
+##  1 2-faces     negative 
+##  2 abnormal    negative 
+##  3 abolish     negative 
+##  4 abominable  negative 
+##  5 abominably  negative 
+##  6 abominate   negative 
+##  7 abomination negative 
+##  8 abort       negative 
+##  9 aborted     negative 
+## 10 aborts      negative 
+## # … with 6,776 more rows
+```
+]
+
+---
+
+### Sentiment to text
+
+
+```r
+sent_dict &lt;- get_sentiments("afinn")
+sent_text &lt;- text_data %&gt;% inner_join(sent_dict) %&gt;% ungroup()
+sent_text
+```
+
+```
+## # A tibble: 66 x 5
+##    headline                                      date       story_id word  value
+##    &lt;chr&gt;                                         &lt;date&gt;        &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 cut      -1
+##  2 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
+##  3 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 crit…    -2
+##  4 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 hurt     -2
+##  5 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
+##  6 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 huge      1
+##  7 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
+##  8 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 boost     1
+##  9 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 cut      -1
+## 10 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 shoot    -1
+## # … with 56 more rows
+```
+
+---
+
+
+```r
+sent_text %&gt;% distinct(word,value) %&gt;% 
+* mutate(word = fct_reorder(word,value)) %&gt;%
+  ggplot(aes(word, value)) +
+  geom_col(show.legend = FALSE,aes(fill=value)) +
+  scale_fill_viridis_c() +
+  coord_flip() + theme(text=element_text(size=20))
+```
+
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-55-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+text_data %&gt;% ungroup %&gt;% 
+  inner_join(get_sentiments("bing"),by = "word") %&gt;% 
+  distinct(word,sentiment) %&gt;%
+  mutate(word = fct_reorder(word,sentiment=="positive")) %&gt;% 
+  ggplot(aes(word, sentiment,label=word,color=sentiment)) +
+  geom_text(size=3,show.legend = FALSE) +
+  coord_flip() + scale_color_manual(values=c("darkred","steelblue")) +
+  theme_minimal() + theme(text=element_text(size=20),axis.text.y = element_blank()) 
+```
+
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-56-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Example: Inaugural Speeches
+
+
+```r
+inaug_dat &lt;- read_csv("Data/inaug_speeches.csv")
+inaug_dat
+```
+
+```
+## # A tibble: 58 x 5
+##       X1 Name      `Inaugural Address` Date        text                         
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;               &lt;chr&gt;       &lt;chr&gt;                        
+##  1     4 George W… First Inaugural Ad… Thursday, … "Fellow-Citizens of the Sena…
+##  2     5 George W… Second Inaugural A… Monday, Ma… "Fellow Citizens:  \xa0\xa0I…
+##  3     6 John Ada… Inaugural Address   Saturday, … "\xa0\xa0WHEN it was first p…
+##  4     7 Thomas J… First Inaugural Ad… Wednesday,… "Friends and Fellow-Citizens…
+##  5     8 Thomas J… Second Inaugural A… Monday, Ma… "\xa0\xa0PROCEEDING, fellow-…
+##  6     9 James Ma… First Inaugural Ad… Saturday, … "\xa0\xa0UNWILLING to depart…
+##  7    10 James Ma… Second Inaugural A… Thursday, … "\xa0\xa0ABOUT to add the so…
+##  8    11 James Mo… First Inaugural Ad… Tuesday, M… "\xa0\xa0I SHOULD be destitu…
+##  9    12 James Mo… Second Inaugural A… Monday, Ma… "Fellow-Citizens:  \xa0\xa0I…
+## 10    13 John Qui… Inaugural Address   Friday, Ma… "\xa0\xa0IN compliance with …
+## # … with 48 more rows
+```
+
+---
+
+### Example: Inaugural Speeches
+
+
+```r
+obama &lt;- 
+  inaug_dat %&gt;% 
+  filter(Name == "Barack Obama") %&gt;% 
+  select(address = `Inaugural Address`,text)
+obama
+```
+
+```
+## # A tibble: 2 x 2
+##   address              text                                                     
+##   &lt;chr&gt;                &lt;chr&gt;                                                    
+## 1 First Inaugural Add… "My fellow citizens:    \xa0\xa0I stand here today humbl…
+## 2 Second Inaugural Ad… "Vice President Biden, Mr. Chief Justice, Members of the…
+```
+
+---
+
+### Example: Inaugural Speeches
+
+
+```r
+obama_txt &lt;- 
+  obama %&gt;% 
+  unnest_tokens(word,text) %&gt;% 
+  anti_join(stop_words) %&gt;% 
+  inner_join(get_sentiments("afinn")) %&gt;% 
+  group_by(address) %&gt;% 
+  mutate(index = row_number()) %&gt;% 
+  ungroup()
+obama_txt
+```
+
+```
+## # A tibble: 300 x 4
+##    address                 word     value index
+##    &lt;chr&gt;                   &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;
+##  1 First Inaugural Address grateful     3     1
+##  2 First Inaugural Address trust        1     2
+##  3 First Inaugural Address peace        2     3
+##  4 First Inaugural Address vision       1     4
+##  5 First Inaugural Address faithful     3     5
+##  6 First Inaugural Address true         2     6
+##  7 First Inaugural Address crisis      -3     7
+##  8 First Inaugural Address war         -2     8
+##  9 First Inaugural Address reaching     1     9
+## 10 First Inaugural Address violence    -3    10
+## # … with 290 more rows
+```
+
+---
+
+### Example: Inaugural Speeches
+
+
+```r
+obama_txt %&gt;% 
+  ggplot(aes(index,value,fill=address)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~address,ncol = 1, scales = "free_y") +
+  theme_minimal() +theme(text = element_text(size=20))
+```
+
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-60-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+### Example: Inaugural Speeches
+
+![:space 15]
+
+
+```r
+obama_txt %&gt;% 
+  group_by(address) %&gt;% 
+  summarize(proportion_words_positive = sum(value&gt;0)/n())
+```
+
+```
+## # A tibble: 2 x 2
+##   address                  proportion_words_positive
+##   &lt;chr&gt;                                        &lt;dbl&gt;
+## 1 First Inaugural Address                      0.589
+## 2 Second Inaugural Address                     0.657
+```
+
+
+
+---
+
+### Example: Inaugural Speeches
+
+![:space 10]
+
+
+```r
+obama_txt %&gt;% 
+  group_by(word,address) %&gt;% 
+  summarize(n = n(),score=max(value)) %&gt;% 
+  filter(n&gt;1) %&gt;% 
+  ggplot(aes(label=word,size=n,color=score)) +
+* ggwordcloud::geom_text_wordcloud_area() +
+  scale_color_gradient(low="darkred",high="steelblue") +
+  scale_size_area(max_size = 15) +
+  facet_wrap(~address,scales="free") +
+  theme(text = element_text(size=20))
+```
+
+---
+
+### Example: Inaugural Speeches
+
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: newsection
+
+# Topic Models 
+
+---
+
+![:space 10]
+![:center_img](Figures/tidyflow-ch-6.png)
+
+---
+
+### Latent Dirichlet Allocation (LDA)
+
+- **Every document is a mixture of topics**
+  
+  - We could imagine a two-topic model of American news, with one topic for “politics” and one for “entertainment.” 
+  
+  - We could say “Document 1 is 90% about "politics" and 10% about "entertainment", while Document 2 is 30% about "politics" and 70% about "entertainment."
+
+- **Every topic is a mixture of words**
+  
+  - The most common words in the "politics" topic might be “President”, “Congress”, and “government”, while the entertainment topic may be made up of words such as “movies”, “television”, and “actor”. 
+  
+  - Words can be shared between topics; a word like “budget” might appear in both equally.
+
+
+---
+
+### Latent Dirichlet Allocation (LDA)
+
+![:space 10]
+![:center_img](Figures/IntroToLDA.png)
+
+---
+
+
+```r
+library(topicmodels)
+
+data("AssociatedPress")
+AssociatedPress
+```
+
+```
+## &lt;&lt;DocumentTermMatrix (documents: 2246, terms: 10473)&gt;&gt;
+## Non-/sparse entries: 302031/23220327
+## Sparsity           : 99%
+## Maximal term length: 18
+## Weighting          : term frequency (tf)
+```
+
+--
+
+Can convert easily from a document term matrix (see reading) back to a tidy text format with `tidy()`
+
+
+```r
+AssociatedPress %&gt;% tidy()
+```
+
+```
+## # A tibble: 302,031 x 3
+##    document term       count
+##       &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+##  1        1 adding         1
+##  2        1 adult          2
+##  3        1 ago            1
+##  4        1 alcohol        1
+##  5        1 allegedly      1
+##  6        1 allen          1
+##  7        1 apparently     2
+##  8        1 appeared       1
+##  9        1 arrested       1
+## 10        1 assault        1
+## # … with 302,021 more rows
+```
+
+---
+
+### LDA
+
+
+```r
+ap_lda &lt;- LDA(AssociatedPress, k = 2, control = list(seed = 1234))
+ap_lda
+```
+
+```
+## A LDA_VEM topic model with 2 topics.
+```
+
+![:space 15]
+
+- Like the other clustering methods that we encountered, `k` is arbitrary. Here we shot for `\(k = 2\)` 
+
+- Running an LDA is _easy_ (though they are computationally expensive)
+
+- The challenge lies in **interpreting** the topic output.
+
+---
+
+- Extract information regarding topic assignment using the `tidy()` function from the `tidytext` package
+  
+- Parameters of interest
+
+  - "beta" &amp;rarr; Term to Topic
+  
+  - "gamma" &amp;rarr; Document to Topic
+
+
+```r
+ap_topics &lt;- tidy(ap_lda, matrix = "beta")
+ap_topics
+```
+
+```
+## # A tibble: 20,946 x 3
+##    topic term           beta
+##    &lt;int&gt; &lt;chr&gt;         &lt;dbl&gt;
+##  1     1 aaron      1.69e-12
+##  2     2 aaron      3.90e- 5
+##  3     1 abandon    2.65e- 5
+##  4     2 abandon    3.99e- 5
+##  5     1 abandoned  1.39e- 4
+##  6     2 abandoned  5.88e- 5
+##  7     1 abandoning 2.45e-33
+##  8     2 abandoning 2.34e- 5
+##  9     1 abbott     2.13e- 6
+## 10     2 abbott     2.97e- 5
+## # … with 20,936 more rows
+```
+
+---
+
+
+```r
+ap_top_terms &lt;- 
+  ap_topics %&gt;%
+  group_by(topic) %&gt;% # Group by the topics
+  
+  # Grab the top 10 words most 
+  # associated with the topic
+  top_n(10, beta) %&gt;% 
+  
+  ungroup() %&gt;% # Ungroup
+  arrange(topic, -beta) # Arrange 
+ap_top_terms
+```
+
+```
+## # A tibble: 20 x 3
+##    topic term          beta
+##    &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;
+##  1     1 percent    0.00981
+##  2     1 million    0.00684
+##  3     1 new        0.00594
+##  4     1 year       0.00575
+##  5     1 billion    0.00427
+##  6     1 last       0.00368
+##  7     1 two        0.00360
+##  8     1 company    0.00348
+##  9     1 people     0.00345
+## 10     1 market     0.00333
+## 11     2 i          0.00705
+## 12     2 president  0.00489
+## 13     2 government 0.00452
+## 14     2 people     0.00407
+## 15     2 soviet     0.00372
+## 16     2 new        0.00370
+## 17     2 bush       0.00370
+## 18     2 two        0.00361
+## 19     2 years      0.00339
+## 20     2 states     0.00320
+```
+
+---
+
+### Deciphering the Topics
+
+
+```r
+ap_top_terms %&gt;%
+  mutate(term = reorder(term, beta)) %&gt;%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip() +
+  theme(text=element_text(size=16))
+```
+
+&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-69-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Documents to Topics
+
+
+```r
+ap_documents &lt;- tidy(ap_lda, matrix = "gamma") %&gt;% 
+  arrange(document,gamma)
+ap_documents 
+```
+
+```
+## # A tibble: 4,492 x 3
+##    document topic gamma
+##       &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1        1     1 0.248
+##  2        1     2 0.752
+##  3        2     1 0.362
+##  4        2     2 0.638
+##  5        3     2 0.473
+##  6        3     1 0.527
+##  7        4     1 0.357
+##  8        4     2 0.643
+##  9        5     1 0.181
+## 10        5     2 0.819
+## # … with 4,482 more rows
+```
+
+---
+
+### Documents to Topics
+
+Document #6 is highly associated with the "politics" topic 
+
+
+```r
+ap_documents %&gt;% filter(document==6)
+```
+
+```
+## # A tibble: 2 x 3
+##   document topic    gamma
+##      &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1        6     1 0.000588
+## 2        6     2 0.999
+```
+
+
+
+```r
+tidy(AssociatedPress) %&gt;% filter(document == 6) %&gt;% arrange(desc(count))
+```
+
+```
+## # A tibble: 287 x 3
+##    document term           count
+##       &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;
+##  1        6 noriega           16
+##  2        6 panama            12
+##  3        6 jackson            6
+##  4        6 powell             6
+##  5        6 administration     5
+##  6        6 economic           5
+##  7        6 general            5
+##  8        6 i                  5
+##  9        6 panamanian         5
+## 10        6 american           4
+## # … with 277 more rows
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

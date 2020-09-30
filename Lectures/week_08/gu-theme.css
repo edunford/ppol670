@@ -145,12 +145,6 @@ img, video, iframe {
   font-size: 35px;
 }
 
-.littlelist li {
-  color: #424242;
-  font-size: 20px;
-}
-
-
 /* Aesthetic for the new section slide */
 
 .newsection {
@@ -241,12 +235,5 @@ div.slide-footer span {
 .break p {
   color: white;
 }
-
-
-
-
-
-
-
 
 

@@ -1,0 +1,1023 @@
+---
+title: 
+    <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
+  <font size=6, face="bold"> Week 7 </font> 
+  <br>
+  <br>
+  <font size=100, face="bold"> Text as Data </font>
+author: 
+  <font class = "title-footer"> 
+  &emsp;Prof. Eric Dunford &emsp;&#9670;&emsp; Georgetown University &emsp;&#9670;&emsp; McCourt School of Public Policy &emsp;&#9670;&emsp; eric.dunford@georgetown.edu</font>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: "gu-theme.css"
+    nature:
+      beforeInit: "macros.js"
+      highlightStyle: github
+      countIncrementalSlides: False
+      highlightLines: true
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F,cache = T)
+require(tidyverse)
+require(tidytext)
+```
+
+layout: true
+
+<div class="slide-footer"><span> 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Week 7 <!-- Week of the Footer Here -->
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Text-as-Data <!-- Title of the lecture here -->
+
+</span></div> 
+
+---
+class: outline
+
+# Outline for Today 
+
+![:space 10]
+
+- **String Manipulation**
+
+- **Text as "tidy" data**
+
+- **Sentiment Analysis**
+
+- **Topic Models**
+
+---
+
+class: newsection
+
+# Strings
+
+---
+
+### String Manipulation in `R`
+
+
+.pull-left[
+![:center_img 50](Figures/stringr-log.png)
+]
+
+.pull-right[
+
+```{r}
+require(stringr)
+
+# or
+
+require(tidyverse)
+```
+]
+
+--
+
+![:space 30]
+
+.center[
+`str_<prefix>()`
+
+```{r}
+str_c("a","b")
+```
+
+```{r}
+str_detect("There is a cat in the street",pattern = "cat")
+```
+
+]
+
+
+---
+
+![:space 20]
+
+```{r}
+text = "There were 5 cats!"
+text
+```
+
+--
+
+![:space 10]
+
+```{r}
+str_view(text,"cats")
+```
+
+
+---
+
+### Regular Expressions (regex)
+
+.center[
+
+
+|Regex | Description |
+|:----:|------------------------------|
+| `+`  | match 1 or more of the previous character |
+| `*`  | match 0 or more of the previous character
+| `?` |the preceding item is optional (i.e., match 0 or 1 of the previous character).
+| `[ ]` | match 1 of the set of things inside the bracket
+| `\\w` | match a "word" character (i.e., letters and numbers).
+| `\\d` | match digits
+| `\\s` | match a space character
+| `\\t` | match a "tab" character
+| `\\n` | match a "newline" character
+| `^`   | the "beginning edge" of a string
+| `$` | the "ending edge" of a string
+| {n} | the preceding character is matched n times
+]
+
+
+
+---
+
+![:space 30]
+
+```{r}
+str_view(string = text, pattern = "\\d")
+```
+
+---
+
+![:space 30]
+
+```{r,results="asis"}
+str_view_all(string = text, pattern = "\\s")
+```
+
+---
+
+![:space 30]
+
+```{r,results="asis"}
+str_view_all(string = text, pattern = "\\d+\\s+\\w+")
+```
+
+---
+
+### String Editing
+
+![:space 5]
+
+```{r}
+str_replace(string = text, pattern = "cats", replacement = "dogs")
+```
+
+--
+
+![:space 5]
+
+```{r}
+str_remove(string = text, pattern = "[:punct:]")
+```
+
+
+--
+
+![:space 5]
+
+```{r}
+str_extract(text,pattern = "\\d")
+```
+
+---
+
+### Locating text 
+
+```{r}
+texts <- c("The man drank 5 beers.",
+           "Obama was president.",
+           "I think we should walk 2 blocks.")
+```
+
+![:space 5]
+
+```{r}
+str_detect(texts,pattern = "\\d")
+```
+
+
+![:space 5]
+
+```{r}
+str_which(texts,pattern = "\\d")
+```
+
+
+---
+
+### Insert data in a string
+
+![:space 5]
+
+```{r}
+x <- 10
+str_c("The value is ",x,"%")
+```
+
+--
+
+![:space 3]
+
+```{r}
+x <- 10
+str_glue("The value is {x}%")
+```
+
+--
+
+![:space 3]
+
+```{r}
+x <- 10
+str_glue("The value is {x + 5}%")
+```
+
+---
+
+### Capitalization
+
+```{r}
+text2 <- "TeXt MininG iN r"
+```
+
+```{r}
+str_to_lower(text2)
+```
+
+```{r}
+str_to_upper(text2)
+```
+
+```{r}
+str_to_title(text2)
+```
+
+```{r}
+str_to_sentence(text2)
+```
+
+---
+
+class: newsection
+
+# Tidy Text
+
+---
+
+![:space 20]
+
+.pull-left[
+![:center_img 85](Figures/tidytext-logo.png)
+]
+
+.pull-right[
+
+<br><br><br>
+
+```{r}
+require(tidytext)
+```
+
+]
+
+
+---
+
+![:space 5]
+
+.pull-left[
+![:center_img 75](Figures/tidy-text-cover.png)
+]
+
+.pull-right[
+- ![:text_color steelblue](`Tidy` data principals)
+
+- ![:text_color orangered](Plays well with existing data manipulation and visualization toolkit)
+
+- ![:text_color forestgreen](Streamlined integration with other text mining libraries): that require that the data be organized differently 
+
+]
+
+--
+
+![:space 65]
+
+![:center_img 100](Figures/tidyflow-ch-1.png)
+
+
+---
+
+
+![:space 5]
+
+.pull-left[
+![:center_img 75](Figures/tidy-text-cover.png)
+]
+
+.pull-right[
+**Tidy Text Data**
+
+- Each variable is a column
+- Each observation is a row
+- Each type of observational unit is a table
+
+tidy text format is a **table with one-token-per-row**
+
+]
+
+
+![:space 65]
+
+![:center_img 100](Figures/tidyflow-ch-1.png)
+
+
+---
+
+### Tokenization 
+
+```{r,echo=F}
+text <- 
+"US opposition politicians and aid agencies have questioned a decision by President Donald Trump to cut off aid to three Central American states --- or so the story reports!"
+```
+
+![:space 5]
+
+```{r,results="asis"}
+text
+```
+
+
+```{r}
+text_data <- tibble(text = text)
+text_data
+```
+
+---
+
+### Tokenization (words)
+
+```{r}
+text_data %>% 
+  unnest_tokens(word,text,token = "words") # Words are Default
+```
+
+---
+
+### Tokenization (characters)
+
+```{r}
+text_data %>% 
+  unnest_tokens(word,text,token = "characters")
+```
+
+---
+
+### Tokenization (ngrams)
+
+```{r}
+text_data %>% 
+  unnest_tokens(word,text,token = "ngrams",n=2)
+```
+
+---
+
+### Tokenization (ngrams)
+
+```{r}
+text_data %>% 
+  unnest_tokens(word,text,token = "ngrams",n=3)
+```
+
+---
+
+### Tokenization (tweets)
+
+```{r}
+tibble(text = "Hey @professor, this assignment doesn't make sense") %>% 
+  unnest_tokens(word,text,token = "tweets") %>% head(3)
+```
+
+
+```{r}
+tibble(text = "Hey @professor, this assignment doesn't make sense") %>% 
+  unnest_tokens(word,text,token = "words") %>% head(3)
+```
+
+---
+
+### From words to numbers (a.k.a. counting)
+
+Number of times a word appears in the text.
+```{r}
+text_data %>% 
+  unnest_tokens(word,text) %>% 
+  count(word, sort = TRUE) 
+```
+
+---
+
+### Stopwords
+
+Some words are common, carrying little to no _unique_ information, and need to be removed. 
+
+`tidytext` comes with a database of common stop words, which we can leverage to remove these low information words.
+
+```{r}
+set.seed(11)  
+stop_words %>% sample_n(10)
+```
+
+---
+
+### Drop Stopwords
+
+```{r,highlight=TRUE}
+text_data %>% 
+  unnest_tokens(word,text) %>%  
+  anti_join(stop_words) %>% #<<
+  count(word,sort = T)
+```
+
+---
+
+### Stemming 
+
+Often words are the same but appear different because of their tense.
+
+```{r}
+txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
+tibble(text = txt) %>% 
+  unnest_tokens(word,text) %>% 
+  count(word)
+```
+
+---
+
+### Stemming 
+
+Stemming allows use to reduce a word down to it's fundamental root. ( _Note: Need to install `SnowballC` package_ )
+
+```{r,highlight=T}
+txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
+tibble(text = txt) %>% 
+  unnest_tokens(word,text) %>% 
+  mutate(word = SnowballC::wordStem(word)) %>% #<<
+  count(word)
+```
+
+---
+
+### Stemming 
+
+```{r}
+text_data %>% 
+  unnest_tokens(word,text) %>%  
+  anti_join(stop_words) %>% 
+  mutate(word = SnowballC::wordStem(word)) %>% #<<
+  count(word,sort = T)
+```
+
+---
+
+### Example 
+
+```{r,echo=F}
+bbc_scraper <- function(url){
+  # Download website   
+  raw = read_html(url)
+  # Extract headline
+  headline = raw %>% 
+    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/h1") %>% 
+    html_text(.)
+  # Extract data
+  date = raw %>% 
+    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[1]/div/div[1]/div[1]/ul/li/div") %>% 
+    html_text(.) %>% as.Date(.,"%d %b %Y")
+  # Extract Story
+  story = raw %>% 
+    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p") %>% 
+    html_text(.) %>% paste0(.,collapse = " ")
+  # Output as data frame and return
+  data.out = data.frame(headline,date,story)
+  return(data.out)
+}
+```
+
+
+```{r,results="asis",cache=T}
+require(rvest)
+urls <- c("https://www.bbc.com/news/world-us-canada-47764237",
+          "https://www.bbc.com/news/world-middle-east-50075703",
+          "https://www.bbc.com/news/world-us-canada-50061727")
+
+# Recall the BBC Scraper we build last class:
+news_data <- c()
+for(i in 1:length(urls)){
+  draw <- bbc_scraper(urls[i])  
+  news_data <- bind_rows(news_data,draw)
+}
+```
+
+
+---
+
+### Example 
+
+```{r,highlight = T}
+news_data <- 
+  news_data %>% 
+  mutate(story_id = row_number()) # Create an id for the document
+
+glimpse(news_data)
+```
+
+---
+
+```{r,highlight = T}
+text_data <- 
+  news_data %>% 
+  group_by(story_id) %>% 
+  unnest_tokens(word,story) %>% #<<
+  ungroup()
+text_data
+```
+
+
+---
+
+```{r}
+# Term Frequency 
+
+text_data %>% 
+  group_by(story_id) %>% 
+  count(word,sort=T) 
+```
+
+---
+
+```{r,highlight=TRUE}
+### Dropping stopwords
+
+text_data <-
+  text_data %>% 
+  anti_join(stop_words) #<<
+
+text_data %>% 
+  group_by(story_id) %>% 
+  count(word,sort = T) 
+```
+
+---
+
+Let's drop words that have digits in them... using regular expressions and the `stringr` package. 
+
+```{r}
+# Further Cleaning 
+text_data %>% 
+  filter(str_detect(word,"\\d")) %>% 
+  select(story_id,word)
+```
+
+---
+
+Let's drop words that have digits in them... using regular expressions and the `stringr` package. 
+```{r}
+# Further Cleaning 
+
+text_data <- 
+  text_data %>% 
+  filter(!str_detect(word,"\\d")) 
+
+text_data %>% select(story_id,word)
+```
+
+---
+
+```{r}
+# Stemming 
+
+text_data <- 
+  text_data %>% 
+  mutate(word = SnowballC::wordStem(word)) 
+
+# Now count for real
+text_data_cnts <- 
+  text_data %>% 
+  group_by(story_id,headline) %>% 
+  count(word,sort=T) %>% 
+  ungroup()
+
+text_data_cnts 
+```
+
+
+---
+
+### Inverse Document Frequency (tf-idf)
+
+Measures how important a word is given all words in the text. Mainly, we want to _up weight_ infrequently used words across the documents, and _down weight_ words that are used often by all the documents. 
+
+<br>
+
+$$idf(term) = ln(\frac{n_{documents}}{n_{documents~containing~term}})$$
+
+$$tf(term) = \frac{n_{word}}{n_{document}})$$
+
+$$tf\_idf(term) = tf(term)*idf(term)$$
+
+![:space 5]
+
+It's in the words particular to an author or document that the real information lies!
+
+---
+
+```{r}
+text_data_cnts2 <- 
+  text_data_cnts %>% 
+  bind_tf_idf(word, story_id, n)
+
+text_data_cnts2 %>% 
+  select(n,tf,idf,tf_idf)
+```
+
+
+---
+
+### Visualize!
+
+![:space 10]
+
+```{r,eval=F,fig.align="center",fig.width=12,fig.height=10}
+text_data_cnts2 %>%
+  group_by(story_id) %>% 
+  top_n(5, tf_idf) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, tf_idf)) %>% 
+  ggplot(aes(word, tf_idf,fill=headline)) +
+  geom_col(show.legend = F) +
+  xlab(NULL) +
+  coord_flip() +
+  facet_wrap(~headline,ncol=1,scales="free") +
+  theme(text=element_text(size=30))
+```
+
+---
+
+### Visualize!
+
+```{r,echo=F,fig.align="center",fig.width=12,fig.height=8,dpi=200}
+text_data_cnts2 %>%
+  group_by(story_id) %>% 
+  top_n(5, tf_idf) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, tf_idf)) %>% 
+  ggplot(aes(word, tf_idf,fill=headline)) +
+  geom_col(show.legend = F) +
+  xlab(NULL) +
+  coord_flip() +
+  facet_wrap(~headline,ncol=1,scales="free") +
+  theme(text=element_text(size=30))
+```
+
+---
+
+
+class: newsection
+
+# Sentiment 
+
+---
+
+![:space 25]
+![:center_img](Figures/tidyflow-ch-2.png)
+
+
+---
+
+### Sentiment Dictionaries
+
+![:space 15]
+
+```{r,eval=F,echo=F}
+tibble(
+  nrc = get_sentiments('nrc') %>% nrow,
+  afinn = get_sentiments('afinn') %>% nrow,
+  bing = get_sentiments('bing') %>% nrow,
+  loughran = get_sentiments('loughran') %>% nrow,
+)
+```
+--
+.center[
+|Dictionary Name | Source 
+|:----------------:|--------|
+| `nrc` | http://saifmohammad.com/WebPages/lexicons.html
+| `AFINN` | http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010
+| `bing` | https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html
+| `loughran` | https://sraf.nd.edu/
+]
+
+---
+
+### Sentiment Dictionaries
+
+.pull-left[
+```{r}
+get_sentiments("afinn")
+```
+]
+
+.pull-right[
+```{r}
+get_sentiments("bing")
+```
+]
+
+---
+
+### Sentiment to text
+
+```{r}
+sent_dict <- get_sentiments("afinn")
+sent_text <- text_data %>% inner_join(sent_dict) %>% ungroup()
+sent_text
+```
+
+---
+
+```{r,fig.align="center",fig.width=12,fig.height=7,dpi=200,highlight=T}
+sent_text %>% distinct(word,value) %>% 
+  mutate(word = fct_reorder(word,value)) %>% #<<
+  ggplot(aes(word, value)) +
+  geom_col(show.legend = FALSE,aes(fill=value)) +
+  scale_fill_viridis_c() +
+  coord_flip() + theme(text=element_text(size=20))
+```
+
+---
+
+```{r,fig.align="center",fig.width=10,fig.height=4.75,dpi=200,highlight=T}
+text_data %>% ungroup %>% 
+  inner_join(get_sentiments("bing"),by = "word") %>% 
+  distinct(word,sentiment) %>%
+  mutate(word = fct_reorder(word,sentiment=="positive")) %>% 
+  ggplot(aes(word, sentiment,label=word,color=sentiment)) +
+  geom_text(size=3,show.legend = FALSE) +
+  coord_flip() + scale_color_manual(values=c("darkred","steelblue")) +
+  theme_minimal() + theme(text=element_text(size=20),axis.text.y = element_blank()) 
+```
+
+
+---
+
+### Example: Inaugural Speeches
+
+```{r}
+inaug_dat <- read_csv("Data/inaug_speeches.csv")
+inaug_dat
+```
+
+---
+
+### Example: Inaugural Speeches
+
+```{r}
+obama <- 
+  inaug_dat %>% 
+  filter(Name == "Barack Obama") %>% 
+  select(address = `Inaugural Address`,text)
+obama
+```
+
+---
+
+### Example: Inaugural Speeches
+
+```{r}
+obama_txt <- 
+  obama %>% 
+  unnest_tokens(word,text) %>% 
+  anti_join(stop_words) %>% 
+  inner_join(get_sentiments("afinn")) %>% 
+  group_by(address) %>% 
+  mutate(index = row_number()) %>% 
+  ungroup()
+obama_txt
+```
+
+---
+
+### Example: Inaugural Speeches
+
+```{r,fig.align="center",fig.width=10,fig.height=4.75,cache=T,dpi=200}
+obama_txt %>% 
+  ggplot(aes(index,value,fill=address)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~address,ncol = 1, scales = "free_y") +
+  theme_minimal() +theme(text = element_text(size=20))
+```
+
+---
+
+
+### Example: Inaugural Speeches
+
+![:space 15]
+
+```{r}
+obama_txt %>% 
+  group_by(address) %>% 
+  summarize(proportion_words_positive = sum(value>0)/n())
+```
+
+
+
+---
+
+### Example: Inaugural Speeches
+
+![:space 10]
+
+```{r,eval=F,fig.align="center",fig.width=10,fig.height=10,cache=F,highlight=T,dpi=200}
+obama_txt %>% 
+  group_by(word,address) %>% 
+  summarize(n = n(),score=max(value)) %>% 
+  filter(n>1) %>% 
+  ggplot(aes(label=word,size=n,color=score)) +
+  ggwordcloud::geom_text_wordcloud_area() + #<<
+  scale_color_gradient(low="darkred",high="steelblue") +
+  scale_size_area(max_size = 15) +
+  facet_wrap(~address,scales="free") +
+  theme(text = element_text(size=20))
+```
+
+---
+
+### Example: Inaugural Speeches
+
+```{r,echo=F,fig.align="center",fig.width=10,fig.height=7,cache=T,highlight=T,dpi=200}
+obama_txt %>% 
+  group_by(word,address) %>% 
+  summarize(n = n(),score=max(value)) %>% 
+  filter(n>1) %>% 
+  ggplot(aes(label=word,size=n,color=score)) +
+  ggwordcloud::geom_text_wordcloud_area() + #<<
+  scale_color_gradient(low="darkred",high="steelblue") +
+  scale_size_area(max_size = 15) +
+  facet_wrap(~address,scales="free") +
+  theme(text = element_text(size=20))
+```
+
+---
+
+class: newsection
+
+# Topic Models 
+
+---
+
+![:space 10]
+![:center_img](Figures/tidyflow-ch-6.png)
+
+---
+
+### Latent Dirichlet Allocation (LDA)
+
+- **Every document is a mixture of topics**
+  
+  - We could imagine a two-topic model of American news, with one topic for “politics” and one for “entertainment.” 
+  
+  - We could say “Document 1 is 90% about "politics" and 10% about "entertainment", while Document 2 is 30% about "politics" and 70% about "entertainment."
+
+- **Every topic is a mixture of words**
+  
+  - The most common words in the "politics" topic might be “President”, “Congress”, and “government”, while the entertainment topic may be made up of words such as “movies”, “television”, and “actor”. 
+  
+  - Words can be shared between topics; a word like “budget” might appear in both equally.
+
+
+---
+
+### Latent Dirichlet Allocation (LDA)
+
+![:space 10]
+![:center_img](Figures/IntroToLDA.png)
+
+---
+
+```{r}
+library(topicmodels)
+
+data("AssociatedPress")
+AssociatedPress
+```
+
+--
+
+Can convert easily from a document term matrix (see reading) back to a tidy text format with `tidy()`
+
+```{r}
+AssociatedPress %>% tidy()
+```
+
+---
+
+### LDA
+
+```{r,cache=T}
+ap_lda <- LDA(AssociatedPress, k = 2, control = list(seed = 1234))
+ap_lda
+```
+
+![:space 15]
+
+- Like the other clustering methods that we encountered, `k` is arbitrary. Here we shot for $k = 2$ 
+
+- Running an LDA is _easy_ (though they are computationally expensive)
+
+- The challenge lies in **interpreting** the topic output.
+
+---
+
+- Extract information regarding topic assignment using the `tidy()` function from the `tidytext` package
+  
+- Parameters of interest
+
+  - "beta" &rarr; Term to Topic
+  
+  - "gamma" &rarr; Document to Topic
+
+```{r}
+ap_topics <- tidy(ap_lda, matrix = "beta")
+ap_topics
+```
+
+---
+
+```{r}
+ap_top_terms <- 
+  ap_topics %>%
+  group_by(topic) %>% # Group by the topics
+  
+  # Grab the top 10 words most 
+  # associated with the topic
+  top_n(10, beta) %>% 
+  
+  ungroup() %>% # Ungroup
+  arrange(topic, -beta) # Arrange 
+ap_top_terms
+```
+
+---
+
+### Deciphering the Topics
+
+```{r,fig.align="center",fig.width=9.5,fig.height=4,cache=T,dpi=200}
+ap_top_terms %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip() +
+  theme(text=element_text(size=16))
+```
+
+---
+
+### Documents to Topics
+
+```{r}
+ap_documents <- tidy(ap_lda, matrix = "gamma") %>% 
+  arrange(document,gamma)
+ap_documents 
+```
+
+---
+
+### Documents to Topics
+
+Document #6 is highly associated with the "politics" topic 
+
+```{r}
+ap_documents %>% filter(document==6)
+```
+
+
+```{r}
+tidy(AssociatedPress) %>% filter(document == 6) %>% arrange(desc(count))
+```
+
