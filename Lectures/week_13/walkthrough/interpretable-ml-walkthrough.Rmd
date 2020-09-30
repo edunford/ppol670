@@ -1,0 +1,448 @@
+---
+title: "PPOL670 | Interpretable Machine Learning"
+subtitle: "Walkthrough"
+date: Week 12
+output: 
+  html_document:
+    toc: True
+    toc_float: True
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r Setup, include=F}
+knitr::opts_chunk$set(warning = F,error = F,message = F,cache=T)
+```
+
+# Overview 
+
+In this notebook, we'll leverage the data and best fit model that we learned from the walkthrough on **Week 10**. The aim is to extract insights from the machine learning model to better understand who is covered and who is not. 
+
+```{r}
+require(tidyverse)
+require(caret) # for machine learning
+require(recipes) # For preprocessing your data
+require(vip) # For variable importance
+require(pdp) # pdp and ice plots
+
+# For parallelization (to run the models across many cores) -- speeds up computation!
+# install.packages("doMC")
+doMC::registerDoMC()
+```
+
+
+# Data 
+
+The following data contains information regarding whether or not someone has health coverage. The outcome of interest is whether of not an individual has healthcare coverage or not. The available predictive features capture socio-economic and descriptive factors. 
+
+
+```{r}
+set.seed(123)
+
+# Again use a small random sample of the data so that it runs quicker
+dat = suppressMessages(read_csv("health-coverage.csv")) %>% 
+  sample_n(5000)
+
+head(dat) # Peek at the data just to make sure everything was read in correctly. 
+```
+
+
+# Split the Sample: Training and test data
+
+As before, let's split the sample up into a training and test dataset. We'll completely hold off on viewing the test data. We'll leverage the test data to explore some of the insights we learn from the training data. Let's use `rsample` to split the data. 
+
+
+```{r}
+set.seed(123)
+# install.packages("rsample") # If you don't have the pack
+split <- rsample::initial_split(dat,prop = .8,)
+train_data <- rsample::training(split) 
+test_data  <- rsample::testing(split) 
+
+
+# Breakdown
+nrow(train_data)/nrow(dat) 
+nrow(test_data)/nrow(dat)
+```
+
+# Data Pre-processing
+
+In the **Week 10 Walkthrough**, we explore the data and outlined a preprocessing strategy. Let's re-implement it here. 
+
+
+```{r}
+rcp <- 
+  recipe(coverage ~  .,train_data) %>% 
+  step_dummy(all_nominal(),-coverage) %>% #
+  step_log(wage,offset = 1) %>% # Log the skewed wage variable
+  step_range(all_numeric()) %>%  # Normalize scale
+  prep()
+
+
+# Apply the recipe to the training and test data
+train_data2 <- bake(rcp,train_data)
+test_data2 <- bake(rcp,test_data) 
+```
+
+
+
+# Cross-validation
+
+Let's use the k-fold cross-validation method with 5 folds in the data to tune the model. We also need to specify that we're dealing with a classification problem: recall we can do this by adding `summaryFunction = twoClassSummary` and `classProbs = TRUE` to the cross-validation function. 
+
+```{r}
+set.seed(1988) # set a seed for replication purposes 
+
+# Partition the data into 5 equal folds
+folds <- createFolds(train_data2$coverage, k = 5) 
+
+# Cross validation object
+control_conditions <- 
+  trainControl(method='cv', # K-fold cross validation
+               summaryFunction = twoClassSummary, # Two classes 
+               classProbs = TRUE, # Need this b/c it's a classification problem
+               index = folds # The indices for our folds
+  )
+```
+
+
+# Fit Model
+
+In the **Week 10 Walkthrough**, we found that the **_random forest_** model had the best performance on predicting the outcome. Let's re-run that model here. 
+
+
+```{r}
+mod_rf <-
+  train(coverage ~ ., # Equation (outcome and everything else)
+        data=train_data2, # Training data 
+        method = "ranger", # random forest (ranger is much faster than rf)
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+Plot the model output (Note we're using _all_ the data, so this will take longer than it did on Week 10). When we plot the performance of the above model, we see that we get a fairly high AUC (.83) on the held out data.
+
+```{r}
+# AUC on the Training data 
+prob_pred <- predict(mod_rf,type="prob")$Coverage
+auc_rf <- Metrics::auc(train_data2$coverage=="Coverage",prob_pred)
+auc_rf
+```
+
+
+```{r}
+# Accuracy on the Training data 
+acc_rf <- Metrics::accuracy(train_data2$coverage,predict(mod_rf))
+acc_rf
+```
+
+# Model Interpretation 
+
+## Variable Importance
+
+Let's now extract some substantive insights from the model using variable importance approach learned in class. **_Which variables does the model rely on most to make it's predictions?_**
+
+```{r,fig.align="center",fig.height=5,fig.width=7}
+vi_plot<- 
+  vip(mod_rf, # Machine learning model
+      train = train_data2, # Training data 
+      method="permute", # permuted importance
+      nsim = 10, # number of times to impute
+      geom = "boxplot", # Type of plot 
+      target = "coverage", # outcome
+      reference_class = "Coverage", # what class are you predicting
+      metric = "accuracy",
+      pred_wrapper = predict)
+
+# Plot VIP
+vi_plot
+```
+
+
+The variable importance plot shows:
+
+- `age` and `wage` is highly important to the models predictive accuracy
+- Things that matter less, but still matter to whether you're covered or not
+    - If someone is married, 
+    - not a citizen, 
+    - never completed high school
+    
+Looking at the variable importance alone, we could **_refine our original model_** to only include those features that matter. Let's see if doing so boosts performance. 
+
+
+```{r}
+# Re-run the random forest, this time with most important variable only. 
+mod_rf_selected <-
+  train(coverage ~ age + wage + mar_Married + cit_Non.citizen + educ_Less.than.HS, 
+        data=train_data2, # Training data 
+        method = "ranger", # random forest (ranger is much faster than rf)
+        metric = "ROC", # area under the curve
+        trControl = control_conditions
+  )
+```
+
+Does the model do better, worse, or about the same?
+
+```{r}
+# AUC on the Training data 
+prob_pred <- predict(mod_rf_selected,type="prob")$Coverage
+auc_rf_sel <- Metrics::auc(train_data2$coverage=="Coverage",prob_pred)
+
+cat("AUC of the selected model:",auc_rf_sel,"\n",
+    "AUC of the full model:",auc_rf,"\n",
+    "Difference:", auc_rf_sel-auc_rf,"\n") # Difference: a 4.2% increase in AUC
+```
+
+```{r}
+# Accuracy on the Training data 
+acc_rf_sel <- Metrics::accuracy(train_data2$coverage,predict(mod_rf_selected))
+
+cat("Accuracy of the selected model:",acc_rf_sel,"\n",
+    "Accuracy of the full model:",acc_rf,"\n",
+    "Difference:", acc_rf_sel-acc_rf,"\n") # Difference: a 3.4% increase in accuracy
+```
+
+Clearly the model performs _better_ (in this case) when we only include the features that matter most. 
+
+Looking into which variables are important to the model helped us **_refine_** the model and the features worth using. 
+
+
+## Marginal Effects
+
+### Partial Dependencies
+
+It's useful to know that `age` and `wage` are important to the model, but how do they relate to whether an individual is covered or not in the data? Let's explore a partial dependency plot to unpack the average marginal effect for `age` and `wage`.
+
+```{r,fig.align="center",fig.height=10,fig.width=10}
+# PDP for age
+age_pdp <- partial(mod_rf_selected, pred.var = "age", plot = TRUE,prob=T,
+                   grid.resolution = 20, # choosing less points makes it run quicker
+                   plot.engine = "ggplot2")
+
+# PDP for wage
+wage_pdp <- partial(mod_rf_selected, pred.var = "wage", plot = TRUE,prob=T,
+                    grid.resolution = 20, # choosing less points makes it run quicker
+                   plot.engine = "ggplot2")
+
+# PDP for Married (note that this is a dummy var, so only can take on one of two values)
+mar_pdp <- partial(mod_rf_selected, pred.var = "mar_Married", plot = TRUE,prob=T,
+                   plot.engine = "ggplot2")
+
+# PDP for Not a citizen (note that this is a dummy var, so only can take on one of two values)
+cit_pdp <- partial(mod_rf_selected, pred.var = "cit_Non.citizen", plot = TRUE,prob=T,
+                   plot.engine = "ggplot2")
+
+# PDP for No high school degree (note that this is a dummy var, so only can take on one of two values)
+nohs_pdp <- partial(mod_rf_selected, pred.var = "educ_Less.than.HS", plot = TRUE,prob=T,
+                   plot.engine = "ggplot2")
+
+# GridExtra allows us to stack two ggplot objects into a single plot
+gridExtra::grid.arrange(age_pdp,wage_pdp,mar_pdp,cit_pdp,nohs_pdp)
+```
+
+Looking above at the partial dependencies for all the variables in the model, we can see some interesting things:
+
+- For age, there appears to exist a _threshold_. Once you get past a certain age (50-sh), you're incredibly more likely to be covered. 
+
+ + As a side note, notice the bump at the lower end of the age distribution? Minimum age in the data is 16. This predicted increase in the probability of coverage likely reflects children who are covered by their parents. 
+
+- For wage, it looks like as you get wealthier, you're more likely to be covered.
+
+- For the three dummy variables: being married corresponds with an increase in the probability of being covered, whereas not being a citizen and/or not graduating from high school correspond with a _decrease_ in the likelihood of being covered. 
+
+### Individual Conditional Expectations
+
+One additional question we might want to ask is whether there is are important _interactions_. One way we can explore this is if we look at the individual expectations for each observation in the data as we manipulate the values of the target variable. If the ICE curves diverge (have different trajectories), that can be evidence that there is a potential interaction. 
+
+```{r,fig.align="center",fig.height=10,fig.width=10}
+# PDP for age
+age_ice <- partial(mod_rf_selected, pred.var = "age", plot = TRUE,prob=T,
+                   ice=T,center=T,alpha=.05,
+                   grid.resolution = 20, # choosing less points makes it run quicker
+                   plot.engine = "ggplot2")
+
+# PDP for wage
+wage_ice <- partial(mod_rf_selected, pred.var = "wage", plot = TRUE,prob=T,
+                    ice=T,center=T,alpha=.05,
+                    grid.resolution = 20, # choosing less points makes it run quicker
+                   plot.engine = "ggplot2")
+
+# PDP for Married (note that this is a dummy var, so only can take on one of two values)
+mar_ice <- partial(mod_rf_selected, pred.var = "mar_Married", plot = TRUE,prob=T,
+                   ice=T,center=T,alpha=.05,
+                   plot.engine = "ggplot2")
+
+# PDP for Not a citizen (note that this is a dummy var, so only can take on one of two values)
+cit_ice <- partial(mod_rf_selected, pred.var = "cit_Non.citizen", plot = TRUE,prob=T,
+                   ice=T,center=T,alpha=.05,
+                   plot.engine = "ggplot2")
+
+# PDP for No high school degree (note that this is a dummy var, so only can take on one of two values)
+nohs_ice <- partial(mod_rf_selected, pred.var = "educ_Less.than.HS", plot = TRUE,prob=T,
+                    ice=T,center=T,alpha=.05,
+                   plot.engine = "ggplot2")
+
+# GridExtra allows us to stack two ggplot objects into a single plot
+gridExtra::grid.arrange(age_ice,wage_ice,mar_ice,cit_ice,nohs_ice)
+```
+
+A few things to note here:
+
+- It looks like there is a potential interaction in `wage`. Notice how some of the curves have a very different trend toward the end of the distribution? The reason for this is likely due to some interaction. 
+
+- The idea that only old people are covered (our conclusion after looking at the PDP plot) isn't entirely accurate. In fact, there are a number of respondents in the data that are predicted to have a higher probability of coverage at a young age; however, these observations are canceled out by other young respondents who are less likely to be covered. 
+
+- Finally, for the dummy variables, note how the impact of being married, not a citizen, or not having a high school degree impacts different respondents differently in the model.
+
+
+Let's now explore the potential interaction between `wage` and `age`. Is it the combination of being wealthy and old that corresponds with coverage, or does wealth make younger people more willing to purchase coverage?
+
+```{r,fig.align="center",fig.height=5,fig.width=7}
+# Calculating the partial dependencies for every value is computationally
+# expensive; we're instead only going to do it for a few values using a provided
+# grid.
+grid_values <- expand.grid(age = seq(0,1,by=.1),
+                           wage = seq(0,1,by=.1))
+
+age_wage_pdp <- partial(mod_rf_selected, pred.var = c("age","wage"), 
+                        plot = TRUE,prob=T,
+                        pred.grid = grid_values,
+                        plot.engine = "ggplot2",
+                        palette = "magma")
+age_wage_pdp
+```
+
+From the above plot, we can indeed see that there is an interaction between `age` and `wage`. Specifically, 
+
+- We still note the threshold effect past .65 on the age scale (that is, all older people are more likely to be covered). 
+- However, what this plot demonstrates is that wage mediates age. Even if you're young, if you're making a high salary you're more likely to be covered. Chances are that a high wage is correlated with employer-provided health coverage. 
+- Finally, there appears to be a major region in which the model predicts a lower probability of coverage. Specifically for young people who don't have a high paying wage. 
+
+## Global Surrogate Model
+
+The random forest model does a fantastic job at predicting the likelihood of coverage, but it's difficult to interpret. In the above sections we explored variable importance and the marginal effects of dependencies of the variables on the predicted probabilities to gain some insight into how the model is using the data to make its predictions. Let's now take this a step further by building a **global surrogate model**. The aim here is to build a more interpretable model _on top_ of our black box model. That is, we can train an interpretable model to approximate the predictions of the random forest model. We can then interpret this more interpretable model. 
+
+```{r}
+train_data3 <- 
+  train_data2 %>% 
+  mutate(
+    # Probability predictions from the random forest model
+    coverage_probs = predict(mod_rf_selected,type = "prob")$Coverage
+  )  
+
+
+surrogate_tree <-
+  
+  # Decision tree model (directly us the model rather than use the implementation in caret)
+  rpart::rpart(
+    # Main selected model. The outcome is now the predicted probabilities from
+    # the RF model
+    coverage_probs ~ age + wage + mar_Married + cit_Non.citizen + educ_Less.than.HS,
+    
+    # Data is being passed by the pipe
+    data = train_data3,
+    
+    # Note that we can control the depth of the tree
+    # a deeper tree increase fit but reduces interpretability
+    control = rpart::rpart.control(maxdepth = 3)
+  )
+```
+
+
+Let's now assess the model fit.
+
+```{r}
+r_squared <- function(model,data){
+  y_hat <- predict(model)
+  y <- data$coverage_probs
+  TSS = sum((y-mean(y))^2) # Total Sum of Squares
+  MSS = sum((y_hat-mean(y))^2) # Model Sum of Squares
+  R2 = MSS/TSS # R-Squared (variance explained)
+  return(round(R2,2))
+}
+
+# Calculate the R Squared
+r_squared(surrogate_tree,train_data3)
+```
+
+An R-Squared of .76 isn't bad. It indicates that the surrogate model does a good job approximating the black box model (i.e. the random forest model).
+
+Let's now look at the tree. 
+
+```{r,fig.align="center",fig.height=5,fig.width=10}
+rattle::fancyRpartPlot(surrogate_tree,sub="",type=1)
+```
+
+
+The surrogate model provides a picture that chimes well with our other insights, but new ones clearly stand out.
+
+- As we previously noted, there is an interaction between `age` and `wage`. Though there are two notable interactions given ones wage. Assuming one is less than 65 years of age (i.e. .64 on our age scale):
+
+    + If one doesn't make the upper quantile of the `wage` distribution, then coverage depends on whether they're a citizen or not (though note the probabilities are low for both splits).
+    + If one does make a high wage and is married he/she is _more_ likely to be covered.
+    
+- If one is more than 65 years of `age`, coverage mainly depends on whether he/she is a citizen or not. If you're above 65 and a citizen, you have a 95% probability of being covered.  
+  
+**_NOTE_: that if we built a deeper model, a richer story emerges.** But that story doesn't differ much from the one we've already been piecing together.
+
+```{r,fig.align="center",fig.height=5,fig.width=10}
+surrogate_tree2 <-
+  rpart::rpart(coverage_probs ~ age + wage + mar_Married + cit_Non.citizen + educ_Less.than.HS,
+    data = train_data3,
+    control = rpart::rpart.control(maxdepth = 5)
+  )
+rattle::fancyRpartPlot(surrogate_tree2,sub="",type=1)
+```
+
+  
+# Theory development and testing
+
+We've learned a lot from the training data and model about the factors that increase the likelihood of coverage. We've generated a number of interesting hypotheses: 
+
+- Retirement age US citizens are more likely to have healthcare coverage than non-retirement age citizens. 
+- Young married individuals making a high salary are more likely to be covered than their non-married counterparts.
+- Coverage largely depends on an individuals income unless he/she is above 65 years of age. 
+
+Let's now build our theoretical model using a standard linear model (actually, a logistic model b/c the outcome is binary)
+```{r}
+theortical_model <- 
+  train_data2 %>% 
+  mutate(coverage_dummy = 1*(coverage == "Coverage")) %>% 
+  glm(coverage_dummy ~ 
+        age*wage + 
+        mar_Married*wage + 
+        cit_Non.citizen*wage + 
+        cit_Non.citizen*age + 
+        educ_Less.than.HS,
+      data=.,family = binomial("logit"))
+
+# Print the regression results
+stargazer::stargazer(theortical_model,type = "text")
+```
+
+We could now test these theoretical insights on new, previously unseen data... i.e. the test data! 
+
+How well does the theoretical model predict future data? Pretty well, which indicates that our insights likely _generalize_ to the test data. 
+
+```{r}
+Metrics::auc(actual = 1*(test_data2$coverage=="Coverage"),
+             predicted = predict(theortical_model,newdata = test_data2))
+```
+
+Let's now run our theoretical model on the test_data and compare the coefficients to the model run on the training results. 
+
+```{r}
+main_model <- 
+  test_data2 %>% 
+  mutate(coverage_dummy = 1*(coverage == "Coverage")) %>% 
+  glm(coverage_dummy ~ age*wage + 
+        mar_Married*wage + 
+        cit_Non.citizen*wage + 
+        cit_Non.citizen*age + 
+        educ_Less.than.HS,
+      data=.,family = binomial("logit"))
+
+# Print the regression results and compare them to the res
+stargazer::stargazer(theortical_model,main_model,type = "text")
+```
