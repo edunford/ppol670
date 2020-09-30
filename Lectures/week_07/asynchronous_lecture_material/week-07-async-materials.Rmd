@@ -1,0 +1,687 @@
+---
+pagetitle: "PPOL670 | Week 7 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Geospatial Data </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 7 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Introduce **geospatial data** and different ways it can be represented, projected, and layered.
+- Delve into the simple features (`sf`) package for **manipulating spatial data** in `R`.
+- Explore how to **join and intersect** spatial data. 
+- Cover how to make **choropleth maps** to present quantitative variables. 
+
+<br>
+
+**In the Synchronous Lecture**
+
+- **Applied walkthrough** using spatial COVID data. 
+- Talk about **where to get spatial polygons** for different countries..
+- Explore **other packages** that are useful in exploring and mapping spatial data. 
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 1 hour and 23 minutes
+
+<br>
+
+Download the spatial data used in the asynchronous videos from the following [**Dropbox link**](https://www.dropbox.com/sh/gvyzwhimfq2iwby/AACycf8FcrrMqyBnipA5mBvsa?dl=0). The data is downloaded from [https://opendata.dc.gov/](https://opendata.dc.gov/).
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Introduction to Geospatial Data
+
+### [**Relevant Slides**](slides/week-07-introduction-to-geospatial.html)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=c2608fbd-b062-4349-b04f-ac4401525b7e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+
+<br><hr><br>
+
+## Processing Geospatial Data
+
+<br>
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=5aa0d42d-a763-4077-8daa-ac450108978f&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(ggthemes)
+require(sf) # simple features   
+
+# All data from opendata.dc.gov
+
+# Read in polygon shape files ---------------------------------------------
+
+    dc <- read_sf("data/dc_wards/Ward_from_2012.shp") %>% 
+      janitor::clean_names() # quickly clean the variable names
+
+    # Look at the data    
+    glimpse(dc)
+    
+    dc
+    # The key spatail bits: 
+        # (1) All the information at the top: dimensions, CRS, bounding box
+        # (2) the geometry column
+  
+    # Plot the DC wards
+    dc %>% 
+      ggplot() +
+      geom_sf() 
+    
+    # We can manipulate this object like we would any tidy data structure
+    dc %>% 
+      filter(ward == 4) %>% 
+      ggplot() +
+      geom_sf() +
+      theme_map()
+    
+# Read in Line shape files --------------------------------------------
+
+    dc_roads <- read_sf("data/dc_roads/Roads.shp") %>% 
+      janitor::clean_names() # quickly clean the variable names
+    
+    # Roads
+    glimpse(dc_roads)
+    
+    # Count up the roads (on big spatial data sets, it sometimes helps to
+    # temporarily drop the geometry feature... everything computes faster)
+    dc_roads %>% 
+      st_drop_geometry() %>%
+      count(descriptio)
+    
+    # Plot just the main roads 
+    dc_roads %>% 
+      filter(descriptio == "Road") %>% 
+      ggplot() +
+      geom_sf() +
+      theme_map()
+    
+# Read in point data ------------------------------------------------------
+
+    
+    crashes <- read_csv("Data/dc_crashes.csv") %>% 
+      
+      # Clean variable names
+      janitor::clean_names() %>% 
+      
+      # Convert the date class and create a year variable
+      mutate(reportdate = as.Date(reportdate,"%Y/%m/%d"), # Convert the date type
+             year = lubridate::year(reportdate)) # Create a year variable
+    
+    # look at the data 
+    glimpse(crashes)
+    
+    # Let's look at the locations
+    crashes %>% 
+      ggplot(aes(x=xcoord,y=ycoord)) +
+      geom_point(color="darkred",alpha=.1)
+    
+    # What's the coverage like in reporting across years?
+    crashes %>% 
+      count(year) %>% 
+      ggplot(aes(x=factor(year),y=n)) +
+      geom_col() +
+      coord_flip()
+    
+    # Restrict to 2019, and drop any incidents where there is no location
+    # info, and convert points to sf geometry!
+    crashes2 <- 
+      
+      crashes %>% 
+      
+      # Only year 2019
+      filter(year ==2019) %>% 
+      
+      # If there is no coordinate info, drop it
+      filter(!is.na(xcoord)) %>% 
+      
+      # Converting points into sf geometry
+      st_as_sf(coords = c("longitude", "latitude"))
+  
+    # Look now we have a geometry field
+    glimpse(crashes2)
+    
+    # Plot: Let's just focus on the car crashing in Jan. 2019
+    crashes2 %>% 
+      filter(lubridate::month(reportdate)==1) %>%  # Focus on January
+      ggplot() +
+      geom_sf()
+    
+# Layering Crash Locations onto the DC map -----------------------------------------
+
+    jan_crashes <- crashes2 %>% filter(lubridate::month(reportdate)==1) 
+    
+    # Layer the the images... What Happened!!!
+    ggplot() +
+      geom_sf(data=dc) +
+      geom_sf(data=jan_crashes,alpha=.2)
+    
+    # Need to make the projections the same with the same coordinate system
+    st_crs(jan_crashes) <- st_crs(dc)
+    
+    # Let's try this again
+    dc %>% 
+      ggplot() +
+      geom_sf() +
+      geom_sf(data=jan_crashes,alpha=.1,inherit.aes = F)
+    
+# Let's Layer it all together ---------------------------------------------
+
+    # Again only focus on specific roads
+    main_roads <- dc_roads %>% filter(descriptio == "Road") 
+    
+    
+    # Add all the geospatial layears togeter
+    ggplot() +
+      geom_sf(data=main_roads,color=alpha("steelblue",.5)) +
+      geom_sf(data=dc,alpha=0,color="grey30",size=.75,inherit.aes = F) + 
+      geom_sf(data=jan_crashes,alpha=.5,color="darkred",size=.5,inherit.aes = F) +
+      theme_map()
+```
+
+<br><hr><br>
+
+## Spatial Joins and Intersections
+
+<br>
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=c5e809a0-cc34-4421-8b07-ac45012a7925&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(ggthemes)
+require(sf)
+
+# NOTE: This script relies on objects created in the "Processing Geospatial
+# Data" video. Run that code before running this code. 
+
+# REFRESH: What is a join? ---------------------------------------------------------
+
+    d1 = tibble(key = c("A","B","C"),
+                v1 = 1:3)    
+    
+    d2 = tibble(key = c("A","D","C"),
+                v2 = 4:6)  
+    
+    left_join(d1,d2)
+    
+
+# Joining Spatial Data ----------------------------------------------------
+
+    # Make sure the coordinate system aligns
+    st_crs(crashes2) <- st_crs(dc)
+    
+    
+    # Simplify the crash data (only simplify to make a point)
+    crashes_simp <- crashes2 %>% select(reportdate,
+                                        majorinjuries_bicyclist,
+                                        minorinjuries_bicyclist,
+                                        unknowninjuries_bicyclist,
+                                        geometry)
+    dc_simp <- dc %>% select(name,ward,geometry)
+    
+    
+    # Look at the data
+    glimpse(dc_simp)
+    glimpse(crashes_simp)
+    
+    
+    # Spatial Joins where the spatial features operate as keys
+    dc_joined <- st_join(dc_simp,crashes_simp)
+    glimpse(dc_joined)
+    
+    
+    
+    # Now we have information in both of the data sets. 
+    injuries <- 
+      dc_joined %>% 
+      st_drop_geometry() %>% 
+      mutate(month = lubridate::month(reportdate)) %>% 
+      group_by(name,month) %>% 
+      summarize(total_b_injuries = sum(majorinjuries_bicyclist + 
+                                         minorinjuries_bicyclist + 
+                                         unknowninjuries_bicyclist)) %>% 
+      ungroup
+    
+    
+    
+    # Let's plot
+    injuries %>% 
+      ggplot(aes(x = month,y = total_b_injuries,
+                 color = name)) +
+      geom_line() +
+      geom_point() +
+      scale_color_gdocs() +
+      labs(y="Total Bicycle Injuries", x = "Month",
+           title="Bicycle Injuries in DC in 2019",
+           color = "") +
+      theme_hc()
+    
+    
+
+# Overlaying Spatial Data -------------------------------------------------
+
+    # Recall Ward 2 ("downtown") was where most of the car accidents were at.
+    ggplot(dc) + geom_sf(aes(fill=name)) + theme_map()
+    
+    
+    
+    # Let's simplify the spatial data so that we're just focusing on all the
+    # relevant spatial features that occur in those wards.
+    ward2 <- dc %>% filter(ward == 2)
+    
+    
+    
+    # Plot
+    ggplot(ward2) + geom_sf()
+    
+    
+    
+    # Now we only want the spatial features that **intersect** with this ward.
+    # Here is a plot that captures the idea
+    ggplot() + 
+      geom_sf(data=main_roads,color=alpha("steelblue",.5)) +
+      geom_sf(data = ward2,,alpha=.5,fill="darkred",inherit.aes = F)+
+      theme_map()
+    
+    
+    
+    # We can accomplish this task with st_filter
+    ward2_roads <- st_filter(x = main_roads,y= ward2)
+    
+    
+    
+    # Let's plot to see what we've done
+    ggplot() + 
+      geom_sf(data=ward2_roads,color=alpha("steelblue",.5)) +
+      theme_map()
+    
+    
+    
+    # Now let's put it together 
+    ggplot() + 
+      geom_sf(data=ward2_roads,color=alpha("steelblue",.5)) +
+      geom_sf(data = ward2,alpha=0,inherit.aes = F) +
+      theme_map()
+    
+    
+    # Note that some of the road features still fall outside of the boundary. We
+    # can get around that issue with
+    ward2_roads2 <- st_intersection(x = main_roads,y= ward2)
+    
+    
+    # Plot it again. Looking good!
+    ggplot() + 
+      geom_sf(data = ward2_roads2,color=alpha("steelblue",.5)) +
+      geom_sf(data = ward2,alpha=0,inherit.aes = F) +
+      theme_map()
+    
+    
+    # Finally, let's add in the January 2019 crash data
+    jan_crashes_ward2 <- st_intersection(x = jan_crashes,y= ward2)
+    
+    
+    # Let's put it all together
+    ggplot() + 
+      geom_sf(data = ward2_roads2,color=alpha("steelblue",.5)) +
+      geom_sf(data = ward2,alpha=0,inherit.aes = F) +
+      geom_sf(data=jan_crashes_ward2,alpha=.5,color="darkred",
+              size=1,inherit.aes = F) +
+      theme_map()
+```
+
+<br><hr><br>
+
+
+## Choropleth Maps
+
+<br>
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=c73510b2-f95a-4e13-9516-ac450157515b&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(ggthemes)
+require(patchwork)
+require(sf) # simple features   
+
+# Read in Polygon Data ----------------------------------------------------
+
+
+    dc <- read_sf("data/dc_wards/Ward_from_2012.shp") %>% 
+      janitor::clean_names() %>%  # quickly clean the variable names
+      mutate(prop_black = as.numeric(pop_black)/as.numeric(pop_2011_2),
+             ln_per_capita = log(as.numeric(per_capita)),
+             unemploy = as.numeric(unemployme),
+             median_age = as.numeric(median_age))
+      
+    # Recall what's in the data 
+    glimpse(dc)
+    
+    
+
+# Choropleth Maps ---------------------------------------------------------
+
+    
+    # Basic idea is that we use color to signify the intensity of a quantitative
+    # variable over a spatial domain. 
+    dc %>% 
+      ggplot() +
+      geom_sf(aes(fill=unemploy))
+    
+    
+    
+    # We can control the color scheme and other aesthetical features as per
+    # usual. (Note that this requires that the 'viridis' package is installed.)
+    dc %>% 
+      ggplot() +
+      geom_sf(aes(fill=unemploy),
+              color = "white") +
+      scale_fill_continuous_tableau() + 
+      labs(fill="Unemployment\nRate (Percent)") +
+      theme_map()
+    
+    
+    # We can also use all the techniques in our data wrangling/visualization
+    # book to process many plots.
+    
+    
+    # Unemployment
+    p1 <- 
+      dc %>% 
+      ggplot() +
+      geom_sf(aes(fill=unemploy),
+              color = "white") +
+      scale_fill_continuous_tableau() + 
+      labs(fill="Unemployment\nRate (Percent)") +
+      theme_map()
+    
+    
+    # Prop. Population that is AA
+    p2 <- 
+      dc %>% 
+      ggplot() +
+      geom_sf(aes(fill=prop_black),
+              color = "white") +
+      scale_fill_continuous_tableau(palette="Red") + 
+      labs(fill="Prop. Pop.\nBlack (Percent)") +
+      theme_map()
+    
+    
+    # Income
+    p3 <- 
+      dc %>% 
+      ggplot() +
+      geom_sf(aes(fill=ln_per_capita),
+              color = "white") +
+      scale_fill_continuous_tableau(palette="Green") + 
+      labs(fill="Log GDP\nPer Capita") +
+      theme_map()
+    
+    
+    # Combine using patchwork
+    (p1 + p2 +  p3 + plot_layout(ncol = 3))
+     
+ 
+    
+
+# Easy Access ggplot maps -------------------------------------------------
+
+    
+    # Sometimes we want/need quick access to common polygon shapes. 
+    # Like a map of the world. 
+    
+    # World Map
+    world <- as_tibble(map_data("world"))
+    
+    # US State Map 
+    state <- as_tibble(map_data("state"))
+    
+    
+    # Can use geom_polygon to visualize these maps (a work around if you just
+    # need a country polygon on the fly)
+    world %>% 
+      ggplot() +
+      geom_polygon(aes(x=long,y=lat,group=group))
+    
+    state %>% 
+      ggplot() +
+      geom_polygon(aes(x=long,y=lat,group=group))
+
+    
+    # Can overlay these as they sharee the same crs
+    ggplot() +
+      geom_polygon(data=world,aes(x=long,y=lat,group=group)) +
+      geom_polygon(data=state,aes(x=long,y=lat,group=group),
+                   inherit.aes = F,fill="steelblue",color="white")
+    
+    
+    # We can easily subset these data if we want specific country polygons.
+    world %>% 
+      filter(region == "Nigeria") %>%
+      ggplot() +
+      geom_polygon(aes(x=long,y=lat,group=group))
+      
+
+
+# Gapminder Data Example Again --------------------------------------------
+
+    
+    # Simplify the map data 
+    world <- 
+      map_data("world") %>% 
+      select(long,lat,group,country=region) %>% 
+      
+      # Again standardize the country names
+      mutate(country = countrycode::countrycode(country,"country.name","country.name")) %>% 
+      mutate(country = ifelse(country == "South Sudan","Sudan",country)) %>% 
+      as_tibble()
+    
+    
+    # subset the relevant African countries in the data.
+    africa <- 
+      gapminder::gapminder %>% 
+      filter(continent == "Africa") %>% 
+      group_by(country) %>% 
+      summarize(lifeExp = mean(lifeExp),.groups="drop")  %>% 
+      mutate(country = countrycode::countrycode(country,"country.name","country.name")) %>% 
+      inner_join(world,by="country")    
+    
+    
+    # Plot the map subset that corresponds with subsetted polygons
+    africa %>% 
+      ggplot(aes(x=long,y=lat,group=group)) +
+      geom_polygon()
+    
+    
+    # Create a Choropleth Map
+    africa %>% 
+      ggplot(aes(x=long,y=lat,group=group,fill=lifeExp)) +
+      geom_polygon(color="white",size=.25) +
+      scale_fill_gradient2_tableau() +
+      theme_map() +
+      labs(fill="Life Expectancy",
+           title = "Average Life Expectancy in Africa",
+           subtitle = "1952 - 2007",
+           caption = "Source gapminder.org") +
+      theme(text=element_text(family = "serif",face="bold",size=14))
+    
+    
+    # Don't Aggregate this time and look at how life expectancy changes over time
+    africa_by_year <- 
+      gapminder::gapminder %>% 
+      filter(continent == "Africa") %>% 
+      mutate(country = countrycode::countrycode(country,"country.name","country.name")) %>% 
+      inner_join(world,by="country") 
+    
+    # Now plot
+    africa_by_year %>% 
+      ggplot(aes(x=long,y=lat,group=group,fill=lifeExp)) +
+      geom_polygon(color="white",size=.25) +
+      scale_fill_gradient2_tableau() +
+      theme_map() +
+      labs(fill="Life Expectancy",
+           title = "Average Life Expectancy in Africa",
+           subtitle = "1952 - 2007",
+           caption = "Source gapminder.org") +
+      facet_wrap(~year) +
+      theme(text=element_text(family = "serif",face="bold",size=18),
+            legend.position = "bottom")
+    
+```
+
+<br><hr><br>
+
+
+# Practice {.tabset .tabset-pills}
+
+<br>
+
+These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
+
+<br>
+
+The following questions uses spatial data downloaded from [https://opendata.dc.gov/](https://opendata.dc.gov/). You can download the data using from the following [**Dropbox link**](https://www.dropbox.com/sh/gvyzwhimfq2iwby/AACycf8FcrrMqyBnipA5mBvsa?dl=0).
+
+<br>
+
+## _
+
+## Question 1  {.tabset}
+
+<br>
+
+Create a choropleth map that shows the median age by DC ward. Note the `median_age` variable can be found on the `Ward_from_2012` shape data. 
+
+<br>
+
+### _
+
+### Answer
+
+```{r,eval=F}
+require(tidyverse)
+require(ggthemes)
+require(sf)
+
+
+# Read in DC ward data
+dc <- read_sf("data/dc_wards/Ward_from_2012.shp") %>% 
+  janitor::clean_names() %>% 
+  mutate(median_age = as.numeric(median_age))
+
+# Generate the choropleth map
+dc %>% 
+  ggplot() +
+  geom_sf(aes(fill=median_age),
+          color = "white") +
+  scale_fill_continuous_tableau() + 
+  labs(fill="Median Age") +
+  theme_map()
+```
+
+
+## Question 2  {.tabset}
+
+<br>
+
+Create a choropleth map that shows the total number of car accidents in 2018 by DC Ward. Please use the map theme, provide a title for the map and legend, and use a non-default color/fill scheme.
+
+<br>
+
+### _
+
+### Answer
+
+```{r,eval=F}
+require(tidyverse)
+require(ggthemes)
+require(sf)
+
+
+# Read in the DC Ward data
+dc <- read_sf("data/dc_wards/Ward_from_2012.shp") %>% 
+  janitor::clean_names() 
+
+
+# Read in the car accidents data 
+crashes <- read_csv("Data/dc_crashes.csv") %>% 
+  
+  # Clean variable names
+  janitor::clean_names() %>% 
+  
+  # Convert the date class and create a year variable
+  mutate(reportdate = as.Date(reportdate,"%Y/%m/%d"), 
+         year = lubridate::year(reportdate)) %>% 
+  
+  # Filter 2018
+  filter(year == 2018) %>% 
+  
+  # Convert to sf geometry
+  st_as_sf(coords = c("longitude", "latitude"))
+
+
+# Ensure the crs align
+st_crs(crashes) <- st_crs(dc)
+
+# Join the crashing onto the ward data
+crash_wards <- st_join(dc,crashes)
+
+# Now aggregate
+agg_crash_wards <-
+  crash_wards %>% 
+  group_by(name) %>% 
+  count()
+
+# Plot
+agg_crash_wards %>% 
+  ggplot() +
+  geom_sf(aes(fill=n),color="white",alpha=.9) +
+  scale_fill_viridis_c(option="magma") + # Need the viridis package installed
+  theme_map() +
+  labs(fill="Number of\nCar Accidents",
+       title="Number of Car Accidents by DC Ward in 2018")
+```
+
+

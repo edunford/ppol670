@@ -1,0 +1,141 @@
+---
+title: 
+    <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
+  <font size=6, face="bold"> Week 7 </font> 
+  <br>
+  <br>
+  <font size=100, face="bold"> Introduction to Geospatial Data </font>
+author: 
+  <font class = "title-footer"> 
+  &emsp;Prof. Eric Dunford &emsp;&#9670;&emsp; Georgetown University &emsp;&#9670;&emsp; McCourt School of Public Policy &emsp;&#9670;&emsp; eric.dunford@georgetown.edu</font>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: "gu-theme.css"
+    nature:
+      beforeInit: "macros.js"
+      highlightStyle: github
+      countIncrementalSlides: False
+      highlightLines: true
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,message=F,error=F,warning = F)
+require(tidyverse)
+require(maps)
+```
+
+layout: true
+
+<div class="slide-footer"><span> 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Week 7 <!-- Week of the Footer Here -->
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+Introduction to Geospatial Data <!-- Title of the lecture here -->
+
+</span></div> 
+
+
+---
+
+## Vector Data Model
+
+```{r,echo=F,fig.align='center',fig.width=12,fig.height=7}
+map_data("world") %>%
+  ggplot(aes(x=long,y=lat,group=group)) +
+  geom_polygon()
+```
+---
+
+## Vector Data Model
+
+![:center_img 70](figures/pnt_line_poly.png)
+
+
+---
+
+## Vector Data Model
+
+![:center_img 70](figures/vector_lonlat.png)
+
+---
+
+## Simple Features
+
+![:center_img 70](figures/sf-classes.png)
+
+
+---
+
+## Raster Data Model
+
+
+![:center_img 100](figures/temp_map.png)
+
+---
+
+## Raster Data Model
+
+![:center_img 100](figures/raster-intro-plot-1.png)
+
+---
+
+## Raster Data Model
+
+![:center_img 100](figures/raster-data-2.png)
+---
+
+## Raster Data Model
+
+![:center_img 100](figures/raster_resolution.png)
+
+
+---
+
+## Projections
+
+![:center_img 75](figures/world-orthographic-1.png)
+
+---
+
+## Mercator Projection
+
+![:center_img 75](figures/world-mercator-1.png)
+
+---
+
+## Goode Homolosine Projection
+
+![:space 10]
+![:center_img 100](figures/world-goode-1.png)
+
+---
+
+## WSG Projection
+
+![:center_img 100](figures/wsg_projection.png)
+
+---
+
+## Mollweide Projection
+
+![:center_img 100](figures/mollweide_projection.png)
+
+---
+
+## Layers
+
+![:center_img 80](figures/sfbay-overview-1.png)
+
+
+---
+
+## Layers
+
+![:center_img 80](figures/sfbay-layers-1.png)
