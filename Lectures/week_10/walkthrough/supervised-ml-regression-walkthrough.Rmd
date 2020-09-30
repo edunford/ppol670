@@ -1,0 +1,386 @@
+---
+title: "PPOL670 | Applications in Supervised Machine Learning"
+subtitle: "Regression"
+date: Week 9
+output: 
+  html_document:
+    toc: True
+    toc_float: True
+---
+
+# Overview 
+
+In this notebook, we'll apply the machine learning concepts covered in the supervised learning lecture on regession methods. Note that there are many libraries that can perform the methods that we reviewed in class, but we'll focus here on using the `caret` package to perform these operations. 
+
+```{r Setup, include=F}
+knitr::opts_chunk$set(warning = F,error = F,message = F)
+require(tidyverse)
+require(caret) # for machine learning
+require(recipes) # For preprocessing your data
+require(rattle) # For nice tree plots
+```
+
+
+# Data
+
+For this exercise, let's examine some historical data of bike sharing in London downloaded from Kaggle. The data contains information on rider usage given a common set of climate and time predictors. 
+
+Assume we work for the company that runs the ride sharing venture: our aim is to build a model that best predicts the number of riders (`cnt`) at any given moment in time so that we can distribute resources appropriately. Please see the Kaggle site for a description of the variables: https://www.kaggle.com/hmavrodiev/london-bike-sharing-dataset#london_merged.csv
+
+```{r}
+dat = read_csv("london_bike_sharing.csv")
+glimpse(dat)
+```
+
+# Split the Sample: Training and test data
+
+Before event looking at the data, let's split the sample up into a training and test dataset. We'll completely hold off on viewing the test data, so as not to bias our development of the learning model. 
+
+```{r}
+set.seed(123)
+index = createDataPartition(dat$cnt,p=.8,list=F) 
+train_data = dat[index,] # Use 80% of the data as training data 
+test_data = dat[-index,] # holdout 20% as test data 
+
+dim(train_data)
+dim(test_data) 
+```
+
+
+
+# Examine the Data
+
+```{r}
+summary(train_data)
+```
+
+Let's look at the temporal coverage: Looks like the data roughly covers a two year time span.
+```{r}
+dat %>% 
+  summarize(min_date = min(timestamp),
+            max_date = max(timestamp))
+```
+
+
+
+Visualize the distribution for each variable.
+
+First, let's look at the numerical variables.
+```{r,fig.height=10,fig.width=8}
+train_data %>% 
+  select_if(is.numeric) %>% 
+  gather(var,val) %>% # equivalent to pivot_longer
+  ggplot(aes(val,group=var)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~var,scales="free",ncol=2)
+```
+
+Most of the variables are continuous values. Some variables appear to be dummy (`is_weekend`) or ordered (`season`) variables. For the seasons, we may want to consider changing this variable to a dummy variable (where each season acts as a dummy variable) since the "order" in the seasons isn't implied (i.e. winter isn't necessarily worse than Fall, etc.).
+
+Also, note that the weather code data is a bit of an enigma. There isn't clear information online regarding what the code means, so we may want to drop it as we're unsure about it. 
+
+It doesn't appear that there is any missing data, so there is no need to impute any data. 
+```{r}
+sum(is.na(train_data)) # any missingness??
+```
+
+
+Finally, note that the outcome variable is a count, so we may want to log transform it so that it's less skewed. 
+
+
+# Pre-process the Data 
+
+What do we need to do?
+
+- Seasons variable to dummies 
+- Scale all the variables so that they fall into a 0 to 1 range.
+- No need to impute missing values. All the data is there.
+
+
+
+```{r}
+# First, turn the season variable into a categorical variable
+clean_steps = function(.data){
+  .data %>% 
+  mutate(season = as.factor(season)) %>% 
+  select(-timestamp,-weather_code)
+} 
+
+# Generate our recipe to preprocess the data 
+rcp <- 
+  recipe(cnt~.,data = train_data %>% clean_steps) %>% 
+  step_dummy(all_nominal(),-cnt) %>% 
+  
+  # log the dependent variable so it's more normal, offset the count by 1 for instances when cnt==0
+  step_log(cnt,offset=1) %>% 
+  
+  step_range(all_numeric(),-cnt) %>%  # Normalize scale
+  prep()
+
+
+# Apply the recipe to the training and test data
+train_data2 <- bake(rcp,train_data %>% clean_steps)
+test_data2 <- bake(rcp,test_data%>% clean_steps) # Need to transform the seasons data here as well. 
+```
+
+Let's examine the post-processed data.
+```{r}
+train_data2 %>% glimpse()
+```
+
+
+```{r,fig.height=6,fig.width=10}
+train_data2 %>% 
+  select(cnt,hum,wind_speed,t1,t2) %>% 
+  gather(var,val) %>% 
+  ggplot(aes(val,group=var)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~var,scales="free",ncol=3)
+```
+
+# Cross-validation
+
+When comparing different machine learning models, we want to make sure we're making a fair and equal comparison. One way that random chance can sneak into our assessments of model fit is through cross-validation. We want to make sure that we're cross-validating the data on the _exact same data partitions_. 
+
+`caret` makes this ease to do. Let's use the k-fold cross-validation method with 10 folds in the data. 
+```{r}
+set.seed(1988) # set a seed for replication purposes 
+
+folds <- createFolds(train_data2$cnt, k = 10) # Partition the data into 10 equal folds
+
+sapply(folds,length)
+```
+
+Now, let's use the `trainControl()` function from `caret` to set up our validation conditions
+
+```{r}
+control_conditions <- 
+  trainControl(method='cv', # K-fold cross validation
+               index = folds # The indices for our folds (so they are always the same)
+  )
+```
+
+We'll now use this same cross-validation object for everything that we do. 
+
+# Models
+
+Let's explore the different models that we covered in the lecture using the same package framework. As we saw last time in class, `caret` facilitates this task nicely. 
+
+## Linear Regression
+
+```{r}
+mod_lm <-
+  train(cnt ~ .,          # Equation (outcome and everything else)
+        data=train_data2, # Training data 
+        method = "lm",    # linear model
+        metric = "RMSE",   # mean squared error
+        trControl = control_conditions # Cross validation conditions
+  )
+```
+
+Let's look at the performance plots. What do we see?
+```{r}
+mod_lm
+```
+
+
+## K-Nearest Neighbors
+
+> Remember: these algorithms are computationally demanding, so they can take a little time to run depending on the power of your machine
+
+```{r}
+mod_knn <-
+  train(cnt ~ .,           # Equation (outcome and everything else)
+        data=train_data2,  # Training data 
+        method = "knn",    # K-Nearest Neighbors Algorithm
+        metric = "RMSE",   # mean squared error
+        trControl = control_conditions # Cross validation conditions
+  )
+```
+
+Let's look at the performance plots. What do we see?
+
+```{r}
+mod_knn
+```
+
+- `caret` has default settings that auto explore different tunning parameters for the model. 
+- We can easily plot these tuning features using the standard plot functions (these function have been over-ridden in R)
+
+```{r}
+plot(mod_knn)
+```
+
+```{r}
+# Draw out the best model (the one with the best performance)
+mod_knn$finalModel
+```
+
+
+Now, let's say we wanted to adjust the tunning parameters. We can explore different model tunings by using the `tuneGrid` argument. 
+
+```{r}
+# Different values of the tuning parameter that I want to try.
+knn_tune = expand.grid(k = c(1,3,10,50))
+
+mod_knn <-
+  train(cnt ~ .,           # Equation (outcome and everything else)
+        data=train_data2,  # Training data 
+        method = "knn",    # K-Nearest Neighbors Algorithm
+        metric = "RMSE",   # mean squared error
+        trControl = control_conditions, # Cross validation conditions
+        tuneGrid = knn_tune # Vary the tuning parameter K 
+  )
+```
+
+Look at performance: it doesn't look that we get much of a boost when going all the way to K-Neighbors.
+```{r}
+plot(mod_knn)
+```
+
+
+## Classification and Regression Trees (CART)
+
+```{r}
+mod_cart <-
+   train(cnt ~ .,            # Equation (outcome and everything else)
+        data=train_data2,    # Training data 
+        method = "rpart",    # Regression tree
+        metric = "RMSE",     # mean squared error
+        trControl = control_conditions # Cross validation conditions
+  )
+```
+
+
+```{r}
+mod_cart
+```
+
+Note that the main tuning parameter here is the complexity parameter (`cp`): this reflect how deep we let the tree grow. It looks like the more complex models perform worse on out-of-sample data. 
+```{r}
+plot(mod_cart)
+```
+
+Let's visualize the tree we just grew. It looks like the humidity level is an important factor when predicting othe number of riders. 
+```{r}
+# This tree goes really deep
+fancyRpartPlot(mod_cart$finalModel)
+```
+
+We can actually print out the larger decision tree to look at it as a print out.
+```{r}
+print(mod_cart$finalModel)
+```
+
+Let's free the CART to grow deeper.
+```{r}
+tune_cart <- expand.grid(cp = c(0.0010281)) # Complexity Parameter (how "deep" our trees should grow)
+mod_cart2 <-
+  train(cnt ~ ., # Equation (outcome and everything else)
+        data=train_data2, # Training data 
+        method = "rpart", # Classification Tree
+        metric = "RMSE",     # mean squared error
+        tuneGrid = tune_cart, # Tuning parameters
+        trControl = control_conditions
+  )
+```
+
+Doesn't doo a whole lot better on out of sample data. 
+```{r}
+print(mod_cart2)
+```
+
+Let's look at the tree itself: much deeper!
+```{r}
+print(mod_cart2$finalModel)
+```
+
+## Random Forest
+
+```{r}
+mod_rf <-
+  train(cnt ~ ., # Equation (outcome and everything else)
+        data=train_data2, # Training data 
+        method = "ranger", # random forest (ranger is much faster than rf)
+        metric = "RMSE",     # mean squared error
+        trControl = control_conditions
+  )
+```
+
+
+There are three tunning parameters in this model:
+
+- `mtry`: the number of predictors that we'll randomly select.
+- `splitrule`: the way we determine how the nodes should be split
+  - `variance` = takes the split that maximizes the variance (minimizes the error).
+  - `extratrees` = doesn't bag, randomly select vars, but just randomly split, accept the best split. (Short for "Extremely Randomize Trees")
+- 'min.node.size': the minimum number of observations that can be in each terminal node (default fixes this at 1)
+
+
+```{r}
+mod_rf
+```
+
+```{r}
+plot(mod_rf)
+```
+
+```{r}
+mod_rf$bestTune
+```
+
+
+# Model Comparison
+
+How did the different methods perform? Which one did the best?
+
+```{r}
+# Organize all model imputs as a list.
+mod_list <-
+  list(
+    lm = mod_lm,
+    knn = mod_knn,
+    cart = mod_cart,
+    cart_deep = mod_cart2,
+    rf = mod_rf 
+  )
+
+# Resamples allows us to compare model output
+resamples(mod_list)
+```
+
+Examine the error across each of the models.
+```{r,fig.width=10,fig.height=4}
+dotplot(resamples(mod_list),metric = "RMSE")
+```
+
+Examine the fit across each of the models.
+```{r,fig.width=10,fig.height=4}
+dotplot(resamples(mod_list),metric = "Rsquared")
+```
+
+
+
+# Test the Predictive Accuracy of the Best Model 
+
+Of the models we ran, it looks like the Random Forest model did the best. Let's now see how well it does on predicting the test data.
+
+```{r}
+pred <- predict(mod_rf,newdata = test_data2)
+mse = sum((test_data2$cnt-pred)^2)/nrow(test_data2)
+mse 
+``` 
+
+
+We can also use the metrics package to calculate performance metrics.
+```{r}
+# If the package isn't installed on your machine
+# install.packages("Metrics")
+
+pred <- predict(mod_rf,newdata = test_data2)
+
+# Mean squared error
+Metrics::mse(actual=test_data2$cnt,predicted = pred)
+```
+
+
