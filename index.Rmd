@@ -364,21 +364,29 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_06/asynchronous_lecture_material/week6-async-material.html)
 
-<!-- ### _Week 6_: [Web Scrapping and APIs](Lectures/week_06/lecture-week-06_webscraping-and-apis.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html)
+  - **Table of Contents**:
+    + [Functions](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#2)
+    + [Websites](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#5)
+    + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#14)
+    + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28)
+    + [Legality](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#35)
+    + [Dates](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#40)
+    
+- **Discussion**: 
+  - [Data Acquisition using `R` packages (wrappers on APIs)](Lectures/week_06/synchronous-materials/data-acquisition-using-r-package-apis.html)
 
-<!-- - **Table of Contents** -->
-<!--   + [Loops and Functions (Refresher)](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#3) -->
-<!--   + [Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#10) -->
-<!--   + [Scraping Web Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#19) -->
-<!--   + [Building a Webscraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#33) -->
-<!--   + [APIs](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping-and-apis.html#45) -->
+- **Practice**:
+  + _Breakout 1_: [Scraping Wikipedia for information on Presidential Debates](Lectures/week_06/synchronous-materials/breakout/breakout01_scraping-wikipedia.html)
 
-<!-- - **Practice**: -->
-<!--   - The following [walkthrough](Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.html) covers building a dataset of all bilaterial investment treaties from scratch using the techniques covered in lecture (<a href="Lectures/week_06/week_06_practice/week-06_webscrapping-walkthrough.Rmd.zip" download> Download .Rmd</a>). -->
 
 <br>
 
 ### _Week 7_: **Geospatial Data**
+
+<br>
+
+- [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html)
 
 <!-- - **Working with Spatial Data in `R`**  -->
 <!--   - The following are materials provided by Trey Billing. He'll walk us through how to utilize spatial data in `R` and some common concepts we need to know when dealing with spatial data.  -->
