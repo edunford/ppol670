@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 11       Applications in Unsupervised Learning</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 11 </font> <br> <br> <font size=100, face="bold"> Applications in Unsupervised Learning </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 11 &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Unsupervised Learning &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+&lt;br&gt;
+
+- **Refresh on the supervised and unsupervised distinction**
+
+&lt;br&gt;
+
+- **K-means Clustering**
+
+&lt;br&gt;
+
+- **Hierarchical Clustering**
+
+---
+
+class: newsection
+
+# Supervised &lt;br&gt; vs. &lt;br&gt; Unsupervised
+
+---
+
+### Supervised Learning
+
+
+- For each observation of the predictor measurement `\(x_i\)` there is an associated response measurement `\(y_i\)`. In essence, there is an _outcome_ we are aiming to accurately predict or understand.
+  
+- Use regression and classification methods
+  
+&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+  
+ 
+---
+  
+### Unsupervised Learning
+  
+
+- We observe a vector of measurements `\(x_i\)` but _no_ associated response `\(y_i\)`.
+  
+- "unsupervised" because we lack a response variable that can supervise our analysis.
+
+- Aim is to (a) data reduction and/or (b) data exploration (find "hidden" structures in the data).
+  
+&lt;img src="lecture-week-11-applications-unsupervised-ml-ppol670_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+  
+---
+
+### Challenges of Unsupervised Learning
+
+
+&lt;br&gt; 
+
+- Tends to be more **subjective**: there is no simple goal here
+
+&lt;br&gt; 
+
+- **Difficult to assess** the results
+
+&lt;br&gt; 
+
+- No way to "check our work": no universally accepted mechanism for performing cross-validation or validating results.
+
+&lt;br&gt; 
+
+- Requires **exploration**
+
+---
+
+class: newsection
+
+### K-Means Clustering
+
+---
+
+### Clustering Methods
+
+![:space 5]
+
+- **Clustering** refers to techniques for finding _subgroups_ in a data set. 
+
+- When we cluster the observations of a data set, we seek to partition them into distinct groups so that 
+  
+  - the observations **_within_** each group are **_similar_** to each other.
+  
+  - while observations in different groups are **_different_** from each other.
+
+- Clustering looks to find homogeneous subgroups among the observations.
+
+
+---
+
+### K-means clustering
+
+&lt;br&gt;&lt;br&gt;
+- **Aim**: partition a data set into `\(k\)` distinct, _non-overlapping_ clusters.
+
+&lt;br&gt;
+
+- An observation can only be member to one cluster.
+
+&lt;br&gt; 
+
+- "Good" clustering is when the **_within-cluster variation is as small as possible_**
+
+---
+
+### K is arbitrary
+
+&lt;br&gt;&lt;br&gt;
+.center[
+&lt;img src = "Figures/k-is-arbitrary.png"&gt;
+]
+
+
+---
+
+### Minimize the total within-cluster variation
+
+&lt;br&gt;&lt;br&gt;
+
+`$$\underset{C_1,\dots,C_k}{Min} \begin{Bmatrix}\sum^K_{k=1} W(C_k) \end{Bmatrix}$$`
+&lt;br&gt;&lt;br&gt;
+
+Where 
+
+- `\(k\)` indexes the number of clusters
+- `\(C_k\)` denotes a cluster 
+- `\(W(C_k)\)` denotes the within-cluster variation
+
+---
+
+### Within-cluster variation?
+
+First, what does it mean to be "close"?
+
+--
+
+Could use _squared Euclidean distance_ 
+
+`$$(x_{ij} - x_{i'j})^2$$`
+
+But "distance" can be conceptualized in many ways. 
+
+--
+
+Second, define within-cluster variance
+
+`$$W(C_k) = \frac{1}{|C_k|} \sum_{i,i' \in C_k}\sum^P_{j=1} (x_{ij} - x_{i'j})^2$$`
+
+where `\(|C_k|\)` denotes the number of observations in the `\(k\)` cluster.
+
+--
+
+&gt; Very difficult problem to solve because there are `\(K^n\)` ways to partition the data. 
+
+---
+
+### K-means clustering algorithm
+
+&lt;br&gt;&lt;br&gt;
+**Step 1**: Randomly assign a number, from 1 to `\(K\)`, to each of the observations.
+These serve as initial cluster assignments for the observations. 
+
+**Step 2**: Iterate until the cluster assignments stop changing:
+
+- **(a)** For each of the `\(K\)` clusters, compute the cluster centroid. The `\(k\)`th cluster centroid is the vector of the `\(p\)` feature means for the observations in the `\(k\)`th cluster.
+
+- **(b)** Assign each observation to the cluster whose centroid is closest (where closest is defined using Euclidean distance).
+
+---
+
+.center[
+&lt;img src = "Figures/k-mean-alg.png" width=600&gt;
+]
+
+---
+
+Because the K-means algorithm finds a **_local_** rather than a **_global optimum_**, the results obtained will depend on the initial (random) cluster assignment of each observation in Step 1.
+
+.center[
+&lt;img src = "Figures/k-means-diff-starts.png" width=500&gt;
+]
+
+---
+
+class: newsection
+
+### Hierarchical Clustering
+
+---
+
+### Hierarchical Clustering
+
+&lt;br&gt;&lt;br&gt;
+- One downside of `\(K\)`-means is that it requires us to **_pre-specify_** the number of clusters `\(K\)`
+
+- **Hierarchical clustering** is a _bottom-up_ clustering method that doesn't require use to define the number of clusters _ex anti_.
+
+- H. clustering builds a tree (dendrogram) which treats every observation as unique and then combines clusters up to the trunk.
+
+- We can determine the number of clusters by choosing a cutpoint (i.e. by "pruning the tree")
+
+---
+
+### Hierarchical Clustering
+
+&lt;br&gt;
+.center[
+&lt;img src = "Figures/hclust-dendrogram.png", width=1000&gt;
+]
+
+---
+
+### Hierarchical Clustering
+
+&lt;br&gt;
+
+We can draw conclusions regarding the similarity of observations by proximity on the verticle axis, _not_ the horizontal axis.
+
+
+&lt;br&gt;
+.center[
+&lt;img src = "Figures/simple-hclust.png", width=1000&gt;
+]
+
+---
+
+### Hierarchical Clustering Algorithm
+
+**Step 1**: Begin with n observations and a measure (such as Euclidean distance) of all the `\(\frac{n(n − 1)}{2}\)` pairwise dissimilarities. Treat each observation as its own cluster.
+
+**Step 2**: For `\(i=n,n−1,...,2\)`:
+
+- **(a)** Examine all pairwise inter-cluster dissimilarities among the `\(i\)` clusters and identify the pair of clusters that are least dissimilar (that is, most similar). Fuse these two clusters. The dissimilarity between these two clusters indicates the height in the dendrogram at which the fusion should be placed.
+
+- **(b)** Compute the new pairwise **inter-cluster dissimilarities** among the `\(i − 1\)` remaining clusters.
+
+---
+
+.center[
+&lt;img src = "Figures/hclust-alg.png", width=600&gt;
+]
+
+---
+
+### Defining "Inter-Cluster" Dissimilarity
+
+The concept of dissimilarity between a pair of observations needs to be extended to a pair of **_groups of observations_**. 
+
+--
+
+This is known as **"Linkage"**
+
+|Linkage| Description|
+|-------|----------|
+| *Complete* | Maximal intercluster dissimilarity. Compute all pairwise dissimilarities between the observations in cluster A and the observations in cluster B, and record the _largest_ of these dissimilarities. |
+| *Single* | Minimal intercluster dissimilarity. Compute all pairwise dissimilarities between the observations in cluster A and the observations in cluster B, and record the _smallest_ of these dissimilarities. Single linkage can result in extended, trailing clusters in which single observations are fused one-at-a-time. |
+| *Average* | Mean intercluster dissimilarity. Compute all pairwise dissimilarities between the observations in cluster A and the observations in cluster B, and record the average of these dissimilarities. |
+| *Centroid* | Dissimilarity between the centroid for cluster A (a mean vector of length p) and the centroid for cluster B. Centroid linkage can result in undesirable _inversions_. |
+
+---
+
+### Linkage matters
+
+.center[
+&lt;img src = "Figures/linkage.png", width=1000&gt;
+]
+
+---
+
+### Small Decisions, Big Consequences
+
+In order to perform clustering, some decisions must be made:
+
+--
+
+- **_Should the observations or features first be standardized in some way?_**
+
+--
+
+- In the case of **hierarchical clustering**:
+  
+  - _What dissimilarity measure should be used?_
+  
+  - _What type of linkage should be used?_
+  
+  - _Where should we cut the dendrogram in order to obtain clusters?_
+
+--
+
+- In the case of **K-means clustering**: 
+
+  - _how many clusters should we look for in the data?_
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
