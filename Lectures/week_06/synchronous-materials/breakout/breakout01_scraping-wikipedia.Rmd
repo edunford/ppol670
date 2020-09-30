@@ -1,0 +1,50 @@
+---
+title: "PPOL 670 | Week 6 | Breakout 1"
+subtitle: "Scraping Wikipedia Page on Presidential Debates" 
+output: 
+  html_document:
+    highlight: breezedark
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 3
+---
+
+```{r,include = F}
+knitr::opts_chunk$set(warning=F,error=F,message = F)
+```
+
+<br><br><br>
+
+# Overview
+
+The following Wikipedia webpage contains information on past presidential debates. 
+
+```{r,eval=F}
+url <-  "https://en.wikipedia.org/wiki/United_States_presidential_debates"
+```
+
+
+Please use this url to answer the following questions. 
+
+<br><br>
+
+# Questions
+
+<br>
+
+#### (1) Download the wikipedia website using the provided `url`.
+
+<br><br><br>
+
+#### (2) Scrape all the text from the wiki page. Collapse content into a single string.
+
+<br><br><br>
+
+#### (3) Scrape all the references from the wikipedia page and store in a `tibble` data.frame.
+
+<br><br><br>
+
+#### (4)  Download and clean the table after the "Timeline" header on the page. Create a tidy data frame that only has the election date and the presidential candidates as variables. 
+
+<br><br><br>

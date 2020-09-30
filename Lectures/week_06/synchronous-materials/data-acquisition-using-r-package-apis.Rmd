@@ -1,0 +1,273 @@
+---
+pagetitle: "PPOL670 | Week 6 - Data Acquisition Using `R`"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Data Acquisition Using `R` Package APIs </center>
+subtitle: <center> <br>PPOL 670 | Introduction to Data Science <br> </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    df_print: paged
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+```
+
+<br><br>
+
+# Overview
+
+There are more streamlined ways to extract data from external sources. Let's explore some `R` package that provide wrapper for useful APIs to streamline data extraction and acquisition. 
+
+<br><br>
+
+# Google Trends Data
+
+<br>
+
+## What is it?
+
+What is [Google Trends](https://trends.google.com/trends/?geo=US)? "Google Trends is a website by Google that analyzes the popularity of top search queries in Google Search across various regions and languages. The website uses graphs to compare the search volume of different queries over time." - Wikipedia
+
+<br>
+
+## Package(s)
+
+  - [`gtrendsR`](https://cran.r-project.org/web/packages/gtrendsR/gtrendsR.pdf):  An interface for retrieving and displaying the information returned online by Google Trends is provided. Trends (number of hits) over the time as well as geographic representation of the results can be displayed.
+  - [`trendyy`](https://cran.r-project.org/web/packages/trendyy/trendyy.pdf): a tidy wrapper to the `gtrendsR` package.
+
+<br>
+
+## Installation
+
+```{r,eval=F}
+install.packages("gtrendsR")
+install.packages("trendyy")
+```
+
+```{r}
+require(trendyy)
+```
+
+
+<br>
+
+## Usage
+
+```{r,cache=T}
+# Specify the search terms you're interested in. 
+my_search_terms <- c("Biden","trump")
+
+# Download the term activity across a specific period using the Google Trends API
+trends <- trendy(search_terms = my_search_terms,
+                 from = "2020-09-01",to="2020-09-30")
+```
+
+Clean and examine the data.
+```{r}
+# Trends sends you back a lot of data. Use trendyy's helper functions to get
+# what we want: search term interest over time.
+dat_trends <- get_interest(trends)
+dat_trends
+```
+Visualize.
+```{r,fig.align="center",fig.width=10,fig.height=5}
+# Note: tidyverse is loaded. 
+dat_trends %>%
+  ggplot(aes(date,hits,color=keyword)) +
+  geom_line() +
+  geom_point() +
+  ggthemes::scale_color_fivethirtyeight() +
+  ggthemes::theme_fivethirtyeight()
+```
+
+
+We can target specific geographic regions with the `geo =` argument. To know which geographic code corresponds to a specific instance, we need to look at `gtrendsR`.
+
+```{r}
+geo_codes <- as_tibble(gtrendsR::countries)
+geo_codes 
+```
+
+
+```{r,cache=T}
+# Extract trends just for the US. Also we can draw out larger time windows
+trends_us <- trendy(search_terms = my_search_terms,
+                    from = "2004-01-01",to="2020-09-30",
+                    geo="US")
+
+# Draw out relevant content
+dat_trends_us <- get_interest(trends_us)
+dat_trends_us
+```
+Visualize again.
+```{r,fig.align="center",fig.width=10,fig.height=5}
+# Visualize
+dat_trends_us %>%
+  ggplot(aes(date,hits,color=keyword)) +
+  geom_line() +
+  ggthemes::scale_color_fivethirtyeight() +
+  ggthemes::theme_fivethirtyeight()
+```
+
+<br>
+
+## Limitations
+
+- **Normalized search terms** means that content is relative to the words searched. We can't back out search volumn. 
+- Can only search for **5 keywords** at a time. 
+- Can only request **1000 queries** a day. 
+- Choosing the correct keywords can be difficult. Language matters.
+
+<br><br>
+
+# World Bank Development Indicators Data
+
+<br>
+
+## What is it?
+
+World Development Indicators (WDI) is the primary World Bank collection of development indicators, compiled from officially recognized international sources. It presents the most current and accurate global development data available, and includes national, regional and global estimates.
+
+<br>
+
+## Package
+
+- [`wbstats`](https://cran.r-project.org/web/packages/wbstats/wbstats.pdf): Programmatic Access to Data and Statistics from the World Bank API
+
+
+<br>
+
+## Installation
+
+```{r,eval=F}
+install.packages("wbstats")
+```
+
+```{r}
+require(wbstats)
+```
+
+
+<br>
+
+## Usage
+
+Search for specific measured concepts. 
+```{r}
+# Look up indicators related to GDP.
+gdp_ind <- wbsearch(pattern = "gdp")
+gdp_ind 
+```
+
+Download data for a specific indicator. 
+```{r,cache=T}
+# Download info on the GDP (current US$)
+wb_dat <- wb(indicator = "NY.GDP.MKTP.CD", # Use the indicator id
+             country = "countries_only", # Avoid regional designations
+             startdate = 2000, enddate=2005)
+```
+
+Look at the data 
+```{r}
+glimpse(wb_dat)
+```
+
+Plot the average log GDP by year.
+```{r,fig.align="center",fig.width=10,fig.height=5}
+wb_dat %>%
+  mutate(date = as.numeric(date),
+         ln_gdp = log(value)) %>% 
+  ggplot(aes(date,ln_gdp)) +
+  geom_smooth(method="loess",color="steelblue",fill="steelblue") +
+  ggthemes::theme_economist()
+```
+
+<br>
+
+# Reddit Data
+
+<br>
+
+## What is it?
+
+"Reddit is an American social news aggregation, web content rating, and discussion website. Registered members submit content to the site such as links, text posts, and images, which are then voted up or down by other members." - Wikipedia
+
+<br>
+
+## Package
+
+- [`rreddit`](https://github.com/mkearney/rreddit)
+
+
+## Installation
+
+```{r,eval=F}
+if (!requireNamespace("remotes")) {
+  install.packages("remotes")
+}
+
+# Not published on CRAN, must download from Github
+remotes::install_github("mkearney/rreddit")
+```
+
+<br>
+
+## Usage
+
+Download the data from a specific subreddit.  
+```{r,cache=T}
+## get up to 100 of the most recent posts made to /r/dataisbeautiful
+d <- rreddit::get_r_reddit(subreddit = "dataisbeautiful", 
+                           n = 10000)
+```
+
+We get a lot of fields back.
+```{r}
+dim(d)
+```
+
+Let's look at the data. 
+
+```{r}
+d
+```
+
+
+Let's plot the posting over time.  
+```{r,fig.align="center",fig.width=10,fig.height=5}
+d %>% 
+  transmute(created_at=as.Date(created_utc)) %>% 
+  count(created_at) %>% 
+  ggplot(aes(created_at,n)) +
+  geom_line(size=1,color="grey30") +
+  ggthemes::theme_wsj()
+```
+
+<br>
+
+## Limitations
+
+- Package is a proto-type. Still experimental/buggy. 
+
+<br><br>
+
+# Other Packages 
+
+<br>
+
+- [**rtweet**](https://github.com/ropensci/rtweet): R client for accessing Twitter’s REST and stream APIs.
+  + Need an authorization key to download data. Can take awhile to get.
+- [**WikipediR**](https://cran.r-project.org/web/packages/WikipediR/WikipediR.pdf): A wrapper for the MediaWiki API, aimed particularly at the Wikimedia 'production' wikis, such as Wikipedia. It can be used to retrieve page text, information about users or the history of pages, and elements of the category tree. 
+- [**Rfacebook**](https://cran.r-project.org/web/packages/Rfacebook/Rfacebook.pdf): Provides an interface to the Facebook API.
+  + This package hasn't been updated since 2017. A lot has changed since then. May not work. 
+
