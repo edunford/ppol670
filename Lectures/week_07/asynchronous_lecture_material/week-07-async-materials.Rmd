@@ -35,7 +35,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **In the Synchronous Lecture**
 
-- **Applied walkthrough** using spatial COVID data. 
+- **Applied walkthrough** using spatial data. 
 - Talk about **where to get spatial polygons** for different countries..
 - Explore **other packages** that are useful in exploring and mapping spatial data. 
 
