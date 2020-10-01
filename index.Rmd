@@ -369,7 +369,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
     + [Functions](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#2)
     + [Websites](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#5)
     + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#14)
-    + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28)
+    + [Building a Scraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28)
     + [Legality](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#35)
     + [Dates](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#40)
     
@@ -388,10 +388,16 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html)
 
-<!-- - **Working with Spatial Data in `R`**  -->
-<!--   - The following are materials provided by Trey Billing. He'll walk us through how to utilize spatial data in `R` and some common concepts we need to know when dealing with spatial data.  -->
-<!--     + [Spatial Walkthrough](Lectures/week_13/spatial_walkthrough/walkthrough.html) -->
-<!--     + [Walkthrough Materials](Lectures/week_13/spatial_walkthrough.zip) (`.zip`) -->
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_07/asynchronous_lecture_material/slides/week-07-introduction-to-geospatial.html) -->
+
+<!-- - _Breakout_: [Mapping Conflict in Nigeria](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria.nb.html) -->
+
+<!-- - _Additional Resources_: -->
+<!--   + Retrieve country-level and subnational-level shape files for free from [diva-gis.org](https://www.diva-gis.org/). -->
+<!--   + Explore other popular mapping packages in `R`: -->
+<!--     + [**`ggmap`**](https://github.com/dkahle/ggmap): `ggmap` is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework -->
+<!--     + [**`leaflet`**](https://rstudio.github.io/leaflet/): `leaflet` is one of the most popular open-source JavaScript libraries for interactive maps. It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB. -->
+<!--     + [**`tidycensus`**](https://walker-data.com/tidycensus/): `tidycensus` is an R package that allows users to interface with the US Census Bureau’s decennial Census and five-year American Community APIs and return tidyverse-ready data frames, optionally with simple feature geometry included. -->
 
 <br>
 
