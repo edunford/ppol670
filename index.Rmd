@@ -388,32 +388,41 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_07/asynchronous_lecture_material/slides/week-07-introduction-to-geospatial.html) -->
 
-<!-- - _Breakout_: [Mapping Conflict in Nigeria](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria.nb.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_07/asynchronous_lecture_material/slides/week-07-introduction-to-geospatial.html)
 
-<!-- - _Additional Resources_: -->
-<!--   + Retrieve country-level and subnational-level shape files for free from [diva-gis.org](https://www.diva-gis.org/). -->
-<!--   + Explore other popular mapping packages in `R`: -->
-<!--     + [**`ggmap`**](https://github.com/dkahle/ggmap): `ggmap` is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework -->
-<!--     + [**`leaflet`**](https://rstudio.github.io/leaflet/): `leaflet` is one of the most popular open-source JavaScript libraries for interactive maps. It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB. -->
-<!--     + [**`tidycensus`**](https://walker-data.com/tidycensus/): `tidycensus` is an R package that allows users to interface with the US Census Bureau’s decennial Census and five-year American Community APIs and return tidyverse-ready data frames, optionally with simple feature geometry included. -->
+- **Practice**:
+  + _Breakout_: [**Mapping Conflict in Nigeria**](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria.nb.html)
+
+
+- **Discussion**:
+
+  + Retrieve country-level and subnational-level shape files for free from [diva-gis.org](https://www.diva-gis.org/).
+  + Explore other popular mapping packages in `R`:
+    + [**`ggmap`**](https://github.com/dkahle/ggmap): `ggmap` is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework
+    + [**`leaflet`**](https://rstudio.github.io/leaflet/): `leaflet` is one of the most popular open-source JavaScript libraries for interactive maps. It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB.
+    + [**`tidycensus`**](https://walker-data.com/tidycensus/): `tidycensus` is an R package that allows users to interface with the US Census Bureau’s decennial Census and five-year American Community APIs and return tidyverse-ready data frames, optionally with simple feature geometry included.
 
 <br>
 
 ### _Week 8_: **Text as Data**
 
-<!-- ### _Week 7_: [Text as Data](Lectures/week_07/lecture-week-07-text-as-data-ppol670.html) -->
+<br>
 
-<!-- - **Table of Contents** -->
-<!--   + [Strings](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#3) -->
-<!--   + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#20) -->
-<!--   + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#49) -->
-<!--   + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_07/lecture-week-07-text-as-data-ppol670.html#64) -->
+- [**Asynchronous Material**](Lectures/week_08/asynchronous-lecture-material/week-08-async-materials.html)
 
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html) -->
+
+<!--   - **Table of Contents** -->
+<!--     + [Strings](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3) -->
+<!--     + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20) -->
+<!--     + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#49) -->
+<!--     + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#64) -->
 
 <!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_07/week_07_practice/walkthrough_text-as-data_ppol670.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_07/week_07_practice.zip) as a `.zip`. -->
+<!--   + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html) -->
+<!--     + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout.  -->
+
 
 <br>
 
