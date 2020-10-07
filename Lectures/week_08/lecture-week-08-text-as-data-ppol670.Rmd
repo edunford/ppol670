@@ -1,7 +1,7 @@
 ---
 title: 
     <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
-  <font size=6, face="bold"> Week 7 </font> 
+  <font size=6, face="bold"> Week 8 </font> 
   <br>
   <br>
   <font size=100, face="bold"> Text as Data </font>
@@ -33,7 +33,7 @@ PPOL670 | Introduction to Data Science for Public Policy
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
-Week 7 <!-- Week of the Footer Here -->
+Week 8 <!-- Week of the Footer Here -->
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
@@ -502,18 +502,18 @@ bbc_scraper <- function(url){
   raw = read_html(url)
   # Extract headline
   headline = raw %>% 
-    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/h1") %>% 
-    html_text(.)
-  # Extract data
+    html_nodes(xpath='//*[@id="page"]/div[1]/div[2]/div/div[1]/div[1]/h1') %>% 
+    html_text()
+  # Extract date
   date = raw %>% 
-    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[1]/div/div[1]/div[1]/ul/li/div") %>% 
-    html_text(.) %>% as.Date(.,"%d %b %Y")
+    html_nodes(xpath='//*[@id="page"]/div[1]/div[2]/div/div[1]/div[1]/div[1]/div/div[1]/div[1]/ul/li/div') %>% 
+    html_text()
   # Extract Story
   story = raw %>% 
-    html_nodes(.,xpath="//*[@id='page']/div[1]/div[2]/div/div[1]/div[1]/div[2]/p") %>% 
-    html_text(.) %>% paste0(.,collapse = " ")
+    html_nodes(xpath='//*[@id="page"]/div[1]/div[2]/div/div[1]/div[1]/div[2]/p') %>% 
+    html_text() %>% paste0(.,collapse = " ")
   # Output as data frame and return
-  data.out = data.frame(headline,date,story)
+  data.out = tibble(headline,date,story)
   return(data.out)
 }
 ```
@@ -521,9 +521,9 @@ bbc_scraper <- function(url){
 
 ```{r,results="asis",cache=T}
 require(rvest)
-urls <- c("https://www.bbc.com/news/world-us-canada-47764237",
-          "https://www.bbc.com/news/world-middle-east-50075703",
-          "https://www.bbc.com/news/world-us-canada-50061727")
+urls <- c("https://www.bbc.com/news/election-us-2020-54437852",
+              "https://www.bbc.com/news/world-us-canada-54441986",
+              "https://www.bbc.com/news/election-us-2020-54423497")
 
 # Recall the BBC Scraper we build last class:
 news_data <- c()

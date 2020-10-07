@@ -1,0 +1,97 @@
+---
+title: "PPOL670 | Introduction to Data Science | Week 8"
+subtitle: "Exploring Inaugural Presidential Speeches"
+output: 
+  html_document:
+    df_print: paged
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 4
+---
+
+```{r include=F, paged.print=FALSE}
+knitr::opts_chunk$set(warning = F,error = F,message = F)
+require(tidyverse)
+require(tidytext)
+require(topicmodels)
+```
+
+# Data 
+
+```{r}
+# Read the data in
+inaug_dat <- read_csv("inaug_speeches.csv") 
+
+# Clean it 
+dat <- 
+  inaug_dat %>% 
+  transmute(president = str_to_lower(Name) %>% str_replace_all(.," ","_"),
+            address = case_when(
+                str_detect(`Inaugural Address`,"First") ~ "first",
+                str_detect(`Inaugural Address`,"Second") ~ "second",
+                str_detect(`Inaugural Address`,"Third") ~ "third",
+                str_detect(`Inaugural Address`,"Fourth") ~ "fourth",
+                T ~ "first"),
+            date = as.Date(Date,"%A, %B %d, %Y"),
+            year = lubridate::year(date),
+            length = str_count(text),
+            text = text)
+
+# Adjust for one problematic date
+dat[dat$president=="bill_clinton" & dat$address=="second",]$date = as.Date("1997-01-20")
+dat[dat$president=="bill_clinton" & dat$address=="second",]$year = 1997
+
+head(dat)
+```
+
+<br><br>
+
+# Questions
+
+<br><br>
+
+#### (1) Do speeches get longer over time?
+
+<br><br>
+
+#### (2) Who was the most/least verbose?
+
+<br><br>
+
+#### (3) Convert text to tidy format.
+
+- tokenize using words as the fundamental unit. 
+- Remove all stopwords
+- Remove all digits. 
+
+<br><br>
+
+
+#### (4) What are the 30 most frequent words used _across all inaugural speeches_? Please present this information as a bar plot.
+
+<br><br>
+
+#### (5) Remove the top 30 most common words from the inaugural speech data. 
+
+Treat these as stop words that are particular to inaugural speeches (i.e. every president uses these words).
+
+<br><br>
+
+#### (6) What are the top five words that are most unique to each president's inaugural speech in their first term? Please present this information as a faceted bar graph. 
+
+<br><br>
+
+#### (7) On Average, which president's inaugural speech is most "positive"? Which is most "negative"? 
+
+<br><br>
+
+#### (8) Of presidents elected into a second term of office, are they more positive in their second inaugural speech vis-a-vis their first on average? Plot this information as a graph of your choosing. 
+
+> Note: Don't consider FDR's third and fourth inaugural speeches. 
+
+<br><br>
+
+#### (9) Run a topic model on the inaugural speeches setting `k` (the number of topics you're looking for to `5`). Try and interpret the output. 
+
+<br><br>

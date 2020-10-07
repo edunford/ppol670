@@ -1,0 +1,691 @@
+---
+pagetitle: "PPOL670 | Week 8 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Text-as-Data </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 8 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Learn how to **manipulate strings** (character values) with `stringr`
+- Explore how to **tokenize** and tidy unstructured text data with `tidytext`
+- Delve into removing **stop words** and **stemming** text. 
+- Utilize metrics like frequency counts and inverse document term frequency to **convert text into numerical data**. 
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Examine word usage to **analyze sentiment**. 
+- Learn how to find (latent) topics in text using **topics models**
+- Put some of the skills learned in the lecture to practice with an **applied walkthrough**
+
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 1 hour and 6 minutes.
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## String Manipulation
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3)
+
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ccaf8d59-f4e1-4d23-aec7-ac4c011c5df3&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br>
+
+|Regex | Description |
+|:----:|------------------------------|
+| `+`  | match 1 or more of the previous character |
+| `*`  | match 0 or more of the previous character
+| `?` |the preceding item is optional (i.e., match 0 or 1 of the previous character).
+| `[ ]` | match 1 of the set of things inside the bracket
+| `\\w` | match a "word" character (i.e., letters and numbers).
+| `\\d` | match digits
+| `\\s` | match a space character
+| `\\t` | match a "tab" character
+| `\\n` | match a "newline" character
+| `^`   | the "beginning edge" of a string
+| `$` | the "ending edge" of a string
+| `{n}` | the preceding character is matched n times
+| `[:punct:]` | find punctuation in the text
+
+
+<br>
+
+### Code from the video
+
+```{r,eval=F}
+#'
+#' **String Manipulation with `stringr`**
+#'
+#' > `stringr` package is part of the tidyverse.
+
+require(tidyverse)
+
+
+# How stringr works -----------------------------------------------------------
+
+
+#' `str_<prefix()`
+
+
+    # Examples
+    str_c("a","b")
+
+    str_remove_all("What the %&*!",pattern="[:punct:]")
+
+    str_detect("There is a cat in the street", pattern = "cat")
+
+# String Views: Understanding pattern you're targetting -------------------
+
+
+    text = "There were 5 cats!"
+    text
+
+
+    # Pattern is a word
+    str_view(text, pattern = "cats")
+
+
+    # Pattern is a regular expression
+    str_view(text, pattern = "\\d")
+
+    str_view_all(text, pattern = "\\s")
+
+    str_view(text, pattern = "\\d+\\s+\\w+")
+
+# String Editing  ---------------------------------------------------------
+
+    text # original string
+
+  # Replacement
+
+    str_replace(string = text, pattern = "cats", replacement = "dogs")
+
+
+
+  # Removal
+
+    str_remove(string = text, pattern = "[:punct:]")
+    
+    # Special case of replace
+    str_replace(string = text, pattern = "[:punct:]", replacement = "")
+
+
+
+  # Extraction
+
+    str_extract(text,pattern = "\\d")
+
+
+
+  # Inserting Data (in a string)
+
+      x <- 10 # data that we want to put in a string.
+
+      # (1) Pasting
+
+        str_c("The answer is ",x,"%") # Concatenate the string
+
+            # Base R: Version of this paste0() --- same thing under the hood.
+            paste0("The answer is ",x,"%")
+
+
+      # (2) Gluing
+
+        str_glue("The answer is {x}%")
+
+
+        str_glue("The answer is {x + 10}%")
+
+
+
+
+  #' **SIDE NOTE**: `str_remove` vs. `str_remove_all()`
+
+    text2 =  "Hello! What is your name?"
+
+    # Remove only the first instance of the pattern
+    str_remove(string = text2, pattern = "[:punct:]")
+
+    # Remove only the all instances of the pattern
+    str_remove_all(string = text2, pattern = "[:punct:]")
+
+
+
+    #' _Note_: many `str_` methods have an `_all` implementation.
+    #' e.g `str_replace_all()` and `str_extract_all()`
+
+
+
+# Pattern Detection -------------------------------------------------------
+
+
+    texts <- c("The man drank 5 beers.",
+               "Obama was president.",
+               "I think we should walk 2 blocks.")
+
+
+    # Logical
+    str_detect(texts,pattern = "\\d")
+
+
+    # Index Location
+    str_which(texts,pattern = "\\d")
+
+
+
+    #' **NOTE**: This works really well with `filter()` when dealing with tidy
+    #' data structures
+
+    example_data = tibble(text=texts)
+
+
+    example_data %>%
+      filter(str_detect(text,"\\d"))
+    
+    
+
+# Splitting and Trimming --------------------------------------------------
+
+    # Split a string by some pattern
+    str_split(texts[1],pattern = "\\s")
+    
+    # Cleaning whitespace
+    white_text = "      Hello         "
+    str_trim(white_text)
+    
+
+# Capitalization ----------------------------------------------------------
+
+
+    text3 <- "TeXt MininG iN r"
+
+
+    # Lower case
+    str_to_lower(text3)
+
+
+    # Upper case
+    str_to_upper(text3)
+
+
+    # Title case
+    str_to_title(text3)
+
+
+    # "Sentence case"
+    str_to_sentence(text3)
+```
+
+<br><hr><br>
+
+## Tokenization
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=a6ae4fc3-990f-4eba-ad86-ac4c0126efd3&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(tidytext)
+
+
+
+# Text to process ---------------------------------------------------------
+
+text <-
+  "US opposition politicians and aid agencies have questioned a decision by President Donald Trump to cut off aid to three Central American states --- or so the story reports!"
+
+text
+
+# We want to make this text tidy --- so convert it into a data frame.
+
+text_data <- tibble(text = text)
+text_data
+
+
+
+# Tokenization ------------------------------------------------------------
+
+  # Process of breaking a body of text up into fundamental units that we wish to
+  # analyze
+
+
+  # Split by each word
+  text_data %>%
+    unnest_tokens(output = word, input = text, token = "words") 
+
+
+  # Split by each character
+  text_data %>%
+    unnest_tokens(word,text,token = "characters")
+
+
+  # Split by clusters of words
+  text_data %>%
+    unnest_tokens(word,text,token = "ngrams",n=2)
+
+
+
+  # Special cases
+  tweet = "Hey @professor, this assignment doesn't make sense. #BadTeacher"
+
+  tibble(text = tweet) %>%
+    unnest_tokens(word,text,token = "words")
+
+
+  tibble(text = tweet) %>%
+    unnest_tokens(word,text,token = "tweets")
+
+
+
+# Controlling the Tokenization Process ------------------------------------
+
+  # Don't lower the case
+  text_data %>%
+    unnest_tokens(output = word, input = text,
+                  token = "words",to_lower = F)
+
+
+  # Don't drop the input text
+  text_data %>%
+    unnest_tokens(output = word, input = text,
+                  token = "words",to_lower = F,drop=F)
+
+
+
+# Text to Data ------------------------------------------------------------
+
+
+  # How do we turn text into data? We count!
+
+  text_data %>%
+    unnest_tokens(output = word, input = text, token = "words") %>%
+    count(word,sort=T)
+```
+
+<br><hr><br>
+
+
+## Processing Text
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#32)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=3787e4a7-6362-4791-9df2-ac4c013d0b19&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+require(tidyverse)
+require(tidytext)
+require(rvest) # To download some stories
+
+
+# Get Data with our BBC Scraper -------------------------------------------------------------
+
+
+    # Recall the BBC Scraper we built on the webscraping week.
+    bbc_scraper <- function(url){
+      # Download website
+      raw = read_html(url)
+      # Extract headline
+      headline = raw %>%
+        html_nodes(xpath='//*[@id="page"]/div[1]/div[2]/div/div[1]/div[1]/h1') %>%
+        html_text()
+      # Extract date
+      date = raw %>%
+        html_nodes(xpath='//*[@id="page"]/div[1]/div[2]/div/div[1]/div[1]/div[1]/div/div[1]/div[1]/ul/li/div') %>%
+        html_text()
+      # Extract Story
+      story = raw %>%
+        html_nodes(xpath='//*[@id="page"]/div[1]/div[2]/div/div[1]/div[1]/div[2]/p') %>%
+        html_text() %>% paste0(.,collapse = " ")
+      # Output as data frame and return
+      data.out = tibble(headline,date,story)
+      return(data.out)
+    }
+
+
+    # Let's use it to scrape some news data on Trump having COVID
+    urls <- c("https://www.bbc.com/news/election-us-2020-54437852",
+              "https://www.bbc.com/news/world-us-canada-54441986",
+              "https://www.bbc.com/news/election-us-2020-54423497")
+
+    news_data <- c()
+    for(i in 1:length(urls)){
+      draw <- bbc_scraper(urls[i])
+      news_data <- bind_rows(news_data,draw)
+    }
+
+
+
+# Text to Data ----------------------------------------------------------------
+
+    # Tokenize
+    news_tokens <-
+      news_data %>%
+      mutate(story_id = row_number()) %>%  # Create a unique id for each story
+      unnest_tokens(output = word, input = story, token = "words")
+
+
+    # Convert text to data: Term Frequency
+    news_tokens %>% count(word,sort=T)
+
+
+
+# Removing Stopwords ------------------------------------------------------
+
+
+    # Tidytext provides a dictionary of stop words to remove
+    stop_words
+
+
+    # We can use this dictionary to clean our text
+    news_tokens2 <-
+      news_tokens %>%
+      anti_join(stop_words,by="word")
+
+
+    
+    # Now count again
+    news_tokens2 %>% count(word,sort=T)
+
+
+    # we can also build our own dictionaries to clean out specific words
+    # relevant to the text documents we're processing.
+    my_stop_words = tibble(word = c("president","white","house","presidential"))
+
+    # Then anti join in the same way we did above
+    news_tokens2 <-
+      news_tokens %>%
+      anti_join(stop_words,by="word") %>%
+      anti_join(my_stop_words,by="word")
+
+    # Now count again
+    news_tokens2 %>% count(word,sort=T)
+
+
+# Removing digits ---------------------------------------------------------
+
+    # tidytext doesn't remove digits, so we might want to get rid of those too
+
+    # Let's first detect all the digits
+    news_tokens2 %>%
+      filter(str_detect(word,"\\d")) %>%
+      select(story_id,word)
+
+
+    # Let's then remove them
+    news_tokens3 <-
+      news_tokens2 %>%
+      filter(!str_detect(word,"\\d")) # note the `!` to negate
+
+
+# Stemming ----------------------------------------------------------------
+
+    # Often words are the same but appear different because of their tense.
+
+    # EXAMPLE
+    txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
+    tibble(text = txt) %>%
+      unnest_tokens(word,text) %>%
+      count(word)
+
+
+    #' **Stemming** allows use to reduce a word down to it's fundamental root. (
+    #' Note: Need to install `SnowballC` package )
+    txt = "cleaned cleaning cleaner beauty beautiful killing killed killer"
+    tibble(text = txt) %>%
+      unnest_tokens(word,text) %>%
+      mutate(word = SnowballC::wordStem(word)) %>%
+      count(word)
+
+
+
+    # Let's stem the news articles
+    news_tokens4 <-
+      news_tokens3 %>%
+      mutate(word = SnowballC::wordStem(word))
+
+
+# Text to Data (using Group by) -------------------------------------------
+
+
+    # Now convert to numerical data by counting
+    text_data  <-
+
+      news_tokens4 %>%
+
+      # We want to group by story_id b/c we're interested in how the words are
+      # used within each stories
+      group_by(story_id,headline) %>%
+
+      # Count
+      count(word,sort=T) %>%
+
+      ungroup()
+
+
+    text_data 
+
+
+
+# Inverse Document Frequency ----------------------------------------------
+
+    
+    # Measures how important a word is given all words in the text. Mainly, we
+    # want to up weight infrequently used words across the documents, and down
+    # weight words that are used often by all the documents.
+
+    text_data2 <-
+      
+      text_data %>%
+      
+      bind_tf_idf(term = word,  # Tokens
+                  document = story_id, # Document id differentiating the docs
+                  n = n) # word counts
+
+    text_data2
+
+    
+# Visualize ---------------------------------------------------------------
+
+
+    # Pull the top five words that are unique to each story
+    top_5idf <-
+
+      text_data2 %>%
+
+      # For each story
+      group_by(story_id) %>%
+      
+      # Pull the top five words that are unique to that story
+      arrange(desc(tf_idf)) %>% 
+      slice(1:5) %>% 
+      
+      ungroup()
+    
+    
+    # Visualize as a bar graph
+    top_5idf %>%
+        ggplot(aes( fct_reorder(word,tf_idf), tf_idf,fill=headline)) +
+        geom_col(show.legend = F) +
+        xlab(NULL) +
+        coord_flip() +
+        facet_wrap(~headline,ncol=1,scales="free") +
+        theme(text=element_text(size=12))
+
+
+
+    #' Visualize as a **word cloud**
+    text_data2 %>%
+
+      # Only plot if the word was used more than once
+      filter(n > 1) %>%
+
+      # Let's ignore the military leaders story
+      filter(!str_detect(headline,"military leaders")) %>%
+
+
+      # Visualize
+      ggplot(aes(label = word,
+                 size = tf_idf,
+                 color= tf_idf)) +
+
+      #' We'll borrow the following GEOM from the `ggwordcloud` package (so you
+      #' need to have this package installed)
+      ggwordcloud::geom_text_wordcloud_area() +
+
+      scale_color_gradient(low="darkred",high="steelblue") +
+
+      facet_wrap(~headline,scales="free") +
+
+      theme(text = element_text(size=12))
+```
+
+<br><hr><br>
+
+
+# Practice {.tabset .tabset-pills}
+
+<br>
+
+These exercises are designed to help you reinforce your grasp of the concepts covered in the asynchronous lecture material. 
+
+<br>
+
+## _
+
+## Question 1  {.tabset}
+
+<br>
+
+Clean the following string so that it reads as: `"Clean this string"`.
+
+```{r}
+dirty_string <- "22clean 5674.5This $%&*_@string!"
+```
+
+
+<br>
+
+### _
+
+### Answer
+
+```{r,eval=F}
+# Remove digits
+dirty_string = str_remove_all(dirty_string,"\\d")
+
+# Remove all punctuation 
+dirty_string = str_remove_all(dirty_string,"[:punct:]")
+
+# Looks like we have one lingering punctuation value
+dirty_string =  str_remove_all(dirty_string,"\\$")
+
+# Now to sentence case
+clean_string = str_to_sentence(dirty_string)
+
+clean_string
+```
+
+
+## Question 2  {.tabset}
+
+<br>
+
+Clean the below text as follows:
+
+- Remove excess white space
+- Remove the spacing in the middle of the text (`\n` is computer speak for "new line")
+- Remove the subordinate clauses (i.e. all text in-between the dashes (`-`).) 
+
+```{r}
+dirty_text <-"
+
+    A comedian with no political experience has won the most votes in the first round of Ukraine's presidential elections, according to exit polls.
+
+They say Volodymyr Zelenskiy - who played the president on TV - received 30.4% of the vote, with current leader Petro Poroshenko second on 17.8%.
+
+The two - who have expressed largely pro-EU opinions - are set to take part in a run-off election next month.
+
+
+"
+```
+
+
+
+<br>
+
+### _
+
+### Answer
+
+```{r,eval=F}
+# Clean the white space
+dirty_text <- str_trim(dirty_text)
+
+
+# Remove the spacing in the middle of the test 
+dirty_text <- str_remove_all(dirty_text,"\\n")
+
+
+# Remove the subordinate clauses. 
+
+    # (1) Split the strings by the clauses 
+    text_list <- str_split(dirty_text," - ")
+    
+    # (2) test returned as a list. Only entry though
+    text_list <- text_list[[1]]
+    
+    # (3) drop the indices containing the clauses.
+    text_list <- text_list[c(-2,-4)]
+    
+    # (4) Paste the string back together.
+    dirty_text <-  str_c(text_list,collapse = " ")
+    
+    # (5) Add spaces between the sentences.
+    dirty_text <- str_replace_all(dirty_text,"\\.(?!\\d)",". ") 
+    
+dirty_text 
+```
+

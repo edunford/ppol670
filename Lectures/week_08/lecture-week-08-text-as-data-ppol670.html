@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 7       Text as Data</title>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 8       Text as Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
     <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
@@ -13,7 +13,7 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 7 </font> <br> <br> <font size=100, face="bold"> Text as Data </font>
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 8 </font> <br> <br> <font size=100, face="bold"> Text as Data </font>
 ### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
 
 ---
@@ -28,7 +28,7 @@ PPOL670 | Introduction to Data Science for Public Policy
 
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
 
-Week 7 &lt;!-- Week of the Footer Here --&gt;
+Week 8 &lt;!-- Week of the Footer Here --&gt;
 
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
 
@@ -129,8 +129,8 @@ text
 str_view(text,"cats")
 ```
 
-<div id="htmlwidget-006e0e6c70b7d9828be5" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-006e0e6c70b7d9828be5">{"x":{"html":"<ul>\n  <li>There were 5 <span class='match'>cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a33436ac3cdeb0ac7508" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a33436ac3cdeb0ac7508">{"x":{"html":"<ul>\n  <li>There were 5 <span class='match'>cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 
 ---
@@ -167,8 +167,8 @@ str_view(text,"cats")
 str_view(string = text, pattern = "\\d")
 ```
 
-<div id="htmlwidget-4ac9e345ae2fa529ada3" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4ac9e345ae2fa529ada3">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5<\/span> cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-56a43f716e2b9b07ef87" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-56a43f716e2b9b07ef87">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5<\/span> cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -179,8 +179,8 @@ str_view(string = text, pattern = "\\d")
 str_view_all(string = text, pattern = "\\s")
 ```
 
-<div id="htmlwidget-f80932ab7a4806063307" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f80932ab7a4806063307">{"x":{"html":"<ul>\n  <li>There<span class='match'> <\/span>were<span class='match'> <\/span>5<span class='match'> <\/span>cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b06161d820086d4c0654" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b06161d820086d4c0654">{"x":{"html":"<ul>\n  <li>There<span class='match'> <\/span>were<span class='match'> <\/span>5<span class='match'> <\/span>cats!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -191,8 +191,8 @@ str_view_all(string = text, pattern = "\\s")
 str_view_all(string = text, pattern = "\\d+\\s+\\w+")
 ```
 
-<div id="htmlwidget-dfd9379f562d08f4a5fd" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dfd9379f562d08f4a5fd">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5 cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2a95a5790547650cb8f6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2a95a5790547650cb8f6">{"x":{"html":"<ul>\n  <li>There were <span class='match'>5 cats<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -460,9 +460,9 @@ text_data
 
 ```
 ## # A tibble: 1 x 1
-##   text                                                              
-##   &lt;chr&gt;                                                             
-## 1 US opposition politicians and aid agencies have questioned a deci…
+##   text                                                                          
+##   &lt;chr&gt;                                                                         
+## 1 US opposition politicians and aid agencies have questioned a decision by Pres…
 ```
 
 ---
@@ -653,18 +653,18 @@ stop_words %&gt;% sample_n(10)
 
 ```
 ## # A tibble: 10 x 2
-##    word      lexicon 
-##    &lt;chr&gt;     &lt;chr&gt;   
-##  1 oh        SMART   
-##  2 a         SMART   
-##  3 him       snowball
-##  4 allows    SMART   
-##  5 both      SMART   
-##  6 too       onix    
-##  7 consider  SMART   
-##  8 otherwise SMART   
-##  9 perhaps   onix    
-## 10 everybody SMART
+##    word       lexicon 
+##    &lt;chr&gt;      &lt;chr&gt;   
+##  1 anyone     SMART   
+##  2 about      snowball
+##  3 large      onix    
+##  4 everywhere SMART   
+##  5 worked     onix    
+##  6 i          snowball
+##  7 say        SMART   
+##  8 i'll       SMART   
+##  9 been       SMART   
+## 10 twice      SMART
 ```
 
 ---
@@ -796,9 +796,9 @@ text_data %&gt;%
 
 ```r
 require(rvest)
-urls &lt;- c("https://www.bbc.com/news/world-us-canada-47764237",
-          "https://www.bbc.com/news/world-middle-east-50075703",
-          "https://www.bbc.com/news/world-us-canada-50061727")
+urls &lt;- c("https://www.bbc.com/news/election-us-2020-54437852",
+              "https://www.bbc.com/news/world-us-canada-54441986",
+              "https://www.bbc.com/news/election-us-2020-54423497")
 
 # Recall the BBC Scraper we build last class:
 news_data &lt;- c()
@@ -823,11 +823,11 @@ glimpse(news_data)
 ```
 
 ```
-## Observations: 3
-## Variables: 4
-## $ headline &lt;chr&gt; "Dismay after Trump moves to cut aid to Central …
-## $ date     &lt;date&gt; 2019-03-31, 2019-10-16, 2019-10-16
-## $ story    &lt;chr&gt; "US opposition politicians and aid agencies have…
+## Rows: 3
+## Columns: 4
+## $ headline &lt;chr&gt; "Trump Covid: Biden warns there is 'a lot to be concerned ab…
+## $ date     &lt;chr&gt; "6 October 2020", "6 October 2020", "6 October 2020"
+## $ story    &lt;chr&gt; "Democratic presidential nominee Joe Biden has criticised US…
 ## $ story_id &lt;int&gt; 1, 2, 3
 ```
 
@@ -844,20 +844,20 @@ text_data
 ```
 
 ```
-## # A tibble: 2,471 x 4
-##    headline                                        date       story_id word     
-##    &lt;chr&gt;                                           &lt;date&gt;        &lt;int&gt; &lt;chr&gt;    
-##  1 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 us       
-##  2 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 oppositi…
-##  3 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 politici…
-##  4 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 and      
-##  5 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 aid      
-##  6 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 agencies 
-##  7 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 have     
-##  8 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 question…
-##  9 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 a        
-## 10 Dismay after Trump moves to cut aid to Central… 2019-03-31        1 decision 
-## # … with 2,461 more rows
+## # A tibble: 2,894 x 4
+##    headline                                       date        story_id word     
+##    &lt;chr&gt;                                          &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;    
+##  1 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 democrat…
+##  2 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 presiden…
+##  3 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 nominee  
+##  4 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 joe      
+##  5 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 biden    
+##  6 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 has      
+##  7 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 criticis…
+##  8 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 us       
+##  9 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 president
+## 10 Trump Covid: Biden warns there is 'a lot to b… 6 October …        1 donald   
+## # … with 2,884 more rows
 ```
 
 
@@ -873,21 +873,21 @@ text_data %&gt;%
 ```
 
 ```
-## # A tibble: 1,102 x 3
+## # A tibble: 1,310 x 3
 ## # Groups:   story_id [3]
 ##    story_id word      n
 ##       &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-##  1        3 the      78
-##  2        2 the      71
-##  3        3 to       43
-##  4        1 the      35
-##  5        3 a        34
-##  6        2 to       29
-##  7        2 a        27
-##  8        3 of       27
-##  9        1 to       26
-## 10        2 of       24
-## # … with 1,092 more rows
+##  1        1 the      74
+##  2        3 the      55
+##  3        1 to       52
+##  4        1 a        45
+##  5        1 he       31
+##  6        2 the      31
+##  7        1 and      29
+##  8        3 and      25
+##  9        1 of       22
+## 10        1 on       22
+## # … with 1,300 more rows
 ```
 
 ---
@@ -906,21 +906,21 @@ text_data %&gt;%
 ```
 
 ```
-## # A tibble: 715 x 3
+## # A tibble: 874 x 3
 ## # Groups:   story_id [3]
-##    story_id word            n
-##       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;
-##  1        3 house          20
-##  2        3 impeachment    17
-##  3        3 vote           14
-##  4        2 president      10
-##  5        2 trump          10
-##  6        3 pelosi         10
-##  7        2 border          9
-##  8        2 forces          9
-##  9        2 syria           9
-## 10        2 syrian          9
-## # … with 705 more rows
+##    story_id word             n
+##       &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1        1 trump           21
+##  2        1 president       17
+##  3        3 presidential    12
+##  4        3 debate          11
+##  5        1 house           10
+##  6        1 white           10
+##  7        1 coronavirus      9
+##  8        1 people           9
+##  9        2 positive         8
+## 10        2 president        8
+## # … with 864 more rows
 ```
 
 ---
@@ -936,29 +936,20 @@ text_data %&gt;%
 ```
 
 ```
-## # A tibble: 19 x 2
-## # Groups:   story_id [3]
-##    story_id word   
-##       &lt;int&gt; &lt;chr&gt;  
-##  1        1 60     
-##  2        1 300    
-##  3        1 2017   
-##  4        1 2018   
-##  5        1 500m   
-##  6        1 383m   
-##  7        1 2018   
-##  8        1 700m   
-##  9        1 2017   
-## 10        1 248m   
-## 11        1 175m   
-## 12        1 115m   
-## 13        1 2016   
-## 14        2 9      
-## 15        2 160,000
-## 16        3 1993   
-## 17        3 1868   
-## 18        3 1998   
-## 19        3 1974
+## # A tibble: 32 x 2
+##    story_id word 
+##       &lt;int&gt; &lt;chr&gt;
+##  1        1 19   
+##  2        1 3    
+##  3        1 19   
+##  4        1 19   
+##  5        1 10   
+##  6        1 19   
+##  7        1 24   
+##  8        1 7    
+##  9        1 74   
+## 10        1 12   
+## # … with 22 more rows
 ```
 
 ---
@@ -976,21 +967,20 @@ text_data %&gt;% select(story_id,word)
 ```
 
 ```
-## # A tibble: 1,098 x 2
-## # Groups:   story_id [3]
-##    story_id word       
-##       &lt;int&gt; &lt;chr&gt;      
-##  1        1 opposition 
-##  2        1 politicians
-##  3        1 aid        
-##  4        1 agencies   
-##  5        1 questioned 
-##  6        1 decision   
-##  7        1 president  
-##  8        1 donald     
-##  9        1 trump      
-## 10        1 cut        
-## # … with 1,088 more rows
+## # A tibble: 1,262 x 2
+##    story_id word        
+##       &lt;int&gt; &lt;chr&gt;       
+##  1        1 democratic  
+##  2        1 presidential
+##  3        1 nominee     
+##  4        1 joe         
+##  5        1 biden       
+##  6        1 criticised  
+##  7        1 president   
+##  8        1 donald      
+##  9        1 trump       
+## 10        1 downplaying 
+## # … with 1,252 more rows
 ```
 
 ---
@@ -1014,20 +1004,20 @@ text_data_cnts
 ```
 
 ```
-## # A tibble: 640 x 4
-##    story_id headline                                                word       n
-##       &lt;int&gt; &lt;chr&gt;                                                   &lt;chr&gt;  &lt;int&gt;
-##  1        3 Why won't Democrats vote to authorise impeachment?      impea…    24
-##  2        3 Why won't Democrats vote to authorise impeachment?      hous      20
-##  3        3 Why won't Democrats vote to authorise impeachment?      vote      18
-##  4        2 Turkey-Syria offensive: Not our border, says Donald Tr… presid    10
-##  5        2 Turkey-Syria offensive: Not our border, says Donald Tr… trump     10
-##  6        3 Why won't Democrats vote to authorise impeachment?      pelosi    10
-##  7        2 Turkey-Syria offensive: Not our border, says Donald Tr… border     9
-##  8        2 Turkey-Syria offensive: Not our border, says Donald Tr… forc       9
-##  9        2 Turkey-Syria offensive: Not our border, says Donald Tr… syria      9
-## 10        2 Turkey-Syria offensive: Not our border, says Donald Tr… syrian     9
-## # … with 630 more rows
+## # A tibble: 776 x 4
+##    story_id headline                                              word         n
+##       &lt;int&gt; &lt;chr&gt;                                                 &lt;chr&gt;    &lt;int&gt;
+##  1        1 Trump Covid: Biden warns there is 'a lot to be conce… trump       21
+##  2        1 Trump Covid: Biden warns there is 'a lot to be conce… presid      17
+##  3        3 Kamala Harris v Mike Pence: Why this vice-president … debat       16
+##  4        3 Kamala Harris v Mike Pence: Why this vice-president … preside…    12
+##  5        1 Trump Covid: Biden warns there is 'a lot to be conce… hous        10
+##  6        1 Trump Covid: Biden warns there is 'a lot to be conce… white       10
+##  7        1 Trump Covid: Biden warns there is 'a lot to be conce… coronav…     9
+##  8        1 Trump Covid: Biden warns there is 'a lot to be conce… peopl        9
+##  9        2 Covid: US military leaders quarantine after official… chief        8
+## 10        2 Covid: US military leaders quarantine after official… posit        8
+## # … with 766 more rows
 ```
 
 
@@ -1062,20 +1052,20 @@ text_data_cnts2 %&gt;%
 ```
 
 ```
-## # A tibble: 640 x 4
+## # A tibble: 776 x 4
 ##        n     tf   idf  tf_idf
 ##    &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-##  1    24 0.0532 1.10  0.0585 
-##  2    20 0.0443 0     0      
-##  3    18 0.0399 0.405 0.0162 
-##  4    10 0.0246 0     0      
-##  5    10 0.0246 0     0      
-##  6    10 0.0222 0.405 0.00899
-##  7     9 0.0221 0.405 0.00897
-##  8     9 0.0221 1.10  0.0243 
-##  9     9 0.0221 1.10  0.0243 
-## 10     9 0.0221 1.10  0.0243 
-## # … with 630 more rows
+##  1    21 0.0339 0     0      
+##  2    17 0.0275 0     0      
+##  3    16 0.0455 0     0      
+##  4    12 0.0341 0.405 0.0138 
+##  5    10 0.0162 0.405 0.00655
+##  6    10 0.0162 0.405 0.00655
+##  7     9 0.0145 0.405 0.00590
+##  8     9 0.0145 0     0      
+##  9     8 0.0275 0.405 0.0111 
+## 10     8 0.0275 0     0      
+## # … with 766 more rows
 ```
 
 
@@ -1104,7 +1094,7 @@ text_data_cnts2 %&gt;%
 
 ### Visualize!
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-08-text-as-data-ppol670_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1200,20 +1190,20 @@ sent_text
 ```
 
 ```
-## # A tibble: 66 x 5
-##    headline                                      date       story_id word  value
-##    &lt;chr&gt;                                         &lt;date&gt;        &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-##  1 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 cut      -1
-##  2 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
-##  3 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 crit…    -2
-##  4 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 hurt     -2
-##  5 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
-##  6 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 huge      1
-##  7 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 stop     -1
-##  8 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 boost     1
-##  9 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 cut      -1
-## 10 Dismay after Trump moves to cut aid to Centr… 2019-03-31        1 shoot    -1
-## # … with 56 more rows
+## # A tibble: 56 x 5
+##    headline                                    date        story_id word   value
+##    &lt;chr&gt;                                       &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt;
+##  1 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 fear      -2
+##  2 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 glad       3
+##  3 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 hope       2
+##  4 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 matter     1
+##  5 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 death     -2
+##  6 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 save       2
+##  7 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 threat    -2
+##  8 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 prote…     1
+##  9 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 danger    -2
+## 10 Trump Covid: Biden warns there is 'a lot t… 6 October …        1 prote…     1
+## # … with 46 more rows
 ```
 
 ---
@@ -1228,7 +1218,7 @@ sent_text %&gt;% distinct(word,value) %&gt;%
   coord_flip() + theme(text=element_text(size=20))
 ```
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-55-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-08-text-as-data-ppol670_files/figure-html/unnamed-chunk-55-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1244,7 +1234,7 @@ text_data %&gt;% ungroup %&gt;%
   theme_minimal() + theme(text=element_text(size=20),axis.text.y = element_blank()) 
 ```
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-56-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-08-text-as-data-ppol670_files/figure-html/unnamed-chunk-56-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -1342,7 +1332,7 @@ obama_txt %&gt;%
   theme_minimal() +theme(text = element_text(size=20))
 ```
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-60-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-08-text-as-data-ppol670_files/figure-html/unnamed-chunk-60-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1392,7 +1382,7 @@ obama_txt %&gt;%
 
 ### Example: Inaugural Speeches
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-08-text-as-data-ppol670_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1586,7 +1576,7 @@ ap_top_terms %&gt;%
   theme(text=element_text(size=16))
 ```
 
-&lt;img src="lecture-week-07-text-as-data-ppol670_files/figure-html/unnamed-chunk-69-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture-week-08-text-as-data-ppol670_files/figure-html/unnamed-chunk-69-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 

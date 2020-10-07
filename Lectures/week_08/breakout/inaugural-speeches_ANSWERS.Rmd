@@ -1,0 +1,321 @@
+---
+title: "PPOL670 | Introduction to Data Science | Week 8"
+subtitle: "Exploring Inaugural Presidential Speeches<br>ANSWER KEY"
+output: 
+  html_document:
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 4
+---
+
+```{r include=F, paged.print=FALSE}
+knitr::opts_chunk$set(warning = F,error = F,message = F)
+require(tidyverse)
+require(tidytext)
+require(topicmodels)
+```
+
+# Data 
+
+
+```{r}
+inaug_dat <- read_csv("inaug_speeches.csv") 
+head(inaug_dat)
+```
+
+Clean the data.
+
+```{r}
+dat <- 
+  inaug_dat %>% 
+  transmute(president = str_to_lower(Name) %>% str_replace_all(.," ","_"),
+            address = case_when(
+                str_detect(`Inaugural Address`,"First") ~ "first",
+                str_detect(`Inaugural Address`,"Second") ~ "second",
+                str_detect(`Inaugural Address`,"Third") ~ "third",
+                str_detect(`Inaugural Address`,"Fourth") ~ "fourth",
+                T ~ "first"),
+            date = as.Date(Date,"%A, %B %d, %Y"),
+            year = lubridate::year(date),
+            length = str_count(text),
+            text = text)
+
+# Adjust for one problematic date
+dat[dat$president=="bill_clinton" & dat$address=="second",]$date = as.Date("1997-01-20")
+dat[dat$president=="bill_clinton" & dat$address=="second",]$year = 1997
+
+head(dat)
+```
+
+# Questions
+
+#### (1) Do speeches get longer over time?
+
+> **Answer**: Not really. Though the variation in speech length varies less after 1950. 
+
+```{r}
+dat %>% 
+  ggplot(aes(year,length)) +
+  geom_line() +
+  geom_point() +
+  geom_smooth(method="loess",se=F)
+```
+
+#### (2) Who was the most/least verbose?
+
+> Most Verbose!
+
+```{r}
+dat %>% 
+  filter(max(length)==length) %>% 
+  select(president,length)
+```
+
+> Least Verbose
+
+```{r}
+dat %>% 
+  filter(min(length)==length) %>% 
+  select(president,length)
+```
+
+#### (3) Convert text to tidy format.
+
+- tokenize using words as the fundamental unit. 
+- Remove all stopwords
+- Remove all digits. 
+
+
+```{r}
+text_dat <- 
+  dat %>% 
+  unnest_tokens(word,text) %>% 
+   anti_join(stop_words,by="word") %>% 
+  filter(!str_detect(word,"\\d")) 
+
+head(text_dat)
+```
+
+#### (4) What are the 30 most frequent words used _across all inaugural speeches_? Please present this information as a bar plot.
+
+
+```{r}
+text_dat %>% 
+  count(word,sort = T) %>% 
+  slice(1:30) %>% 
+  ggplot(aes(x=n,y=fct_reorder(word,n))) +
+  geom_col() +
+  labs(x="Term Frequency",y="")
+```
+
+#### (5) Remove the top 30 most common words from the inaugural speech data. 
+
+Treat these as stop words that are particular to inaugural speeches (i.e. every president uses these words).
+
+```{r}
+# Flag the relevant stop words
+inaug_stop_words <-
+  text_dat %>% 
+  count(word,sort = T) %>% 
+  slice(1:39) %>% 
+  select(word)
+
+# And drop
+text_dat2 <- 
+  text_dat %>% 
+  anti_join(inaug_stop_words,by = "word")
+```
+
+
+#### (6) What are the top five words that are most unique to each president's inaugural speech in their first term? Please present this information as a faceted bar graph. 
+
+To answer this we need to know the inverse document term frequency, so we need word usage counts by president.
+```{r}
+pres_tf <- 
+  text_dat2 %>% 
+  filter(address == "first") %>% 
+  group_by(president,year) %>% 
+  count(word) %>% 
+  
+  # let's bind on the inverse document term frequency. 
+  bind_tf_idf(term = word,
+              document = president,
+              n = n )
+
+pres_tf
+```
+
+
+Now to select the top 5 words unique to each president.
+
+```{r}
+five_unique <-
+  pres_tf %>% 
+  group_by(president,year) %>% 
+  arrange(desc(tf_idf)) %>% 
+  slice(1:5)  %>% 
+  ungroup
+
+five_unique
+```
+
+
+Finally, let's plot as a bar plot. 
+
+```{r,fig.align="center",fig.height=15,fig.width=10}
+five_unique %>% 
+  
+  # This line orders the presidents temporally rather than alphabetically
+  mutate(president = fct_reorder(president,year)) %>% 
+  
+  ggplot(aes(x=tf_idf,y=fct_reorder(word,tf_idf))) +
+  geom_col() +
+  facet_wrap(~president,scales="free_y",ncol=3) +
+  labs(y="Inverse Document Term Frequency",x="") +
+  theme(text = element_text(size=18))
+```
+
+
+#### (7) On Average, which president's inaugural speech is most "positive"? Which is most "negative"? 
+
+Let's examine the sentiment of the speeches.
+
+```{r}
+text_dat_sent <- 
+  text_dat2 %>% 
+  inner_join(get_sentiments("afinn"),by='word')
+
+text_dat_sent
+```
+
+Most positive.
+
+```{r}
+text_dat_sent %>% 
+  group_by(president,year,address) %>% 
+  summarize(ave_score = mean(value)) %>% 
+  ungroup %>% 
+  filter(ave_score == max(ave_score))
+```
+Most negative.
+
+```{r}
+text_dat_sent %>% 
+  group_by(president,year,address) %>% 
+  summarize(ave_score = mean(value)) %>% 
+  ungroup %>% 
+  filter(ave_score == min(ave_score))
+```
+
+#### (8) Of presidents elected into a second term of office, are they more positive in their second inaugural speech vis-a-vis their first on average? Plot this information as a graph of your choosing. 
+
+> Note: Don't consider FDR's third and fourth inaugural speeches. 
+
+
+```{r}
+# Only consider presidents who made it to a second term.
+two_timers = 
+  text_dat_sent %>% 
+  filter(address == "second") %>% 
+  distinct(president)
+
+# Filter the text data and aggregate
+sent_first_second <- 
+  text_dat_sent %>% 
+  inner_join(two_timers,by="president") %>% 
+  filter(!address %in% c("third","fourth")) %>% 
+  group_by(president,address) %>% 
+  summarize(score = mean(value))
+```
+
+
+Now plot. 
+```{r}
+# Plot as a bar graph
+sent_first_second %>% 
+  ggplot(aes(x=score,y=president,fill=address)) +
+  geom_col(position="dodge") +
+  geom_vline(xintercept = 0) +
+  labs(x="Sentiment Score",y="",fill="Term in Office") +
+  ggthemes::scale_fill_colorblind() +
+  ggthemes::theme_hc() +
+  theme(legend.position = "top")
+```
+
+Let's present this same information as a difference. 
+
+```{r}
+# Reorganize the data 
+sent_first_second %>% 
+  pivot_wider(names_from = address,values_from = score) %>% 
+  mutate(diff = second - first) %>% 
+  
+  ggplot(aes(x=diff,y=president,fill=diff>0)) +
+  geom_col(show.legend = F) +
+  geom_vline(xintercept = 0) +
+  scale_fill_manual(values=c("darkred","steelblue")) +
+  labs(x="Difference in the Sentiment Score from First to Second Term",
+       y="") +
+  ggthemes::theme_hc() +
+  theme(legend.position = "top")
+```
+
+
+#### (9) Run a topic model on the inaugural speeches setting `k` (the number of topics you're looking for to `5`). Try and interpret the output. 
+
+Let's subset the text and convert to a document term matrix. 
+```{r}
+dtm <- 
+  text_dat2 %>% 
+  mutate(id = str_glue("{president} ({address})")) %>% 
+  group_by(id) %>% 
+  
+  # Dropping some additional words
+  filter(!str_detect(word,"american")) %>% 
+  filter(!str_detect(word,"president")) %>% 
+  
+  # Stem
+  # mutate(word = SnowballC::wordStem(word)) %>%
+  
+  count(word) %>% 
+  ungroup %>% 
+  cast_dtm(document = id,term = word,value = n) 
+
+dtm
+```
+
+Let's run a topic model with 5 possible topics.
+
+```{r}
+inaug_lda <- LDA(dtm,k=5,control = list(seed = 1234))
+```
+
+Let's explore the topic output. 
+
+What are the top ten words most associated with each topic?
+
+```{r,fig.width=5,fig.height=10}
+# Extract the term to topic associations
+inaug_lda %>% 
+  tidy(metric="beta") %>% 
+  
+  # Convert topics metrics to proportions
+  group_by(topic) %>% 
+  mutate(prop = beta/sum(beta)) %>% 
+  
+  # Grab the top 10
+  arrange(desc(prop)) %>% 
+  slice(1:5) %>% 
+  ungroup %>% 
+  
+  # Rename topic label
+  mutate(topic_label = str_glue("Topic {topic}")) %>% 
+  
+  # Plot as word cloud
+  ggplot(aes(y=term,x=prop,fill=prop)) +
+  geom_col(show.legend = F) +
+  facet_wrap(~topic_label,scales="free",ncol=1) 
+```
+
+Can we associate meaning to these topics?
