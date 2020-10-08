@@ -393,6 +393,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - **Practice**:
   + _Breakout_: [**Mapping Conflict in Nigeria**](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria.nb.html)
+  + [**_Answers to the Breakout_**](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria_ANSWERS.nb.html)
 
 
 - **Discussion**:
