@@ -1,0 +1,85 @@
+---
+pagetitle: "PPOL670 | Week 9 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Introduction to Statistical Learning </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 9 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Get a general introduction to **statistical learning** and what it is all about.
+- Talk about **supervised learning** problems.
+- Think through **cross-validation** as a strategy to deal with over-fitting.
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Delve into **data pre-processing**.
+- Explore data pre-processing in `R` using the `recipes` package. 
+- Introduction to the `caret` package API, which we'll use to run our machine learning models. 
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 1 hour
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Statistical Learning
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=adcf5691-dbf9-4739-9592-ac4100e80b87&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Supervised Learning 
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#13)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=efec0e38-7633-41e1-8ea0-ac4100eda11c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+
+## Cross-Validation
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#32)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ef5e0d0c-e7da-479c-9614-ac4100f78b3f&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+
+<br><hr><br>

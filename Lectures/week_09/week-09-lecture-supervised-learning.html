@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title> PPOL670 | Introduction to Data Science for Public Policy   Week 9       Introduction to Statistical Learning</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  eric.dunford@georgetown.edu" />
+    <link rel="stylesheet" href="gu-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy </font> <font size=6, face="bold"> Week 9 </font> <br> <br> <font size=100, face="bold"> Introduction to Statistical Learning </font>
+### <font class = "title-footer">  Prof. Eric Dunford  ◆  Georgetown University  ◆  McCourt School of Public Policy  ◆  <a href="mailto:eric.dunford@georgetown.edu" class="email">eric.dunford@georgetown.edu</a></font>
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="slide-footer"&gt;&lt;span&gt; 
+PPOL670 | Introduction to Data Science for Public Policy
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Week 9  &lt;!-- Week of the Footer Here --&gt;
+
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+
+Introduction to Statistical Learning &lt;!-- Title of the lecture here --&gt;
+
+&lt;/span&gt;&lt;/div&gt; 
+
+---
+class: outline
+
+# Outline for Today 
+
+- **_What is Statistical Learning?_**
+
+- Talk about **_Supervised Learning_** and issues of over/under fitting
+
+- Delve into **_Cross-Validation_**
+
+- Discussion **_preprocessing data_**
+
+- Introduction to the **`caret`** package 
+
+&lt;br&gt;
+
+&gt; This week covers the basics/theory, next time we meet we'll apply what we learned.
+
+---
+
+class: newsection
+
+# Statistical Learning
+
+---
+
+### What is statistical learning?
+
+The aim is to model the  relationship between the outcome and some set of features features
+
+`$$y = f(X) + \epsilon$$`
+
+where 
+
+- `\(y\)` is the outcome/dependent/response variable 
+
+- `\(X\)` is a matrix of predictors/features/independent variables 
+
+- `\(f\)` is some fixed but unknown function mapping `\(X\)` to `\(y\)`. The "signal" in the data.
+
+- `\(\epsilon\)` is some random error term. The "noise" in the data.
+
+---
+
+### What is statistical learning?
+
+Statistical learning refers to a set of methods/approaches for estimating `\(f(.)\)` 
+
+`$$\hat{y} = \hat{f}(X)$$`
+
+Where `\(\hat{f}(X)\)` is an approximation of the "true" functional form, `\(f(X)\)`, and `\(\hat{y}\)` is the predicted value.
+
+The aim is to find a `\(\hat{f}(X)\)` that minimizes the **_reducible_ error**.
+
+--
+
+`$$E(y - \hat{y})^2$$`
+`$$E[f(X) + \epsilon -  \hat{f}(X)]^2$$`
+
+`$$\underbrace{E[f(X) -\hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{var(\epsilon)}_{\text{Irreducible}}$$`
+
+---
+
+### Reducible vs. Irreducible Error
+
+`$$\underbrace{E[f(X) -\hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{var(\epsilon)}_{\text{Irreducible}}$$`
+
+
+
+The **"reducible" error** is the systematic **signal**. We can reduce this error by using different functional forms, better data, or a mixture of those two. 
+
+The **"irreducible" error** is associated with the random **noise** around `\(y\)`. 
+
+Statistical learning is concerned with minimizing the reducible error. However, our predictions  will never be perfect given the irreducible error. 
+
+There is a lower bound on how accurate we can be.
+
+---
+
+### Inference vs. Prediction
+
+Two reasons we want to estimate `\(f(\cdot)\)`: 
+
+--
+
+- **Inference**
+
+  + Goal is **_interpretation_**
+  
+      - _Which predictors are associated with the response?_
+      - _What is the relationship between the response and the predictors?_
+      - _Is the relationship causal?_
+      
+  + **&lt;font color = "darkred"&gt; Key limitation&lt;/font&gt;**: 
+  
+      - using functional forms that are easy to interpret (e.g. lines) might be far away from the true function form of `\(f(X)\)`.
+  
+---
+  
+### Inference vs. Prediction
+
+Two reasons we want to estimate `\(f(\cdot)\)`: 
+  
+- **Prediction**
+
+  + Goal is to **_predict_** future values of the outcome, `\(\hat{y}_{t+1}\)`
+  
+  + `\(\hat{f}(X)\)` is treated as a **&lt;font color=#282828&gt;_black box_&lt;/font&gt;**
+      + model doesn't need to be interpretable as long as it provides an accurate prediction of `\(y\)`.
+  
+  + **&lt;font color = "darkred"&gt; Key limitation&lt;/font&gt;**: 
+  
+      - &lt;u&gt;Interpretation&lt;/u&gt;: it is difficult to know which variables are doing the heavy lifting and the exact influence of `\(x\)` on `\(y\)`.
+      
+
+---
+
+### Supervised vs. Unsupervised Learning
+
+- &lt;u&gt;**Supervised Learning**&lt;/u&gt; (our focus today)
+
+  - for each observation of the predictor measurement `\(x_i\)` there is an associated response measurement `\(y_i\)`. In essence, there is an _outcome_ we are aiming to accurately predict or understand.
+  
+  - use regression and classification methods
+  
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+  
+ 
+---
+  
+### Supervised vs. Unsupervised Learning
+  
+- &lt;u&gt;**Unsupervised Learning**&lt;/u&gt;  
+
+  - we observe a vector of measurements `\(x_i\)` but _no_ associated response `\(y_i\)`.
+  
+  - "unsupervised" because we lack a response variable that can supervise our analysis.
+  
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+  
+
+---
+
+class: newsection
+
+# Supervised Learning
+
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+--
+
+- **Quantitative** outcome
+
+  + a continuous/interval-based outcome: e.g. housing price, number of bills passed, stock market prices, etc.
+  
+  + Regression Methods: linear, penalization, generalized additive models (GAMs) 
+  
+  + Both parametric and non-parametric ways of approximating `\(f(\cdot)\)`
+
+
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+- **Quantitative** outcome
+
+- **Qualitative** outcome
+
+  + a discrete outcome
+  
+      + _Binary_: War/No War; Sick/Not Sick
+      
+      + _Ordered_: Don't Support, Neutral, Support
+      
+      + _Categorical_: Cat, Dog, Bus, ... 
+      
+  + Classification Methods: logistic regression, naive Bayes, support vector machines, neural networks
+  
+---
+
+### Regression vs. Classification
+
+_Outcomes_ come in many forms. How the outcome is distributed will determine the methods we use. 
+
+- **Quantitative** outcome
+
+- **Qualitative** outcome
+ 
+- Some methods can be used on either outcome type
+  - K nearest neighbors
+  - tree-based methods (random forest, gradient boosting)
+
+- Every model has specific **tuning parameters** that we can use to optimize performance. 
+  
+---
+
+### Interpretation vs. Flexibility
+
+&lt;br&gt;
+.center[_"There is no free lunch in statistics"_]
+
+.pull-left[
+- No one method dominates all others over all possible data sets. 
+
+- It is an important task to decide for any given set of data which method produces the best results
+
+- Balance between  model interpretation and model flexibility
+]
+
+.pull-right[
+&lt;br&gt;&lt;br&gt;
+&lt;img src="Figures/interpret-vs-flexible.png",width=700px,height=700&gt;
+]
+
+---
+
+### Under-fitting (Bias)
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Over-fitting (Variance)
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Model Accuracy
+
+- We need to quantify the extent to which the predicted response value for a given observation is close to the true response value for that observation
+
+--
+
+- There are many metrics for model accuracy. Which metric you use depends on:
+
+  + type of learning problem you are trying to solve 
+  
+  + what you aspect of the model you're aiming to optimize
+  
+--
+  
+- In the regression setting, the most common accuracy metric is _mean squared error_ (MSE).
+
+`$$MSE = \frac{\sum^N_{i=1} (y_i - \hat{f}(X_i))^2}{N}$$`
+---
+
+
+### Model Accuracy
+
+`$$MSE = \frac{\sum^N_{i=1} (y_i - \hat{f}(X_i))^2}{N}$$`
+
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Model Accuracy
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Training and Test Data
+
+- Utilize accuracy metrics to assess model performance, &lt;u&gt;_but we can always make our models flexible enough to minimize the MSE_&lt;/u&gt;. 
+
+--
+
+- Need to see how accurate the model is on **_previously unseen data_**.
+
+- Data is usually hard to come by so we partition the data we _do have_ into **training** and **test** sets. The idea is to hold the test data back and &lt;u&gt;never look at it&lt;/u&gt;.
+
+--
+
+- Use the test data to calculate the **out of sample predictive accuracy**. 
+
+- By holding off some data we can reduce the tendency to **overfit** the data.
+
+---
+
+### Model accuracy on New Data 
+
+
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Bias-Variance Tradeoff
+
+.center[&lt;img src = "Figures/bias-variance-tradeoff.png",width=800&gt;]
+
+- **high variance**: new data, new pattern.
+
+- **high bias**: rigid pattern, doesn't reflect the data 
+
+
+---
+
+### Bias-Variance Tradeoff
+
+.center[&lt;img src = "Figures/bias-variance-tradeoff.png"&gt;]
+
+- Reality is a **tradeoff**
+
+  - More variance, less bias
+  
+  - More bias, less variance
+
+---
+
+class: newsection
+
+# Cross-Validation
+
+---
+
+### What is cross-validation?
+
+&lt;br&gt;
+
+- As we saw, the training error will always be less than the test error due to over-fitting. We need to see how our model performs on data it wasn't trained on (test error)
+
+- "**Re-sampling**" involves repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the fitted model. 
+
+- We can use re-sampling techniques to **generate estimates for the test error**. 
+
+- Let's look at **_three cross-validation approaches_**.
+
+
+---
+
+### Validation Set Approach
+
+- Involves randomly dividing the data into two comparably sized samples, a training set and a validation/test/hold-out set.
+
+- Model is fit to the training set then used to predict the response in the validation set. 
+
+- The resulting error provides an estimate of the test error rate. 
+&lt;br&gt;
+.center[
+&lt;img src="Figures/validation-set.png"&gt;
+]
+
+---
+
+### Validation Set Approach
+
+**&lt;font color = "darkred"&gt;Drawbacks&lt;/font&gt;**
+
+- Highly variable: test error rate is sensitive to the estimates that are in the training and test set. 
+
+- Overestimates the test error: only trained on one sub-sample of the data. Models tend to perform worse when trained on less data. 
+&lt;br&gt;
+.center[
+&lt;img src="Figures/validation-set.png"&gt;
+]
+
+---
+
+### "Leave-One-Out" Cross-Validation (LOOCV)
+
+- Involves splitting the set of observations into two parts. Rather than creating two subsets of comparable size, a single observation is used for the validation set. 
+
+- Estimate the model on `\(N-1\)` observation, then test on the remaining observation.
+
+- Do this `\(N\)` times and average the test error. 
+
+![:space 2]
+
+.center[
+&lt;img src="Figures/LOOCV.gif"&gt;
+]
+
+---
+
+### "Leave-One-Out" Cross-Validation (LOOCV)
+
+Far less biased than the validation approach. Does not overestimate the test error. No randomness in the training/test split
+
+**&lt;font color = "darkred"&gt;Drawbacks&lt;/font&gt;**: 
+
+- Computationally expensive: you have to re-estimate the same model N times!
+
+![:space 2]
+
+.center[
+&lt;img src="Figures/LOOCV.gif"&gt;
+]
+
+---
+
+
+### `\(K\)`-Fold Cross-Validation
+
+- Involves randomly dividing the data into `\(k\)` groups (or folds). Model is trained on `\(k-1\)` folds, then test on the remaining fold. 
+
+- Process is repeated `\(k\)` times, each time using a new fold. Offers `\(k\)` estimates of the test error, which we average. 
+
+&lt;br&gt;&lt;br&gt;
+
+.center[
+&lt;!-- &lt;img src="Figures/k-fold-validation.png"&gt; --&gt;
+&lt;img src="Figures/KfoldCV.gif"&gt;
+]
+
+---
+
+### `\(K\)`-Fold Cross-Validation
+
+- Less computationally expensive (LOOCV is a special case of `\(K\)`-fold where `\(k = n\)`) 
+
+- Gives more accurate estimates of the test error rate than LOOCV
+
+&lt;br&gt;&lt;br&gt;
+
+.center[
+&lt;!-- &lt;img src="Figures/k-fold-validation.png"&gt; --&gt;
+&lt;img src="Figures/KfoldCV.gif"&gt;
+]
+
+
+---
+
+class:newsection
+
+# Pre-Processing Data
+
+---
+
+### Feature Cleaning 
+
+We've already talked about **data manipulation**.
+
+- raw data to **tidy** data
+- transform the **unit of analysis**
+- **class** management (e.g. characters to dates)
+
+--
+
+&lt;br&gt;
+
+However, often our variables exist on different scales, which can complicate machine learning and statistics tasks.
+
+By complicate, I mean it can make **optimization problems intractable**. 
+
+---
+
+### Feature Cleaning 
+
+Feature (or variable) cleaning is the process of curating a **design matrix** for a machine learning or modeling task. 
+
+&lt;br&gt;
+
+&gt; In statistics, a **design matrix** (also known as regressor matrix or model matrix) is a matrix of values of explanatory variables of a set of objects, often denoted by X. Each row represents an individual object, with the successive columns corresponding to the variables and their specific values for that object. _We saw this earlier!_
+
+&lt;br&gt;
+
+This is known as data **pre-processing** the data.
+
+---
+
+### Feature Cleaning 
+
+
+
+
+```r
+D %&gt;% ggplot(aes(x,y)) + geom_point()
+```
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Feature Cleaning 
+
+
+
+```r
+D %&gt;% 
+  gather(var,val) %&gt;% 
+  ggplot(aes(val,fill=var)) + geom_density()
+```
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Feature Cleaning 
+
+Variables at different scales can impact estimation. The coefficient estimates are scaled down (i.e. a unit change in x has a really really small unit change in y). 
+
+
+```r
+lm(y~x,data=D) %&gt;% 
+  coef(.) %&gt;% 
+  round(.,6)
+```
+
+```
+## (Intercept)           x 
+##   -0.921649    0.000002
+```
+
+
+---
+
+### Scaling
+
+**scaling** is the process of transforming our data so that it all falls within the same numerical range. Below `x` is transformed to have a mean of `0` and a variance of `1`.
+
+
+```r
+D %&gt;% 
+  mutate(x = scale(x)) %&gt;% 
+  gather(var,val) %&gt;% 
+  ggplot(aes(val,fill=var)) +geom_density(alpha=.5)
+```
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Scaling
+
+**scaling** is the process of transforming our data so that it all falls within the same numerical range. Below `x` is transformed to have a mean of `0` and a variance of `1`.
+
+
+```r
+D %&gt;% 
+* mutate(x = (x-mean(x))/sd(x) ) %&gt;%
+  gather(var,val) %&gt;% 
+  ggplot(aes(val,fill=var)) +geom_density(alpha=.5)
+```
+
+&lt;img src="week-09-lecture-supervised-learning_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Scaling
+
+The scaled versions of our variables behave better. 
+
+
+```r
+D %&gt;% 
+  mutate(x = (x-mean(x))/sd(x) ) %&gt;%
+  lm(y~x,data=.) %&gt;% 
+  coef(.) %&gt;% 
+  round(.,3)
+```
+
+```
+## (Intercept)           x 
+##       0.000       0.899
+```
+
+---
+
+### Data preprocessing
+
+&lt;br&gt;&lt;br&gt;
+
+Common pre-processing tasks:
+
+- **Scaling** and transforming continuous values 
+
+- Converting categorical variables to **dummy** variables.
+
+- Detecting and **imputing** missing values
+
+
+---
+
+### `recipes()` package
+
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;
+.center[&lt;img src="Figures/recipes_hex_thumb.png",width=700&gt;]
+]
+
+.pull-right[
+[`recipes`](https://tidymodels.github.io/recipes/) package is an alternative method for creating and preprocessing design matrices that can be used for modeling or visualization.
+
+
+The idea of the `recipes` package is to define a recipe or blueprint that can be used to sequentially define the encodings and preprocessing of the data (i.e. “feature engineering”).
+]
+
+
+---
+
+### `recipes()` package
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;
+.center[&lt;img src="Figures/recipes_hex_thumb.png"&gt;]
+]
+.pull-right[
+The basic setup of `recipes()`:
+
+- Initialize a recipe object
+
+- Specify the transformation steps
+
+- Estimates the required quantities and statistics required by any operations.
+
+- Apply the transformations 
+]
+
+---
+
+### `recipe()`
+
+&lt;br&gt;
+`recipe()` provides a way to systematically transform our data and apply it to any _new_ versions of the data.
+
+&lt;br&gt;
+
+This becomes really important when pre-processing **training data** that we then need to apply to **test data** in order to calculate our out of sample predictions.
+
+&lt;br&gt; 
+
+The `prep()` function allows us to use the same statistics (like the mean when centering) that we used to process the old and new data. 
+
+Then `bake()` allows allows us to seamlessly and implement those steps. 
+
+---
+
+class: newsection
+
+# `caret` API
+
+---
+
+### Machine learning in `R`
+
+&lt;br&gt;&lt;br&gt;
+
+- There are LARGE assortment of ML packages in `R`: essentially one for every possible learning method. 
+
+- Each package has it's own unique ways of reading data in, outputting results, and post-processing. 
+
+- This can make it difficult to implement different types of models quickly.
+
+- The [`caret` package](http://topepo.github.io/caret/index.html) eases this process by creating a system of wrapper functions that make it very easy to implement models
+
+
+---
+
+### `caret` 
+
+- The main `caret` function is `train()`, 
+
+  + `method = ` argument allows us to select a specific machine learning algorithm. 
+  
+  + `trControl = ` argument allows us to feed it a `trainControl()` function which allows use to easily set cross-validation specifications. 
+  
+  + `metric =` argument allows us to specify what sorts of accuracy metrics the best performing model should be evaluated by. 
+  
+  + `tuneGrid =` argument allows us to easily try out different tuning parameters (more on this later).
+  
+  
+---
+
+
+```r
+require(caret)
+library(mlbench) # Holds the Sonar Data 
+data(Sonar)
+str(Sonar[, 1:10])
+```
+
+```
+## 'data.frame':	208 obs. of  10 variables:
+##  $ V1 : num  0.02 0.0453 0.0262 0.01 0.0762 0.0286 0.0317 0.0519 0.0223 0.0164 ...
+##  $ V2 : num  0.0371 0.0523 0.0582 0.0171 0.0666 0.0453 0.0956 0.0548 0.0375 0.0173 ...
+##  $ V3 : num  0.0428 0.0843 0.1099 0.0623 0.0481 ...
+##  $ V4 : num  0.0207 0.0689 0.1083 0.0205 0.0394 ...
+##  $ V5 : num  0.0954 0.1183 0.0974 0.0205 0.059 ...
+##  $ V6 : num  0.0986 0.2583 0.228 0.0368 0.0649 ...
+##  $ V7 : num  0.154 0.216 0.243 0.11 0.121 ...
+##  $ V8 : num  0.16 0.348 0.377 0.128 0.247 ...
+##  $ V9 : num  0.3109 0.3337 0.5598 0.0598 0.3564 ...
+##  $ V10: num  0.211 0.287 0.619 0.126 0.446 ...
+```
+
+
+```r
+# R == "Rock", M == "Mine"
+table(Sonar$Class) 
+```
+
+```
+## 
+##   M   R 
+## 111  97
+```
+
+---
+
+
+
+```r
+# Another way to break the data into training and test datasets
+set.seed(998)
+inTraining &lt;- createDataPartition(Sonar$Class, 
+                                  p = .75, 
+                                  list = FALSE)
+training &lt;- Sonar[ inTraining,]
+testing  &lt;- Sonar[-inTraining,]
+
+dim(training)
+```
+
+```
+## [1] 157  61
+```
+
+```r
+dim(testing)
+```
+
+```
+## [1] 51 61
+```
+
+
+---
+
+
+```r
+## 10-fold CV 
+fitControl &lt;- trainControl(method = "cv",number = 10)
+
+fit &lt;- train(Class ~ ., 
+             data = training, 
+             method = "gbm", 
+             trControl = fitControl,
+             verbose = FALSE)
+fit
+```
+
+```
+## Stochastic Gradient Boosting 
+## 
+## 157 samples
+##  60 predictor
+##   2 classes: 'M', 'R' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 141, 141, 141, 141, 141, 142, ... 
+## Resampling results across tuning parameters:
+## 
+##   interaction.depth  n.trees  Accuracy   Kappa    
+##   1                   50      0.7654167  0.5255290
+##   1                  100      0.7962500  0.5875515
+##   1                  150      0.8220833  0.6407000
+##   2                   50      0.7962500  0.5877405
+##   2                  100      0.8279167  0.6495995
+##   2                  150      0.8150000  0.6238744
+##   3                   50      0.8475000  0.6922716
+##   3                  100      0.8537500  0.7047619
+##   3                  150      0.8412500  0.6780808
+## 
+## Tuning parameter 'shrinkage' was held constant at a value of 0.1
+## 
+## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were n.trees = 100, interaction.depth =
+##  3, shrinkage = 0.1 and n.minobsinnode = 10.
+```
+
+
+---
+
+
+```r
+pred &lt;-  predict(fit,newdata = testing)
+table(pred,testing$Class)
+```
+
+```
+##     
+## pred  M  R
+##    M 23  6
+##    R  4 18
+```
+
+---
+
+
+```r
+confusionMatrix(table(pred,testing$Class))
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##     
+## pred  M  R
+##    M 23  6
+##    R  4 18
+##                                           
+##                Accuracy : 0.8039          
+##                  95% CI : (0.6688, 0.9018)
+##     No Information Rate : 0.5294          
+##     P-Value [Acc &gt; NIR] : 4.341e-05       
+##                                           
+##                   Kappa : 0.6047          
+##                                           
+##  Mcnemar's Test P-Value : 0.7518          
+##                                           
+##             Sensitivity : 0.8519          
+##             Specificity : 0.7500          
+##          Pos Pred Value : 0.7931          
+##          Neg Pred Value : 0.8182          
+##              Prevalence : 0.5294          
+##          Detection Rate : 0.4510          
+##    Detection Prevalence : 0.5686          
+##       Balanced Accuracy : 0.8009          
+##                                           
+##        'Positive' Class : M               
+## 
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,335 @@
+---
+title: "PPOL670 | Introduction to Data Science | Week 9"
+subtitle: "Data Preprocessing with the `recipes` package"
+output: 
+  html_notebook:
+    df_print: paged
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 4
+---
+
+```{r include=F, paged.print=FALSE}
+knitr::opts_chunk$set(warning = F,error = F,message = F)
+require(tidyverse)
+require(tidytext)
+require(topicmodels)
+```
+
+## Overview 
+
+In this walkthrough, we'll explore how pre-process data using the `recipes` package. Data preprocessing is the process of preparing our data for modeling. As we've seen, data comes in all shapes and sizes. Some data is dirty and needs to be cleaned before building a model with it. Specifically, data can be: 
+
+- Scaled and/or skewed
+- Missing
+- Be non-numeric (and thus not something a machine can process) -- e.g. categorical or character data. 
+
+Pre-processing is necessary step used to resolve these issues.Some common pre-processing tasks are:
+
+- **Scaling** and transforming continuous values 
+
+- Converting categorical variables to **dummy** variables.
+
+- Detecting and **imputing** missing values
+
+## Dependencies 
+
+Here are the packages we'll use today in this walkthrough. 
+
+```{r}
+require(tidyverse) 
+require(recipes) # For data pre-processing
+require(rsample) # For generating train-test splits
+```
+
+## Data 
+
+The provided data captures whether or not a person will pay back a bank loan. The outcome variable is `status`, which is a qualitative outcome that takes one of two values: `good` if the individual has good credit, otherwise `bad`. There are `13` other variables tracking features about the debtor and the loan. 
+
+We'll encounter this data later on when we learn more about modeling. Right now, we'll use it to walkthrough pre-processing concepts. 
+
+```{r,echo=F}
+credit_data <- 
+  read_csv("Data/credit_data.csv") %>% 
+  mutate_if(is.character,as.factor) %>% 
+  janitor::clean_names()
+
+head(credit_data)
+```
+
+
+## Train-Test Split 
+
+Before doing _anything_ with our data, we want to split it into a training and test dataset. We don't want to learn anything about our test data, and that even includes summary statistics. Thus before we look at and explore our data (to figure out how to preprocess it), we want to split it into a training and test dataset. 
+
+
+We can easily break our data up into a training and test dataset using the `rsample` package. First, we want to generate a split object using the `initial_split()` function. Note that the `prop=` argument dictates the proportion of the data we want to keep as training data. 
+
+```{r}
+set.seed(123) # We set a seed so we can reproduce the random split
+splits <- initial_split(credit_data,prop = .75)
+splits
+```
+
+Then break into training and test datasets. 
+
+```{r}
+train_dat <- training(splits)
+test_dat <- testing(splits)
+```
+
+If we look at the number of observations, we see that we get precisely the proportions that were requested in each dataset.
+
+```{r}
+nrow(train_dat)/nrow(credit_data)
+```
+```{r}
+nrow(test_dat)/nrow(credit_data)
+```
+> _Note_: **_never_** look at the training data. Maintaining this rule is how we can do good social science using machine learning methods. More on this later. 
+
+
+## Data Exploration
+
+
+**Data Types**: Note we have variables of different classes/types. How we preprocess these data will differ given its type. 
+
+```{r}
+train_dat %>% 
+  summarize_all(class) %>% 
+  glimpse()
+```
+
+Of the **numberic** variable, we clearly have variables on different scales... with some missing values!
+
+```{r}
+train_dat %>% 
+  summarize_if(is.numeric, function(x) mean(x)) %>% 
+  glimpse()
+```
+
+We can drop missing values when calculating a summary statistic with the `na.rm = T` argument. 
+
+```{r}
+train_dat %>% 
+  summarize_if(is.numeric, function(x) mean(x,na.rm = T)) %>% 
+  glimpse()
+```
+
+
+Of the **categorical** variable, we also have missing values
+
+```{r}
+train_dat %>% 
+  select_if(is.factor) %>% 
+  glimpse()
+```
+
+```{r}
+train_dat %>% 
+  select_if(is.factor) %>% 
+  summarize_all(function(x) sum(is.na(x)))
+```
+
+
+### Distributions 
+
+How is the continuous data distributed? And what does this tell us?
+
+```{r,fig.align="center",fig.heigh=7,fig.width= 8}
+train_dat %>% 
+  
+  # only select the numeric variables
+  select_if(is.numeric) %>% 
+  
+  # Pivot to longer data format (for faceting)
+  pivot_longer(cols = everything()) %>% 
+  
+  # Plot histograms for each variable
+  ggplot(aes(value)) +
+  
+  geom_histogram() +
+  
+  facet_wrap(~name,scales="free",ncol=3)
+```
+
+
+
+## Pre-Processing 
+
+### Building a recipe
+
+The package operates by laying out a series of steps that are then itemized. Once we have all our steps in place we then `bake` the recipe (i.e. execute and transform the data all at once).
+
+<br> 
+
+`step_`s we need to perform:
+
+1. impute any missing values.
+
+2. Log transform `amount`, `assets`, `debt`, `income`, `seniority`, `expenses` and `price`
+
+3. scale the continuous variables
+
+4. convert the categorical variables to dummy variables
+
+### Initialize a recipe object
+
+First, let's initialize the recipe object. 
+
+```{r}
+our_recipe <- recipe(status ~ ., data = train_dat)
+our_recipe
+```
+
+### (1) Impute any missing values
+
+`recipes` offers many different forms of imputation.
+
+|Imputation Methods      |
+|:-----------------------|
+|step_bagimpute          |
+|step_knnimpute          |
+|step_lowerimpute        |
+|step_meanimpute         |
+|step_medianimpute       |
+|step_modeimpute         |
+|step_rollimpute         |
+|step_bagimpute  |
+|step_knnimpute  |
+|step_meanimpute |
+|step_rollimpute |
+
+See the package documentation on how any one of these methods works (.e.g `step_knnimpute`).
+
+
+Below I'm using **mean imputation** for all numeric variables, which fills in the average value for variable to fill in any missing values, and **mode imputation** for the categorical variables, which fills in the most common category for any missing values.
+
+Note the `all_numeric()` and `all_nominal()` functions. This tells the recipe to perform a particular step on certain types of variables. We can directly reference specific variables using the variable name. 
+
+```{r}
+our_recipe <-
+  our_recipe %>% 
+  step_meanimpute(all_numeric()) %>% 
+  step_modeimpute(all_nominal())
+our_recipe
+```
+
+#### Question
+
+- What assumptions are we making when we delete/drop missing values?
+- What assumptions are we making when we impute missing values?
+- What is the best way to deal with missing data?
+
+
+### (2) Transform some continuous variables 
+
+Recall there was a right skew in the following variables: `amount`, `assests`, `debt`, `income`, `seniority`, `expenses` and `price`. We can log transform these features so that the extreme values in their tails exhibit less of an influence. 
+
+The `offset=1` argument adds one to each of the variables before logging. Why do you think this is? 
+
+```{r}
+our_recipe <-
+  our_recipe %>%
+  step_log(amount,assets,debt,income,
+           seniority,expenses,price,offset = 1) 
+our_recipe
+```
+
+
+### (3) Scale the continuous variables
+
+```{r}
+our_recipe <-
+  our_recipe %>%
+  step_normalize(all_numeric()) # Center mean around 0 and Set variance to 1
+our_recipe
+```
+
+### (4) Convert the categories to dummies
+
+```{r}
+our_recipe <- 
+  our_recipe %>% 
+  step_dummy(all_nominal())
+our_recipe
+```
+
+---
+
+### Prepare the recipe
+
+`prep()` calculates all the necessary statistics and values for the transformations. It then stores this information for use later on. When might we use this data later? 
+
+```{r}
+prepared_recipe <- our_recipe %>% prep()
+prepared_recipe
+```
+
+
+---
+
+### Bake!
+
+Now that the recipe is prepared, we can apply our preprocessing steps to our data, which **transforms** the data as requested. 
+
+_Before_
+```{r}
+glimpse(train_dat) 
+```
+
+
+_After_
+```{r}
+dat_processed <- bake(prepared_recipe,new_data = train_dat)
+glimpse(dat_processed) 
+```
+
+### Preprocessing does not distort distributions
+```{r,fig.align="center"}
+train_dat %>% 
+  ggplot(aes(age)) +
+  geom_density(fill="pink",
+               alpha=.5)
+```
+
+
+
+```{r,fig.align="center"}
+dat_processed %>% 
+  ggplot(aes(age)) +
+  geom_density(fill="pink",
+               alpha=.5)
+```
+
+
+## In one go!
+
+In practice, we can build up our data preprocessing method in one go. 
+
+```{r}
+our_recipe <- 
+  recipe(status ~ ., data = train_dat) %>% 
+  step_meanimpute(all_numeric()) %>% 
+  step_modeimpute(all_nominal()) %>% 
+  step_log(amount,assets,debt,income,
+           seniority,expenses,price,offset = 1) %>% 
+  step_normalize(all_numeric()) %>% 
+  step_dummy(all_nominal()) %>% 
+  prep()
+```
+
+Then just implement on the training data prior to running any model. 
+
+```{r}
+train_dat2 <- bake(our_recipe,new_data = train_dat)
+```
+
+And on the test data before checking performance. 
+
+```{r}
+test_dat2 <- bake(our_recipe,new_data = test_dat)
+```
+
+Again, why is this so important?
