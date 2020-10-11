@@ -1,7 +1,7 @@
 ---
 title: 
     <font class = "title-panel"> PPOL670 | Introduction to Data Science for Public Policy  </font>
-  <font size=6, face="bold"> Week 9 </font> 
+  <font size=6, face="bold"> Week 10 </font> 
   <br>
   <br>
   <font size=50, face="bold">Applications in Supervised Learning<br><br>_Regression_</font>
@@ -37,7 +37,7 @@ PPOL670 | Introduction to Data Science for Public Policy
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
-Week 9 <!-- Week of the Footer Here -->
+Week 10 <!-- Week of the Footer Here -->
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 

@@ -1,23 +1,36 @@
 ---
-title: "PPOL670 | Applications in Supervised Machine Learning"
-subtitle: "Regression"
-date: Week 9
+title: "PPOL670 | Introduction to Data Science | Week 10"
+subtitle: "Walkthrough using regression methods with `caret`"
 output: 
-  html_document:
-    toc: True
-    toc_float: True
+  html_notebook:
+    df_print: paged
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 4
 ---
 
 # Overview 
 
-In this notebook, we'll apply the machine learning concepts covered in the supervised learning lecture on regession methods. Note that there are many libraries that can perform the methods that we reviewed in class, but we'll focus here on using the `caret` package to perform these operations. 
+In this notebook, we'll apply the machine learning concepts covered in the supervised learning lecture on regression methods. Note that there are many libraries that can perform the methods that we reviewed in class, but we'll focus here on using the `caret` package to perform these operations. 
 
 ```{r Setup, include=F}
 knitr::opts_chunk$set(warning = F,error = F,message = F)
+```
+
+# Dependencies
+
+```{r}
 require(tidyverse)
 require(caret) # for machine learning
 require(recipes) # For preprocessing your data
+require(rsample) # for train test splits
 require(rattle) # For nice tree plots
+require(yardstick) # for performance metrics
+
+# For parallelization (to run the models across many cores) -- speeds up computation!
+# install.packages("doMC")
+doMC::registerDoMC()
 ```
 
 
@@ -38,9 +51,9 @@ Before event looking at the data, let's split the sample up into a training and 
 
 ```{r}
 set.seed(123)
-index = createDataPartition(dat$cnt,p=.8,list=F) 
-train_data = dat[index,] # Use 80% of the data as training data 
-test_data = dat[-index,] # holdout 20% as test data 
+splits = initial_split(dat,prop = .8)
+train_data = training(splits) # Use 80% of the data as training data 
+test_data = testing(splits) # holdout 20% as test data 
 
 dim(train_data)
 dim(test_data) 
@@ -239,7 +252,7 @@ plot(mod_knn)
 ```
 
 
-## Classification and Regression Trees (CART)
+## Decision Trees
 
 ```{r}
 mod_cart <-
@@ -350,12 +363,12 @@ resamples(mod_list)
 ```
 
 Examine the error across each of the models.
-```{r,fig.width=10,fig.height=4}
+```{r,fig.width=7,fig.height=4}
 dotplot(resamples(mod_list),metric = "RMSE")
 ```
 
 Examine the fit across each of the models.
-```{r,fig.width=10,fig.height=4}
+```{r,fig.width=7,fig.height=4}
 dotplot(resamples(mod_list),metric = "Rsquared")
 ```
 
@@ -368,19 +381,25 @@ Of the models we ran, it looks like the Random Forest model did the best. Let's 
 ```{r}
 pred <- predict(mod_rf,newdata = test_data2)
 mse = sum((test_data2$cnt-pred)^2)/nrow(test_data2)
-mse 
+rmse_score = sqrt(mse)
+rmse_score
 ``` 
 
 
-We can also use the metrics package to calculate performance metrics.
+We can also use the `yardstick` package to calculate performance metrics.
 ```{r}
-# If the package isn't installed on your machine
-# install.packages("Metrics")
-
+# Generate a prediction on our test data. 
 pred <- predict(mod_rf,newdata = test_data2)
 
-# Mean squared error
-Metrics::mse(actual=test_data2$cnt,predicted = pred)
+
+# Organize as a data frame
+performance = tibble(truth=test_data2$cnt,estimate = pred)
+
+# Calculate performance metrics
+bind_rows(
+  performance %>% rmse(truth,estimate), # Root Mean Squared Error
+  performance %>% rsq(truth,estimate) # R Squared
+)
 ```
 
 

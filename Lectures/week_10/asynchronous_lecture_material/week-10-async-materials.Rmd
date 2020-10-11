@@ -1,0 +1,85 @@
+---
+pagetitle: "PPOL670 | Week 10 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Applications in Supervised Learning <br><br> _Regression_ </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 10 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Refresh on learning problems where the outcome is **continuous**.
+- Discuss the most famous **parametric model** -- the linear model -- to predict a continuous outcome. 
+- Delve into the **K Nearest Neighbors** algorithm and discuss how it can offer a non-parametric approach to fitting data. 
+- Explore a **Decision Tree** model and discuss we can split data into regions to generate a non-parametric fit. 
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Discuss **Bagging** and **Random Forest** models as a way of overcoming the limitations of decision trees. 
+- Walkthrough how to **implement the models** discussed this week using `caret`. 
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 1 hour
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Regression Methods
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=20fff38e-08fd-4031-bde1-ac51012eb7ec&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## K Nearest Neighbors
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#23)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=2bff941d-e35d-403c-9c52-ac5101372f1a&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Decision Trees
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#23)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=3cee908a-c032-4f43-a30f-ac51013ed37b&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+
+<br><hr><br>
+
