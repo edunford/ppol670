@@ -127,13 +127,13 @@ Data science is an applied field and therefore, it is important that you underst
 
 
 
-<!-- <br> -->
+<br>
 
-<!-- **Overview** -->
+**Overview**
 
-<!-- <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center> -->
+<center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center>
 
-<!-- <br> -->
+<br>
 
 <!-- **Rubrics** -->
 
@@ -412,60 +412,88 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_08/asynchronous-lecture-material/week-08-async-materials.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html)
 
-<!--   - **Table of Contents** -->
-<!--     + [Strings](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3) -->
-<!--     + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20) -->
-<!--     + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#49) -->
-<!--     + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#64) -->
+  - **Table of Contents**
+    + [Strings](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3)
+    + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20)
+    + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#49)
+    + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#64)
 
-<!-- - **Practice**: -->
-<!--   + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html) -->
-<!--     + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout.  -->
+- **Practice**:
+  + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html)
+    + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout.
 
 
 <br>
 
 ### _Week 9_: **Introduction to Statistical Learning**
 
-<!-- ### _Week 8_: [Introduction to Statistical Learning](Lectures/week_08/week-08-lecture-supervised-learning.html) -->
+<br>
+
+- [**Asynchronous Material**](Lectures/week_09/asynchronous_lecture_material/week-09-async-materials.html)
+
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html) -->
+
 <!-- - **Table of Contents** -->
-<!--   + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#3) -->
-<!--   + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#13) -->
-<!--   + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#32) -->
-<!--   + [Caret](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#56) -->
-<!--   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_08/week-08-lecture-supervised-learning.html#64) -->
+<!--   + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#3) -->
+<!--   + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#13) -->
+<!--   + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#32) -->
+<!--   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#40) -->
+<!--   + [`caret` API](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#54) -->
+
+
+<!-- - **Practice**: -->
+<!--   + _Walkthrough_: [**Data Pre-processing with `recipes`**](Lectures/week_09/synchronous-material/data-pre-processing-with-recipes.nb.html) -->
+<!--     + Download the <a href="Lectures/week_09/Data/credit_data.csv" download><strong>credit_data.csv</strong></a> dataset used in the walkthrough. -->
+
+
 
 <br>
 
 ### _Week 10_: **Applications in Supervised Learning (Regression)**
 
-<!-- ### _Week 9_: [Applications in Supervised Learning (Regression)](Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html) -->
-<!-- - **Table of Contents** -->
-<!--   + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#3) -->
-<!--   + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#33) -->
-<!--   + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_09/lecture-week-09-applications-supervised-ml-regression-ppol670.html#48) -->
+<!-- <br> -->
+
+<!-- - [**Asynchronous Material**](Lectures/week_10/asynchronous_lecture_material/week-10-async-materials.html) -->
+
+
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html) -->
+<!--   - **Table of Contents** -->
+<!--     + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#3) -->
+<!--     + [K Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#23) -->
+<!--     + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#33) -->
+<!--     + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#48) -->
+
 
 <!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_09/walkthrough/supervised-ml-regression-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_09/week_09-practice.zip) as a `.zip`. -->
+<!--   + _Walkthrough_: [**Walkthrough using regression methods with `caret`**](Lectures/week_10/synchronous-materials/supervised-ml-regression-walkthrough.nb.html)  -->
+<!--     + Download the <a href="Lectures/week_10/synchronous-materials/london_bike_sharing.csv" download><strong>london_bike_sharing.csv</strong></a> dataset used in the walkthrough. -->
+
 
 <br>
 
 ### _Week 11_: **Applications in Supervised Learning (Classification)**
 
-<!-- ### _Week 10_: [Applications in Supervised Learning (Classification)](Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html) -->
 
-<!-- - **Table of Contents**: -->
-<!--   + [Classification](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#3) -->
-<!--   + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#16) -->
-<!--   + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#24) -->
-<!--   + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#37) -->
-<!--   + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-classification-ppol670.html#42) -->
+<!-- <br> -->
+
+<!-- - [**Asynchronous Material**](Lectures/week_11/asynchronous_lecture_material/week-11-async-materials.html) -->
+
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html) -->
+
+<!--   - **Table of Contents**: -->
+<!--     + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3) -->
+<!--     + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#16) -->
+<!--     + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#24) -->
+<!--     + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#37) -->
+<!--     + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42) -->
 
 
 <!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_10/walkthrough/supervised-ml-classification-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_10/week-10-walkthrough.zip) as a `.zip`. -->
+<!--   + _Walkthrough_: [**Walkthrough using classification methods with `caret`**](Lectures/week_11/synchronous-materials/supervised-ml-classification-walkthrough.nb.html) -->
+<!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
+
 
 <br>
 
