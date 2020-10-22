@@ -143,10 +143,14 @@ Data science is an applied field and therefore, it is important that you underst
 
 <!-- <br> -->
 
-<!-- **Examples of Successful Projects** -->
+**Examples of Successful Projects**
 
-<!-- - [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Costa_Kristina_Example_Final_Report.pdf) -->
-<!-- - [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Wang_Liping_Example_Final_Report.pdf) -->
+- [Frances Chen - "Predicting Social Distancing in the Age of COVID-19"](Assignments/Project/Examples/Chen_Frances_Example_Final_Report.pdf)
+- [Julia Eigner - "Predicting Maternal Mortality"](Assignments/Project/Examples/Eigner_Julia_Example_Final_Report.pdf)
+- [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Examples/Costa_Kristina_Example_Final_Report.pdf)
+- [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Examples/Wang_Liping_Example_Final_Report.pdf)
+
+
 
 
 
