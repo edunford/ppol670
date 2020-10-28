@@ -1,0 +1,91 @@
+---
+pagetitle: "PPOL670 | Week 11 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Applications in Supervised Learning <br>_Classification_ </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 11 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Delve into **performance metrics** for classification problems.
+- Explore **logistic regression** as a way of fiting linear model to binary data.
+- Discuss **KNN** and **decision trees** for classication. 
+- Learn about **support vector machines**. 
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Explore how to implement the models discussed this week using `caret`. 
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 46 Minutes
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Classification 
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e2c9b87e-9373-40fe-998d-ac5b0136101c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Logistic Regression
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=2de0d47c-49fb-48b7-8b2b-ac5b013d2008&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+
+## KNN/DT for Classification
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=527506bf-d815-4ec5-bc8a-ac5b013faf99&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Support Vector Machines
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ec795dd7-0aee-4715-b10a-ac5b0143704f&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>

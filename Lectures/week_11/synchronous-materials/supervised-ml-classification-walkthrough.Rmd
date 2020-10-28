@@ -1,11 +1,13 @@
 ---
-title: "PPOL670 | Supervised Learning - Classification"
-subtitle: "Walkthrough"
-date: Week 10
+title: "PPOL670 | Introduction to Data Science | Week 11"
+subtitle: "Walkthrough using classification methods with `caret`"
 output: 
-  html_document:
-    toc: True
-    toc_float: True
+  html_notebook:
+    df_print: paged
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 4
 ---
 
 ```{r Setup, include=F}
@@ -20,6 +22,8 @@ In this notebook, we'll apply the machine learning concepts covered in the class
 require(tidyverse)
 require(caret) # for machine learning
 require(recipes) # For preprocessing your data
+require(rsample) # For train/test split
+require(yardstick) # For performance metrics
 require(rattle) # For nice tree plots
 
 # For parallelization (to run the models across many cores) -- speeds up computation!
@@ -45,28 +49,18 @@ head(dat) # Peek at the data just to make sure everything was read in correctly.
 
 # Split the Sample: Training and test data
 
-Before event looking at the data, let's split the sample up into a training and test dataset. We'll completely hold off on viewing the test data, so as not to bias our development of the learning model. 
+Before event looking at the data, let's split the sample up into a training and test dataset. We'll completely hold off on viewing the test data, so as not to bias our development of the learning model. Note that `strata=` argument ensures that we have a similar proportion of covered and not covered individuals in the training and test data. 
 
 ```{r}
 set.seed(123)
-index = createDataPartition(dat$coverage,p=.8,list=F) 
-train_data = dat[index,] # Use 80% of the data as training data 
-test_data = dat[-index,] # holdout 20% as test data 
+splits = initial_split(dat,prop = .8,strata = coverage)
+train_data = training(splits) # Use 80% of the data as training data 
+test_data = testing(splits) # holdout 20% as test data 
 
 dim(train_data)
 dim(test_data) 
 ```
 
-
-Here is an alternative way of splitting the data.
-
-```{r,eval=F}
-# install.packages("rsample")
-# require(rsample)
-split <- rsample::initial_split(dat,prop = .8)
-train_data <- rsample::training(split) 
-test_data  <- rsample::testing(split) 
-```
 
 
 # Examine the data 
@@ -465,15 +459,22 @@ pred <- predict(mod_rf, newdata = test_data2)
 confusionMatrix(table(pred,test_data2$coverage))
 ``` 
 
-We can also use the `Metrics` package to generate specific performance metrics.
+We can also use the `yardstick` package to generate specific performance metrics.
 
 ```{r}
 # Generates predicted probabilities for both 1 ("Coverage") and 0 ("No Coverage")
 pred_probability <- predict(mod_rf,newdata = test_data2,type="prob")
+pred <- predict(mod_rf,newdata = test_data2,type="raw")
 
-# install.packages("Metrics") # if Metrics is not installed
+# Organize as a data frame
+preformance <- tibble(truth = test_data2$coverage,
+                      prob = pred_probability$Coverage,
+                      pred = pred)
 
-# Note that we need to convert the outcome in the data to a 1/0.
-Metrics::auc(as.numeric(test_data2$coverage=="Coverage"), pred_probability$Coverage)
+# Calculate performance metrics 
+bind_rows(
+  preformance %>% roc_auc(truth,prob),
+  preformance %>% accuracy(truth,pred)  
+)
 ```
 

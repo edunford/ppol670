@@ -463,17 +463,17 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 - [**Asynchronous Material**](Lectures/week_10/asynchronous_lecture_material/week-10-async-materials.html)
 
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html) -->
-<!--   - **Table of Contents** -->
-<!--     + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#3) -->
-<!--     + [K Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#23) -->
-<!--     + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#33) -->
-<!--     + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#48) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html)
+  - **Table of Contents**
+    + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#3)
+    + [K Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#23)
+    + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#33)
+    + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#48)
 
 
-<!-- - **Practice**: -->
-<!--   + _Walkthrough_: [**Walkthrough using regression methods with `caret`**](Lectures/week_10/synchronous-materials/supervised-ml-regression-walkthrough.nb.html)  -->
-<!--     + Download the <a href="Lectures/week_10/synchronous-materials/london_bike_sharing.csv" download><strong>london_bike_sharing.csv</strong></a> dataset used in the walkthrough. -->
+- **Practice**:
+  + _Walkthrough_: [**Walkthrough using regression methods with `caret`**](Lectures/week_10/synchronous-materials/supervised-ml-regression-walkthrough.nb.html)
+    + Download the <a href="Lectures/week_10/synchronous-materials/london_bike_sharing.csv" download><strong>london_bike_sharing.csv</strong></a> dataset used in the walkthrough.
 
 
 <br>
@@ -481,18 +481,18 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 ### _Week 11_: **Applications in Supervised Learning (Classification)**
 
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_11/asynchronous_lecture_material/week-11-async-materials.html) -->
+- [**Asynchronous Material**](Lectures/week_11/asynchronous_lecture_material/week-11-async-materials.html)
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html) -->
 
 <!--   - **Table of Contents**: -->
 <!--     + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3) -->
-<!--     + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#16) -->
-<!--     + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#24) -->
-<!--     + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#37) -->
-<!--     + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42) -->
+<!--     + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21) -->
+<!--     + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29) -->
+<!--     + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42) -->
+<!--     + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47) -->
 
 
 <!-- - **Practice**: -->
