@@ -74,7 +74,7 @@ read_csv('Syllabus/fall-2020-timeline.csv') %>%
   
 <br>
   
-#### [Virtual Office Hours](https://georgetown.zoom.us/j/96444963432) (Tuesdays 9am - 11am)
+#### [Virtual Office Hours](https://georgetown.zoom.us/j/96444963432) (Wednesdays 12pm - 2pm)
 
   
 <br>
