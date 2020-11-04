@@ -1,0 +1,97 @@
+---
+pagetitle: "PPOL670 | Week 12 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Interpretable Machine Learning </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 12 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Talk through why **interpreting machine learning models** matters. 
+- Delve into model-agnostic ways of determining **variable importance**.
+- Explore marginal effects using **partial dependency** and **individual conditional expectation** plots.
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Explore building **surrogate models** to help interpret blackbox models.
+- Apply the model interpretability techniques to explore the health care coverage model we built in Week 11.  
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 1 hour and 6 minutes. 
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Interpretable Machine Learning
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=38054bb1-54c7-400e-98a2-ac6601369856&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Variable Importance
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#9)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=7d5aa5c5-5831-4c16-84aa-ac660139281e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+### Code from the video
+
+```{r,eval=F}
+# ENTER CODE
+```
+
+<br><hr><br>
+
+## Partial Dependency Plots (PDP)
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#24)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=006bb8c6-30f9-4571-8d55-ac660141a07e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+
+## Individual Conditional Expectation Plots (ICE)
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=6b40ca1e-b6c0-4d97-97bc-ac66014587ba&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>

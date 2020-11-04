@@ -11,7 +11,7 @@ output:
 ---
 
 ```{r Setup, include=F}
-knitr::opts_chunk$set(warning = F,error = F,message = F,cache=T)
+knitr::opts_chunk$set(warning = F,error = F,message = F,comment = F,cache=T)
 ```
 
 # Overview 
@@ -38,10 +38,43 @@ The following data contains information regarding whether or not someone has hea
 
 
 ```{r}
-set.seed(123)
+set.seed(1988)
 
 dat = suppressMessages(read_csv("health-coverage.csv")) %>% 
-  sample_n(5000) # Only taking a random sample of the data so the models run quicker
+  
+  # Convert education into an ordered category.
+  mutate(
+    
+    educ = case_when(
+      educ == 'Less than HS' ~ 0,
+      educ == 'HS Degree' ~ 1,
+      educ == 'Undergraduate Degree' ~ 2,
+      educ == 'Graduate Degree' ~ 3),
+    
+    race = case_when(
+      race == 'White' ~ 'white',
+      race == 'Black' ~ 'black',
+      race == 'Asian' ~ 'asian',
+      T ~ 'other'),
+    
+    race = factor(race,level=c("white",'black','asian','other')),
+    
+    mar = factor(mar,levels= c('Never Married',
+                               'Divorced','Married',
+                               'Separated','Widowed'))
+    
+    ) %>% 
+  
+  # Convert all remaining factor variables into character variables
+  mutate_if(is.character,as.factor) %>% 
+  
+  # Make sure that the category you want to predict is the first category in
+  # your factor variable
+  mutate(coverage = factor(coverage,
+                           levels = c("Coverage","No_Coverage"))) %>% 
+  
+  # Only taking a random sample of the data so the models run quicker
+  sample_n(5000) 
 
 head(dat) # Peek at the data just to make sure everything was read in correctly. 
 ```
@@ -75,14 +108,14 @@ skimr::skim(train_data)
 Visualize the distribution for each variable.
 
 First, let's look at the categorical variables.
-```{r,fig.height=6,fig.width=15,fig.height=7}
+```{r,fig.height=6,fig.width=6,fig.height=10}
 train_data %>% 
-  select_if(is.character) %>% 
+  select_if(is.factor) %>% 
   gather(var,val) %>% 
   ggplot(aes(val)) +
   geom_bar() +
   scale_y_log10() +
-  facet_wrap(~var,scales="free",ncol=3) +
+  facet_wrap(~var,scales="free_y",ncol=1) +
   coord_flip() +
   theme(text=element_text(size=16))
 ```
@@ -91,31 +124,7 @@ Few things to note:
 
 - Balanced classes on the outcome (more or less)
 - Over representativeness of some racial groups in the data. 
-- Good variation on maritial outcomes and education
-
-Let's peek at the data a little closer. We see that there are potential issues in this data with **perfect prediction**. That is, among some categorical configurations, there lie arrangements where there is no variation in the outcome. For these instances, we can predict Coverage or lack there of perfectly. This can cause issues for some models (logistic regression, SVM). 
-
-```{r}
-train_data %>% 
-  select_if(is.character) %>% 
-  group_by_all() %>% 
-  count() %>% 
-  spread(coverage,n,fill=0) %>% 
-  arrange(Coverage)
-```
-
-For these models, we might need to restict the types of variables we use as to not run into issues.
-
-```{r}
-train_data %>% 
-  select(-race,-mar) %>% 
-  select_if(is.character) %>% 
-  group_by_all() %>% 
-  count() %>% 
-  spread(coverage,n,fill=0) %>% 
-  arrange(Coverage)
-```
-
+- Good variation on marital outcomes.
 
 Second, let's look at the distribution of the continuous variables
 
@@ -132,7 +141,8 @@ Things to note:
 
 - Wage is right skewed. There appears to an outlier making a lot of the money. This outlier could cause problems. 
 - Good distribution on the age variable.
-- The scales for both these variables will have to be adjusted. 
+- Majority of the observations only have a high school education. 
+- The scales for these variables will have to be adjusted. 
 
 Let's peek more closely at the distribution of wealth in the sample. 
 
@@ -236,12 +246,9 @@ Let's explore the different models that we covered in the lecture using the same
 
 ## Logistic Regression
 
-Recall we have issues with some of the variable categories (i.e. do to insufficient variation), so we'll use a retricted model here and just include _some_ of the variables.
-
 ```{r}
 mod_logit <-
-  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
-          educ_Less.than.HS + educ_Undergraduate.Degree, 
+  train(coverage ~ ., 
         data=train_data2, # Training data 
         method = "glm", # logit function
         metric = "ROC", # area under the curve
@@ -249,8 +256,6 @@ mod_logit <-
   )
 mod_logit
 ```
-
-
 
 ## K-Nearest Neighbors
 
@@ -360,12 +365,9 @@ There are three tunning parameters in this model:
 - 'min.node.size': the minimum number of observations that can be in each terminal node (default fixes this at 1)
 
 ```{r}
-mod_rf
-```
-
-```{r}
 plot(mod_rf)
 ```
+
 
 ## Support Vector Machine
 
@@ -375,8 +377,7 @@ Let's explore three versions of the support vector algorithm: linear boundary, a
 ### Linear Boundary
 ```{r}
 mod_svm_linear <-
-  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
-          educ_Less.than.HS + educ_Undergraduate.Degree,
+  train(coverage ~ . ,
         data=train_data2, # Training data 
         method = "svmLinear", # SVM with a polynomial Kernel
         metric = "ROC", # area under the curve
@@ -392,19 +393,18 @@ mod_svm_linear
 
 ### Polynomial Boundary
 
-```{r}
+```{r,comment=F,error=F,warning=F}
 mod_svm_poly <-
-  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
-          educ_Less.than.HS + educ_Undergraduate.Degree,
+  train(coverage ~ .,
         data=train_data2, # Training data 
-         method = "svmPoly", # SVM with a polynomial Kernel
+        method = "svmPoly", # SVM with a polynomial Kernel
         metric = "ROC", # area under the curve
         trControl = control_conditions
   )
 ``` 
 
-```{r}
-mod_svm_poly
+```{r,}
+plot(mod_svm_poly)
 ```
 
 
@@ -412,8 +412,7 @@ mod_svm_poly
 
 ```{r}
 mod_svm_radial <-
-  train(coverage ~ age + wage + cit_Non.citizen + educ_HS.Degree +
-          educ_Less.than.HS + educ_Undergraduate.Degree,
+  train(coverage ~ .,
         data=train_data2, # Training data 
          method = "svmRadial", # SVM with a Radial Kernel
         metric = "ROC", # area under the curve
@@ -423,7 +422,7 @@ mod_svm_radial <-
 
 
 ```{r}
-mod_svm_radial
+plot(mod_svm_radial)
 ```
 
 

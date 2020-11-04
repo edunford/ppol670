@@ -485,34 +485,42 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_11/asynchronous_lecture_material/week-11-async-materials.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html)
 
-<!--   - **Table of Contents**: -->
-<!--     + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3) -->
-<!--     + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21) -->
-<!--     + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29) -->
-<!--     + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42) -->
-<!--     + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47) -->
+  - **Table of Contents**:
+    + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3)
+    + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21)
+    + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29)
+    + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42)
+    + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47)
 
 
-<!-- - **Practice**: -->
-<!--   + _Walkthrough_: [**Walkthrough using classification methods with `caret`**](Lectures/week_11/synchronous-materials/supervised-ml-classification-walkthrough.nb.html) -->
-<!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
+- **Practice**:
+  + _Walkthrough_: [**Walkthrough using classification methods with `caret`**](Lectures/week_11/synchronous-materials/supervised-ml-classification-walkthrough.nb.html)
+    + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough.
 
 
 <br>
 
 ### _Week 12_: **Interpretable Machine Learning**
 
-<!-- ### _Week 12_: [Exploratory Data Analysis](Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html) -->
+<br>
 
-<!-- - **Table of Contents**: -->
-<!--   + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#3) -->
-<!--   + [Data Exploration in the Social Sciences](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-exploratory-data-analysis-ml-ppol670.html#37) -->
+- [**Asynchronous Material**](Lectures/week_12/asynchronous_lecture_material/week-12-async-materials.html)
+
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29) -->
+
+<!--   - **Table of Contents**: -->
+<!--     + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#3) -->
+<!--     + [Variable Importance](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#9) -->
+<!--     + [Partial Dependence Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#24) -->
+<!--     + [Individual Conditional Expectation Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29) -->
+<!--     + [Global Surrogate Models](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#33) -->
 
 <!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_12/walkthrough/interpretable-ml-walkthrough.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_12/week-12-walkthrough.zip) as a `.zip`. -->
-
+<!--   + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_12/synchronous-materials/interpretable-ml-walkthrough.nb.html) -->
+<!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
+  
 <br>
 
 ### _Week 13_: **Applications in Unsupervised Learning**
