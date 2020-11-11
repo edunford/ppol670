@@ -1,0 +1,83 @@
+---
+pagetitle: "PPOL670 | Week 13 - Asynchronous lecture materials"
+title:  <a href="http://ericdunford.com/ppol670/">Back to Course Website</a> <br><br><center> Applications in Unsupervised Learning </center>
+subtitle: <center> PPOL 670 | Introduction to Data Science <br><br> Lecture Materials for Week 13 </center><br>
+author: <center>Professor Eric Dunford (ed769@georgetown.edu) <br> McCourt School of Public Policy, Georgetown University </center>
+output: 
+  html_document:
+    includes: 
+      after_body: async-footer.html
+    css: async-page-style.css
+    highlight: breezedark
+    theme: united
+---
+
+<br><hr><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Learning Objectives 
+
+<br>
+
+**In the Asynchronous Lecture**
+
+- Refresher on what **unsupervised learning** is and how it differs from supervised learning. 
+- Discuss how the **K-Means Clustering** algorithm works
+- Explore how **Hierarchical Clustering** works
+
+<br>
+
+**In the Synchronous Lecture**
+
+- Walk through **implementing unsupervised learning methods** to classify regime time. 
+- Discuss rules of thumb for **data exploration in the social sciences** when we have **weak priors** on the data being explored.
+
+
+<br>
+
+> If you have any questions while watching the pre-recorded material, be sure to **write them down and to bring them up** during the synchronous portion of the lecture.
+
+<br><hr><br>
+
+# Asynchronous Materials {.tabset .tabset-pills}
+
+<br>
+
+_The following tabs contain pre-recorded lecture materials for class this week. Please review these materials prior to the synchronous lecture._
+
+**_Total time_**: Approx. 34 Minutes
+
+<br>
+
+## _
+
+<br><hr><br>
+
+## Unsupervised Learning
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#3)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=9514c9b3-7380-464a-aca6-ac6d01845497&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## K-Means Clustering
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#7)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ab647e79-0f7d-4289-b97d-ac6d0186e43b&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>
+
+## Hierarchical Clustering
+
+### [**Relevant Slides**](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#19)
+
+<iframe src="https://georgetown.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=c1636562-e473-4efb-afbe-ac6e000277c9&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="506" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+<br><hr><br>

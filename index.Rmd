@@ -508,31 +508,41 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_12/asynchronous_lecture_material/week-12-async-materials.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html)
 
-<!--   - **Table of Contents**: -->
-<!--     + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#3) -->
-<!--     + [Variable Importance](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#9) -->
-<!--     + [Partial Dependence Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#24) -->
-<!--     + [Individual Conditional Expectation Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29) -->
-<!--     + [Global Surrogate Models](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#33) -->
+  - **Table of Contents**:
+    + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#3)
+    + [Variable Importance](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#9)
+    + [Partial Dependence Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#24)
+    + [Individual Conditional Expectation Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29)
+    + [Global Surrogate Models](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#33)
 
-<!-- - **Practice**: -->
-<!--   + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_12/synchronous-materials/interpretable-ml-walkthrough.nb.html) -->
-<!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
+- **Practice**:
+  + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_12/synchronous-materials/interpretable-ml-walkthrough.nb.html)
+    + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough.
   
 <br>
 
 ### _Week 13_: **Applications in Unsupervised Learning**
 
-<!-- ### _Week 11_: [Applications in Unsupervised Learning](Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html) -->
-<!-- - **Table of Contents**: -->
-<!--   + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#3) -->
-<!--   + [K Means Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#7) -->
-<!--   + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-unsupervised-ml-ppol670.html#19) -->
+<br>
+
+- [**Asynchronous Material**](Lectures/week_13/asynchronous_lecture_material/week-13-async-materials.html)
+
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html) -->
+
+<!--   - **Table of Contents**: -->
+<!--     + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#3) -->
+<!--     + [K-Means Clustering](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#7) -->
+<!--     + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#19) -->
+
+
+<!-- - [**Exploratory Data Analysis in the Social Sciences**](Lectures/week_13/lecture-week-13-eda-in-the-social-sciences.html) -->
 
 <!-- - **Practice**: -->
-<!--   - The following provides a [walkthrough](Lectures/week_11/walkthrough/unsupervised-learning-walkthrough.nb.html) of the concepts covered in this lecture. The materials can be found  [here](Lectures/week_11/week_11-walkthrough.zip) as a `.zip`. -->
+<!--   + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_13/synchronous-materials/unsupervised-learning-walkthrough.nb.html) -->
+<!--     + Download the <a href="Lectures/week_13/synchronous-materials/Data/vdems_civil_liberties.csv" download><strong>vdems_civil_liberties.csv</strong></a> dataset used in the walkthrough. -->
+
 
 <br>
 
