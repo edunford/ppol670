@@ -15,42 +15,41 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Project Name**: ________________________________________
 
-**Total Score**: ____ / 16
+**Total Score**: ____ / 19
 
 > _The score on each item will take the value of 1 (met expectation), .5 (partially met expectation), 0 (fell below expectation)._
 
 **Project Items**
 
-- Materials were posted on Canvas? score: (_score_:___)
-- Materials were generated using R? (_score_:___)
-- Student rendered their materials as slides in R Markdown (or Rpres)? (_score_:___)
-- Student's presentation materials were version controlled on Github?  (_score_:___)
+- Materials were generated using R? (_score_:__/1)
+- Student recording was submitted as a `.mp4` file format? (_score_:__/1)
+- Student rendered their materials as slides in R Markdown (or Rpres)? (_score_:__/1)
+- Student submitted code, rendered slides, and `.mp4` file as a single `.zip` file titled: "lastName_firstName.zip"? (_score_:__/1)
 - Student used professional looking visualizations in the presentation materials:
   
-  + Figures were easy to read and understand? (_score_:___)
-  + Color scheme made sense; easy to differentiate between colored items (_score_:___)
-  + Figures were appropriately proportioned (_score_:___)
+  + Figures were easy to read and understand? (_score_:__/1)
+  + Color scheme made sense; easy to differentiate between colored items (_score_:__/1)
+  + Figures were appropriately proportioned (_score_:__/1)
 
 **Slides**
 
-- 1-3 slides on problem statement and background (_score_:___)
+- 1-3 slides on problem statement and background (_score_:__/1)
 
-- 1-3 slides on the methods/approaches the student considered using (_score_:___)
+- 1-3 slides on the methods/approaches the student considered using (_score_:__/1)
 
-- 1-3 slides on the methods/tools used (to date), and the rationale for their use (_score_:___)
+- 1-3 slides on the methods/tools used (to date), and the rationale for their use (_score_:__/1)
 
-- 2-4 slides on preliminary results and conclusions (_score_:___)
+- 2-4 slides on preliminary results and conclusions (_score_:__/1)
 
-- 1-2 slides on lessons learned thus far and/or plans to mitigate challenges. (_score_:___)
+- 1-2 slides on lessons learned thus far and/or plans to mitigate challenges. (_score_:__/1)
 
 **Presentation**
 
-- Student was ready with presentation materials (i.e. there was no delay in getting started)? (_score_:___)
-- Student was clear, well-paced, and easy to follow when speaking. (_score_:___)
-- Student used the entire allotted time (i.e. the presentation was precisely 7 minutes). (_score_:___)
+- Student was clear, well-paced, and easy to follow when speaking in their recording. (_score_:__/1)
+- Student used the entire allotted time (i.e. the presentation was precisely 7 minutes). (_score_:__/1)
     
 **Feedback**
 
-- Student offered feedback/suggestions to other students via the Google Doc or in-class questions (_score_:___)
+- Student offered substantive feedback/suggestions to other students in their pre-assigned cluster (5 students total) via the class Google Doc (_score_:__/5)
 
 **Notes**
