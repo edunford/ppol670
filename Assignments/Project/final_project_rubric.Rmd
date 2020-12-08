@@ -1,7 +1,7 @@
 ---
 title: \textbf{Final Project Rubric}
 author: \Large PPOL670 -- Introduction to Data Science
-date: 'Spring 2020'
+date: 'Fall 2020'
 fontsize: 11pt
 output: 
   pdf_document: default
@@ -15,64 +15,67 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Project Name**: ________________________________________
 
-**Total Score**: ____ / 45
+**Total Score**: ____ / 51
 
 
-### Project Materials
+### Project Materials 
 
-- Report was posted on Canvas? (1 point)
-  - `.pdf` rendered using RMarkdown. (1 point)
-  - `.Rmd` file containing all the code used to generate the analytics in the report. (1 point)
-- Student provided access to the data (1 point)
-  - Via Dropbox link (if greater than a Gigabyte)
-  - Via Canvas (if less than a Gigabyte)
+_4 points_
 
+- Report was posted to Canvas as a `.zip` containing the following items:
+  - Report was rendered using RMarkdown as any one of the following file types: `.pdf`, `.html`, `.docx`. File was titled `lastname_firstname_final_report.pdf`. (__/1 point)
+  - `.Rmd` file containing all the code used to generate the analytics in the report. File was titled `lastname_firstname_final_report.Rmd`. (__/1 point)
+  - Student included the data used in a `Data/` folder. (__/1 point)
+  - Student included an `.Rproj`. (__/1 point)
   
 ### Document Presentation 
 
+_17 points_
+
 - **Student used professional looking visualizations in the report:**
-  + Figures were easy to read and understand? (1 point)
-  + Figures made sense within the context of the report? (1 point)
-  + Student described the purpose and the insight drawn from the figure in the text? (1 point)
-  + Color scheme made sense; easy to differentiate between colored items (1 point)
-  + Figures were appropriately proportioned (1 point)
-  
+  + Figures were easy to understand? (__/1 point)
+  + Figures made sense within the context of the report? (__/1 point)
+  + Student described the purpose and the insight drawn from the figure in the text? (__/1 point)
+  + Figures referenced in the t ext are labeled, i.e. references to "figure 1" correspond to the figure title (e.g. "Figure 1: Title")? (__/1 point)
+  + Figures include titles? (__/1 point)
+  + Figures labels/axes/text are readable? (__/1 point)
+  + Color scheme made sense; easy to differentiate between colored items (__/1 point)
+  + Figures were appropriately proportioned to the document? (__/1 point)
   
 - **Student used `R` Markdown for a professional looking report:**
-  + Report was rendered without errors or warnings. (1 point)
-  + No `R` code was visible in the report. (1 point)
-  + Report contained a table of contents. (1 point)
-  + Report contained no (or few) gramatical/spelling errors. (1 point)
-  + Report reads as a single cohesive document. (1 point)
-  + Report is 12 pages in length (double-spaced; 12 pt font). (1 point)
-  + Student cited academic, data, and package sources. (1 point)
+  + Report was rendered without errors or warnings. (__/1 point)
+  + No code was visible in the report. (__/1 point)
+  + No raw output was visible in the report. (__/1 point)
+  + Report includes a title and author byline. (__/1 point)
+  + Report includes a word count. (__/1 point)
+  + Report is 12 pages in length (double-spaced; 12 pt font) if rendered as `.pdf`/`.docx`. (__/1 point)
+  + Report contained no (or few) grammatical/spelling errors. (__/1 point)
+  + Report reads as a single cohesive document. (__/1 point)
+  + Report is 12 pages in length (double-spaced; 12 pt font; if rendered as `.pdf`/`.docx`) or 3000 words.^[Note that your citations do not count against your word/page count.]  (__/1 point)
+  + Student cited academic, data, and package sources.   
     - To cite a package, use `citation("package_name")` to get a the citation information for a package, e.g. `citation("ggplot2")` will yield "_H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
   2016._"
-    
-- **[_BONUS_] Student used professional looking tables:** (+ 2 points)
-  + When presenting data and/or figures, student formatted the data as a clean table (i.e. latex)? 
-    - see `stargazer` package or [`gt`](https://gt.rstudio.com/)
-  + Table made sense within the context of the report?
-  + Table was clear and easy to read. 
-  + Table was concise and did not contain unnessary information. 
+  
   
 ### Content
 
+_Points 30_
+
 The student's project sufficiently addressed these general areas.
 
-- **Introduction** (5 point)
+- **Introduction** (__/5 point)
 
     + Student clearly established the aim of the project.
       
     + Student offered a clear roadmap of the report (i.e what is covered in the report).
 
-- **Problem Statement and Background** (5 point)
+- **Problem Statement and Background** (__/5 point)
     
     + Student offered a clear and complete statement of the problem and/or aim of their analysis. 
     
     + Student included a brief summary of any related work (i.e. a _light_ literature review)
     
-- **Data** (5 point)
+- **Data** (__/5 point)
 
     + Student outlined where their data came from.
     
@@ -83,14 +86,14 @@ The student's project sufficiently addressed these general areas.
     
     + Student articulate the steps they took to wrangle the data.
 
-- **Analysis** (5 point)
+- **Analysis** (__/5 point)
 
     + Student described the methods/tools they explored in their project. 
         - Justified the tools/methods that they used.
         - Adequately described what the tools/methods are doing.
-        - Note: "Assume the reader is smart but doesn't know `R`/Machine Learning well. That is, be crystal clear about what you're doing and why."
+        - Note: Assume the reader is smart but doesn't know `R`/Machine Learning well. That is, be crystal clear about what you're doing and why.
 
-- **Results** (5 point)
+- **Results** (__/5 point)
 
     + Student gave a detailed summary of their results. 
     
@@ -98,12 +101,10 @@ The student's project sufficiently addressed these general areas.
     
     + Student used visualizations (and tables) whenever possible/appropriate. 
 
-- **Discussion** (5 point)
+- **Discussion** (__/5 point)
 
   + Student spoke on the "success" of their project (as defined in their proposal). 
       + "Did you achieve what you set out to do? If not why?"
-
-  + Student outlined the tools/methods they considered but ultimately did *not* use in their final analysis.
   
   + Student articulate how they would expand the analysis if given more time.
 

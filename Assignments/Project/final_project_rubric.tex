@@ -1,0 +1,288 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  11pt,
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdfauthor={PPOL670 -- Introduction to Data Science},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{\textbf{Final Project Rubric}}
+\author{\Large PPOL670 -- Introduction to Data Science}
+\date{Fall 2020}
+
+\begin{document}
+\maketitle
+
+\textbf{Student}:\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+\textbf{Project Name}:
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+\textbf{Total Score}: \_\_\_\_ / 51
+
+\hypertarget{project-materials}{%
+\subsubsection{Project Materials}\label{project-materials}}
+
+\emph{4 points}
+
+\begin{itemize}
+\tightlist
+\item
+  Report was posted to Canvas as a \texttt{.zip} containing the
+  following items:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Report was rendered using RMarkdown as any one of the following file
+    types: \texttt{.pdf}, \texttt{.html}, \texttt{.docx}. File was
+    titled \texttt{lastname\_firstname\_final\_report.pdf}. (\_\_/1
+    point)
+  \item
+    \texttt{.Rmd} file containing all the code used to generate the
+    analytics in the report. File was titled
+    \texttt{lastname\_firstname\_final\_report.Rmd}. (\_\_/1 point)
+  \item
+    Student included the data used in a \texttt{Data/} folder. (\_\_/1
+    point)
+  \item
+    Student included an \texttt{.Rproj}. (\_\_/1 point)
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{document-presentation}{%
+\subsubsection{Document Presentation}\label{document-presentation}}
+
+\emph{17 points}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Student used professional looking visualizations in the
+  report:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Figures were easy to understand? (\_\_/1 point)
+  \item
+    Figures made sense within the context of the report? (\_\_/1 point)
+  \item
+    Student described the purpose and the insight drawn from the figure
+    in the text? (\_\_/1 point)
+  \item
+    Figures referenced in the t ext are labeled, i.e.~references to
+    ``figure 1'' correspond to the figure title (e.g.~``Figure 1:
+    Title'')? (\_\_/1 point)
+  \item
+    Figures include titles? (\_\_/1 point)
+  \item
+    Figures labels/axes/text are readable? (\_\_/1 point)
+  \item
+    Color scheme made sense; easy to differentiate between colored items
+    (\_\_/1 point)
+  \item
+    Figures were appropriately proportioned to the document? (\_\_/1
+    point)
+  \end{itemize}
+\item
+  \textbf{Student used \texttt{R} Markdown for a professional looking
+  report:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Report was rendered without errors or warnings. (\_\_/1 point)
+  \item
+    No code was visible in the report. (\_\_/1 point)
+  \item
+    No raw output was visible in the report. (\_\_/1 point)
+  \item
+    Report includes a title and author byline. (\_\_/1 point)
+  \item
+    Report includes a word count. (\_\_/1 point)
+  \item
+    Report is 12 pages in length (double-spaced; 12 pt font) if rendered
+    as \texttt{.pdf}/\texttt{.docx}. (\_\_/1 point)
+  \item
+    Report contained no (or few) grammatical/spelling errors. (\_\_/1
+    point)
+  \item
+    Report reads as a single cohesive document. (\_\_/1 point)
+  \item
+    Report is 12 pages in length (double-spaced; 12 pt font; if rendered
+    as \texttt{.pdf}/\texttt{.docx}) or 3000 words.\footnote{Note that
+      your citations do not count against your word/page count.} (\_\_/1
+    point)
+  \item
+    Student cited academic, data, and package sources.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      To cite a package, use \texttt{citation("package\_name")} to get a
+      the citation information for a package,
+      e.g.~\texttt{citation("ggplot2")} will yield ``\emph{H. Wickham.
+      ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New
+      York, 2016.}''
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{content}{%
+\subsubsection{Content}\label{content}}
+
+\emph{Points 30}
+
+The student's project sufficiently addressed these general areas.
+
+\begin{itemize}
+\item
+  \textbf{Introduction} (\_\_/5 point)
+
+  \begin{itemize}
+  \item
+    Student clearly established the aim of the project.
+  \item
+    Student offered a clear roadmap of the report (i.e what is covered
+    in the report).
+  \end{itemize}
+\item
+  \textbf{Problem Statement and Background} (\_\_/5 point)
+
+  \begin{itemize}
+  \item
+    Student offered a clear and complete statement of the problem and/or
+    aim of their analysis.
+  \item
+    Student included a brief summary of any related work (i.e.~a
+    \emph{light} literature review)
+  \end{itemize}
+\item
+  \textbf{Data} (\_\_/5 point)
+
+  \begin{itemize}
+  \item
+    Student outlined where their data came from.
+  \item
+    Student clearly specified:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      the unit of observation;
+    \item
+      variables of interest;
+    \item
+      potential issues in the data (e.g.~missingness, coverage, etc.)
+    \end{itemize}
+  \item
+    Student articulate the steps they took to wrangle the data.
+  \end{itemize}
+\item
+  \textbf{Analysis} (\_\_/5 point)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Student described the methods/tools they explored in their project.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Justified the tools/methods that they used.
+    \item
+      Adequately described what the tools/methods are doing.
+    \item
+      Note: Assume the reader is smart but doesn't know
+      \texttt{R}/Machine Learning well. That is, be crystal clear about
+      what you're doing and why.
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Results} (\_\_/5 point)
+
+  \begin{itemize}
+  \item
+    Student gave a detailed summary of their results.
+  \item
+    Student presented their results clearly and concisely.
+  \item
+    Student used visualizations (and tables) whenever
+    possible/appropriate.
+  \end{itemize}
+\item
+  \textbf{Discussion} (\_\_/5 point)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Student spoke on the ``success'' of their project (as defined in
+    their proposal).
+
+    \begin{itemize}
+    \tightlist
+    \item
+      ``Did you achieve what you set out to do? If not why?''
+    \end{itemize}
+  \item
+    Student articulate how they would expand the analysis if given more
+    time.
+  \end{itemize}
+\end{itemize}
+
+\end{document}
