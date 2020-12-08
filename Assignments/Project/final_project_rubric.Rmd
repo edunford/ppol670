@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Project Name**: ________________________________________
 
-**Total Score**: ____ / 51
+**Total Score**: ____ / 50
 
 
 ### Project Materials 
@@ -30,7 +30,7 @@ _4 points_
   
 ### Document Presentation 
 
-_17 points_
+_16 points_
 
 - **Student used professional looking visualizations in the report:**
   + Figures were easy to understand? (__/1 point)
@@ -46,13 +46,11 @@ _17 points_
   + Report was rendered without errors or warnings. (__/1 point)
   + No code was visible in the report. (__/1 point)
   + No raw output was visible in the report. (__/1 point)
-  + Report includes a title and author byline. (__/1 point)
-  + Report includes a word count. (__/1 point)
-  + Report is 12 pages in length (double-spaced; 12 pt font) if rendered as `.pdf`/`.docx`. (__/1 point)
+  + Report includes a title, author byline, and word count. (__/1 point)
+  + Report is 12 pages in length (double-spaced; 12 pt font; if rendered as `.pdf`/`.docx`) or 3000 words.^[Note that your citations do not count against your word/page count.]  (__/1 point)
   + Report contained no (or few) grammatical/spelling errors. (__/1 point)
   + Report reads as a single cohesive document. (__/1 point)
-  + Report is 12 pages in length (double-spaced; 12 pt font; if rendered as `.pdf`/`.docx`) or 3000 words.^[Note that your citations do not count against your word/page count.]  (__/1 point)
-  + Student cited academic, data, and package sources.   
+  + Student cited academic, data, and package sources. (__/1 point)   
     - To cite a package, use `citation("package_name")` to get a the citation information for a package, e.g. `citation("ggplot2")` will yield "_H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
   2016._"
   
