@@ -19,7 +19,7 @@ require(kableExtra)
 
 <center><h1>Introduction to Data Science</h1></center>
 <center><h2>PPOL670-01</h2></center>
-<center>**Fall 2020**</center>
+<center>**Spring 2021**</center>
 <center>**Georgetown University**</center>
 
 <br>
@@ -115,28 +115,28 @@ Data science is an applied field and therefore, it is important that you underst
 
 
 
-<br>
+<!-- <br> -->
 
-**Overview**
+<!-- **Overview** -->
 
-<center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center>
+<!-- <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center> -->
 
-<br>
+<!-- <br> -->
 
-<center>[**Presentation Rubric**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center>
+<!-- <center>[**Presentation Rubric**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center> -->
 
-<br>
+<!-- <br> -->
 
-<center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center>
+<!-- <center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center> -->
 
-<br>
+<!-- <br> -->
 
-**Examples of Successful Projects**
+<!-- **Examples of Successful Projects** -->
 
-- [Frances Chen - "Predicting Social Distancing in the Age of COVID-19"](Assignments/Project/Examples/Chen_Frances_Example_Final_Report.pdf)
-- [Julia Eigner - "Predicting Maternal Mortality"](Assignments/Project/Examples/Eigner_Julia_Example_Final_Report.pdf)
-- [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Examples/Costa_Kristina_Example_Final_Report.pdf)
-- [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Examples/Wang_Liping_Example_Final_Report.pdf)
+<!-- - [Frances Chen - "Predicting Social Distancing in the Age of COVID-19"](Assignments/Project/Examples/Chen_Frances_Example_Final_Report.pdf) -->
+<!-- - [Julia Eigner - "Predicting Maternal Mortality"](Assignments/Project/Examples/Eigner_Julia_Example_Final_Report.pdf) -->
+<!-- - [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Examples/Costa_Kristina_Example_Final_Report.pdf) -->
+<!-- - [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Examples/Wang_Liping_Example_Final_Report.pdf) -->
 
 
 
@@ -239,300 +239,300 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <br>
 <br>
 
-### _Week 1_: **Work Flow and Reproducibility**
+<!-- ### _Week 1_: **Work Flow and Reproducibility** -->
 
-<br>
+<!-- <br> -->
 
-- [**Lecture Slides**](Lectures/week_01/lecture-week-01.html)
+<!-- - [**Lecture Slides**](Lectures/week_01/lecture-week-01.html) -->
 
-  - **_Table of Contents_**
-    + [About this Course](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#3)
-    + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14)
-    + [Interacting with `R`](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14)
+<!--   - **_Table of Contents_** -->
+<!--     + [About this Course](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#3) -->
+<!--     + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14) -->
+<!--     + [Interacting with `R`](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14) -->
 
-<br>
+<!-- <br> -->
 
 
-### _Week 2_: **Introduction to Programming in `R`**
+<!-- ### _Week 2_: **Introduction to Programming in `R`** -->
 
 
-<br>
+<!-- <br> -->
 
-- [**Asynchronous Material**](Lectures/week_02/asynchronous_lecture_material/week-02-async-material.html)
+<!-- - [**Asynchronous Material**](Lectures/week_02/asynchronous_lecture_material/week-02-async-material.html) -->
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html)
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html) -->
 
-  - **_Table of Contents_**
-    - [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
-    - [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20)
-    - [Indexing](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#28)
-    - [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#57)
-    - [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70)
-    - [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#76)
-    - [Importing and Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#85)
-    - [But where is my data exactly?](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#100)
+<!--   - **_Table of Contents_** -->
+<!--     - [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3) -->
+<!--     - [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20) -->
+<!--     - [Indexing](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#28) -->
+<!--     - [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#57) -->
+<!--     - [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70) -->
+<!--     - [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#76) -->
+<!--     - [Importing and Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#85) -->
+<!--     - [But where is my data exactly?](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#100) -->
 
-- **Practice**
-  + In breakout rooms, let's [practice creating an R project, subsetting and creating data structures in R, and importing/exporting data.](Lectures/week_02/Practice/week-02_practice.html)
+<!-- - **Practice** -->
+<!--   + In breakout rooms, let's [practice creating an R project, subsetting and creating data structures in R, and importing/exporting data.](Lectures/week_02/Practice/week-02_practice.html) -->
 
-<br>
+<!-- <br> -->
 
-### _Week 3_: **Reproducibility in Practice**
+<!-- ### _Week 3_: **Reproducibility in Practice** -->
 
-<br>
+<!-- <br> -->
 
-- [**Asynchronous Material**](Lectures/week_03/asynchronous_lecture_material/week-03-async-material.html)
+<!-- - [**Asynchronous Material**](Lectures/week_03/asynchronous_lecture_material/week-03-async-material.html) -->
 
 
-- [**Lecture Slides**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html)
+<!-- - [**Lecture Slides**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
 
-  - **Table of Contents**
-    + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3)
-    + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22)
-    + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26)
-    + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50)
+<!--   - **Table of Contents** -->
+<!--     + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3) -->
+<!--     + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22) -->
+<!--     + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26) -->
+<!--     + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50) -->
 
-- **Practice**:
-  + _Breakout 1_: [Piecing together the code](Lectures/week_03/Practice/breakout01_piecing-together-code.html)
-  + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a>
-  + _Breakout 2_: [Generate a Reproducible Example](Lectures/week_03/Practice/breakout02_reprex_practice.html)
-  
+<!-- - **Practice**: -->
+<!--   + _Breakout 1_: [Piecing together the code](Lectures/week_03/Practice/breakout01_piecing-together-code.html) -->
+<!--   + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a> -->
+<!--   + _Breakout 2_: [Generate a Reproducible Example](Lectures/week_03/Practice/breakout02_reprex_practice.html) -->
 
-<br>
 
-### _Week 4_: **Data Wrangling in R**
+<!-- <br> -->
 
+<!-- ### _Week 4_: **Data Wrangling in R** -->
 
-<br>
 
-- [**Asynchronous Material**](Lectures/week_04/asynchronous_lecture_material/week4-async-material.html)
+<!-- <br> -->
 
+<!-- - [**Asynchronous Material**](Lectures/week_04/asynchronous_lecture_material/week4-async-material.html) -->
 
-- [**Lecture Slides**](Lectures/week_04/lecture-week-04_data-wrangling.html)
-  - **Table of Contents**
-    + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3)
-    + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9)
-    + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17)
-    + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#60)
-    + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#67)
-    + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#85)
-    
-- **Practice**:
-  + _Breakout 1_: <a href="Lectures/week_04/walkthrough/breakout01_manipulating-conflict-data.Rmd.zip" download> <strong>Manipulating conflict event data </strong> </a>
-  + _Breakout 2_: <a href="Lectures/week_04/walkthrough/breakout02_joining-reshaping.Rmd.zip" download> <strong> Practice joining and reshaping data</strong> </a>
 
-<br>
+<!-- - [**Lecture Slides**](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
+<!--   - **Table of Contents** -->
+<!--     + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3) -->
+<!--     + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9) -->
+<!--     + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17) -->
+<!--     + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#60) -->
+<!--     + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#67) -->
+<!--     + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#85) -->
 
-### _Week 5_: **Data Visualization**
+<!-- - **Practice**: -->
+<!--   + _Breakout 1_: <a href="Lectures/week_04/walkthrough/breakout01_manipulating-conflict-data.Rmd.zip" download> <strong>Manipulating conflict event data </strong> </a> -->
+<!--   + _Breakout 2_: <a href="Lectures/week_04/walkthrough/breakout02_joining-reshaping.Rmd.zip" download> <strong> Practice joining and reshaping data</strong> </a> -->
 
-<br>
+<!-- <br> -->
 
-- [**Asynchronous Material**](Lectures/week_05/asynchronous_lecture_material/week5-async-material.html)
+<!-- ### _Week 5_: **Data Visualization** -->
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html)
-  - **Table of Contents**
-    + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#2)
-    + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#15)
-  
+<!-- <br> -->
 
-- **Practice**:
-  - _Walkthrough_: let's visualize the [Gapminder](https://www.gapminder.org/) dataset in a live coding walkthrough. 
-    + <a href="Lectures/week_05/synchronous-materials/gapminder_visualization_practice.Rmd.zip" download><strong>Download the notebook</strong></a> (`.rmd` as a `.zip`)
-    + [**Answers**](Lectures/week_05/synchronous-materials/gapminder_visualization_practice_ANSWERS.nb.html) to the notebook. 
-    
-    
-- **Third Party Visualization Packages** that build off of `ggplot2`.
-    + [`ggthemes`](https://jrnold.github.io/ggthemes/reference/index.html): for great theme and color schemes. 
-    + [`scico`](https://github.com/thomasp85/scico): for beautiful continuous color schemes. 
-    + [`gghighlight`](https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html): for highlighting values or subgroups in a ggplot2 plot. 
-    + [`ggrepel`](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html): for adding text labels to `ggplot2` plots. 
-    + [`GGally`](https://ggobi.github.io/ggally/reference/index.html): for generating standard (but more complicated to construct) `ggplot2` plots, such as correlation heatmaps and pairs plots. 
+<!-- - [**Asynchronous Material**](Lectures/week_05/asynchronous_lecture_material/week5-async-material.html) -->
 
-<br>
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html) -->
+<!--   - **Table of Contents** -->
+<!--     + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#2) -->
+<!--     + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#15) -->
 
-### _Week 6_: **Web Scrapping**
 
-<br>
+<!-- - **Practice**: -->
+<!--   - _Walkthrough_: let's visualize the [Gapminder](https://www.gapminder.org/) dataset in a live coding walkthrough.  -->
+<!--     + <a href="Lectures/week_05/synchronous-materials/gapminder_visualization_practice.Rmd.zip" download><strong>Download the notebook</strong></a> (`.rmd` as a `.zip`) -->
+<!--     + [**Answers**](Lectures/week_05/synchronous-materials/gapminder_visualization_practice_ANSWERS.nb.html) to the notebook.  -->
 
-- [**Asynchronous Material**](Lectures/week_06/asynchronous_lecture_material/week6-async-material.html)
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html)
-  - **Table of Contents**:
-    + [Functions](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#2)
-    + [Websites](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#5)
-    + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#14)
-    + [Building a Scraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28)
-    + [Legality](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#35)
-    + [Dates](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#40)
-    
-- **Discussion**: 
-  - [Data Acquisition using `R` packages (wrappers on APIs)](Lectures/week_06/synchronous-materials/data-acquisition-using-r-package-apis.html)
+<!-- - **Third Party Visualization Packages** that build off of `ggplot2`. -->
+<!--     + [`ggthemes`](https://jrnold.github.io/ggthemes/reference/index.html): for great theme and color schemes.  -->
+<!--     + [`scico`](https://github.com/thomasp85/scico): for beautiful continuous color schemes.  -->
+<!--     + [`gghighlight`](https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html): for highlighting values or subgroups in a ggplot2 plot.  -->
+<!--     + [`ggrepel`](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html): for adding text labels to `ggplot2` plots.  -->
+<!--     + [`GGally`](https://ggobi.github.io/ggally/reference/index.html): for generating standard (but more complicated to construct) `ggplot2` plots, such as correlation heatmaps and pairs plots.  -->
 
-- **Practice**:
-  + _Breakout 1_: [Scraping Wikipedia for information on Presidential Debates](Lectures/week_06/synchronous-materials/breakout/breakout01_scraping-wikipedia.html)
+<!-- <br> -->
 
+<!-- ### _Week 6_: **Web Scrapping** -->
 
-<br>
+<!-- <br> -->
 
-### _Week 7_: **Geospatial Data**
+<!-- - [**Asynchronous Material**](Lectures/week_06/asynchronous_lecture_material/week6-async-material.html) -->
 
-<br>
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html) -->
+<!--   - **Table of Contents**: -->
+<!--     + [Functions](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#2) -->
+<!--     + [Websites](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#5) -->
+<!--     + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#14) -->
+<!--     + [Building a Scraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28) -->
+<!--     + [Legality](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#35) -->
+<!--     + [Dates](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#40) -->
 
-- [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html)
+<!-- - **Discussion**:  -->
+<!--   - [Data Acquisition using `R` packages (wrappers on APIs)](Lectures/week_06/synchronous-materials/data-acquisition-using-r-package-apis.html) -->
 
+<!-- - **Practice**: -->
+<!--   + _Breakout 1_: [Scraping Wikipedia for information on Presidential Debates](Lectures/week_06/synchronous-materials/breakout/breakout01_scraping-wikipedia.html) -->
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_07/asynchronous_lecture_material/slides/week-07-introduction-to-geospatial.html)
 
-- **Practice**:
-  + _Breakout_: [**Mapping Conflict in Nigeria**](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria.nb.html)
-  + [**_Answers to the Breakout_**](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria_ANSWERS.nb.html)
+<!-- <br> -->
 
+<!-- ### _Week 7_: **Geospatial Data** -->
 
-- **Discussion**:
+<!-- <br> -->
 
-  + Retrieve country-level and subnational-level shape files for free from [diva-gis.org](https://www.diva-gis.org/).
-  + Explore other popular mapping packages in `R`:
-    + [**`ggmap`**](https://github.com/dkahle/ggmap): `ggmap` is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework
-    + [**`leaflet`**](https://rstudio.github.io/leaflet/): `leaflet` is one of the most popular open-source JavaScript libraries for interactive maps. It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB.
-    + [**`tidycensus`**](https://walker-data.com/tidycensus/): `tidycensus` is an R package that allows users to interface with the US Census Bureau’s decennial Census and five-year American Community APIs and return tidyverse-ready data frames, optionally with simple feature geometry included.
+<!-- - [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html) -->
 
-<br>
 
-### _Week 8_: **Text as Data**
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_07/asynchronous_lecture_material/slides/week-07-introduction-to-geospatial.html) -->
 
-<br>
+<!-- - **Practice**: -->
+<!--   + _Breakout_: [**Mapping Conflict in Nigeria**](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria.nb.html) -->
+<!--   + [**_Answers to the Breakout_**](Lectures/week_07/breakout/breakout_mapping-conflict-in-nigeria_ANSWERS.nb.html) -->
 
-- [**Asynchronous Material**](Lectures/week_08/asynchronous-lecture-material/week-08-async-materials.html)
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html)
+<!-- - **Discussion**: -->
 
-  - **Table of Contents**
-    + [Strings](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3)
-    + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20)
-    + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#49)
-    + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#64)
+<!--   + Retrieve country-level and subnational-level shape files for free from [diva-gis.org](https://www.diva-gis.org/). -->
+<!--   + Explore other popular mapping packages in `R`: -->
+<!--     + [**`ggmap`**](https://github.com/dkahle/ggmap): `ggmap` is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework -->
+<!--     + [**`leaflet`**](https://rstudio.github.io/leaflet/): `leaflet` is one of the most popular open-source JavaScript libraries for interactive maps. It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB. -->
+<!--     + [**`tidycensus`**](https://walker-data.com/tidycensus/): `tidycensus` is an R package that allows users to interface with the US Census Bureau’s decennial Census and five-year American Community APIs and return tidyverse-ready data frames, optionally with simple feature geometry included. -->
 
-- **Practice**:
-  + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html)
-    + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout.
-    + [Breakout Answers](Lectures/week_08/breakout/inaugural-speeches_ANSWERS.html)
+<!-- <br> -->
 
+<!-- ### _Week 8_: **Text as Data** -->
 
-<br>
+<!-- <br> -->
 
-### _Week 9_: **Introduction to Statistical Learning**
+<!-- - [**Asynchronous Material**](Lectures/week_08/asynchronous-lecture-material/week-08-async-materials.html) -->
 
-<br>
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html) -->
 
-- [**Asynchronous Material**](Lectures/week_09/asynchronous_lecture_material/week-09-async-materials.html)
+<!--   - **Table of Contents** -->
+<!--     + [Strings](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3) -->
+<!--     + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20) -->
+<!--     + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#49) -->
+<!--     + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#64) -->
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html)
+<!-- - **Practice**: -->
+<!--   + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html) -->
+<!--     + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout. -->
+<!--     + [Breakout Answers](Lectures/week_08/breakout/inaugural-speeches_ANSWERS.html) -->
 
-- **Table of Contents**
-  + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#3)
-  + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#13)
-  + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#32)
-  + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#40)
-  + [`caret` API](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#54)
 
+<!-- <br> -->
 
-- **Practice**:
-  + _Walkthrough_: [**Data Pre-processing with `recipes`**](Lectures/week_09/synchronous-material/data-pre-processing-with-recipes.nb.html)
-    + Download the <a href="Lectures/week_09/Data/credit_data.csv" download><strong>credit_data.csv</strong></a> dataset used in the walkthrough.
+<!-- ### _Week 9_: **Introduction to Statistical Learning** -->
 
+<!-- <br> -->
 
+<!-- - [**Asynchronous Material**](Lectures/week_09/asynchronous_lecture_material/week-09-async-materials.html) -->
 
-<br>
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html) -->
 
-### _Week 10_: **Applications in Supervised Learning (Regression)**
+<!-- - **Table of Contents** -->
+<!--   + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#3) -->
+<!--   + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#13) -->
+<!--   + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#32) -->
+<!--   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#40) -->
+<!--   + [`caret` API](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#54) -->
 
-<br>
 
-- [**Asynchronous Material**](Lectures/week_10/asynchronous_lecture_material/week-10-async-materials.html)
+<!-- - **Practice**: -->
+<!--   + _Walkthrough_: [**Data Pre-processing with `recipes`**](Lectures/week_09/synchronous-material/data-pre-processing-with-recipes.nb.html) -->
+<!--     + Download the <a href="Lectures/week_09/Data/credit_data.csv" download><strong>credit_data.csv</strong></a> dataset used in the walkthrough. -->
 
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html)
-  - **Table of Contents**
-    + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#3)
-    + [K Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#23)
-    + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#33)
-    + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#48)
 
+<!-- <br> -->
 
-- **Practice**:
-  + _Walkthrough_: [**Walkthrough using regression methods with `caret`**](Lectures/week_10/synchronous-materials/supervised-ml-regression-walkthrough.nb.html)
-    + Download the <a href="Lectures/week_10/synchronous-materials/london_bike_sharing.csv" download><strong>london_bike_sharing.csv</strong></a> dataset used in the walkthrough.
+<!-- ### _Week 10_: **Applications in Supervised Learning (Regression)** -->
 
+<!-- <br> -->
 
-<br>
+<!-- - [**Asynchronous Material**](Lectures/week_10/asynchronous_lecture_material/week-10-async-materials.html) -->
 
-### _Week 11_: **Applications in Supervised Learning (Classification)**
 
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html) -->
+<!--   - **Table of Contents** -->
+<!--     + [Regression Methods](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#3) -->
+<!--     + [K Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#23) -->
+<!--     + [Regression Trees](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#33) -->
+<!--     + [Bagging and Random Forest](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html#48) -->
 
-<br>
 
-- [**Asynchronous Material**](Lectures/week_11/asynchronous_lecture_material/week-11-async-materials.html)
+<!-- - **Practice**: -->
+<!--   + _Walkthrough_: [**Walkthrough using regression methods with `caret`**](Lectures/week_10/synchronous-materials/supervised-ml-regression-walkthrough.nb.html) -->
+<!--     + Download the <a href="Lectures/week_10/synchronous-materials/london_bike_sharing.csv" download><strong>london_bike_sharing.csv</strong></a> dataset used in the walkthrough. -->
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html)
 
-  - **Table of Contents**:
-    + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3)
-    + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21)
-    + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29)
-    + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42)
-    + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47)
+<!-- <br> -->
 
+<!-- ### _Week 11_: **Applications in Supervised Learning (Classification)** -->
 
-- **Practice**:
-  + _Walkthrough_: [**Walkthrough using classification methods with `caret`**](Lectures/week_11/synchronous-materials/supervised-ml-classification-walkthrough.nb.html)
-    + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough.
 
+<!-- <br> -->
 
-<br>
+<!-- - [**Asynchronous Material**](Lectures/week_11/asynchronous_lecture_material/week-11-async-materials.html) -->
 
-### _Week 12_: **Interpretable Machine Learning**
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html) -->
 
-<br>
+<!--   - **Table of Contents**: -->
+<!--     + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3) -->
+<!--     + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21) -->
+<!--     + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29) -->
+<!--     + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42) -->
+<!--     + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47) -->
 
-- [**Asynchronous Material**](Lectures/week_12/asynchronous_lecture_material/week-12-async-materials.html)
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html)
+<!-- - **Practice**: -->
+<!--   + _Walkthrough_: [**Walkthrough using classification methods with `caret`**](Lectures/week_11/synchronous-materials/supervised-ml-classification-walkthrough.nb.html) -->
+<!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
 
-  - **Table of Contents**:
-    + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#3)
-    + [Variable Importance](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#9)
-    + [Partial Dependence Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#24)
-    + [Individual Conditional Expectation Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29)
-    + [Global Surrogate Models](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#33)
 
-- **Practice**:
-  + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_12/synchronous-materials/interpretable-ml-walkthrough.nb.html)
-    + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough.
-  
-<br>
+<!-- <br> -->
 
-### _Week 13_: **Applications in Unsupervised Learning**
+<!-- ### _Week 12_: **Interpretable Machine Learning** -->
 
-<br>
+<!-- <br> -->
 
-- [**Asynchronous Material**](Lectures/week_13/asynchronous_lecture_material/week-13-async-materials.html)
+<!-- - [**Asynchronous Material**](Lectures/week_12/asynchronous_lecture_material/week-12-async-materials.html) -->
 
-- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html)
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html) -->
 
-  - **Table of Contents**:
-    + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#3)
-    + [K-Means Clustering](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#7)
-    + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#19)
+<!--   - **Table of Contents**: -->
+<!--     + [Interpretable Machine Learning](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#3) -->
+<!--     + [Variable Importance](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#9) -->
+<!--     + [Partial Dependence Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#24) -->
+<!--     + [Individual Conditional Expectation Plots](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#29) -->
+<!--     + [Global Surrogate Models](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html#33) -->
 
+<!-- - **Practice**: -->
+<!--   + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_12/synchronous-materials/interpretable-ml-walkthrough.nb.html) -->
+<!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
 
-- [**Exploratory Data Analysis in the Social Sciences**](Lectures/week_13/lecture-week-13-eda-in-the-social-sciences.html)
+<!-- <br> -->
 
-- **Practice**:
-  + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_13/synchronous-materials/unsupervised-learning-walkthrough.nb.html)
-    + Download the <a href="Lectures/week_13/synchronous-materials/Data/vdems_civil_liberties.csv" download><strong>vdems_civil_liberties.csv</strong></a> dataset used in the walkthrough.
+<!-- ### _Week 13_: **Applications in Unsupervised Learning** -->
 
+<!-- <br> -->
 
-<br>
+<!-- - [**Asynchronous Material**](Lectures/week_13/asynchronous_lecture_material/week-13-async-materials.html) -->
+
+<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html) -->
+
+<!--   - **Table of Contents**: -->
+<!--     + [Unsupervised Learning](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#3) -->
+<!--     + [K-Means Clustering](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#7) -->
+<!--     + [Hierarchical Clustering](http://ericdunford.com/ppol670/Lectures/week_13/lecture-week-13-applications-unsupervised-ml-ppol670.html#19) -->
+
+
+<!-- - [**Exploratory Data Analysis in the Social Sciences**](Lectures/week_13/lecture-week-13-eda-in-the-social-sciences.html) -->
+
+<!-- - **Practice**: -->
+<!--   + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_13/synchronous-materials/unsupervised-learning-walkthrough.nb.html) -->
+<!--     + Download the <a href="Lectures/week_13/synchronous-materials/Data/vdems_civil_liberties.csv" download><strong>vdems_civil_liberties.csv</strong></a> dataset used in the walkthrough. -->
+
+
+<!-- <br> -->
 
 
 
