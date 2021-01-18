@@ -18,7 +18,7 @@ require(kableExtra)
 ```
 
 <center><h1>Introduction to Data Science</h1></center>
-<center><h2>PPOL670-01</h2></center>
+<center><h2>PPOL670</h2></center>
 <center>**Spring 2021**</center>
 <center>**Georgetown University**</center>
 
@@ -35,7 +35,7 @@ require(kableExtra)
 
 
 ```{r,echo=F,message=F,results='asis'}
-read_csv('Syllabus/fall-2020-timeline.csv') %>%
+read_csv('Syllabus/fall-2021-timeline.csv') %>%
   # filter(Topic != "No Class") %>% 
   {.[is.na(.)]="";.} %>% 
   kable(., "html", booktabs = T,align = c('c','l','l')) %>%
@@ -58,11 +58,13 @@ read_csv('Syllabus/fall-2020-timeline.csv') %>%
 <br> 
 
 
-#### [Link to Virtual Zoom Classroom](https://georgetown.zoom.us/j/91598655229)
+#### [Link to Virtual Zoom Classroom](https://georgetown.zoom.us/j/92400325980?pwd=OGIxQWhQalFNOEVyK0Jjbzg2dk9Qdz09) (Tuesdays 6:30pm - 9:00pm)
+- **Meeting Id**: 924 0032 5980
+- **Pass code**: 54193548
   
 <br>
   
-#### [Virtual Office Hours](https://georgetown.zoom.us/j/96444963432) (Wednesdays 12pm - 2pm)
+#### [Virtual Office Hours](https://georgetown.zoom.us/j/96444963432) (Wednesdays 9:00am - 11:00am)
 
   
 <br>
@@ -113,6 +115,7 @@ Data science is an applied field and therefore, it is important that you underst
 
 **_More information regarding the final project will be circulated during class on Week 8_**
 
+<!-- CHANGE NOTES: Ban on specific datasets (WB, UN, my world in data) --- outcome can not come from these datasets. No more than 20% of your predictors can come from this data -->
 
 
 <!-- <br> -->
@@ -208,7 +211,7 @@ Video walkthroughs:
 #### [Eric Dunford](http://ericdunford.com/) (Professor)
 
 - **Office**: Bedroom (formerly 404 Old North)
-- **Office Hours**: Tuesdays 9:00am to 11:00am (EST) or by appointment
+- **Office Hours**: Wednesdays 9:00am to 11:00am (EST) or by appointment
 - **Email**: [eric.dunford@georgetown.edu](mailto:eric.dunford@georgetown.edu)
 
 <br>
@@ -222,7 +225,7 @@ Video walkthroughs:
 
 #### Class
 
-- **Slack**: class communications will primarily take place through [Slack](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members). Please follow the [**_invite link_**](https://join.slack.com/t/ppol670-fall-2020/shared_invite/zt-gnbnemyd-9GSNAaEfXtSUgzsnH3KHKA) to be added to the class Slack channel.
+- **Slack**: class communications will primarily take place through [Slack](https://get.slack.help/hc/en-us/articles/218080037-Getting-started-for-new-members). Please follow the [**_invite link_**](https://join.slack.com/t/ppol670-spring-2021/shared_invite/zt-ku5h37xj-rN4y~pXDnQeV4YFNXsf9pw) to be added to the class Slack channel.
 
 <br>
 <br>
