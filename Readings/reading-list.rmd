@@ -1,6 +1,5 @@
 ---
 title: 'PPOL670 | Reading List'
-date: 'Fall 2020'
 output: 
   html_document:
     css: style.css
