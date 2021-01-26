@@ -242,26 +242,26 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <br>
 <br>
 
-<!-- ### _Week 1_: **Work Flow and Reproducibility** -->
+### _Week 1_: **Work Flow and Reproducibility**
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Lecture Slides**](Lectures/week_01/lecture-week-01.html) -->
+- [**Lecture Slides**](Lectures/week_01/lecture-week-01.html)
 
-<!--   - **_Table of Contents_** -->
-<!--     + [About this Course](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#3) -->
-<!--     + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14) -->
-<!--     + [Interacting with `R`](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14) -->
+  - **_Table of Contents_**
+    + [About this Course](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#3)
+    + [Reproducibility](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14)
+    + [Interacting with `R`](http://ericdunford.com/ppol670/Lectures/week_01/lecture-week-01.html#14)
 
-<!-- <br> -->
-
-
-<!-- ### _Week 2_: **Introduction to Programming in `R`** -->
+<br>
 
 
-<!-- <br> -->
+### _Week 2_: **Introduction to Programming in `R`**
 
-<!-- - [**Asynchronous Material**](Lectures/week_02/asynchronous_lecture_material/week-02-async-material.html) -->
+
+<br>
+
+- [**Asynchronous Material**](Lectures/week_02/asynchronous_lecture_material/week-02-async-material.html)
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html) -->
 
@@ -535,7 +535,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--     + Download the <a href="Lectures/week_13/synchronous-materials/Data/vdems_civil_liberties.csv" download><strong>vdems_civil_liberties.csv</strong></a> dataset used in the walkthrough. -->
 
 
-<!-- <br> -->
+<br>
 
 
 
