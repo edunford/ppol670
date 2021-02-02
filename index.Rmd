@@ -280,11 +280,11 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 <br>
 
-<!-- ### _Week 3_: **Reproducibility in Practice** -->
+### _Week 3_: **Reproducibility in Practice**
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_03/asynchronous_lecture_material/week-03-async-material.html) -->
+- [**Asynchronous Material**](Lectures/week_03/asynchronous_lecture_material/week-03-async-material.html)
 
 
 <!-- - [**Lecture Slides**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
