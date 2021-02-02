@@ -263,22 +263,22 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_02/asynchronous_lecture_material/week-02-async-material.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html)
 
-<!--   - **_Table of Contents_** -->
-<!--     - [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3) -->
-<!--     - [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20) -->
-<!--     - [Indexing](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#28) -->
-<!--     - [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#57) -->
-<!--     - [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70) -->
-<!--     - [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#76) -->
-<!--     - [Importing and Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#85) -->
-<!--     - [But where is my data exactly?](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#100) -->
+  - **_Table of Contents_**
+    - [Objects](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#3)
+    - [Data Structures](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#20)
+    - [Indexing](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#28)
+    - [Operators](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#57)
+    - [Functions](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#70)
+    - [Packages](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#76)
+    - [Importing and Exporting Data](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#85)
+    - [But where is my data exactly?](http://ericdunford.com/ppol670/Lectures/week_02/lecture-week-02_intro-to-R.html#100)
 
-<!-- - **Practice** -->
-<!--   + In breakout rooms, let's [practice creating an R project, subsetting and creating data structures in R, and importing/exporting data.](Lectures/week_02/Practice/week-02_practice.html) -->
+- **Practice**
+  + In breakout rooms, let's [practice creating an R project, subsetting and creating data structures in R, and importing/exporting data.](Lectures/week_02/Practice/week-02_practice.html)
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 3_: **Reproducibility in Practice** -->
 
