@@ -287,28 +287,28 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 - [**Asynchronous Material**](Lectures/week_03/asynchronous_lecture_material/week-03-async-material.html)
 
 
-<!-- - [**Lecture Slides**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html) -->
+- [**Lecture Slides**](Lectures/week_03/lecture-week03-reproducibility-in-practice.html)
 
-<!--   - **Table of Contents** -->
-<!--     + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3) -->
-<!--     + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22) -->
-<!--     + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26) -->
-<!--     + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50) -->
+  - **Table of Contents**
+    + [Iteration](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#3)
+    + [Control Statements](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#22)
+    + [`R` Markdown](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#26)
+    + [Generating Reproducible Examples](http://ericdunford.com/ppol670/Lectures/week_03/lecture-week03-reproducibility-in-practice.html#50)
 
-<!-- - **Practice**: -->
-<!--   + _Breakout 1_: [Piecing together the code](Lectures/week_03/Practice/breakout01_piecing-together-code.html) -->
-<!--   + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a> -->
-<!--   + _Breakout 2_: [Generate a Reproducible Example](Lectures/week_03/Practice/breakout02_reprex_practice.html) -->
-
-
-<!-- <br> -->
-
-<!-- ### _Week 4_: **Data Wrangling in R** -->
+- **Practice**:
+  + _Breakout 1_: [Piecing together the code](Lectures/week_03/Practice/breakout01_piecing-together-code.html)
+  + <a href="Lectures/week_03/Practice/rmarkdown_walkthrough.Rmd.zip" download> R Markdown Walkthrough (download `.Rmd`) </a>
+  + _Breakout 2_: [Generate a Reproducible Example](Lectures/week_03/Practice/breakout02_reprex_practice.html)
 
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_04/asynchronous_lecture_material/week4-async-material.html) -->
+### _Week 4_: **Data Wrangling in R**
+
+
+<br>
+
+- [**Asynchronous Material**](Lectures/week_04/asynchronous_lecture_material/week4-async-material.html)
 
 
 <!-- - [**Lecture Slides**](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
@@ -324,7 +324,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--   + _Breakout 1_: <a href="Lectures/week_04/walkthrough/breakout01_manipulating-conflict-data.Rmd.zip" download> <strong>Manipulating conflict event data </strong> </a> -->
 <!--   + _Breakout 2_: <a href="Lectures/week_04/walkthrough/breakout02_joining-reshaping.Rmd.zip" download> <strong> Practice joining and reshaping data</strong> </a> -->
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 5_: **Data Visualization** -->
 

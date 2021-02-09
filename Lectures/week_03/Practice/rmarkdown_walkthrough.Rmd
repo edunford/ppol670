@@ -1,7 +1,5 @@
 ---
 title: "Markdown Basics"
-author: "Prof. Dunford"
-date: "Fall 2019"
 output: html_notebook
 ---
 
