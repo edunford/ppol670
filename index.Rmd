@@ -311,26 +311,26 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 - [**Asynchronous Material**](Lectures/week_04/asynchronous_lecture_material/week4-async-material.html)
 
 
-<!-- - [**Lecture Slides**](Lectures/week_04/lecture-week-04_data-wrangling.html) -->
-<!--   - **Table of Contents** -->
-<!--     + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3) -->
-<!--     + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9) -->
-<!--     + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17) -->
-<!--     + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#60) -->
-<!--     + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#67) -->
-<!--     + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#85) -->
+- [**Lecture Slides**](Lectures/week_04/lecture-week-04_data-wrangling.html)
+  - **Table of Contents**
+    + [Data Wrangling](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#3)
+    + [Tidy Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#9)
+    + [Manipulating Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#17)
+    + [Piping](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#60)
+    + [Joining Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#67)
+    + [Reshaping Data](http://ericdunford.com/ppol670/Lectures/week_04/lecture-week-04_data-wrangling.html#85)
 
-<!-- - **Practice**: -->
-<!--   + _Breakout 1_: <a href="Lectures/week_04/walkthrough/breakout01_manipulating-conflict-data.Rmd.zip" download> <strong>Manipulating conflict event data </strong> </a> -->
-<!--   + _Breakout 2_: <a href="Lectures/week_04/walkthrough/breakout02_joining-reshaping.Rmd.zip" download> <strong> Practice joining and reshaping data</strong> </a> -->
+- **Practice**:
+  + _Breakout 1_: <a href="Lectures/week_04/walkthrough/breakout01_manipulating-conflict-data.Rmd.zip" download> <strong>Manipulating conflict event data </strong> </a>
+  + _Breakout 2_: <a href="Lectures/week_04/walkthrough/breakout02_joining-reshaping.Rmd.zip" download> <strong> Practice joining and reshaping data</strong> </a>
 
 <br>
 
-<!-- ### _Week 5_: **Data Visualization** -->
+### _Week 5_: **Data Visualization**
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_05/asynchronous_lecture_material/week5-async-material.html) -->
+- [**Asynchronous Material**](Lectures/week_05/asynchronous_lecture_material/week5-async-material.html)
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html) -->
 <!--   - **Table of Contents** -->
@@ -351,7 +351,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--     + [`ggrepel`](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html): for adding text labels to `ggplot2` plots.  -->
 <!--     + [`GGally`](https://ggobi.github.io/ggally/reference/index.html): for generating standard (but more complicated to construct) `ggplot2` plots, such as correlation heatmaps and pairs plots.  -->
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 6_: **Web Scrapping** -->
 
