@@ -332,32 +332,32 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_05/asynchronous_lecture_material/week5-async-material.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html) -->
-<!--   - **Table of Contents** -->
-<!--     + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#2) -->
-<!--     + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#15) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html)
+  - **Table of Contents**
+    + [The Components of Data Visualization](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#2)
+    + [Grammar of Graphics](http://ericdunford.com/ppol670/Lectures/week_05/lecture-week-05_data-visualization.html#15)
 
 
-<!-- - **Practice**: -->
-<!--   - _Walkthrough_: let's visualize the [Gapminder](https://www.gapminder.org/) dataset in a live coding walkthrough.  -->
-<!--     + <a href="Lectures/week_05/synchronous-materials/gapminder_visualization_practice.Rmd.zip" download><strong>Download the notebook</strong></a> (`.rmd` as a `.zip`) -->
-<!--     + [**Answers**](Lectures/week_05/synchronous-materials/gapminder_visualization_practice_ANSWERS.nb.html) to the notebook.  -->
+- **Practice**:
+  - _Walkthrough_: let's visualize the [Gapminder](https://www.gapminder.org/) dataset in a live coding walkthrough.
+    + <a href="Lectures/week_05/synchronous-materials/gapminder_visualization_practice.Rmd.zip" download><strong>Download the notebook</strong></a> (`.rmd` as a `.zip`)
+    + [**Answers**](Lectures/week_05/synchronous-materials/gapminder_visualization_practice_ANSWERS.nb.html) to the notebook.
 
 
-<!-- - **Third Party Visualization Packages** that build off of `ggplot2`. -->
-<!--     + [`ggthemes`](https://jrnold.github.io/ggthemes/reference/index.html): for great theme and color schemes.  -->
-<!--     + [`scico`](https://github.com/thomasp85/scico): for beautiful continuous color schemes.  -->
-<!--     + [`gghighlight`](https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html): for highlighting values or subgroups in a ggplot2 plot.  -->
-<!--     + [`ggrepel`](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html): for adding text labels to `ggplot2` plots.  -->
-<!--     + [`GGally`](https://ggobi.github.io/ggally/reference/index.html): for generating standard (but more complicated to construct) `ggplot2` plots, such as correlation heatmaps and pairs plots.  -->
+- **Third Party Visualization Packages** that build off of `ggplot2`.
+    + [`ggthemes`](https://jrnold.github.io/ggthemes/reference/index.html): for great theme and color schemes.
+    + [`scico`](https://github.com/thomasp85/scico): for beautiful continuous color schemes.
+    + [`gghighlight`](https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html): for highlighting values or subgroups in a ggplot2 plot.
+    + [`ggrepel`](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html): for adding text labels to `ggplot2` plots.
+    + [`GGally`](https://ggobi.github.io/ggally/reference/index.html): for generating standard (but more complicated to construct) `ggplot2` plots, such as correlation heatmaps and pairs plots.
 
 <br>
 
-<!-- ### _Week 6_: **Web Scrapping** -->
+### _Week 6_: **Web Scrapping**
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_06/asynchronous_lecture_material/week6-async-material.html) -->
+- [**Asynchronous Material**](Lectures/week_06/asynchronous_lecture_material/week6-async-material.html)
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html) -->
 <!--   - **Table of Contents**: -->
@@ -375,7 +375,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--   + _Breakout 1_: [Scraping Wikipedia for information on Presidential Debates](Lectures/week_06/synchronous-materials/breakout/breakout01_scraping-wikipedia.html) -->
 
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 7_: **Geospatial Data** -->
 
