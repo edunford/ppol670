@@ -359,29 +359,29 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_06/asynchronous_lecture_material/week6-async-material.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html) -->
-<!--   - **Table of Contents**: -->
-<!--     + [Functions](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#2) -->
-<!--     + [Websites](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#5) -->
-<!--     + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#14) -->
-<!--     + [Building a Scraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28) -->
-<!--     + [Legality](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#35) -->
-<!--     + [Dates](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#40) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html)
+  - **Table of Contents**:
+    + [Functions](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#2)
+    + [Websites](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#5)
+    + [Scraping Content](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#14)
+    + [Building a Scraper](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#28)
+    + [Legality](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#35)
+    + [Dates](http://ericdunford.com/ppol670/Lectures/week_06/lecture-week-06_webscraping.html#40)
 
-<!-- - **Discussion**:  -->
-<!--   - [Data Acquisition using `R` packages (wrappers on APIs)](Lectures/week_06/synchronous-materials/data-acquisition-using-r-package-apis.html) -->
+- **Discussion**:
+  - [Data Acquisition using `R` packages (wrappers on APIs)](Lectures/week_06/synchronous-materials/data-acquisition-using-r-package-apis.html)
 
-<!-- - **Practice**: -->
-<!--   + _Breakout 1_: [Scraping Wikipedia for information on Presidential Debates](Lectures/week_06/synchronous-materials/breakout/breakout01_scraping-wikipedia.html) -->
+- **Practice**:
+  + _Breakout 1_: [Scraping Wikipedia for information on Presidential Debates](Lectures/week_06/synchronous-materials/breakout/breakout01_scraping-wikipedia.html)
 
 
 <br>
 
-<!-- ### _Week 7_: **Geospatial Data** -->
+### _Week 7_: **Geospatial Data**
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html) -->
+- [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html)
 
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_07/asynchronous_lecture_material/slides/week-07-introduction-to-geospatial.html) -->
@@ -399,7 +399,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--     + [**`leaflet`**](https://rstudio.github.io/leaflet/): `leaflet` is one of the most popular open-source JavaScript libraries for interactive maps. It’s used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB. -->
 <!--     + [**`tidycensus`**](https://walker-data.com/tidycensus/): `tidycensus` is an R package that allows users to interface with the US Census Bureau’s decennial Census and five-year American Community APIs and return tidyverse-ready data frames, optionally with simple feature geometry included. -->
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 8_: **Text as Data** -->
 
