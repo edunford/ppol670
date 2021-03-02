@@ -383,6 +383,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_07/asynchronous_lecture_material/week-07-async-materials.html)
 
+*
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_07/asynchronous_lecture_material/slides/week-07-introduction-to-geospatial.html) -->
 
