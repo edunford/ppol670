@@ -353,7 +353,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 <br>
 
-### _Week 6_: **Web Scrapping**
+### _Week 6_: **Web Scraping**
 
 <br>
 
