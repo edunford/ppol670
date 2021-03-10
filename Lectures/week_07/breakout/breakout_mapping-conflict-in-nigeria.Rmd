@@ -50,7 +50,6 @@ require(sf)
 ```
 
 
-
 # Tasks
 
 ### (1) Import and Prepare the Data
