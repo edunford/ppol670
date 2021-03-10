@@ -38,7 +38,7 @@ We'll use the following spatial datasets for this project:
   + Added to the grid shape file is information on [nighttime lights](https://sos.noaa.gov/datasets/nighttime-lights/), which captures the level of light pollution within a prio-grid unit. Values represent the gridcell average of the cloud-free composites made using all the available archived DMSP-OLS smooth resolution data for 1992 - 2012 calendar years. 
 - Country shape file of **Nigeria**. 
 
-The data can be downloaded from the following [**Dropbox data transfer link**](https://www.dropbox.com/t/GyQWP5mP9QDum4AX).
+The data can be downloaded from the following [**Dropbox data transfer link**](https://www.dropbox.com/t/D6EAcCWM9AOaSM3i).
 
 
 ```{r}
