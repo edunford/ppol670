@@ -416,7 +416,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 - **Practice**:
   + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html)
     + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout.
-    <!-- + [Breakout Answers](Lectures/week_08/breakout/inaugural-speeches_ANSWERS.html) -->
+    + [Breakout Answers](Lectures/week_08/breakout/inaugural-speeches_ANSWERS.html)
 
 
 <br>
