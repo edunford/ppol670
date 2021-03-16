@@ -85,7 +85,7 @@
 
 \title{\textbf{Project Overview}}
 \author{\Large PPOL670 -- Introduction to Data Science}
-\date{Fall 2020}
+\date{Spring 2021}
 
 \begin{document}
 \maketitle
@@ -101,6 +101,8 @@ The following provides an overview of the data science project that you
 will be responsible for completing by the end of the semester. The
 project is an opportunity to apply the skills and tools that you've
 learned throughout the course on an area of substantive interest to you.
+The aim of this project is to build a model that predicts an outcome of
+interest (broadly defined).
 
 The project is composed of three distinct parts: a proposal, a
 presentation, and a report. The proposal should outline the general plan
@@ -110,8 +112,8 @@ presentation is an opportunity to present your work in mid-stream to
 receive verbal feedback from the professor, TA, and classmates. These
 comments will hopefully help you as you move forward with the final
 report. The report is the written analysis of the project in its
-entirety. The report will be due on December 11 @ 9pm (PPOL670's
-designated finals slot).
+entirety. The report will be due on May 18 @ 9pm (PPOL670's designated
+finals slot).
 
 The proposal, presentation materials, and the report should be generated
 using
@@ -127,14 +129,12 @@ and should follow all reproducibility practices discussed in class.
 \textbf{Length}\tabularnewline
 \midrule
 \endhead
-October 28 & 5\% & 2 pages/750-1000 words (single-spaced; 12pt
-font)\tabularnewline
+April 13 & 5\% & 750-1000 words\tabularnewline
 \bottomrule
 \end{longtable}
 
-The project proposal asks that you sketch out a general 2 page
-(single-spaced; 12pt font; 750-1000 words) project proposal. The
-proposal should offer the following information:
+The project proposal asks that you sketch out a general project proposal
+(750-1000 words). The proposal should offer the following information:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -142,42 +142,60 @@ proposal should offer the following information:
 \item
   A high-level statement of the problem you intend to address or the
   analysis you aim to generate;
-\item
-  The data source(s) you intend to use;
 
   \begin{itemize}
   \tightlist
   \item
-    The data you choose to utilize should take some effort to compose
-    (it shouldn't be entirely ``off-the-shelf data'', i.e.~data easily
-    downloaded online).
+    What is the research question/problem?
   \item
-    If using API's or other easily downloadable data sources (such as
-    World Bank data) to collect your data, try joining other data to the
-    downloaded data, change the unit of analysis, etc.
-  \item
-    In general, one should have some wrangling component to get their
-    data in order.
+    Have others studied this question/problem before? If so, what are
+    some conclusions they've drawn. What is still unknown?
   \end{itemize}
 \item
-  Your plan to obtain that data;
-\item
-  The methods (learned in class) that you aim to employ; and
+  What is the outcome variable that you're looking to explore/predict?
 
   \begin{itemize}
   \tightlist
   \item
-    The project must contain:
+    Describe the variable and how it relates conceptually to the
+    research question/problem.
+  \item
+    Provide summary statistics of the outcome variable.
 
     \begin{itemize}
     \tightlist
     \item
-      a data wrangling component
-    \item
-      (multiple) data visualizations
-    \item
-      a machine (statistical) learning component
+      Five number summary, plot the distribution of the variable, and/or
+      any other valuable summaries of the variable (e.g.~plot the
+      spatial distribution of the variable)
     \end{itemize}
+  \item
+    Is there missingness in the variable? If so, explore what
+    observations are missing data. Is there something systematic about
+    that missingness (e.g.~``a majority of authoritarian countries are
+    missing in the data'')
+  \item
+    Note: \emph{The outcome variable cannot be pulled from the World
+    Bank, United Nations, International Monetary Fund, or Our World in
+    Data without explicit permission from the instructor}.
+  \end{itemize}
+\item
+  What predictor variables do you plan on using to model the outcome?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    You should have a minimum of 10 predictor variables in your model.
+  \item
+    Outline where you plan to get these data.
+  \item
+    \emph{No more than 20\% of your predictor variables} should be from
+    the World Bank, United Nations, International Monetary Fund, or Our
+    World in Data.
+  \item
+    You do not need to describe these variables at this point in time.
+    Rather I am looking that for a clear plan to get these data. If you
+    have these, you can offer some brief descriptive statistics.
   \end{itemize}
 \item
   A definition for what ``success'' means with respect to your project.
@@ -196,11 +214,11 @@ proposal should offer the following information:
 \end{enumerate}
 
 Please be detailed but \emph{succinct} as possible when writing.
-\emph{Any material that exceeds page 2 (1000 words) will not be
-considered when grading/reading}. There is no advantage/incentive to
-exceeding the page limit. Be sure to properly cite any referenced
-materials and/or packages (it is okay if your work cited runs onto a
-third page).
+\emph{Any material that exceeds 1000 words will not be considered when
+grading/reading}. There is no advantage/incentive to exceeding the word
+limit. Be sure to properly cite any referenced materials and/or packages
+(it is okay if your work cited runs over the word limit. Your work cited
+will not be considered in the word count).
 
 \hypertarget{project-presentation}{%
 \subsection{Project Presentation}\label{project-presentation}}
@@ -211,7 +229,7 @@ third page).
 \textbf{Length}\tabularnewline
 \midrule
 \endhead
-December 2 & 10\% & 7 minutes in length\tabularnewline
+May 4 & 10\% & 7 minutes in length\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -222,9 +240,9 @@ Presentation}\label{part-1-video-presentation}}
 Please prepare and record a 7 minute presentation that walks us through
 the progress you've made on your project to date. The presentation is an
 opportunity to summarize your project and talk through your
-(preliminary) results. Moreover, it'll provide an opportunity for both
-your peers and the Professor/TA to provide constructive feedback, which
-you can then incorporate into your final paper.
+(preliminary) results. Moreover, it will provide an opportunity for both
+your peers and the Professor/TA/classmates to provide constructive
+feedback, which you can then incorporate into your final paper.
 
 When preparing your recording, please prepare slides \emph{using
 \texttt{R\ Markdown}}. \textbf{Students should not ``live code'' or show
@@ -272,11 +290,11 @@ so that others will have sufficient time to provide feedback.}
 \subsection{Part 2: Feedback}\label{part-2-feedback}}
 
 Each student will be randomly assigned the names of 5 peers in their
-class. The names will be circulated on \textbf{December 2}. Each student
-will be required to watch the recordings of their assigned classmates
-and provide substantive feedback by \textbf{Sunday December 6 11:59PM}.
-All comments/Feedback should be written on a shared \textbf{Google
-Document}, which will be circulated on \textbf{December 2} via the class
+class. The names will be circulated on \textbf{May 4}. Each student will
+be required to watch the recordings of their assigned classmates and
+provide substantive feedback by \textbf{Sunday May 9 11:59PM}. All
+comments/Feedback should be written on a shared \textbf{Google
+Document}, which will be circulated on \textbf{May 4} via the class
 Slack channel. The recorded presentations will be stored in a share
 folder on CANVAS. All enrolled students will have access to this folder.
 
@@ -289,19 +307,16 @@ folder on CANVAS. All enrolled students will have access to this folder.
 \textbf{Length}\tabularnewline
 \midrule
 \endhead
-December 11 & 30\% & 12 pages/3000 words (double-spaced; 12pt
-font)\tabularnewline
+May 18 & 30\% & 3000 words\tabularnewline
 \bottomrule
 \end{longtable}
 
 The report is a complete description of the project's analysis and
-results. The report should be 12 pages (3000 words) in length
-(\emph{double-spaced; 12 pt font}) and cover the below bullet points. As
-with the proposals, no written material will be considered beyond page
-12 when reviewing the report (a work cited can span onto a 13th page, or
-\textgreater{} 3000 words). Below I've outlined points that one should
-aim to discuss in each section. Note that paper should read as a
-cohesive report, so do not respond to these bullet points verbatim.
+results. The report should be 3000 words in length and cover the below
+bullet points. Note that your work cited can exceed the 3000 words
+limit. Below I've outlined points that one should aim to discuss in each
+section. Note that paper should read as a cohesive report, so do not
+respond to these bullet points verbatim.
 
 \begin{itemize}
 \item
@@ -344,13 +359,47 @@ cohesive report, so do not respond to these bullet points verbatim.
 
   \begin{itemize}
   \item
-    Where does the data come from?
-  \item
     What is the unit of observation?
   \item
-    What are the variables of interest?
+    What is the outcome variable?
+
+    \begin{itemize}
+    \tightlist
+    \item
+      How is it measured?
+    \item
+      Where does it come from?
+    \item
+      Please describe how the outcome variable is distributed using a
+      table and/or graph.
+    \end{itemize}
   \item
-    What steps did you take to wrangle the data?
+    What are your predictor variables?
+
+    \begin{itemize}
+    \tightlist
+    \item
+      How are they measured?
+    \item
+      Where do they come from?
+    \item
+      Please describe how the predictor variable are distributed using a
+      table and/or graph.
+    \end{itemize}
+  \item
+    Outline any potential issues with the data:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Missingness
+    \item
+      Lack of variation and/or availibility
+    \item
+      Any potential sources of bias
+    \end{itemize}
+  \item
+    How do you overcome/mitigate these issues in your analysis?
   \end{itemize}
 \item
   \textbf{Analysis}
@@ -370,22 +419,44 @@ cohesive report, so do not respond to these bullet points verbatim.
       Learning well. That is, be crystal clear about what you're doing
       and why.
     \end{itemize}
+  \item
+    Note that this section should walk us through what you're doing and
+    how you're planning on doing it. There should be no results
+    presented in this section.
   \end{itemize}
 \item
   \textbf{Results}
 
   \begin{itemize}
   \item
-    Give a detailed summary of your results.
-  \item
-    Present your results clearly and concisely.
+    Give a detailed summary of your results. Present your results
+    clearly and concisely.
   \item
     Please use visualizations and tables whenever possible.
+  \item
+    Be sure to:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Discuss the performance of your predictive model.
+    \item
+      Use interpretable machine learning to talk about which variables
+      were important in the prediction task and how they relate to the
+      outcome (i.e.~PDP/ICE/Surrogate Models)
+    \end{itemize}
   \end{itemize}
 \item
   \textbf{Discussion}
 
   \begin{itemize}
+  \item
+    What conclusions should we pull from your analysis?
+  \item
+    What are the limitations (i.e.~what can't we say given your
+    findings)?
+  \item
+    How would you expand the analysis if given more time?
   \item
     Speak on the ``success'' of your project (as defined in your
     proposal).
@@ -395,17 +466,12 @@ cohesive report, so do not respond to these bullet points verbatim.
     \item
       Did you achieve what you set out to do? If not why?
     \end{itemize}
-  \item
-    What tools/methods did you consider but \emph{not} use in the final
-    analysis?
-  \item
-    How would you expand the analysis if given more time?
   \end{itemize}
 \end{itemize}
 
 The reports must be submitted as a hardcopy (i.e.~the \texttt{.rmd}
-notebook must be rendered as a \texttt{.html}) to CANVAS by 9PM on
-December 11th. \textbf{\emph{Note that given the page constraints, no
-\texttt{R} code should be visible in the rendered document.}}
+notebook must be rendered as a \texttt{.html}) to CANVAS by 9PM on May
+18th. \textbf{\emph{Note that given the page constraints, no \texttt{R}
+code should be visible in the rendered document.}}
 
 \end{document}

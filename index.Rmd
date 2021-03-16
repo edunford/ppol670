@@ -111,20 +111,18 @@ Recurrent Zoom link can also be found on Canvas. Please contact the professor/TA
 
 <br>
 
-Data science is an applied field and therefore, it is important that you understand how to conduct a complete analysis from collecting data, to cleaning and analyzing it, to presenting your findings. Toward this end, students are required to complete an independent data science project, _applying concepts learned throughout the course_. The project is composed of three parts: a 2 page project proposal, an in-class presentation, and a 12-page project report.
+Data science is an applied field and therefore, it is important that you understand how to conduct a complete analysis from collecting data, to cleaning and analyzing it, to presenting your findings. Toward this end, students are required to complete an independent data science project, _applying concepts learned throughout the course_. The project is composed of three parts: a project proposal, an in-class presentation, and a project report.
 
 **_More information regarding the final project will be circulated during class on Week 8_**
 
-<!-- CHANGE NOTES: Ban on specific datasets (WB, UN, my world in data) --- outcome can not come from these datasets. No more than 20% of your predictors can come from this data -->
 
+<br>
 
-<!-- <br> -->
+**Overview**
 
-<!-- **Overview** -->
+<center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center>
 
-<!-- <center>[**Project Overview**](Assignments/Project/project_overview.pdf)</center> -->
-
-<!-- <br> -->
+<br>
 
 <!-- <center>[**Presentation Rubric**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center> -->
 
@@ -134,12 +132,12 @@ Data science is an applied field and therefore, it is important that you underst
 
 <!-- <br> -->
 
-<!-- **Examples of Successful Projects** -->
+**Examples of Successful Projects**
 
-<!-- - [Frances Chen - "Predicting Social Distancing in the Age of COVID-19"](Assignments/Project/Examples/Chen_Frances_Example_Final_Report.pdf) -->
-<!-- - [Julia Eigner - "Predicting Maternal Mortality"](Assignments/Project/Examples/Eigner_Julia_Example_Final_Report.pdf) -->
-<!-- - [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Examples/Costa_Kristina_Example_Final_Report.pdf) -->
-<!-- - [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Examples/Wang_Liping_Example_Final_Report.pdf) -->
+- [Frances Chen - "Predicting Social Distancing in the Age of COVID-19"](Assignments/Project/Examples/Chen_Frances_Example_Final_Report.pdf)
+- [Julia Eigner - "Predicting Maternal Mortality"](Assignments/Project/Examples/Eigner_Julia_Example_Final_Report.pdf)
+- [Kristina Costa - "Analyzing FEMA Pre-Disaster Mitigation Grants"](Assignments/Project/Examples/Costa_Kristina_Example_Final_Report.pdf)
+- [Liping Wang - "Female Labor Force Participation"](Assignments/Project/Examples/Wang_Liping_Example_Final_Report.pdf)
 
 
 
@@ -407,27 +405,27 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_08/asynchronous-lecture-material/week-08-async-materials.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html)
 
-<!--   - **Table of Contents** -->
-<!--     + [Strings](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3) -->
-<!--     + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20) -->
-<!--     + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#49) -->
-<!--     + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#64) -->
+  - **Table of Contents**
+    + [Strings](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#3)
+    + [Tidy Text](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#20)
+    + [Sentiment Analysis](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#49)
+    + [Topic Models](http://ericdunford.com/ppol670/Lectures/week_08/lecture-week-08-text-as-data-ppol670.html#64)
 
-<!-- - **Practice**: -->
-<!--   + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html) -->
-<!--     + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout. -->
-<!--     + [Breakout Answers](Lectures/week_08/breakout/inaugural-speeches_ANSWERS.html) -->
+- **Practice**:
+  + _Breakout_: [**Exploring Inaugural Presidential Speeches**](Lectures/week_08/breakout/inaugural-speeches.html)
+    + Download the <a href="Lectures/week_08/Data/inaug_speeches.csv" download><strong>inaug_speeches.csv</strong></a> dataset used in the breakout.
+    <!-- + [Breakout Answers](Lectures/week_08/breakout/inaugural-speeches_ANSWERS.html) -->
 
 
-<!-- <br> -->
+<br>
 
-<!-- ### _Week 9_: **Introduction to Statistical Learning** -->
+### _Week 9_: **Introduction to Statistical Learning**
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_09/asynchronous_lecture_material/week-09-async-materials.html) -->
+- [**Asynchronous Material**](Lectures/week_09/asynchronous_lecture_material/week-09-async-materials.html)
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html) -->
 
@@ -445,7 +443,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 10_: **Applications in Supervised Learning (Regression)** -->
 
