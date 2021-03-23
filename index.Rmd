@@ -427,29 +427,29 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_09/asynchronous_lecture_material/week-09-async-materials.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html)
 
-<!-- - **Table of Contents** -->
-<!--   + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#3) -->
-<!--   + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#13) -->
-<!--   + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#32) -->
-<!--   + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#40) -->
-<!--   + [`caret` API](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#54) -->
+- **Table of Contents**
+  + [Statistical Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#3)
+  + [Supervised Learning](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#13)
+  + [Cross-Validation](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#32)
+  + [Pre-Processing Data](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#40)
+  + [`caret` API](http://ericdunford.com/ppol670/Lectures/week_09/week-09-lecture-supervised-learning.html#54)
 
 
-<!-- - **Practice**: -->
-<!--   + _Walkthrough_: [**Data Pre-processing with `recipes`**](Lectures/week_09/synchronous-material/data-pre-processing-with-recipes.nb.html) -->
-<!--     + Download the <a href="Lectures/week_09/Data/credit_data.csv" download><strong>credit_data.csv</strong></a> dataset used in the walkthrough. -->
+- **Practice**:
+  + _Walkthrough_: [**Data Pre-processing with `recipes`**](Lectures/week_09/synchronous-material/data-pre-processing-with-recipes.nb.html)
+    + Download the <a href="Lectures/week_09/Data/credit_data.csv" download><strong>credit_data.csv</strong></a> dataset used in the walkthrough.
 
 
 
 <br>
 
-<!-- ### _Week 10_: **Applications in Supervised Learning (Regression)** -->
+### _Week 10_: **Applications in Supervised Learning (Regression)**
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_10/asynchronous_lecture_material/week-10-async-materials.html) -->
+- [**Asynchronous Material**](Lectures/week_10/asynchronous_lecture_material/week-10-async-materials.html)
 
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_10/lecture-week-10-applications-supervised-ml-regression-ppol670.html) -->
@@ -465,7 +465,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--     + Download the <a href="Lectures/week_10/synchronous-materials/london_bike_sharing.csv" download><strong>london_bike_sharing.csv</strong></a> dataset used in the walkthrough. -->
 
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 11_: **Applications in Supervised Learning (Classification)** -->
 
