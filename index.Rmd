@@ -475,28 +475,28 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 - [**Asynchronous Material**](Lectures/week_11/asynchronous_lecture_material/week-11-async-materials.html)
 
-<!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html) -->
+- [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html)
 
-<!--   - **Table of Contents**: -->
-<!--     + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3) -->
-<!--     + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21) -->
-<!--     + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29) -->
-<!--     + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42) -->
-<!--     + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47) -->
-
-
-<!-- - **Practice**: -->
-<!--   + _Walkthrough_: [**Walkthrough using classification methods with `caret`**](Lectures/week_11/synchronous-materials/supervised-ml-classification-walkthrough.nb.html) -->
-<!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
+  - **Table of Contents**:
+    + [Classification](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#3)
+    + [Logistic Regression](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#21)
+    + [K-Nearest Neighbors](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#29)
+    + [Classification Trees](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#42)
+    + [Support Vector Machines](http://ericdunford.com/ppol670/Lectures/week_11/lecture-week-11-applications-supervised-ml-classification-ppol670.html#47)
 
 
-<!-- <br> -->
+- **Practice**:
+  + _Walkthrough_: [**Walkthrough using classification methods with `caret`**](Lectures/week_11/synchronous-materials/supervised-ml-classification-walkthrough.nb.html)
+    + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough.
 
-<!-- ### _Week 12_: **Interpretable Machine Learning** -->
 
-<!-- <br> -->
+<br>
 
-<!-- - [**Asynchronous Material**](Lectures/week_12/asynchronous_lecture_material/week-12-async-materials.html) -->
+### _Week 12_: **Interpretable Machine Learning**
+
+<br>
+
+- [**Asynchronous Material**](Lectures/week_12/asynchronous_lecture_material/week-12-async-materials.html)
 
 <!-- - [**Lecture Slides**](http://ericdunford.com/ppol670/Lectures/week_12/lecture-week-12-interpretable-ml-ppol670.html) -->
 
@@ -511,7 +511,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--   + _Walkthrough_: [**Walkthrough using interpretablility methods**](Lectures/week_12/synchronous-materials/interpretable-ml-walkthrough.nb.html) -->
 <!--     + Download the <a href="Lectures/week_11/synchronous-materials/health-coverage.csv" download><strong>health-coverage.csv</strong></a> dataset used in the walkthrough. -->
 
-<!-- <br> -->
+<br>
 
 <!-- ### _Week 13_: **Applications in Unsupervised Learning** -->
 
