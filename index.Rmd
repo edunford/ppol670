@@ -515,6 +515,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 
 ### _Week 13_: **Applications in Unsupervised Learning**
 
+
 <br>
 
 - [**Asynchronous Material**](Lectures/week_13/asynchronous_lecture_material/week-13-async-materials.html)
@@ -533,6 +534,7 @@ _Asynchronous lecture materials will go live approximately one week prior to the
 <!--   + _Walkthrough_: [**Walkthrough using unsupervised learning**](Lectures/week_13/synchronous-materials/unsupervised-learning-walkthrough.nb.html) -->
 <!--     + Download the <a href="Lectures/week_13/synchronous-materials/Data/vdems_civil_liberties.csv" download><strong>vdems_civil_liberties.csv</strong></a> dataset used in the walkthrough. -->
 
+-
 
 <br>
 
