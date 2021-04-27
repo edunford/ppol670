@@ -124,13 +124,13 @@ Data science is an applied field and therefore, it is important that you underst
 
 <br>
 
-<!-- <center>[**Presentation Rubric**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center> -->
+<center>[**Presentation Rubric**](Assignments/Project/project_presentation_assessment_sheet.pdf)</center>
 
 <!-- <br> -->
 
 <!-- <center>[**Final Project Rubric**](Assignments/Project/final_project_rubric.pdf)</center> -->
 
-<!-- <br> -->
+<br>
 
 **Examples of Successful Projects**
 
