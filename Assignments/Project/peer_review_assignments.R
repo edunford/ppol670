@@ -12,25 +12,19 @@ require(tidyverse)
   # datapasta::tribble_paste()
   studat <- tibble::tribble(
     ~ student,
-    "Hyun Jin Choi",
-    "Giuliana Daga",
-    "Breah Dean",
-    "Antonia Doncheva",
-    "William Gorman",
-    "Kylie Grow",
-    "Kunliang He",
-    "Yuting Hu",
-    "Emma Hurler",
-    "Kunaal Kini",
-    "Matteo Lieb",
-    "Andrea Ocando",
-    "Yutong Shi",
-    "Ziyan Song",
-    "Lilith Tromblay",
-    "Haley VanOverbeck",
-    "Ya Wang",
-    "Yinan Xiao",
-    "Chengyi Zhao"
+    "Hye-lim An",
+    "Jess Belledonne",
+    "Lucia Carrillo",
+    "Pedro Casas Alatriste",
+    "Zhaocheng Gu",
+    "Andrea Lau",
+    "Nathaniel Millard",
+    "Youn Park",
+    "Emily Pelles",
+    "Xiyue Yang",
+    "Xilin Yao",
+    "Bongheum Yeon",
+    "Izzy Youngs",
   )
 
 
@@ -122,6 +116,8 @@ require(tidyverse)
 
 # Export Assignments ------------------------------------------------------
 
-  allocations %>% stargazer::stargazer(type="html",summary = F,rownames = F)
+  allocations %>% stargazer::stargazer(type="text",summary = F,rownames = F)
 
-
+  allocations$student %>%
+    unique %>%
+    paste0(.,collapse="\n") %>% cat

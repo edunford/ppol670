@@ -1,7 +1,7 @@
 ---
 title: \textbf{Final Project Rubric}
 author: \Large PPOL670 -- Introduction to Data Science
-date: 'Fall 2020'
+date: 'Spring 2021'
 fontsize: 11pt
 output: 
   pdf_document: default
